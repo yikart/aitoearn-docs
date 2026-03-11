@@ -2,51 +2,92 @@
 title: "Changelog"
 description:
 ---
-<Update label="2026.3.3" description="v2.0.0" tags={["Windows","MacOS","Android","iOS"]}>
+<Update label="2026.3.11" description="v2.0.0" tags={["Windows","MacOS","Android","iOS"]}>
 
-# 🚀 AiToEarn v2.0.0
+# 🚀 AiToEarn v2.0.0 — A New Era for Promotion & Monetization
 
-### 🆕 **Features & Enhancements**
+AiToEarn 2.0 is a comprehensive upgrade built around four pillars: **Task System, AI Capabilities, Desktop Experience, and Platform Coverage** — delivering a smarter, more efficient promotion and monetization experience for creators and advertisers alike.
 
-* **Task System Major Upgrade**
-  - **Automatic AI review and settlement** after submitting work links, significantly improving efficiency
-  - Added **CPM (Cost Per Mille) reward** task type
-  - Support **engagement-based settlement** (likes, comments, favorites)
-  - Publishers can **manually review** tasks that didn't pass AI review
-  - Rejected tasks can be **resubmitted with one click**
-  - Added **local task location verification** to ensure tasks are completed in the designated area
-  - Added **work link validity check** before submission
-  - Added task **acceptance time limit** — slots are automatically released after timeout
-  - Added **duplicate acceptance prevention** for the same user
-  - Publishers can **stop tasks** and automatically receive a refund for remaining reward slots
-  - Added **My Published Tasks** list for easier task management
-  - Publishers can view the **list of users who accepted each task**
-  - Added task **completion statistics**
-  - Review messages now support **multiple languages**
-* **Payment & Balance System Upgrade**
-  - Task charges switched from credits to **balance**, with full transaction history
-  - Top-up now supports **any custom amount** — no more fixed tiers
-  - Ad Credits purchases now use **balance deduction** for a smoother experience
-  - Payment records now include **filtering options**
-  - **Unified balance and income management** — view all funds in one place
-* **Withdrawal System Upgrade**
-  - Simplified withdrawal process, **no longer restricted by income records**
-  - Withdrawal review now supports **screenshot evidence upload**
-* **New Login Methods**
-  - Added **email verification code login**
-  - Added **phone verification code login**
-* **Platform Support Expansion**
-  - Work details now support **YouTube** and **Kuaishou** platforms
-* **Enhanced Location Info**
-  - User location info now precise to **district level**, with location reporting support
+---
+
+### 🆕 **Task System Major Upgrade**
+
+* **Automatic AI review and settlement** after submitting work links, significantly improving efficiency
+* Added **CPM (Cost Per Mille) reward** task type — pay by impressions
+* Support **engagement-based settlement** (likes, comments, favorites)
+* Publishers can **manually review** tasks that didn't pass AI review
+* Rejected tasks can be **resubmitted with one click** or **disputed via appeal**
+* Added **location verification** for local tasks with country/province/city precision
+* Added **work link validity check** before submission
+* Added task **acceptance time limit** — slots are automatically released after timeout
+* Added **duplicate acceptance prevention** for the same user
+* Publishers can **stop tasks** and automatically receive a refund for remaining reward slots
+* Added **My Published Tasks** list and **user acceptance list** for easier management
+* Added task **completion statistics** and **post analytics** per task
+* Review messages now support **multiple languages**
+* Task marketplace now supports **filtering by platform**, with available tasks shown first by default
+* **In-app notifications** sent automatically when task review passes
+
+---
+
+### 🤖 **AI Capabilities Enhanced**
+
+* **Free draft generation**: AI planning and content generation are completely free — only image and video generation are billed
+* Added **AI image-text batch generation** mode — create multiple image-text posts at once
+* Added **Grok video editing** feature
+* Image models now support **dynamic pricing** and **custom resolution**
+* Publishing topics support **AI auto-parsing**
+* Video drafts get **automatic thumbnail extraction** — no manual upload needed
+
+---
+
+### 💰 **Payment & Balance System Upgrade**
+
+* Task charges switched from credits to **balance**, with full transaction history
+* Top-up now supports **any custom amount** with a minimum threshold
+* Smart **top-up guidance** when balance is insufficient
+* **Unified balance and income management** — view all funds in one place
+* Simplified withdrawal process with **screenshot evidence upload** support
+* Withdrawal records now display **type, wallet, notes, and screenshots**
+
+---
+
+### 🖥️ **Full Desktop Adaptation**
+
+* Homepage task marketplace **fully upgraded for PC**: rich info cards, hero banner, and responsive layout
+* Task details, task creation, and my tasks pages are now **fully responsive on desktop**
+* Login redesigned as a **global modal** for a unified PC experience
+* Calendar records now support **expand/collapse** and horizontal scrolling
+
+---
+
+### 🌐 **Platform Support Expansion**
+
+* Work details now support **YouTube** and **Kuaishou** platforms
+* Added **Twitter authorization check**
+* Platforms separated by **domestic/international region** — unavailable platforms are grayed out with guidance
+* Douyin publishing optimized: **short link redirect**, automatic hashtag injection, and video ID parsing
+* Materials can now be **filtered by platform**
+
+---
+
+### 🔐 **New Login Methods**
+
+* Added **email verification code login**
+* Added **phone verification code login**
 
 ---
 
 ### ⚙️ **Improvements**
 
-* Simplified task creation flow by removing unnecessary steps
-* Automatic **draft usage tracking** when submitting work
-* Prevented **duplicate submissions** caused by concurrent task acceptance
+* Simplified task creation flow with a new **task description** field
+* Brand promotion page split into **Content Management** and **Data Analytics** sub-tabs
+* Added **two-step draft creation dialog** for quick access to AI batch generation
+* Image editor now features a **brand-new crop tool**, with legacy editor removed
+* Enhanced notification system: new notification types with **click-to-navigate** support
+* Location picker upgraded to **country/province/city cascading selection**
+* Improved OAuth authorization experience
+* Comprehensive database index optimization for **significantly faster queries**
 * Overall service performance and stability improvements
 
 ---
@@ -60,8 +101,10 @@ description:
 * Fixed task submissions **occasionally getting stuck**
 * Fixed **reward and slot restoration inconsistency** after task rejection
 * Fixed **task status not reverting correctly** when income crediting fails
-* Fixed **YouTube analytics data** display issues
 * Fixed **balance loss** when task creation fails after payment deduction
+* Fixed Douyin publish links missing title, hashtags, and config parameters
+* Fixed YouTube title character limit and analytics display issues
+* Fixed multiple **hardcoded i18n** text issues
 * Fixed **email login** issues
 * Fixed **file upload** occasional failures
 
