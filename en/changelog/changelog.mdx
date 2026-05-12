@@ -2,6 +2,118 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.5.12" description="v2.4.3" tags={["Windows","MacOS","Android","iOS"]}>
+
+# 🚀 AiToEarn v2.4.3
+
+### 🏪 **Offline Promotion and BTL Upgrade**
+
+This release strengthens offline promotion workflows, providing a more complete foundation for store campaigns, field marketing, QR-code publishing, and offline content distribution.
+
+* **BTL organization management**: added BTL organizations, members, roles, and user binding support for offline promotion teams
+* **Brand and store management**: merchants can manage brands, stores, locations, markets, and promotional content
+* **Map and booth configuration**: added map, booth, and banner management for offline events and commercial district campaigns
+* **Featured products and markets**: added homepage featured product, market type, and promotional content configuration
+* **Admin support**: added BTL data models, admin APIs, and workflow configuration
+
+---
+
+### 📢 **Publishing Flow and WeChat Channels Support**
+
+Publishing workflows have been refined across account selection, authorization checks, reconnect behavior, and WeChat Channels publishing.
+
+* **WeChat Channels publishing**: added publishing parameters, activity selection, location selection, and a debug page
+* **Publishing dialog improvements**: improved account selection, platform parameter validation, mobile publishing content, and status display
+* **Plugin authorization checks**: publishing now detects plugin authorization and account status more accurately
+* **Work link status updates**: publish records now support updating work links and link status
+* **Offline QR publishing improvements**: offline QR publish records, source tagging, statistics, and monitoring filters are more accurate
+
+---
+
+### 🤖 **AI Draft Generation Improvements**
+
+Draft generation is now more transparent and flexible, with better multi-model generation, progress feedback, and prompt constraints.
+
+* **Multi-model draft generation**: draft box generation now supports multiple model options
+* **Live generation feedback**: partial generation results can be displayed while generation is still running
+* **Prompt limit improvements**: added draft prompt limits and clearer copy guidance for more stable outputs
+* **Pricing display improvements**: added original price configuration for draft generation
+* **Generation reliability**: improved Gemini draft planning, image generation, video generation, and related pricing logic
+
+---
+
+### 📋 **Task Fulfillment, Tickets, and Operations**
+
+This release adds stronger tools for post-task issue reporting, operational diagnosis, and settlement tracking.
+
+* **User task tickets**: creators can report issues during task execution, and operations teams can view and handle them
+* **Task operations overview**: added task health status, ticket summaries, and operations overview data
+* **Settlement records**: added user task settlement records for better tracking and troubleshooting
+* **Submission validation**: improved task submission checks, CPE validation, link submission, and topic parsing
+* **Deleted-work refunds**: deleted content can now trigger related refund and status handling
+* **Task sorting improved**: user tasks are now sorted by recent updates so important changes are easier to find
+
+---
+
+### 💰 **Creator Earnings and Wallet**
+
+Wallet and earnings visibility have been improved so creators can better understand balances, credits, and withdrawal status.
+
+* **Balance type split**: added support for multiple balance types with clearer accounting
+* **Credit consumption source**: added credit consumption source tracking and trend statistics
+* **Withdrawal cancellation**: withdrawals can now be cancelled
+* **Earnings entry improved**: added creator earnings entry and refined wallet, fee, and withdrawal displays
+* **Mobile wallet improvements**: improved mobile balance, earnings, and wallet views
+
+---
+
+### 🛍️ **Shopify Store Experience**
+
+Shopify store management and connection flows are easier to use for merchants.
+
+* **Store management entry**: added Shopify store list and billing status display
+* **Connection guidance**: improved Shopify connection guidance and loading states
+* **Open Shopify app**: added a shortcut for opening the Shopify app with localized copy
+* **API path fix**: fixed Shopify API path prefixes to improve connection reliability
+
+---
+
+### 📊 **Data Statistics and Monitoring**
+
+Account statistics, comment search, offline QR data, and anomaly handling are now easier to monitor and diagnose.
+
+* **Crawler monitoring filters**: added monitoring platform filters and separated monitoring scopes by platform
+* **Account stats sync**: account statistics can now be synced after authorization
+* **Comment search improvements**: improved comment search billing, import, export, and anomaly messaging
+* **Data anomaly handling**: added anomaly status query and update support for operations workflows
+* **Offline QR statistics**: improved offline QR publish record and statistics visibility
+
+---
+
+### 📱 **Mobile and Calendar Experience**
+
+Mobile workflows and calendar planning received a focused usability upgrade.
+
+* **Mobile task publishing**: improved mobile task creation, submission, and bottom action flows
+* **Calendar festival data**: added 2026 holiday, solar term, and calendar assets
+* **Festival details**: improved mobile calendar, festival details, and scheduled record display
+* **Home experience**: improved role display, follower statistics entry, and pricing/recharge experience
+* **Seasonal planning support**: content planning now has richer holiday and solar term references
+
+---
+
+### 🐞 **Bug Fixes and Stability**
+
+* Fixed publish account status sync, plugin authorization checks, and publish calendar display issues
+* Fixed account selection styling in the publishing dialog
+* Fixed an issue where already accepted tasks could be accepted again
+* Fixed request error messaging, earnings display, credit record types, and localized descriptions
+* Fixed Douyin follower authorization scopes and WeChat platform token caching
+* Fixed offline QR publishing source, statistics, and monitoring issues
+* Improved module import/export ordering and service build stability
+
+</Update>
+
 <Update label="2026.4.29" description="v2.4.0" tags={["Windows","MacOS","Android","iOS"]}>
 
 # 🚀 AiToEarn v2.4.0
