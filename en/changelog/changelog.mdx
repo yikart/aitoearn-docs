@@ -2,6 +2,93 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.5.19" description="v2.4.4" tags={["Windows","MacOS","Android","iOS"]}>
+
+# 🚀 AiToEarn v2.4.4
+
+### 🏪 **BTL Field Marketing and Brand Home Upgrade**
+
+This release continues the BTL rollout with richer campaign configuration, brand pages, map behavior, and homepage promotion tools.
+
+* **Brand home pages**: added brand home assets, configurable link modes, store links, and brand description display
+* **Hot item management**: added hot item price fields, management flows, random homepage ordering, and clearer action copy
+* **Map and booth improvements**: improved BTL maps, hot zones, booth creation, active-map rules, and public store filtering
+* **Campaign statistics**: added BTL project statistics APIs and updated attention-area click ranking logic
+* **Admin configuration**: added brand admin configuration APIs and support for custom publish defaults
+
+---
+
+### 📋 **Task Settlement, Appeals, and Operations**
+
+Task operations now provide stronger settlement visibility, dispute replacement workflows, and safer task lifecycle controls.
+
+* **Pre-settlement amounts**: added pre-settlement amount fields, remaining amount display, settlement status, and localized settlement dates
+* **Refund calculation updates**: improved task refund logic for commissions, sample budgets, and refund metadata
+* **Appeal handling**: added merchant and KOC appeal processing, appeal logs, status updates, and audit trail support
+* **Operations tickets**: added task and user-task ticket listing, duplicate unfinished ticket protection, and reporting dialogs
+* **Task controls**: added task deletion, task stop reasons, operation records, and automatic cleanup for settled recruited tasks
+
+---
+
+### 💰 **CPM/CPE Pricing and Acceptance Rules**
+
+CPM and CPE campaigns are easier to configure and safer to accept.
+
+* **Deposit calculation**: added CPM/CPE deposit fields, conditional checks, and calculation logic
+* **Minimum reward rules**: added minimum reward constraints and clearer minimum price descriptions
+* **Acceptance limits**: added daily acceptance limit validation for Xiaohongshu accounts
+* **Follower thresholds**: improved follower threshold checks across platforms and task acceptance copy
+* **Expired settlement option**: added an option to allow expired user tasks during settlement when needed
+
+---
+
+### 📢 **Publishing, Authorization, and Public Uploads**
+
+Publishing and account authorization flows received several reliability and platform updates.
+
+* **Douyin image-text publishing**: added Douyin image publishing support and related workflow fixes
+* **Douyin authorization**: updated Douyin scopes, fan count refresh behavior, and Mini App user creation
+* **WeChat authorization**: improved WeChat public account authorization messages, service type data, and failure handling
+* **Public uploads**: added public upload signed URL creation, confirmation, ID validation, and updated API paths
+* **Query-token login**: added login through query tokens for supported entry flows
+
+---
+
+### 🤖 **AI Drafts and Content Generation**
+
+AI draft generation is more transparent and better aligned with current image-generation options.
+
+* **Queue position display**: draft generation now shows queue status and position feedback
+* **Queue reliability**: increased draft generation queue concurrency
+* **GPT Image 2 ratios**: updated GPT Image 2 aspect-ratio support
+* **Prompt editing**: improved support for editing copywriting system prompts
+* **Draft validation**: improved draft creation validation and pricing step behavior
+
+---
+
+### 📊 **Data, Statistics, and Monitoring**
+
+Data capture and operational diagnostics were refined across account, task, and crawler workflows.
+
+* **Manual data repair**: added manual user-task post data repair and manual fan count updates
+* **Crawler capture**: added instance capture result queries, fan capture support, and crawler work status updates
+* **Statistics matching**: matched crawler posts and snapshots by platform data ID for better accuracy
+* **Trend queries**: fixed user task post trend queries and related DTO/schema imports
+* **Monitoring updates**: added offline QR crawler monitoring and adjusted crawler monitor time zones
+
+---
+
+### 🐞 **Bug Fixes and Stability**
+
+* Fixed brand organization list responses, anonymous portal organization access, and organization user messages
+* Fixed task search, user keyword search, and regex escaping for safer queries
+* Fixed Xiaohongshu invalid work-link handling and missing material-group edge cases
+* Fixed comment search credit consumption from 50 credits to 20 credits
+* Removed legacy dispute management and unused account/user portrait reporting flows
+* Improved account upsert behavior, account portrait updates, and online-fan total calculations
+
+</Update>
+
 <Update label="2026.5.12" description="v2.4.3" tags={["Windows","MacOS","Android","iOS"]}>
 
 # 🚀 AiToEarn v2.4.3
