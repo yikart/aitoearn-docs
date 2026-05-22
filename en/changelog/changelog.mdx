@@ -2,6 +2,86 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.5.22" description="v2.4.5" tags={["Windows","MacOS","Android","iOS"]}>
+
+# 🚀 AiToEarn v2.4.5
+
+### 📋 **Task Review, Settlement, and Creator Workflow**
+
+This release improves task review accuracy, creator resubmission flows, settlement safety, and task progress visibility.
+
+* **AI video verification**: submitted videos can now be checked with Gemini-based review, with safer handling when no published video is available
+* **Resubmission flow**: creators can resubmit pending user tasks more reliably, while concurrent review updates avoid overwriting approved results
+* **Task timeline**: accepted tasks now show processing records, audit history, and status changes for clearer follow-up
+* **Settlement reliability**: fixed reward release and clawback rules, added work existence checks, and delayed fixed reward release until the seventh day
+* **Settlement pagination**: settlement lists now support compound cursor pagination for more stable large-list browsing
+* **Task lifecycle controls**: improved task deletion, stop records, full-recruitment checks, and automatic cleanup for completed recruited tasks
+
+---
+
+### 📢 **Douyin Mini App Authorization and Publishing**
+
+Douyin Mini App authorization and publishing received a focused reliability upgrade.
+
+* **Mini App channel authorization**: added Douyin Mini App channel authorization flows across backend and creator-facing pages
+* **Separate auth tickets**: Mini App authorization now supports separate ticket handling for different credential flows
+* **Token refresh fixes**: expired Mini App client tokens, homepage credentials, and video tokens are refreshed more reliably
+* **Publishing status**: Douyin publish records now move into the publishing state more accurately
+* **Login validation**: Mini App login now requires the expected login code and clearer authorization prompts
+* **Publish source tracking**: Douyin publishing can read source information from request data for better traceability
+
+---
+
+### 🤖 **AI Drafts, Models, and Media Uploads**
+
+AI creation workflows now support richer models, more flexible media inputs, and faster media handling.
+
+* **Seedance video models**: added HKCOPP Seedance video provider support and Seedance face-video draft models
+* **Draft media inputs**: draft generation now supports multi-model media parameters and improved media references
+* **GPT Image 2 pricing**: GPT Image 2 pricing now accounts for resolution settings
+* **Generation records**: improved generation detail pages, generation parameters, and draft record display
+* **Global upload compression**: media uploads can now be compressed globally before upload
+* **Thumbnail performance**: optimized draft-box thumbnails, lazy image behavior, and OSS image rendering
+
+---
+
+### 🏪 **Brand Library, BTL, and Home Experience**
+
+Brand assets, offline promotion configuration, and homepage guidance are easier to manage.
+
+* **Brand comment texts**: brand library comment text management is now supported and public comment text lookup no longer requires an unnecessary token
+* **Promotion jump options**: jump option management was refactored around reusable visit relation values and related data IDs
+* **BTL activity fields**: booth configuration now supports on-site activity and store activity fields with localized display
+* **BTL analytics**: improved field-promotion analytics, task navigation, activity button layout, and external link behavior
+* **Creator guidance**: added AitoEarn beginner guide and FAQ entry points on the marketplace homepage
+* **Brand asset management**: streamlined brand asset, QR-code, promotion, and reference-media management flows
+
+---
+
+### 💰 **Pricing, Eligibility, and Recommendation Scores**
+
+Pricing and eligibility information is now clearer across task details, creator checks, and subscription pages.
+
+* **KOC recommendation reasons**: task details can now show recommendation scores and the reasons behind them
+* **Follower requirement copy**: task acceptance prompts now describe follower requirements more accurately
+* **Follower refresh**: account and channel pages added follower count refresh support
+* **Pricing table updates**: pricing pages were updated and repeated pricing requests were reduced
+* **Task title support**: task creation now supports explicit title parameters across more task types
+* **Public task data**: task cards and reward cap hints now show clearer task metrics and media information
+
+---
+
+### 🐞 **Bug Fixes and Stability**
+
+* Fixed content management first-load errors and draft-box state handling
+* Fixed publish-editor topic validation and improved publish parameter editing
+* Fixed Alipay WebView detection so mobile publishing can prompt users to open in a browser
+* Fixed WeChat Channels login cookie array parsing and login follower count synchronization
+* Fixed task recommendation scoring dependencies, keyword query filters, and duplicate imports
+* Simplified uptime content by removing unused incident announcement logic
+
+</Update>
+
 <Update label="2026.5.19" description="v2.4.4" tags={["Windows","MacOS","Android","iOS"]}>
 
 # 🚀 AiToEarn v2.4.4
