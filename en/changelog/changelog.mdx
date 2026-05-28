@@ -2,6 +2,85 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.5.28" description="v2.4.6" tags={["Windows","MacOS","Android","iOS"]}>
+
+# 🚀 AiToEarn v2.4.6
+
+### 📋 **Task Settlement, Review, and Operations**
+
+This release strengthens user-task settlement, review recovery, and operations visibility across creator and admin workflows.
+
+* **Direct settlement operations**: admins can now trigger user-task settlement from the task workspace, view settlement details in drawers, and filter by settlement status more efficiently
+* **Expired task compensation**: added tools to backfill overdue settlement records and complete eligible expired user-task settlements
+* **Settlement safeguards**: improved locking, timeout handling, and atomic claiming to reduce duplicate payout risk during concurrent settlement jobs
+* **Audit recovery**: user-task review records now support rollback scenarios, with clearer review source, status update time, and audit history display
+* **Deleted-work handling**: settlement and accepted-task details now handle removed works more clearly, including safer capacity release and clearer creator-facing notices
+* **Task operations timeline**: operation tickets now include activity records, improving visibility into handling history and follow-up actions
+
+---
+
+### 🤖 **AI Review, Fraud Risk, and Recommendation Scores**
+
+AI-assisted task review is more controllable, more explainable, and less likely to block valid creators.
+
+* **AI fraud risk review**: added manual AI fraud risk checks, rejected-task review tabs, and confirmation flow for suspected fraud-risk results
+* **False-positive reduction**: adjusted fraud-risk windows, thresholds, and skip rules for dismissed, deleted, link-error, or missing-video works
+* **Video and draft checks**: video-theme checks now use URL context and avoid charging creators for verification-only checks
+* **Recommendation score refresh**: task recommendation scores can be regenerated, sorted, and shown more clearly in task detail and admin views
+* **Model and prompt updates**: updated AI scoring model usage, loaded scoring prompts from app config, and removed the deprecated Gemini Veo video integration
+
+---
+
+### 👤 **Creator Task Experience**
+
+Accepted-task pages and task lists now provide clearer status, reward, and submission feedback.
+
+* **Accepted task detail**: redesigned accepted-task detail with clearer status banners, task information, material previews, settlement records, and performance data
+* **Task filters**: added more filters for user task lists, including platform, status, settlement status, task ID, user-task ID, and keyword search
+* **Revocation states**: added revoked-task status handling and clearer reason copy across accepted-task details and task cards
+* **Reward display**: improved base reward, settlement amount, payout direction, and task amount display across creator and advertiser pages
+* **Draft and submission flow**: optimized draft-box filtering, publishing import loading states, submitted link handling, and tab-specific empty states
+* **Shopify promotions**: added Shopify discount-code cards and rollback handling for discount-code creation failures
+
+---
+
+### 📢 **Publishing, Promotion Pages, and Channel Data**
+
+Publishing and promotion entry flows received compatibility, platform, and data-reliability improvements.
+
+* **Legacy browser compatibility**: added compatibility fallbacks for promotion and BTL pages to improve behavior on older browsers and embedded webviews
+* **Promotion page experience**: optimized promotion-page steps, publishing result views, action sheets, QR posters, and Xiaohongshu copy panels
+* **Channel data refresh**: updated Douyin fan refresh behavior and added internal Douyin video/page data query support
+* **Twitter and Threads publishing**: improved publishing behavior and error formatting for Twitter/X and Threads
+* **Publish dialog improvements**: improved drag-and-drop publishing, account selection, platform authorization handling, and publish parameter editing
+* **Contact and asset updates**: updated contact WeChat assets, promotion QR assets, favicon, and related public resources
+
+---
+
+### 📊 **Metrics, Finance, and Admin Tools**
+
+Operational dashboards and finance views now expose more actionable data.
+
+* **User daily access metrics**: added user daily access reporting and hourly dashboard views
+* **Credits consumption metrics**: added credits consumption category filters and metric improvements
+* **Balance records**: balance records now support task ID, user-task ID, metadata, and related business ID display for easier reconciliation
+* **Finance detail dialog**: advertiser task detail now includes a task finance dialog for clearer cost and settlement inspection
+* **Publishing records**: failed matrix-publishing records are easier to open and inspect from the admin homepage
+* **Deprecated modules removed**: removed legacy account/user portrait, task matching, access restriction, and unused work-data feedback modules
+
+---
+
+### 🐞 **Bug Fixes and Stability**
+
+* Fixed CPS discount-code and task rollback edge cases
+* Fixed duplicate data-abnormal feedback reports
+* Fixed WeChat public-account publishing errors in mixed-channel publishing flows
+* Fixed nullable data-cube update times and related accepted-task display issues
+* Fixed low draft-similarity verification labels and review messages
+* Improved client i18n state stability and older-browser style compatibility
+
+</Update>
+
 <Update label="2026.5.22" description="v2.4.5" tags={["Windows","MacOS","Android","iOS"]}>
 
 # 🚀 AiToEarn v2.4.5
