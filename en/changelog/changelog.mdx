@@ -3,6 +3,70 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.10" description="2.4.10" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.10
+
+### 🔐 **Authorization Recovery and Account Status Clarity**
+
+This release improves how channel authorization problems are detected and reflected across account-connected experiences.
+
+* **Better invalid-authorization handling**: when a connected channel can no longer be used because authorization has failed, the account state now updates more clearly instead of remaining misleadingly available
+* **Missing credential recovery cues**: accounts with incomplete or unavailable authorization data are now treated more consistently, helping users understand that reconnection may be required
+* **Clearer offline transitions**: channel accounts are more likely to move into an appropriate unavailable state after authorization-related failures, reducing confusion during later actions
+* **More dependable re-authorization prompts**: user-facing messaging now does a better job explaining when an account needs to be authorized again
+* **Improved consistency across channel flows**: authorization failures are now handled in a more unified way across content, analytics, and publishing-related actions
+
+---
+
+### 📣 **Publishing Failure Handling and Completion Accuracy**
+
+Publishing-related flows now respond more cleanly when channel-side authorization problems interrupt delivery or follow-up actions.
+
+* **Safer publish interruption handling**: if a publish attempt fails because a channel account is no longer authorized, the result is reflected more clearly so users can take the right next step
+* **More reliable finalization behavior**: follow-up publish actions now react more consistently when account access is no longer valid
+* **Better task update stability**: publishing task updates are less likely to continue under stale authorization conditions, helping reduce confusing task states
+* **Improved account visibility after publish errors**: authorization-related publish failures now contribute to more accurate account availability feedback in later workflows
+* **Reduced ambiguity after channel-side failures**: users are less likely to see generic failure outcomes when the real issue is that the account needs renewed access
+
+---
+
+### 📊 **Analytics, Works, and Engagement Experience Improvements**
+
+Several channel data views now behave more consistently when loading creator content, analytics, and engagement information.
+
+* **More stable analytics retrieval**: analytics views now respond more predictably when a connected account encounters authorization issues during data refresh
+* **Better works browsing reliability**: content lists, link lookups, and work detail views now handle channel access problems more gracefully
+* **Improved engagement actions**: comment-related views and actions now run with better consistency across supported channels
+* **Cleaner cross-channel behavior**: account-connected data actions now feel more uniform across analytics, works, and engagement sections
+* **Stronger error-to-state alignment**: when channel access breaks during data loading, the resulting account state is more likely to match what users can actually do next
+
+---
+
+### 🧭 **Connected Channel Utilities and Data Access Refinements**
+
+Supporting channel tools and account-linked utilities received a pass to improve clarity and reduce edge-case friction.
+
+* **More dependable channel option loading**: account-specific publishing options and selectable values now load more consistently from connected channels
+* **Better custom option creation flow**: creating account-linked option values behaves more reliably, especially in cases where channel access context matters
+* **Clearer internal data availability**: account-linked channel data requests now fail in a way that more accurately points to missing authorization instead of leaving the issue unclear
+* **Improved permission-aware behavior**: actions that depend on channel access rights now surface clearer outcomes when those rights are unavailable
+* **Smoother connected-tool experience**: several account utility flows now feel more predictable when working across channel-backed features
+
+---
+
+### 🔗 **Webhook Result Accuracy and Messaging Polish**
+
+This update also includes small but important correctness improvements for published content tracking and user-facing communication.
+
+* **More accurate published work links**: channel publish callbacks now attach the final content reference more reliably, helping published results point to the expected destination
+* **Better published record matching**: content completion events now map more cleanly to the final published work shown in task history and related views
+* **Improved consistency for publish result details**: saved publish metadata is now closer to the actual channel output users expect to review later
+* **Clearer authorization messages**: account authorization and expiration notices now more explicitly guide users toward reconnecting the affected account
+* **General stability polish**: a set of smaller reliability improvements helps connected channel workflows feel steadier across publishing and post-publish follow-up
+
+</Update>
+
 <Update label="2026.6.10" description="2.4.9" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.9
