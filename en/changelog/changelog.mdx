@@ -2,6 +2,82 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="2.0.16" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.16
+
+### 📢 **Release Announcement Content Refinement**
+
+The automated release note generator now produces cleaner, more professional public announcements by filtering out internal partner and channel identifiers.
+
+* **Partner name suppression**: generated notes no longer leak the names of third‑party platforms or service providers used in product delivery
+* **Generic capability descriptions**: where new features are powered by external integrations, the notes now describe the user‑facing benefit instead of the underlying partner
+* **Consistent public messaging**: all release notes maintain a uniform tone that focuses on product outcomes, not implementation partnerships
+* **Reviewer friction reduced**: editorial teams spend less time manually redacting sensitive names before publication
+* **Brand alignment**: announcement language is fully aligned with the company’s public communication standards, avoiding unintended promotion of third‑party brands
+
+---
+
+### 🔒 **Business Information Protection**
+
+The change strengthens automatic safeguards that prevent accidental exposure of sensitive operational relationships in customer‑facing communications.
+
+* **Supply‑chain confidentiality**: the technology and content partners that power specific features are no longer disclosed in automatically generated text
+* **Zero‑trust announcement pipeline**: even fully automated generation runs with conservative disclosure rules, treating all partner references as sensitive by default
+* **No manual spot‑checking needed**: the filter acts as a permanent guardrail, removing the risk of human oversight allowing a partner name to slip through
+* **Compliance friendly**: the adjusted output helps marketing and legal teams meet internal disclosure policies without extra review cycles
+* **Proactive protection**: the rule is applied during text generation rather than as a post‑process, making it harder for identifiers to appear in any form
+
+---
+
+### 🤖 **Automated Publishing Rules Strengthened**
+
+The internal generation instructions have been extended to permanently ban certain classes of information from all future automatic announcements.
+
+* **Hard rule against identifiers**: the text‑generation instruction set now forbids any mention of integration partners, vendors, or channel names
+* **Broad applicability**: the rule applies to every auto‑generated release note going forward, regardless of the feature or team that triggers the generation
+* **Self‑documenting guideline**: the updated prompt makes the publishing expectation explicit for anyone who customises or extends the automation
+* **Faster release cycles**: fewer manual corrections mean that auto‑generated drafts are closer to publication‑ready immediately
+* **Long‑term maintainability**: future feature additions that introduce new external services will be automatically covered without additional rule changes
+
+---
+
+### 🛡️ **Error‑Proof Documentation Updates**
+
+By encoding the privacy rule directly into the generation process, the risk of leaking confidential information in documentation changelogs has been eliminated.
+
+* **Eliminated ambiguous phrasing**: generated sentences like “powered by X” or “using Y” are replaced with outcome‑focused language
+* **No accidental trademarks**: partner‑specific feature names or trademarks are systematically excluded from all public release sections
+* **Dual‑purpose protection**: the same filtering logic protects both the GitHub releases seen by developers and the public changelog pages
+* **Consistent privacy across surfaces**: whether the changelog is viewed in the app, on the web, or in source‑control, the information envelope remains the same
+* **Fail‑safe design**: even if the tool is invoked with unconventional inputs, the forbidden pattern rule prevents exposure before the text is published
+
+---
+
+### 🧪 **Quality Assurance for Automated Content**
+
+The updated generation rules have been verified to ensure that release note quality remains high while the new constraint is in place.
+
+* **No false positives**: the instruction is tuned to avoid suppressing legitimate feature descriptions that merely sound similar to partner names
+* **Preserved expressiveness**: product‑focused feature descriptions still carry the full richness of the original automated drafts
+* **Validated output samples**: test runs confirm that common release‑note patterns pass the filter without losing essential information
+* **Seamless adoption**: all existing changelog entries were re‑checked and found compliant, so no historical content needed retroactive editing
+* **Future‑ready**: any future addition of new capabilities will automatically flow through the constrained generation, keeping announcements safe by default
+
+---
+
+### 🛠 **Developer & Maintainer Experience**
+
+The streamlined publishing pipeline reduces the cognitive load on team members responsible for finalising releases.
+
+* **Less manual redaction**: developers no longer need to remember to delete partner names before clicking publish
+* **Clearer contribution guidelines**: the same constraint helps maintainers write better initial draft content when preparing build notes
+* **Lower risk of oversight**: stress during release crunch time no longer translates into accidental disclosure
+* **Consistent rule enforcement**: the automatic nature of the rule guarantees it is never forgotten, unlike a manual checklist item
+* **Easier onboarding**: new team members do not need to learn a list of forbidden terms — the system handles it for them
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.14" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.14
