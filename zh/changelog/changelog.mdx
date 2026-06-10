@@ -2,6 +2,21 @@
 title: "更新日志"
 description:
 ---
+<Update label="2026.6.10" description="2.0.6" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.6
+
+### 🛠️ 内部代码清理与维护
+
+此次版本聚焦于移除 GitHub 服务中残留的模拟上下文和多余生命周期实现，使服务更简洁、更专注于实际业务。
+
+* **移除 GitHub 服务模拟上下文**：删除 `GithubService` 中 `OnModuleInit` 内硬编码的 mock 自动发布上下文，结束内部测试用模拟数据对服务的污染
+* **简化服务初始化流程**：`GithubService` 不再实现 `NestJS` 的 `OnModuleInit` 接口，避免模块启动时执行不必要的初始化逻辑
+* **清理无关注入依赖**：移除与 mock 上下文相关的导入和依赖引用，降低服务模块间的无意义耦合
+* **提升代码可维护性**：通过精简冗余代码，使 Github 服务的核心职责更加清晰，降低后续开发者阅读和维护的心智负担
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.5" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.5
