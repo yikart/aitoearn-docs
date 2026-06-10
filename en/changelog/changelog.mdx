@@ -2,6 +2,23 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="2.0.14" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.14
+
+### 📦 **Import Order & Code Structure Refinement**
+
+A small but deliberate reorganisation of import statements in the admin server’s task validation layer improves consistency and makes the module easier to maintain.
+
+* **Consistent dependency ordering**: imports from the content‑safety domain are now listed before those from the task database, matching the convention used across the rest of the admin server.
+* **Cleaner module presentation**: grouping imports by logical domain helps new contributors quickly understand which external packages the validation object depends on.
+* **Reduced merge friction**: a predictable import sequence lowers the likelihood of trivial textual conflicts when multiple feature branches touch the same validation file.
+* **Zero functional impact**: the change is purely cosmetic — no validation logic, status handling, or data flow is altered in any way.
+* **Improved code review focus**: reviewers can now spot genuine dependency additions or removals without being distracted by out‑of‑order lines.
+* **Alignment with team practices**: this adjustment brings the task validation module in line with the import ordering guidelines already adopted by other core modules.
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.7" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.7
