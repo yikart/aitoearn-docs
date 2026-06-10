@@ -2,6 +2,65 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="1.0.1-mock" tags={["Web"]}>
+
+# 🚀 AiToEarn 1.0.1-mock
+
+### 🧪 **Mock Docs Publishing Simulation**
+
+A safe, isolated testing pathway now allows simulating the full docs changelog publishing lifecycle without touching production resources.
+
+* **End-to-end dry run**: the docs changelog flow can be exercised from webhook to MDX generation in a mock environment, validating the entire pipeline before real deployment
+* **Non‑destructive testing**: mock publishing ensures that test runs never overwrite live documentation, protecting the public-facing changelog
+* **Simulated delivery**: the simulation mimics the exact steps of pulling commit data, generating changelog entries, and inserting them into the docs site
+* **Isolated configuration**: mock‑specific settings prevent accidental cross‑contamination between staging and production docs publishing
+
+---
+
+### 🔗 **Webhook Integration & Automation**
+
+A dedicated webhook pathway drives the changelog automation, now testable end‑to‑end in the mock setup.
+
+* **Mock webhook handler**: a simulated GitHub webhook endpoint accepts push events and triggers the changelog generation logic without requiring a real repository event
+* **Payload validation**: incoming webhook payloads are validated against expected schemas, ensuring only well‑formed requests proceed to publishing
+* **Automation chaining**: the webhook seamlessly chains into the changelog generation service, enabling a single‑trigger publishing workflow
+* **Error isolation**: failures within the mock webhook flow are contained and reported clearly, making debugging the publishing pipeline straightforward
+
+---
+
+### 🛠 **Developer Experience & Tooling**
+
+The mock publishing pathway improves developer workflows around documentation updates, reducing friction and risk.
+
+* **Local and CI testing**: developers can invoke the mock flow locally and in CI pipelines to verify changelog generation without depending on live infrastructure
+* **Fast feedback loop**: instant dry‑run results let contributors iterate on changelog formatting and grouping before opening a pull request
+* **Transparent logging**: the mock service logs every step of the generation process, giving full visibility into candidate MDX output and any potential errors
+* **Reusable test fixtures**: simulated commit data and file diffs can be replayed repeatedly, enabling consistent regression testing of the changelog engine
+
+---
+
+### 📝 **Changelog Generation Validation**
+
+Built‑in safeguards help guarantee that generated changelog entries meet the expected style, structure, and completeness before they go live.
+
+* **Style conformity checks**: the mock flow verifies that generated entries respect the mandatory grouping, bullet formatting, and bold‑title conventions
+* **Content completeness**: each candidate changelog block is checked for required sections and minimum point counts, avoiding sparse or broken updates
+* **Tag and label consistency**: release labels, date formats, and platform tags are validated against the docs site configuration
+* **Duplicate detection**: the simulation warns when a generated changelog block appears to overlap with an already‑published entry, preventing accidental duplicates
+
+---
+
+### 🚀 **Docs Site Readiness**
+
+The mock publishing simulation prepares the docs site for future automated changelog delivery while keeping the live site untouched.
+
+* **Acceptance testing pipeline**: the mock flow serves as an acceptance gate for any changelog automation changes before they reach production
+* **Live‑site safety net**: all mock publishing outputs are discarded after validation, leaving the public docs changelog completely unaffected
+* **Progressive rollout preparation**: once the simulation passes, the same pipeline can be promoted to production with minimal configuration changes
+* **Monitoring hooks**: the mock service exposes health and outcome signals, ready to be wired into observability tools when the real automation goes live
+
+</Update>
+
 <Update label="2026.5.28" description="v2.4.6" tags={["Windows","MacOS","Android","iOS"]}>
 
 # 🚀 AiToEarn v2.4.6
