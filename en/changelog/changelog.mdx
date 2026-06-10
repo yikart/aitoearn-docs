@@ -3,6 +3,80 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.10" description="2.4.7" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.7
+
+### 📋 **Task Settlement, Status Recovery, and Admin Actions**
+
+This release improves how task progress, settlement records, and admin-side follow-up are shown across task workflows.
+
+* **Settlement record creation**: eligible task settlements now generate records more reliably, making follow-up and reconciliation clearer
+* **Backfill recovery**: overdue or previously missed settlement scenarios now recover more smoothly, reducing gaps in payout visibility
+* **Rejected-state handling**: task status checks now account for rejected cases more consistently across review and settlement flows
+* **Deleted-work recovery**: task records remain easier to inspect and process even when related submitted content has been removed
+* **Displayed amount clarity**: settlement amounts are shown more clearly in task-related admin views, helping reduce confusion during review
+
+---
+
+### 🛡️ **Review Visibility, Safety Checks, and Audit Experience**
+
+Task and submission review pages now expose more useful moderation and audit context for operations teams.
+
+* **Content safety history**: task detail and user-task detail pages now show related content safety review results in a more complete way
+* **Grouped text review checks**: task text content is reviewed more coherently, improving readability of safety results for titles, descriptions, and topics
+* **Safer timeout handling**: content safety requests now fail more gracefully when providers are unavailable, with clearer review outcomes instead of ambiguous states
+* **Rejected-task operations**: admin-side handling for rejected submissions is more dependable, especially when reviewing follow-up actions
+* **Task detail completeness**: task pages now include richer review context, helping operators understand content issues without switching between views
+
+---
+
+### 📢 **Publishing Channels, Regional Availability, and Media Links**
+
+Channel access, callback reliability, and media response handling received a focused quality pass.
+
+* **TikTok authorization reliability**: TikTok account connection and callback handling are now more stable, reducing setup friction during channel linking
+* **Douyin webhook support**: Douyin publishing events are handled more reliably, with better acknowledgement of non-publishing notifications
+* **Region-aware channel access**: available channel platforms now reflect app region more accurately, so users see options that better match their market
+* **Media link consistency**: returned file and asset links are built more consistently, improving previews and downstream usage
+* **Submission link updates**: task submission links can be updated more smoothly when creators need to correct or replace shared content
+
+---
+
+### 🎬 **AI Creation, Draft Planning, and Model Availability**
+
+AI-assisted creation workflows now provide broader options and cleaner output handling.
+
+* **New video creation option**: a new Seedance-based video channel has been added, expanding available AI generation choices
+* **Cleaner draft planning**: draft planning now avoids pulling in unnecessary video file parts, making planning results more focused and easier to use
+* **Image upload deduplication**: repeated AI image upload paths are handled more safely, reducing duplicate asset issues during creation
+* **Model availability guidance**: unsupported AI generation scenarios are now restricted more clearly, helping users avoid invalid creation attempts
+* **Channel labeling updates**: Seedance-related labels and availability messaging have been refined to better reflect current offering status
+
+---
+
+### 💼 **Finance, Withdrawals, Merchant Billing, and Ops Inbox**
+
+Finance-related views and merchant controls are now easier to follow across admin and storefront workflows.
+
+* **Withdrawal settlement visibility**: withdrawal-related admin views now surface associated settlement information more clearly for faster verification
+* **Merchant billing control**: merchants can now update their monthly billing cap more flexibly, with a clearer confirmation flow
+* **Ops ticket unread status**: operations tickets now show unread state, making pending follow-up easier to prioritize
+* **Task data consistency**: task optimization records are kept more consistent, improving trust in list results and operational summaries
+* **Workflow friction reduction**: several validation and transfer edge cases were relaxed or corrected to reduce unnecessary task-processing blockers
+
+---
+
+### 🐞 **Bug Fixes and Stability**
+
+* Fixed task material handling issues that could block valid task processing
+* Fixed settlement recovery errors in certain backfill scenarios
+* Fixed creator submission and review edge cases around rejected task records
+* Improved overall reliability of publishing callbacks, review data display, and task detail loading
+* Reduced duplicate or inconsistent records in AI asset, task optimization, and admin-side workflow handling
+
+</Update>
+
 # 🚀 AiToEarn v2.4.6
 
 ### 📋 **Task Settlement, Review, and Operations**
