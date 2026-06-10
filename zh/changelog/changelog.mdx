@@ -2,6 +2,65 @@
 title: "更新日志"
 description:
 ---
+<Update label="2026.6.10" description="2.0.12" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.12
+
+### 🔀 Pull Request 事件支持
+
+GitHub 服务新增对 Pull Request Webhook 的处理能力，支持基于合并事件的自动化流程。
+
+* **Pull Request 事件监听**：GitHub 服务新增 `pull_request` 事件的接收和识别，扩展 Webhook 的事件覆盖范围
+* **合并状态检测**：服务自动判断 PR 是否已合并（merged），仅在合并动作时触发后续发布逻辑
+* **主分支保护**：仅针对合入目标分支为主分支的 PR 进行后续处理，避免误触发
+* **自动发布衔接**：合并事件成功识别后，无缝接入已有的文档站自动构建与发布管线
+
+---
+
+### 📦 Webhook 数据结构扩展
+
+为承载 Pull Request 事件携带的丰富信息，新增专用接口并扩展返回结果。
+
+* **专用载荷接口**：定义 `GithubPullRequestWebhookPayload` 接口，覆盖 PR 操作、仓库、合并 SHA 等核心字段
+* **分支信息提取**：通过 payload 提取 base 和 head 分支的 ref、sha 信息，用于分支判断与发布上下文
+* **仓库归属确认**：支持从 PR payload 中获取 base repo 的 full_name，适配跨仓库合并场景
+* **结果对象增强**：`GithubWebhookResult` 新增 `sourceBranch` 字段，用于记录触发事件的源分支，便于日志追溯
+
+---
+
+### 🧩 服务层逻辑升级
+
+服务内部处理逻辑重构，将 PR 事件与已有的 push 事件路径有机结合。
+
+* **事件分支处理**：根据 Webhook 类型分为 push 和 pull_request 两条独立处理路径，职责清晰
+* **SHA 提取策略**：PR 合并时优先使用 merge_commit_sha，fallback 到 head.sha，确保获取准确的代码版本
+* **发布上下文构建**：统一将 PR 事件信息包装为 `GithubReleaseNotesContext`，复用已有的发布版本记录生成逻辑
+* **向后兼容**：push 事件的原有处理逻辑保持不变，不影响现有手动推送或定时触发流程
+
+---
+
+### 📝 日志与可观测性增强
+
+新增 Payload 打印和结果信息扩展，提升发布流程的调试和监控能力。
+
+* **Webhook 载荷日志**：在处理前将 PR payload 完整打印（去除敏感字段），方便问题排查与事件复盘
+* **结果状态完善**：返回的 `GithubWebhookResult` 显式标识 action 为 `processed`，同时包含 repo、branch、sourceBranch 等上下文
+* **无副作用调用**：对无法处理的 PR 操作（非合并、非目标分支）返回 `ignored` 状态，保持服务幂等
+* **监控指标预留**：新增处理路径为后续接入统计埋点和告警规则做好铺垫
+
+---
+
+### 🧪 内部流程验证与稳定性
+
+此次变更通过内部模拟和已有管线验证，确保 PR 自动发布在生产环境可靠运行。
+
+* **本地模拟验证**：通过管理端模拟工具发送 PR Webhook，验证合并事件识别与发布触发链路的正确性
+* **依赖注入稳定**：GitHub 服务模块未引入新的外部依赖，降低对现有 NestJS 模块图的冲击
+* **错误处理健壮**：PR 事件解析失败或字段缺失时，服务返回 safe fallback，避免阻断其他 Webhook 响应
+* **文档站同步触发**：合并后文档站 changelog 自动生成本次升级日志，形成元更新闭环
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.11" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.11
