@@ -2,6 +2,65 @@
 title: "更新日志"
 description:
 ---
+<Update label="2026.6.10" description="2.0.11" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.11
+
+### 🛒 Shopify 平台费用月度封顶
+
+本次更新为 Shopify 商家的平台费用引入了灵活的月度封顶功能，使商家能根据预算调整 Usage Billing 的上限。
+
+* **月度封顶金额更新**：新增 Billing 月度封顶的调整能力，支持在后台修改 Shopify Usage Billing 的 capped amount
+* **商家自助控制**：商家可通过接口设定月度费用上限，超出部分将不再计费，实现成本管理
+* **Shopify 侧确认生效**：更新请求将向 Shopify 发起变更，商家需在 Shopify 后台确认后新封顶方可生效
+* **费用管理闭环**：结合已有订阅和确认流程，形成创建、封顶调整、确认三步走的完整费用管控链路
+
+---
+
+### 📊 数据模型与校验定义
+
+为保障封顶数据的准确性和安全性，平台费用模块新增了对应的 DTO 和校验规则。
+
+* **UpdateBillingCapDto 复用结构**：新建 DTO 复用已有创建订阅的数据结构，保持接口输入格式统一
+* **Zod 模式校验**：使用 Zod 对金额输入进行严格校验，确保传入的封顶金额格式和数值合法
+* **DTO 自动生成**：通过 createZodDto 生成 NestJS DTO 类，自动继承校验规则并减少样板代码
+* **模块内一致性**：将 UpdateBillingCapDto 与已有 DTO 共存于 dto 文件，增强模块内聚性
+
+---
+
+### 🧩 服务层实现与 Shopify GraphQL 集成
+
+服务层新增 updateBillingCap 方法，直接调用 Shopify Admin API 实现封顶金额变体。
+
+* **独立服务方法**：platform-fee.service 新增 updateBillingCap，专门负责月度封顶更新逻辑
+* **Shopify GraphQL 调用**：使用 AppSubscriptionLineItemUpdate 变异，精确修改订阅项的 cappedAmount 字段
+* **完整响应处理**：方法返回更新后的订阅信息及 confirmationUrl，同时处理 userErrors 确保异常反馈清晰
+* **复用现有基础设施**：基于已有的 Shopify GraphQL 客户端和认证机制，无缝接入平台费用模块
+
+---
+
+### 🎛️ 控制器端点与 API 文档
+
+新增 POST /platform-fee/cap 端点，为前端和管理后台提供标准的封顶更新入口。
+
+* **新增封顶更新端点**：控制器新增 `/cap` 路由，接收 UpdateBillingCapDto 并调用服务完成封顶修改
+* **身份认证绑定**：通过 @GetToken 装饰器获取当前商家的 Token，确保只有认证用户可操作
+* **响应体标准化**：端点返回 BillingSubscriptionVo 对象，统一展示最新订阅状态和待确认链接
+* **OpenAPI 文档同步**：使用 @ApiDoc 添加 summary、description 和 body/response schema，自动生成 Swagger 文档
+
+---
+
+### 📝 接口描述与对接指引
+
+端点的接口文档补充了关键描述，方便前后端协作和后续集成。
+
+* **清晰的接口说明**：summary 标注“更新 Billing 月度封顶”，直接体现端点核心功能
+* **重要流程提示**：description 注明“商家需在 Shopify 确认后生效”，避免前端忽略确认步骤
+* **输入输出规范**：接口文档明确请求体与响应体的 Schema 结构，降低集成错误
+* **与已有文档一致**：延续 platform-fee 模块的文档风格，保持开发者查阅体验统一
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.10" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.10
