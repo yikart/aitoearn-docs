@@ -2,6 +2,59 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="2.0.17" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.17
+
+### 🛍️ **Shopify CPS Task Support**
+
+A new generation of Shopify tasks now ties creator earnings directly to sales performance, moving beyond simple fixed‑fee models.
+
+* **Sales‑based KPI tracking**: creators can now see real‑time progress toward sales targets for Shopify campaigns, unlocking performance‑based rewards.
+* **Automated reward calculation**: when a Shopify order attributed to a creator is confirmed, the system automatically computes and holds the corresponding commission.
+* **Transparent deposit flow**: pending Shopify rewards are clearly displayed in the creator’s balance, with a dedicated status until the settlement window closes.
+* **Unified task dashboard**: Shopify CPS tasks appear seamlessly alongside existing task types in the creator’s task list, with consistent filtering and sorting.
+* **No extra setup required**: creators with existing Shopify task permissions automatically gain access to CPS campaigns as soon as they become available.
+
+---
+
+### 🧪 **Sample Approval Lifecycle for Shopify**
+
+The sample request process for Shopify products is now fully automated, reducing wait times and manual intervention.
+
+* **Instant full‑refund processing**: once a Shopify sample request is approved, the system immediately triggers a full refund of any temporary hold, without creator action.
+* **Seamless integration with existing sample rules**: the new flow respects all existing sample eligibility and approval logic, requiring no changes from creators.
+* **Clear status updates**: the sample application status transitions are instantly reflected in the app, removing confusion about whether a refund is on the way.
+* **Consistent experience across platforms**: Shopify sample handling now matches the responsive refund experience already available for other integrated shops.
+* **Back‑office orchestration**: approval decisions from campaign managers take effect within seconds, eliminating the previous delay between approval and fund release.
+
+---
+
+### 🔍 **Shopify Task Discovery & Filtering**
+
+Finding and evaluating Shopify campaigns is now more intuitive, with purpose‑built search and sorting options.
+
+* **Dedicated keyword search**: creators can now search Shopify tasks by product name or campaign title directly from the task marketplace.
+* **Advanced status filters**: the task list supports filtering by publication status, release date, and popularity, making it easier to find active Shopify opportunities.
+* **Consistent sorting controls**: Shopify tasks respect the same sort orders as other task types, providing a unified browsing experience.
+* **Optimised list performance**: even with a growing inventory of Shopify campaigns, the task list loads quickly thanks to targeted query improvements.
+* **Contextual task metrics**: each Shopify task card now shows relevant key metrics such as remaining sample slots or recent conversion data where applicable.
+
+---
+
+### ⚙️ **System Responsiveness & Maintainability**
+
+Under‑the‑hood improvements make the entire task management backbone faster and easier to evolve.
+
+* **Streamlined task query engine**: Shopify‑specific query logic has been modularised, reducing load on the general task listing service and improving response times.
+* **Scheduler simplification**: repetitive background checks for KPI settlements have been consolidated, leading to more predictable resource usage and fewer unnecessary wake‑ups.
+* **Cleaner codebase boundaries**: new Shopify capabilities are isolated in dedicated modules, which means future Shopify feature additions can be developed and tested with minimal risk to other parts of the system.
+* **Faster payout processing**: the redesigned reward calculation pipeline handles high volumes of Shopify order events more efficiently, ensuring that creator balances are updated without lag.
+* **Proactive error isolation**: any intermittent issues with a Shopify integration will only affect that specific task type, protecting the stability of all other ongoing campaigns.
+* **Reduced maintenance overhead**: the team can now ship Shopify enhancements in smaller, safer increments thanks to the modular design, ultimately bringing new features to creators sooner.
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.16" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.16
