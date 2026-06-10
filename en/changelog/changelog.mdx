@@ -3,6 +3,70 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.10" description="2.4.9" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.9
+
+### 🔗 **Connected Account Status and Sync Improvements**
+
+This update improves how connected channel accounts are detected, refreshed, and reflected inside publishing flows.
+
+* **More reliable account status sync**: connected publishing accounts now refresh more consistently, helping online and offline states stay closer to what users actually see in their channel tools
+* **Better loading behavior**: account lists can appear more smoothly while background status checks continue, reducing the feeling that publishing setup is stuck waiting
+* **Clearer readiness display**: account availability now updates more accurately after status information returns, making it easier to understand which accounts are ready to use
+* **Safer status merging**: account information from different sources is combined more consistently, reducing mismatches between saved account data and current connection state
+* **Improved account visibility after refresh**: reopening publishing-related views is now more likely to reflect the latest account condition without extra user effort
+
+---
+
+### 📝 **Publish Dialog Selection and Defaulting**
+
+Publishing setup now behaves more predictably when choosing accounts and preparing content for release.
+
+* **Smarter default account selection**: default publishing accounts are now applied more carefully, helping users land on the expected choices without unwanted overrides
+* **Better empty-state handling**: when no valid account has been selected yet, the dialog is more likely to choose usable defaults instead of leaving the flow incomplete
+* **More stable selection recovery**: account choices are preserved and refreshed more smoothly when the publishing dialog is reopened
+* **Reduced accidental reselection**: once defaults have been applied, the dialog is less likely to repeatedly reset the user’s current account choices
+* **Cleaner multi-account startup**: multi-account publishing opens with a more dependable initial state, especially when account availability changes in the background
+
+---
+
+### ✅ **Publishing Input Checks and Editing Experience**
+
+This release also tightens the publishing form experience so validation and content editing feel more coherent.
+
+* **More dependable publish checks**: validation before publishing now reflects the latest editing state more accurately, helping prevent confusion between visible content and submission readiness
+* **Clearer error focus**: when something needs attention before publishing, the dialog is better at guiding users toward the affected account or input section
+* **Smoother text-and-media editing**: shared publish parameter areas now update more reliably while users adjust content, media, and ordering
+* **Better consistency across desktop and mobile publish views**: shared publishing inputs now behave more uniformly across different screen sizes
+* **Reduced friction before submission**: edge cases that could interrupt a valid publish attempt have been softened to make final confirmation feel more stable
+
+---
+
+### 📱 **Promo Page Mobile Layout Refinements**
+
+The promotional landing experience received a focused pass for smaller screens and mobile browsers.
+
+* **Improved mobile hero spacing**: key promo panels now sit in a more comfortable vertical position on mobile devices, reducing cramped first-screen layouts
+* **Better viewport adaptation**: the promo page responds more smoothly to changing mobile browser heights, helping content remain easier to view as the screen shifts
+* **More balanced panel height behavior**: selection areas and hero content now scale more naturally across a wider range of phone sizes
+* **Safer bottom-area spacing**: mobile layouts now leave space more consistently around browser UI and lower screen insets, helping interactive content stay accessible
+* **Stronger visual continuity**: promo sections feel more stable while scrolling and resizing, improving the overall polish of the mobile acquisition flow
+
+---
+
+### 🌐 **Public Page Experience and Release Notice Handling**
+
+A few surrounding experience updates help keep public-facing pages cleaner and less disruptive.
+
+* **Release popups are less intrusive on public pages**: visitors browsing promotional or public-entry pages are less likely to be interrupted by in-app release messaging
+* **Cleaner first-visit journeys**: public landing flows now stay more focused on onboarding and conversion instead of unrelated account notices
+* **Better context-aware messaging**: release announcements now appear in places that feel more relevant to signed-in product usage
+* **Improved browsing continuity**: switching into public campaign pages is less likely to trigger unrelated modal interruptions
+* **General experience polish**: several small interaction and display improvements were bundled in to make publishing, account setup, and mobile browsing feel steadier overall
+
+</Update>
+
 <Update label="2026.6.10" description="2.4.7" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.7
