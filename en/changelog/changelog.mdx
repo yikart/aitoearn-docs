@@ -2,6 +2,54 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="2.0.4" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.4
+
+### 🔒 **Content Safety Enhancement**
+
+The content safety review pipeline now handles image assets more securely and correctly, ensuring that protected materials pass through moderation without breaking.
+
+* **Presigned image URL resolution**: image URLs are now converted to presigned storage URLs before they are submitted to the Ali Green review service, guaranteeing that protected media can always be accessed by the safety engine
+* **Accurate material delivery**: the fix resolves a class of image link processing errors that previously caused review failures or timeouts when the original asset was stored behind access controls
+* **Stable review outcomes**: by feeding consistently reachable URLs into the moderation API, the service produces more reliable safety verdicts for user-submitted images
+* **Backward-compatible change**: existing callers of the internal `imgGreen` method benefit from the improvement without any change to their integration contracts
+
+---
+
+### 🔗 **Asset Storage Integration**
+
+The internal content safety service now collaborates with the asset storage layer through a clean dependency injection point, decoupling image access from the moderation logic.
+
+* **New `AssetsService` dependency**: the `ContentSafetyInternalService` constructor explicitly receives the assets service, making the collaboration obvious and testable
+* **Presigned URL conversion**: the service delegates to `AssetsService.toPresignedUrl()` to transform a raw storage path into a time-limited, signed URL suitable for third-party moderation
+* **Separation of concerns**: path handling and signature generation remain the responsibility of the dedicated assets module, keeping the safety service focused solely on audit orchestration
+* **Zero configuration migration**: the integration reuses the existing assets infrastructure, so no new environment variables or storage configuration blocks are required for the update
+
+---
+
+### 🧪 **Testing & Quality Assurance**
+
+A dedicated unit test suite for the content safety service has been introduced, capturing the new presigned URL behaviour and guarding against future regressions.
+
+* **Comprehensive `content-safety.service.spec.ts`**: a new test file adds 90 lines of test coverage for the internal service, marking the first unit-level validation of this critical pathway
+* **Mocked assets service**: the test setup provides a lightweight double of `AssetsService` that generates predictable `storage-sign.example.test` URLs, ensuring repeatable assertions
+* **End-to-end moderation stub**: the test also stubs the `AliGreenApiService` methods, allowing the full `imgGreen` flow (presign → submit → interpret result) to be verified in isolation
+* **Regression safeguard**: any future alteration to the image review pipeline will be caught by these tests, protecting the production moderation integrity
+
+---
+
+### 🛠 **Developer Experience & Local Testing**
+
+Developers can now exercise the content safety logic entirely within their local environment, without depending on live cloud storage or real Ali Green endpoints.
+
+* **Simulated presigning**: the test suite demonstrates how to simulate the signed‑URL transformation, enabling developers to debug review flows using local asset references
+* **Isolated service construction**: the test helper `createService()` makes it trivial to instantiate `ContentSafetyInternalService` with controlled dependencies, lowering the barrier for adding new test cases
+* **Clear mock boundaries**: all external calls are explicitly mocked, giving developers a transparent view of the service’s interaction surface during test runs
+* **Fast feedback loop**: running the new spec provides immediate feedback on any behavioural change, accelerating iteration on the internal safety implementation
+
+</Update>
+
 <Update label="2026.6.10" description="1.0.1-mock" tags={["Web"]}>
 
 # 🚀 AiToEarn 1.0.1-mock
