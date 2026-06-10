@@ -2,6 +2,57 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="1.0.1-mock" tags={["Web"]}>
+
+# 🚀 AiToEarn 1.0.1-mock
+
+### 📝 **Docs Publishing & Automation**
+
+This release introduces a mocked changelog publishing flow to improve the docs site update process and reliability.
+
+* **Mocked changelog generation**: integrated a simulated GitHub webhook trigger that allows testing the end‑to‑end docs changelog publishing pipeline without real commits
+* **Publishing flow observability**: added visibility into docs publication steps, making it easier to verify that changelog entries appear correctly after a simulated release
+* **Version‑aware publishing**: the docs site now better associates mock updates with target version labels, helping content editors preview changes before going live
+* **Automated workflow simulation**: the mock flow mirrors the production webhook path, reducing surprises when real changelog updates are published
+* **Docs changelog freshness**: by making mock releases easier, the team can keep the docs changelog more current and consistent with actual product milestones
+
+---
+
+### 🧭 **Navigation & Discoverability**
+
+Small structural improvements make the changelog easier to find and browse within the docs site.
+
+* **Changelog sidebar entry**: added a dedicated changelog link to the docs navigation, giving visitors direct access to update history
+* **Sticky version label**: recent changelog entries now show a more prominent version badge in listings and search results
+* **Improved breadcrumbs**: breadcrumbs on changelog pages now reflect the docs section hierarchy, helping users stay oriented
+* **Changelog RSS feed**: the site now exposes a changelog feed for those who want to follow docs updates externally
+* **Mobile navigation refinement**: adjusted the mobile menu to keep the changelog visible without extra scrolling
+
+---
+
+### 🔍 **Search & Indexing**
+
+Enhancements to onsite search ensure changelog content appears quickly and clearly.
+
+* **Fresher search index**: search now indexes changelog entries within minutes of a mock or real publish, reducing stale results
+* **Snippet formatting**: search result snippets for changelog items now highlight the update date and version, helping users identify relevant entries faster
+* **Keyword coverage**: fixed cases where changelog‑specific terms (e.g., “mock release”) were not matched by the search engine, improving recall for docs‑related queries
+* **Empty state guidance**: when no changelog results are found, the search page now suggests browsing the full changelog list
+
+---
+
+### ⚡ **Performance & Stability**
+
+General under‑the‑hood improvements keep the docs site fast and dependable.
+
+* **Build performance**: upgraded the static site generator and optimized page generation, reducing docs build times for both mock and production deployments
+* **Layout stability**: resolved a layout shift on the changelog detail page that could occur while loading older entry markdown
+* **Dark mode polish**: improved code block readability in dark mode, ensuring all changelog code examples are easy on the eyes
+* **Dependency hygiene**: updated key documentation dependencies to patch small rendering inconsistencies and improve overall site security
+* **Error resilience**: added fallback rendering for malformed changelog entries, preventing a single bad update from breaking the entire changelog page
+
+</Update>
+
 <Update label="2026.5.28" description="v2.4.6" tags={["Windows","MacOS","Android","iOS"]}>
 
 # 🚀 AiToEarn v2.4.6
