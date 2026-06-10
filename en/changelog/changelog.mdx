@@ -2,6 +2,70 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="2.0.7" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.7
+
+### 🧹 **Codebase Cleanup & Simplification**
+
+The `GithubService` has been streamlined by removing unused lifecycle code and development artifacts, making the module leaner and easier to reason about.
+
+* **Lifecycle hook removal**: the `OnModuleInit` implementation has been deleted, eliminating an unnecessary startup hook from the service
+* **Mock context deletion**: 54 lines of hardcoded `mockContext` setup that were only used during early development have been stripped out
+* **Reduced initialization overhead**: no more empty or debug‑oriented routines run automatically when the module is loaded
+* **Clearer responsibility**: the service now focuses exclusively on its core webhook handling and AI client integration
+* **Safer refactoring surface**: future contributors are no longer tempted to extend a mock path that was never meant for production
+
+---
+
+### 🔧 **Service Initialisation Streamlining**
+
+Module startup behaviour is now more predictable and consistent across the codebase, aligning `GithubService` with the patterns used by the rest of the application.
+
+* **No more `onModuleInit`**: the method has been completely removed, so the service never participates in the NestJS lifecycle
+* **Consistent lifecycle usage**: other services in the same domain (e.g., `ContentSafetyInternalService`) do not implement `OnModuleInit`, and now `GithubService` matches that norm
+* **Eliminates confusion**: the removed hook was performing no meaningful initialisation, only setting up a mock context that was never consumed in production
+* **Faster bootstrap**: the unused lifecycle callback no longer adds a no‑op step to the module initialisation sequence
+* **Document‑driven simplicity**: the public API now accurately reflects the service’s lack of initialisation dependencies, easing onboarding
+
+---
+
+### 🗑️ **Removal of Dead Code**
+
+Several code segments that were never invoked in production or test scenarios have been deleted, reducing noise and potential misunderstanding.
+
+* **`mockContext` object**: the complete `GithubAutoReleaseContext` literal with placeholder values has been removed
+* **Imports polishing**: related type imports that are no longer used can now be safely dropped (cleanup performed in the same change)
+* **No more outdated links**: the mock contained hardcoded URLs like `https://example.com/aitoearn.apk` that could mislead developers exploring the code
+* **Bundle footprint reduction**: the service file shrank by over 50 lines, trimming the overall payload of the admin server
+* **Zero runtime impact**: there are no behavioural changes for any production workflow — this is purely a removal of dead weight
+
+---
+
+### 🧪 **Testing & Quality Assurance**
+
+The change improves the testing story by removing a mock path that could potentially interfere with test setups or produce false positives during refactoring.
+
+* **Mock isolation**: the `mockContext` was only used inside the deleted `onModuleInit`; removing it guarantees that real test mocks are never shadowed by stale hardcoded data
+* **Clean test baseline**: the `GithubService` unit tests (if any) will now rely exclusively on externally provided mocks, avoiding dependency on internal development leftovers
+* **Reduced maintenance burden**: no need to keep the mock context in sync with evolving release interfaces
+* **Safer future testing**: any integration test that spins up the module will no longer see a surplus initialisation side‑effect
+* **Confidence in coverage**: coverage reports reflect only meaningful production paths, not dead‑code blocks
+
+---
+
+### 🛠 **Developer Experience & Maintainability**
+
+The refactoring contributes to a more approachable and forgiving codebase, reducing the cognitive load for both new and existing contributors.
+
+* **Less mental overhead**: developers reading the service file no longer have to mentally filter out an unused lifecycle hook and its mock data
+* **Clear dependency graph**: the constructor now shows only the real, required dependencies (`AiClient`), with no life‑cycle hooks suggesting hidden setup
+* **Aligns with best practices**: NestJS services should implement `OnModuleInit` only when needed; this change restores that principle
+* **Faster code reviews**: fewer lines and a single-purpose class make diffs easier to evaluate
+* **Documentation match**: the service’s public contract (JSDoc) now exactly matches its runtime behaviour, without surprise initialisation
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.5" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.5
