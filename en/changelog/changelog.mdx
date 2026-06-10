@@ -2,6 +2,56 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.10" description="2.0.5" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.5
+
+### 🧹 **Import & Re‑export Ordering Refinement**
+
+The codebase now follows a stricter, more predictable ordering convention for barrel exports and internal imports, improving navigation and reducing accidental cyclic dependencies.
+
+* **Export grouping by domain**: shared module public APIs place content‑safety concerns before general content abstractions, putting security‑critical surfaces first
+* **Decorator import repositioning**: event‑stream metadata is now imported after the foundational enumeration module, clarifying the dependency layering within the Redis package
+* **Interface precedence in barrel files**: the event‑payload interface is now exported before decorators and services, ensuring type contracts are available first for consumption
+* **Consistent import block separation**: non‑relative imports remain strictly separated from project‑internal imports, making the distinction between external and internal dependencies immediately visible
+* **Merge‑conflict resilience**: standardized ordering reduces trivial textual conflicts when multiple contributors touch the same barrel file
+
+---
+
+### 🧪 **Test Specification Language Alignment**
+
+Unit test descriptions for the event‑stream infrastructure now use a uniform naming convention that mirrors the JavaScript function casing used throughout the testing suite.
+
+* **Describe block renaming**: the top‑level `describe` block for `EventStreamExplorer` has been renamed to `eventStreamExplorer`, matching the actual class name casing
+* **Nested suite alignment**: the secondary `describe` targeting topic filtering now reads `eventStreamService topic filtering`, consistently adopting camelCase
+* **Discoverability in test runners**: uniform naming ensures that test reporters and IDE tooling highlight related suites under the same logical prefix
+* **No behavioural impact**: these changes are purely cosmetic and do not alter test logic, assertions, or coverage outcomes
+
+---
+
+### 📦 **Public API Surface Reordering**
+
+The outward‑facing module surface for both the server client and the Redis library has been reorganized, making the dependency graph easier to scan and verify.
+
+* **Client service exports**: the content safety client is now listed directly before the generic content client, emphasizing the review pathway as a first‑class concern
+* **Interface exports mirrored**: the corresponding interface barrel follows the same service order, so a developer scanning the interface file can instantly find the matching type
+* **Core Redis surface**: lightweight interfaces (event payload contracts) are positioned ahead of heavier implementation modules, giving consumers a clear type‑first view of the `@aitoearn/redis` package
+* **Gradual adoption**: the new order does not break any existing import paths, allowing teams to adopt the updated surface at their own pace
+
+---
+
+### 🛠 **Developer Experience & Codebase Navigability**
+
+Small structural improvements across multiple packages make it faster for contributors to locate definitions, understand import graphs, and onboard into the event‑stream subsystem.
+
+* **Predictable barrel traversal**: when a developer needs a server‑client service, the exports now follow a logical “safety‑first” order that mirrors the domain’s runtime importance
+* **Type‑first package entry**: the Redis library exposes typed payload contracts before any runtime decorators, guiding integrators toward the contract layer before implementation
+* **Linter‑friendly baseline**: the reordered imports and exports align with the project’s existing eslint and prettier rules, removing entire categories of auto‑fix diffs
+* **Lower cognitive overhead**: consistent ordering conventions reduce the mental effort required to judge whether an import belongs to one logical group or another
+* **Documentation mirroring**: the public API surface now more accurately reflects the narrative emphasis found in the developer guides and changelog entries
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.4" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.4
