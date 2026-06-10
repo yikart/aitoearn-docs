@@ -2,6 +2,22 @@
 title: "更新日志"
 description:
 ---
+<Update label="2026.6.10" description="2.0.5" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.5
+
+### 🛠️ 内部优化与代码规范
+
+本次版本主要针对服务端客户端库和 Redis 事件流模块进行导入顺序规范与测试描述一致性调整，提升代码可维护性。
+
+* **服务客户端导出排序调整**：统一 `aitoearn-server-client` 中各类服务与接口的导出顺序，使 `content-safety` 模块先于 `content` 模块导出
+* **事件流模块导入规范**：调整 Redis 事件流资源管理器内部依赖的导入顺序，将装饰器元数据常量后移，符合同类型导入分组惯例
+* **测试套件命名统一**：将 `EventStreamExplorer` 和 `EventStreamService` 测试用例的 `describe` 名称统一为驼峰形式，保持与其它模块测试描述风格一致
+* **接口导出顺序梳理**：同步调整 `aitoearn-server-client` 的接口导出索引，确保与客户端服务导出保持相同的排列规则
+* **代码可读性提升**：通过系列非功能性的顺序调整，降低后续代码审查和自动合并时的潜在冲突风险
+
+</Update>
+
 <Update label="2026.6.10" description="2.0.4" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.4
