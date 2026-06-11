@@ -2,6 +2,22 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.11" description="2.0.25" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.25
+
+### 🔒 Consistent Material Ownership Filtering
+
+The material list now reliably respects ownership, ensuring that you only see your own uploaded materials regardless of any group filters applied.
+
+* **Always-on user filter**: the system now always applies your user identity to material queries, preventing scenarios where a group-based search could inadvertently surface materials from other creators.
+* **No more mixed results**: even when browsing within a specific material group, the results are strictly limited to your own contributions, eliminating any silent cross-user leakage.
+* **Simplified, predictable behavior**: the query logic has been streamlined, removing conditional branches that could lead to inconsistent outcomes depending on the request parameters.
+* **Seamless and transparent**: existing browsing workflows remain unchanged in appearance and performance—the fix operates entirely behind the scenes.
+* **Supports a safer collaboration environment**: by tightening the default ownership boundary, the platform reinforces data isolation for all users, aligning with privacy expectations.
+
+</Update>
+
 <Update label="2026.6.11" description="2.0.23" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.23
