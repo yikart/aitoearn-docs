@@ -2,6 +2,22 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.11" description="2.0.23" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.23
+
+### 🔒 Material Group Access Control
+
+Creating material now enforces that the selected material group truly belongs to you, blocking any attempt to use another user's group by mistake or on purpose.
+
+* **Ownership verification on material creation**: before processing a new material upload, the system checks that the provided group ID is owned by the current user and rejects the request immediately if it is not.
+* **Uniform "not found" response**: unauthorized attempts to access a group that exists but is owned by someone else now return the same "group not found" error, without revealing any group details.
+* **Early denial, no wasted work**: the ownership check happens before any material processing begins, so no partial state or file operations occur under an incorrect group.
+* **Aligns with account safety norms**: this guard brings material groups in line with the ownership checks already enforced for other user-owned platform resources.
+* **Invisible for legitimate use**: users working inside their own groups see no change in behaviour or performance—the validation is seamless and automatic.
+
+</Update>
+
 <Update label="2026.6.11" description="2.0.21" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.21
