@@ -3,6 +3,55 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.11" description="2.4.15" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.15
+
+### 🧾 **Work Status Detection Accuracy**
+
+* **More reliable task work checks**: creator task submissions now reflect work-status checks more accurately, reducing cases where follow-up handling could rely on incomplete results
+* **Clearer status distinction**: the system now better separates “not yet checked” from “checked but still unclear,” helping task progress feel more consistent in edge cases
+* **Stronger state continuity**: detected work results are now preserved more reliably so later steps can use the latest known outcome instead of behaving ambiguously
+* **Better review flow consistency**: users should see fewer confusing transitions when a task’s published work is being verified over time
+
+---
+
+### 🗑️ **Deleted Work Handling Improvements**
+
+* **Improved deleted-work recognition**: tasks tied to removed or unavailable published work are now identified more consistently during status checks
+* **More measured follow-up behavior**: when deleted work is detected, related task handling now gives users a better chance to recover from temporary issues before final outcomes are applied
+* **Reduced accidental escalations**: short-lived or uncertain deletion states are less likely to trigger immediate downstream consequences
+* **More predictable task outcomes**: creators and advertisers should see steadier behavior when published work is edited, removed, or temporarily inaccessible
+
+---
+
+### 🛍️ **Commerce Task Lifecycle Refinements**
+
+* **Smoother campaign task progression**: product-related collaboration tasks now move through approval and follow-up stages with better consistency
+* **Better sample-task coordination**: sample-based collaboration flows have been refined so related task outcomes feel more aligned across the creator journey
+* **Cleaner published-task views**: users managing their own campaign listings can expect more dependable task retrieval and status presentation
+* **More coherent performance tracking**: commerce-style collaboration tasks now benefit from improved handling around task-linked progress and settlement-related milestones
+
+---
+
+### 🛡️ **Review Feedback Clarity**
+
+* **Clearer safety rejection messages**: when submitted content does not pass review, feedback is now easier to understand at a glance
+* **Better content-type context**: rejection notices now more clearly indicate whether the issue relates to text, image, or video material
+* **Less vague review outcomes**: users receive more direct wording instead of overly generic failure messaging during content review
+* **Improved correction guidance**: clearer feedback makes it easier to identify what kind of content needs adjustment before trying again
+
+---
+
+### 👤 **Account Status and Experience Polish**
+
+* **More accurate account-state checks**: account-related actions now respond more appropriately when a profile is no longer in a normal usable state
+* **Reduced unexpected dead ends**: flows tied to sensitive account actions are less likely to proceed under invalid user conditions
+* **Better overall consistency**: account and task experiences now behave in a more aligned way when user status affects available actions
+* **General quality improvements**: this release also includes stability and experience polish to make everyday task handling feel more dependable
+
+</Update>
+
 <Update label="2026.6.11" description="2.4.13" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.13
