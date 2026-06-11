@@ -2,6 +2,47 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.11" description="2.0.19" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.19
+
+### 🔒 Account Security & Integrity
+
+A repaired guard now properly prevents deleted accounts from initiating sensitive operations, closing a small but important gap in the account lifecycle.
+
+- **Cancellation code blocked for deleted accounts**: previously a deleted account could still request an email verification code for cancellation; this pathway is now correctly closed.
+- **Consistent protection across account states**: the change aligns the cancellation code endpoint with the way the platform already handles disabled accounts, ensuring uniform security.
+- **No residual access**: even if a deleted account retained an active session, the sensitive cancellation code endpoint is now securely gated.
+- **Immediate and transparent**: the correction is live without any user-facing configuration; all future cancellation requests are automatically protected.
+- **Stronger trust in account management**: users can be confident that deleting an account fully disables all sensitive account-level actions.
+
+---
+
+### 🛡️ Content Integrity on Task Submissions
+
+When a creator’s submitted work is detected as deleted, the platform now offers a reasonable window to remedy the situation before automatic penalties are applied.
+
+- **Grace period for deleted work**: if a work status is already flagged as deleted, the system now waits for a defined period before triggering refunds and reputation deductions, giving creators time to update their content links.
+- **Less surprise, more control**: creators can see that the work is marked as deleted and can take corrective action on their own, reducing unexpected account penalties.
+- **Automatic enforcement after timeout**: once the grace interval lapses and the content remains unavailable, the standard deleted-work consequences are applied consistently.
+- **Clear status visibility**: the pending deletion handling is reflected in the task status, so creators always know whether they still have time to act.
+- **Aligned with fair-use principles**: this change balances platform integrity with a fair chance for genuine mistakes to be corrected.
+
+---
+
+### 🧠 Review Accuracy & Transparency
+
+Review logic now stores and distinguishes work status results with higher precision, preventing ambiguous states from triggering incorrect decisions.
+
+- **Undetected versus unknown separated**: work that has never undergone status checking is now clearly recorded as “pending review” instead of being confused with an “unavailable” state.
+- **Stored detection results**: once a work status check is performed, its outcome is saved directly on the task, allowing all downstream processes to consult a consistent record.
+- **Elimination of false negatives**: by differentiating “not yet checked” from “unknown,” the system avoids mistakenly penalizing works that are simply awaiting their first inspection.
+- **More trustworthy decision pipeline**: payment and integrity systems now can rely on the stored status, minimizing inconsistent handling across different stages.
+- **Faster dispute resolution**: support teams have a clear, timestamped record of exactly when and how a work’s status was evaluated, enabling quicker investigations.
+- **No impact on existing tasks**: previously submitted tasks keep their original review outcomes; only future checks benefit from the improved storage and distinction.
+
+</Update>
+
 <Update label="2026.6.11" description="2.0.18" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.18
