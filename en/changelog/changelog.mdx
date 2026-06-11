@@ -2,6 +2,55 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.11" description="2.0.27" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.27
+
+### 📋 Smarter Task Review for Unavailable Content
+
+The task review system now better recognizes when a submitted work has become inaccessible, ensuring fairer handling and fewer unexpected penalties.
+
+* **Expanded detection scope**: the review logic now catches additional unavailability scenarios beyond simple deletion, including content removed by source platforms or privacy restrictions.
+* **Immediate pending transition**: when a work is found to be unavailable, the submission is placed into a dedicated pending state rather than triggering an instant penalty.
+* **Grace period before enforcement**: creators receive a clear time window to update the content link or republish the work before any automatic deductions occur.
+* **Consistent post‑grace handling**: once the grace interval elapses without a fix, the standard refund and reputation consequences are applied, just as with previously handled deletions.
+* **No workflow disruption**: the change operates silently in the background, requiring no new actions during normal task management.
+
+---
+
+### 🛡️ Fairer Penalty Management
+
+By distinguishing different causes of unavailability, the platform now avoids punishing creators for situations outside their direct control.
+
+* **External takedown awareness**: works blocked by third‑party platforms are treated more leniently than deliberate deletions by the creator.
+* **Opportunity to remedy**: the pending status empowers creators to restore eligibility and protect their earnings through a simple link correction.
+* **Reduced false penalties**: unexpected deductions caused by temporary network issues or platform‑side content scans are now minimised.
+* **Aligned with creator‑first principles**: this evolution reinforces a supportive ecosystem that acknowledges real‑world content challenges.
+
+---
+
+### 🔍 Transparent Submission Status
+
+Task details now display the exact review stage for unavailable content, keeping creators fully informed at every step.
+
+* **Live pending indicator**: submissions awaiting content restoration show a clear “pending content update” label directly on the task page.
+* **Visible grace countdown**: the remaining correction time is prominently displayed, encouraging swift action.
+* **Reset on successful update**: providing a valid, accessible link automatically clears the pending flag and restarts the review process.
+* **No more guesswork**: creators can immediately understand why a task hasn’t been approved or penalised, reducing support inquiries.
+
+---
+
+### 🚀 Seamless Correction Flow
+
+The updated workflow makes fixing unavailable content straightforward and integrated into the familiar task management experience.
+
+* **In‑place link editing**: when a pending status appears, the standard edit work interface allows immediate link modification without navigating elsewhere.
+* **Instant re‑evaluation**: after a correction, the system automatically rechecks content accessibility and updates the status in real time.
+* **Full history visibility**: repeated update attempts and status changes are logged, giving creators a clear record of their actions.
+* **Silent performance optimisation**: the enhanced review steps introduce no noticeable delay, keeping the overall task pipeline smooth and responsive.
+
+</Update>
+
 <Update label="2026.6.11" description="2.0.25" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.25
