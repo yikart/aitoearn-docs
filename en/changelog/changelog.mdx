@@ -2,6 +2,67 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.12" description="2.0.37" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.37
+
+### 🎬 Seedance Credits Now Fully Supported
+
+* **New dedicated credits scope introduced**: a separate Seedance credits category is now available, allowing you to manage and spend credits specifically designed for video generation and editing workflows.  
+* **Admin recharge tracking expanded**: the recharge overview and daily trends now include Seedance‑specific data, giving operators clear visibility into how many Seedance credits have been purchased over time.  
+* **Consistent credits record enrichment**: all credits transactions now carry a scope label, so Seedance spending is clearly distinguished from general credits in your transaction history.  
+* **Manual top‑up flexibility**: when administrators add credits to a user account manually, they can now assign the Seedance scope, ensuring the balance can be used for the intended video features.  
+* **Default scope preserves existing behavior**: if no scope is specified, credits continue to behave as general credits, meaning no disruption to your current campaigns or balance.
+
+---
+
+### ⚡ Smarter AI Error Handling
+
+* **Immediate feedback on wrong model selections**: if you request an AI generation using an invalid model, the system now responds instantly with a clear error instead of retrying in the background.  
+* **Insufficient credits caught immediately**: when your balance is too low to cover a generation, you now receive an error right away, avoiding unnecessary waiting that previously occurred due to retries.  
+* **No‑retry for user‑correctable issues**: only transient, network‑level problems still trigger automatic retries; configuration errors like unsupported image sizes are now treated as final, helping you act faster.  
+* **Reduced wasted processing time**: AI services no longer spend time re‑attempting requests that cannot succeed, which lowers overall queue pressure and keeps the platform more responsive for everyone.
+
+---
+
+### 🎥 Video Task Status Delivered Faster
+
+* **Instant return for already‑completed video edits**: when you check the status of a finished video editing task, the system now immediately shows the output video URL without re‑querying external services.  
+* **Failed tasks reported without delay**: if a video task has already ended with an error, the status check returns the failure message directly, saving you from waiting for a repeated probe.  
+* **Lower latency for power users**: frequent status checks, especially during automated workflows, benefit from the early‑exit logic, making batch monitoring significantly snappier.  
+* **No change to the accuracy of results**: the optimization only shortens the response path; task outcomes remain exactly as determined by the video processing pipeline.
+
+---
+
+### 🛡️ Task Publishing Flow Simplified
+
+* **Streamlined promotion task creation**: the content safety review step has been temporarily bypassed during the creation and update of promotion tasks, reducing friction when launching new campaigns.  
+* **Faster go‑to‑market for advertisers**: with the review step paused, checklist items for publishing a task are completed more quickly, enabling you to start attracting creators sooner.  
+* **No impact on other task types**: this adjustment applies only to promotion tasks; all other submission and cancellation workflows continue with their existing safety checks.  
+* **Preparatory step for future review enhancements**: the temporary bypass lays the groundwork for a more refined content moderation integration that will be reintroduced without slowing down task setup.
+
+---
+
+### 📊 Data Foundation for Future Analytics
+
+* **New dedicated statistics database connected**: the backend now uses a separate, purpose‑built database for aggregating platform metrics, isolating analytics workloads from real‑time task operations.  
+* **No interference with active tasks**: because the analytics layer operates independently, data collection and processing do not affect task acceptance, submission, or reward calculations.  
+* **Ready for richer insights**: this architectural change removes previous constraints on large‑scale data analysis, making it possible to introduce advanced creator dashboards and trend reports in upcoming releases.  
+* **Uniform data language across services**: the statistics database and core services now share a consistent schema, preventing mismatches when new visualizations or reports are launched.  
+* **Continuous health monitoring in place**: internal checks now cover the statistics connection status, enabling proactive issue detection before it could affect future analytics features.
+
+---
+
+### 🧹 Stability & Pricing Refinements
+
+* **Legacy index cleanup performed**: outdated database artifacts have been removed during application startup, preventing potential conflicts and ensuring smoother deployment cycles.  
+* **Image generation pricing updated**: the rate table for AI‑generated images has been refreshed to reflect current model costs, aligning the platform with the latest service pricing.  
+* **Extended scheduler protections**: new distributed locks for AI log timeout handling prevent duplicate processing, improving reliability under high‑load conditions.  
+* **Consistent dependency versioning**: internal packages are now pinned with explicit versions, reducing the risk of unexpected behavior during future upgrades.  
+* **Expanded test coverage**: integration and unit tests have been added for the new credits scope and retry logic, catching regressions early before they reach the live platform.
+
+</Update>
+
 <Update label="2026.6.12" description="2.0.36" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.36
