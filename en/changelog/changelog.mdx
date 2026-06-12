@@ -3,6 +3,55 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.12" description="2.4.27" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.27
+
+### 🔄 **User Task Cancellation Expanded**
+
+* **More task types can now be canceled after submission**: cancellation is no longer limited to a narrower set of monetization flows and now works for additional interactive task scenarios
+* **Submitted task recovery is more flexible**: eligible tasks that are still awaiting a final outcome can be returned to a resubmittable state instead of leaving users stuck
+* **Ownership checks are clearer during cancellation**: users should now see more reliable behavior when attempting to cancel only their own submitted tasks
+* **Re-submission flows feel more consistent**: once a supported submission is canceled, the task can move back into a state that better supports editing and trying again
+
+---
+
+### 🧭 **Task Status Handling Improvements**
+
+* **Status transitions are easier to understand**: task updates now reflect cancellation and reset-style actions more clearly in user-facing flows
+* **Audit history feels more coherent**: users should encounter clearer wording when a task status changes through moderation or recovery actions
+* **Submission lifecycle behavior is more predictable**: moving between pending, rejected, and resubmittable states now feels better aligned across supported task types
+* **Task records are less likely to feel contradictory**: state changes now better match what users actually did, reducing confusion after edits or cancellations
+
+---
+
+### 🛡️ **Content Safety Recovery Controls**
+
+* **Rejected tasks can now be restored after manual review**: administrators have a clearer path to bring back tasks that were blocked by automated safety checks when appropriate
+* **Manual handling is more transparent**: recovery actions now support clearer review context so moderation outcomes feel more accountable
+* **Task availability can be recovered faster**: valid tasks that were rejected in error are easier to return to circulation without unnecessary delay
+* **Creator and campaign disruption is reduced**: when moderation decisions are revised, affected tasks can resume in a more orderly way
+
+---
+
+### 📊 **Publishing Data Reliability Updates**
+
+* **Work analytics now prefer direct source results**: when supported publishing data is available from the primary source, the system is less likely to mix in less reliable fallback results
+* **Error handling is more deliberate**: failed analytics retrieval in certain scenarios now avoids misleading substitutions that could distort reporting
+* **Performance records should feel more trustworthy**: creators and operators can expect cleaner separation between unavailable data and actual measured results
+* **Statistics collection is more stable overall**: related reporting flows have been tightened to improve confidence in task-linked publishing insights
+
+---
+
+### ⚙️ **Operational Experience and Stability**
+
+* **Admin-side task actions are more complete**: moderation and task-management workflows now cover more real-world recovery and exception cases
+* **Cross-service task lookups are more practical**: task and submission relationships can now be resolved more directly in support and review scenarios
+* **Experience consistency has been improved across task flows**: cancellation, moderation recovery, and status updates now behave in a more unified way
+* **General stability refinements**: this release also includes background improvements aimed at making task operations and statistics handling more dependable
+
+</Update>
+
 <Update label="2026.6.11" description="2.4.25" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.25
