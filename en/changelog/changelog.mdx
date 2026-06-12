@@ -3,6 +3,55 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.12" description="2.4.39" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.39
+
+### 🎬 **Video Draft Generation Retries Are Handled More Reliably**
+
+* **Draft generation now follows video retry behavior more consistently**: when video creation needs another attempt, the draft flow is better aligned with that process instead of ending too early
+* **Longer-running video drafts are less likely to be interrupted prematurely**: users should see fewer cases where a task appears to stop even though the generation process still has a valid chance to complete
+* **Retry-based generation scenarios are now supported more cleanly**: draft creation behaves more predictably when video output requires additional recovery attempts
+* **Completion handling is now more dependable for video drafts**: successful results are less likely to be missed during extended generation cycles
+
+---
+
+### ⏳ **Task Waiting and Completion Behavior Feels More Natural**
+
+* **Video draft tasks now remain active for an appropriate amount of time**: the system better reflects the full generation window instead of treating slower progress as an early failure
+* **Premature timeout-style outcomes have been reduced**: users are less likely to encounter a draft task ending before the video process has fully played out
+* **Generation progress now better matches actual task state**: task tracking is more in sync with what is really happening behind the scenes during retries
+* **Extended processing scenarios feel more intentional**: when video creation takes longer, the experience is now steadier and easier to trust
+
+---
+
+### 🔁 **Retry Scenarios Now Produce Clearer Results**
+
+* **Repeated attempt flows are now better accounted for**: if a video draft needs more than one try, the result handling is more coherent from start to finish
+* **Success after retry is more likely to surface correctly**: users should see fewer cases where a recoverable generation path is treated like a final failed outcome
+* **Failure and ongoing-processing states are better separated**: the platform now does a better job distinguishing between “still trying” and “truly finished”
+* **Video draft outcomes feel less inconsistent overall**: retry-based creation paths now behave in a more unified way across the experience
+
+---
+
+### 📋 **Generation Status Feedback Is More Consistent**
+
+* **Draft status now better reflects real processing progress**: users get a steadier sense of whether a video draft is still being worked on or has genuinely finished
+* **Unexpected end states are less likely during active retries**: the interface is better aligned with video generation that is still continuing in the background
+* **Result timing now feels more coherent**: final updates are more likely to arrive when the generation cycle has actually completed
+* **Task follow-up is easier to interpret**: overall status behavior now feels more predictable during slower or retry-heavy video creation
+
+---
+
+### 🌐 **Overall Stability for Video Creation Has Improved**
+
+* **Video draft creation is now more resilient in edge cases**: this update focuses on smoother handling for generation paths that do not finish on the first try
+* **The draft workflow is less sensitive to temporary generation setbacks**: retry-capable tasks now move through the process with better continuity
+* **Background processing reliability has been strengthened**: users should experience fewer avoidable interruptions in video-related draft creation
+* **Daily creation experience feels steadier overall**: while the visible changes are subtle, video draft completion should now be more dependable in real usage
+
+</Update>
+
 <Update label="2026.6.12" description="2.4.37" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.37
