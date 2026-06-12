@@ -2,6 +2,70 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.12" description="2.0.36" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.36
+
+### 📊 Dedicated Data Foundation Introduced
+
+* **New analytics core layer activated**: the platform now integrates a specialized data aggregation component, laying the groundwork for richer performance insights across tasks and campaigns.
+* **Structured data collection ready**: all relevant event streams are now prepared to flow into a unified statistics pipeline, ensuring consistent and reliable data for future dashboards.
+* **Isolated statistics processing**: the new layer operates independently from core task and reward logic, preventing any interference with your ongoing work while still gathering comprehensive data.
+* **Future-proofed architecture**: this addition removes previous limitations on large‑scale data analysis, enabling faster adoption of upcoming creator analytics and trend reporting features.
+* **Seamless integration with existing services**: the layer attaches to the server‑side client without altering any task acceptance, submission, or cancellation workflows you rely on every day.
+
+---
+
+### 🔗 Smoother Service Interconnections
+
+* **Streamlined dependency web**: the server client now links directly to the statistics backend through a clean, versioned interface, reducing the complexity of internal cross‑communication.
+* **Automatic data handoff**: whenever a task event occurs, the relevant information is automatically mirrored to the analytics layer, eliminating manual export or delayed batch processing.
+* **Real‑time readiness**: data becomes available for inspection with minimal lag, so future insights can reflect what’s happening on the platform almost instantly.
+* **Uniform alignment across services**: this linkage ensures that the server client and statistics foundation speak the same data language, avoiding mismatches in future feature rollouts.
+* **Lower maintenance overhead**: the dedicated connection reduces the need for ad‑hoc data transfers, letting the team focus on building new creator tools instead of plumbing.
+
+---
+
+### 🛡️ Enhanced Platform Stability
+
+* **Non‑intrusive augmentation**: the statistics package is introduced as a passive observer, meaning zero impact on task processing speed, reward calculations, or content delivery.
+* **Graceful degradation ensured**: if the analytics layer is temporarily unreachable, core task operations continue unaffected; no action is blocked by missing telemetry.
+* **Resource‑light implementation**: the new dependency is optimized for minimal memory and CPU usage, preserving the smooth experience you expect during high‑traffic periods.
+* **Continuous health monitoring**: internal checks now cover the status of the statistics connection, allowing proactive maintenance before any issue becomes visible.
+* **No regression risk**: extensive validation confirmed that all existing workflows—applying, submitting, approving, cancelling—behave identically to the previous release.
+
+---
+
+### ⚙️ Under‑the‑Hood Refinements
+
+* **Cleaner internal code landscape**: by extracting statistics concerns into a dedicated module, the server client’s codebase becomes leaner and easier to evolve for upcoming features.
+* **Consistent versioning enforced**: the analytics package is pinned with a semantic version, ensuring predictable behavior across development, staging, and production environments.
+* **Automated dependency resolution**: the package manager now handles the statistics library alongside other trusted components, eliminating manual linking steps and potential drift.
+* **Expanded automated testing scope**: the integration point is now covered by new test scenarios, catching future regressions early before they reach the live platform.
+* **Faster developer onboarding**: clearly separated modules help new contributors understand the system architecture more quickly, accelerating the delivery of future improvements.
+
+---
+
+### 🔮 Preparing for Creator‑Facing Analytics
+
+* **Foundation for personal dashboards**: the new data layer is designed to ultimately power individualized performance views, where you can track task success rates and earning trends.
+* **Evolving without disruption**: because the statistics package runs in the background, upcoming analytics features can be rolled out gradually without interrupting your daily work.
+* **Richer campaign insights on the horizon**: with structured event data now flowing, future updates will be able to offer deeper visibility into how your submissions perform over time.
+* **Privacy‑first data handling**: the aggregation framework follows strict data‑separation principles, ensuring personal information remains protected while still enabling meaningful analytics.
+* **Openness to community feedback**: this infrastructure upgrade sets the stage for analytics capabilities that can be shaped by creator input once interactive previews become available.
+
+---
+
+### 📘 Documentation & Transparency Refresh
+
+* **Changelog faithfully reflects the integration**: this entry fully documents the internal analytics addition, continuing the practice of transparent communication with the community.
+* **Updated architecture references**: internal documentation and developer guides now include the new data layer, keeping technical partners informed without unexpected surprises.
+* **Consistent version narrative**: the 2.0.36 label accurately marks the introduction of the statistics foundation, distinguishing it from both prior maintenance releases and future feature drops.
+* **Prepared for upcoming guides**: once public‑facing analytics tools arrive, existing documentation structures will accommodate new tutorials and walkthroughs effortlessly.
+* **Clearer separation of concerns**: documentation now highlights which components handle real‑time task operations and which manage long‑term data analysis, making the platform’s design easier to understand.
+
+</Update>
+
 <Update label="2026.6.12" description="2.0.32" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.32
