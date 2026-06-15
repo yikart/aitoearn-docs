@@ -2,6 +2,39 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.15" description="2.0.45" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.45
+
+### 🧩 More Reliable Task Data Handling
+
+* **Brand comment prompts are now part of the task data**: AI prompt and model choices for brand comment tasks are stored together with the task, keeping all configuration neatly bundled and reducing the risk of mix‑ups when you duplicate or edit a campaign.
+* **Interaction task details organized in a dedicated structure**: each interaction target’s actions and links are now held in a well‑defined format, helping the platform validate and display your campaign settings more accurately.
+* **Existing tasks remain fully compatible**: brand comment or interaction tasks created before this release continue to run without disruption, because the system gracefully handles both the new data layout and older formats.
+* **Automatic data reconciliation during edits**: when you modify a task, the platform intelligently merges old and new field structures, so you never lose previously configured details.
+* **Cleaner configuration flow for follow‑account and promotion campaigns**: similar structural improvements have been applied to follow‑account and promotion task types, giving you a consistent setup experience.
+
+---
+
+### 📦 Task Category Refinements
+
+* **“Sample” tasks are now labeled as “Product” tasks**: the task type formerly known as sample promotions has been renamed to better reflect its purpose, helping you instantly identify product‑driven campaigns in lists and filters.
+* **Consistent classification across all views**: whether you browse your published tasks, check order statistics, or review task details, the product promotion type now appears uniformly, eliminating any ambiguity.
+* **Cleaner Shopify task overview**: the overview screen for Shopify tasks groups all product promotions under the updated category, giving you a clearer picture of your active campaigns.
+* **Unchanged reward and approval logic**: although the internal label changed, the way product tasks are settled and reviewed remains exactly the same, so your workflow stays predictable.
+
+---
+
+### ⚙️ Stability & Future‑Proof Architecture
+
+* **Tighter coordination between task services**: internal connections between task management, AI review, and data storage have been strengthened, reducing the chance of sporadic errors during peak usage.
+* **Consistent data handling across all task types**: promotion, interaction, follow‑account, and brand comment tasks now share a uniform internal structure, lowering maintenance overhead and speeding up future feature rollouts.
+* **Smarter task data merging**: the platform now merges task updates at a more granular level, avoiding unintentional overwrites and keeping your campaign history intact.
+* **Enhanced diagnostics behind the scenes**: improved logging and error tracking help our operations team resolve issues faster, keeping the platform stable even as more creators and advertisers join.
+* **A cleaner foundation for upcoming features**: the refactoring work clears the way for new task types, advanced campaign management tools, and other capabilities that you’ll see arrive sooner.
+
+</Update>
+
 <Update label="2026.6.15" description="2.0.44" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.44
