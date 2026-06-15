@@ -2,6 +2,46 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.15" description="2.0.46" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.46
+
+### 🖼️ Screenshot Submissions Now More Reliable
+
+* **Unsupported screenshot formats are now automatically blocked**：data‑URLs and blank links are no longer accepted during task submission, reducing the chance of your review being delayed by invalid evidence.
+* **Automatic cleanup of screenshot links**：extra whitespace and hidden characters are removed from the URLs you provide, so links always work correctly for verifiers.
+* **Consistent validation across interaction, brand‑comment, and follow‑account tasks**：whatever task you complete, the system checks your screenshots the same way, giving you predictable feedback.
+* **No change to your upload flow**：you still paste or upload screenshots as before; the platform now handles them smarter behind the scenes.
+* **Fewer submission rejections due to malformed links**：by filtering out problematic URLs early, your hard‑earned submissions move into review faster.
+
+---
+
+### 🗂️ More Consistent Account Group Handling
+
+* **Account group creation returns clean, predictable data**：previously internal metadata could leak into the response; now you see only the fields relevant to your management screen.
+* **Existing account groups remain completely unchanged**：all your current groupings work as before, with no re‑configuration needed.
+* **Improved stability when managing groups under heavy usage**：the backend now handles account groups with greater resilience, keeping the interface smooth.
+* **A subtle but meaningful polish**：the experience of organizing your linked accounts feels more solid, with no unexpected glitched fields.
+
+---
+
+### 🛡️ Security and Quality Guards for Task Evidence
+
+* **Stricter screenshot URL filtering helps protect review integrity**：invalid or potentially dangerous URL schemes are refused, upholding the quality of your task verification.
+* **No alteration of your original links**：valid screenshot URLs pass through untouched; only problematic ones are flagged.
+* **The same protection now spans all screenshot‑based task types**：from interaction to follow‑account, every submission goes through the improved safety net.
+
+---
+
+### ⚙️ Platform Reliability Upgrades
+
+* **Tighter coordination between task submission and validation services**：internal connections have been strengthened, reducing rare failures during peak submission times.
+* **Enhanced data integrity checks**：the platform now verifies inputs more rigorously, catching edge cases before they affect your experience.
+* **Continuous background diagnostics**：improved error tracking and logging help our operations team spot and resolve issues faster.
+* **A cleaner foundation for upcoming features**：the refinements make it easier to add new task types and submission validations in future releases.
+
+</Update>
+
 <Update label="2026.6.15" description="2.0.45" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.45
