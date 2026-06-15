@@ -2,6 +2,48 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.15" description="2.0.47" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.47
+
+### ⚙️ Streamlined Background Operations
+
+* **Removed outdated database maintenance routines**：legacy index cleanup logic that was no longer needed has been retired, making service startup faster and reducing unnecessary database work.
+* **Lighter service initialization**：the internal startup sequence is now free of redundant safety checks, so background services become ready with less delay after each deployment.
+* **Reduced operational overhead**：periodic cleanup tasks that were previously triggered at launch have been eliminated, improving overall resource efficiency during scaling events.
+* **Cleaner internal coordination**：service components now initialize in a more direct path, lowering the risk of rare race conditions during high‑traffic restarts.
+* **No change to your daily experience**：all task submissions, reviews, rewards, and account management flows continue to operate exactly as before, unaffected by these under‑the‑hood refinements.
+
+---
+
+### 🛡️ Security & Compliance Housekeeping
+
+* **Retired legacy safety review helpers**：some internal fallback functions that had been superseded by newer safeguards were cleaned up, keeping the security architecture current and maintainable.
+* **Simplified audit pipelines without compromising protection**：redundant verification steps were removed, making the content safety path slightly more efficient while all mandatory checks remain active.
+* **Consistent protection across all content**：existing content moderation and anti‑abuse systems are untouched; only outdated backup mechanisms were decommissioned.
+* **Your submissions remain fully guarded**：the same rigorous review standards apply, and no relaxation of safety policies has occurred.
+
+---
+
+### 🔄 Service Resilience Enhancements
+
+* **Faster recovery after maintenance windows**：with fewer legacy startup tasks, the platform reaches its fully operational state more quickly following scheduled updates.
+* **Steadier resource usage at launch**：the removal of obsolete index verification reduces background CPU and memory spikes, contributing to a more predictable environment for all users.
+* **Improved fault isolation**：eliminating deprecated code paths reduces the surface for potential errors, strengthening overall system stability.
+* **Better preparedness for future scaling**：a leaner initialization process allows the platform to adapt more smoothly as the community and task volumes grow.
+
+---
+
+### 📊 Monitoring & Diagnostics Clarity
+
+* **Cleaner operational logs**：verbose alerts originating from outdated index checks have been silenced, helping the operations team focus on genuine incidents.
+* **Reduced false‑positive warnings**：health checks no longer report on no‑longer‑existing database artefacts, making monitoring dashboards more accurate.
+* **Streamlined compliance audits**：the removal of unused database indices simplifies data mapping and audit trails, easing internal and external review processes.
+* **Faster issue triage**：with less noise in the diagnostic data, engineers can identify and resolve real problems more quickly.
+* **Continuous background stability investment**：these quiet but meaningful changes reinforce the platform’s dependability as we prepare for upcoming features.
+
+</Update>
+
 <Update label="2026.6.15" description="2.0.46" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.46
