@@ -2,6 +2,35 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.15" description="2.0.42" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.42
+
+### 🧩 Interaction Task Creation Streamlined
+
+* **Cleaner default task titles**: when you create an interaction task without specifying a custom title, the system now generates a simple “Interaction task” label instead of a long, action‑type‑based name, making your task list easier to scan.
+* **Simplified target configuration**: the internal handling of interaction targets has been refined, reducing unnecessary processing steps and speeding up the task publishing flow.
+* **Enhanced validation for interaction actions**: new safeguards ensure that each interaction target includes at least one action type, helping you avoid misconfigured tasks before they are published.
+* **Unified task data structure**: interaction task definitions have been consolidated into a dedicated, well‑organized structure, improving future extensibility and reducing the chance of accidental data mismatches.
+
+---
+
+### 🔗 Smarter Work Link Handling
+
+* **Automatic link protocol correction**: when you paste a work link without “https://”, the system now normalizes it by prepending the correct protocol, preventing unnecessary errors during link resolution.
+* **Higher link info retrieval success**: the new normalization step is applied across all work link lookups, meaning that tasks relying on external work details are more likely to complete correctly the first time.
+* **Consistent link formatting**: whether you submit a link through task creation or in other work‑related flows, the same normalization logic is applied, giving you a uniform experience.
+
+---
+
+### ⚙️ Stability & Performance Under the Hood
+
+* **Interaction task data restructuring**: internal data models for interaction tasks have been refactored, improving code maintainability and setting the stage for faster feature rollouts in future releases.
+* **Reduced overhead during task publishing**: by removing unused variables and sorting steps, the platform now processes interaction task creation with slightly lower latency, contributing to a snappier overall flow.
+* **Tighter service coordination**: enhanced inter‑service connections ensure that work link normalization seamlessly integrates with core business logic, reducing the risk of sporadic errors in edge cases.
+
+</Update>
+
 <Update label="2026.6.12" description="2.0.37" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.37
