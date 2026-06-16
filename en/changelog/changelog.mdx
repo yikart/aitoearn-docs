@@ -2,6 +2,50 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.16" description="2.0.56" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.56
+
+### 🎯 Interaction Task Health Monitoring
+
+* **Interaction tasks now automatically check the availability of their target works**：the platform periodically verifies that the linked posts, videos, or pages you selected are still accessible, helping you catch broken links before they affect participants.
+* **Tasks are automatically taken down when all targeted works are gone**：if every work attached to an interaction task becomes unavailable, the system deactivates the task without manual intervention, preventing confusion for users who might otherwise try to interact with deleted content.
+* **You can always review and relaunch a deactivated task**：tasks that were automatically paused still appear in your dashboard with a clear status, so you can update the target links and reactivate the campaign when you’re ready.
+* **This health check runs daily in the background**：no extra steps or configuration are needed from your side – once an interaction task is published, it’s continuously monitored.
+* **The monitoring is smart and resource‑friendly**：only active interaction tasks are checked, and the process respects the unique set of works you’ve attached to each task.
+
+---
+
+### 📋 Clearer Target Work Status in Task Details
+
+* **Every target work in an interaction task now shows its current status**：you can see at a glance whether a linked post is still available or has been removed, right from the task editor or campaign details.
+* **A last‑checked timestamp is recorded for each work**：the platform logs when each target was last verified, giving you confidence that the status information is recent.
+* **No more guesswork when reviewing older interaction campaigns**：instead of digging through external links manually, you can rely on the platform’s visibility into each target work’s health.
+* **The status information is optional and transparent**：it doesn’t change how you set up a task – it simply enriches the data you see after the task is live, helping you make better decisions about campaign maintenance.
+* **This enhances the editing experience for all interaction task types**：whether you run like‑based, comment‑based, or share‑based interactions, the same visibility is available.
+
+---
+
+### 🛡️ Quality Assurance for Live Campaigns
+
+* **Participants only interact with valid, working content**：because broken tasks are automatically paused, your community never wastes time engaging with links that lead nowhere.
+* **Your campaign reputation stays intact**：no more disappointed users or support tickets about “dead” tasks, as the platform proactively prevents such scenarios.
+* **The deactivation logic applies consistently across all interaction task types**：no matter the action required (like, comment, share, etc.), the health check treats each target work equally.
+* **No sudden interruptions for tasks that still have at least one valid target**：the automation only acts when every linked work is unreachable, so you can safely run tasks with multiple works and lose one without immediate takedown.
+* **All changes are recorded in your task’s operation history**：you can trace when and why a task was automatically deactivated, supporting transparent campaign management.
+
+---
+
+### 🧱 Behind‑the‑Scenes Resilience
+
+* **The work‑status check is integrated directly into the task data model**：this means the platform can extend health monitoring to other task types in the future without major redesigns.
+* **Edits to interaction task targets now include status updates**：when you modify a task’s works, the system refreshes the availability information as part of the update flow.
+* **The monitoring process is fully decoupled from user‑facing request traffic**：your interactions and task modifications never compete with the background health checks, preserving performance.
+* **No new external dependencies were introduced**：the solution uses existing platform capabilities to verify work availability, keeping the system simple and robust.
+* **This update sets the stage for smarter task lifecycle automation**：with reliable target status data, future improvements could include automatic notifications or replacement suggestions when works become unavailable.
+
+</Update>
+
 <Update label="2026.6.16" description="2.0.55" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.55
