@@ -3,6 +3,60 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.16" description="2.4.57" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.57
+
+### 🎬 **Draft Video Generation Retry Controls Have Been Restored**
+
+* **Draft-based video creation now handles retries more predictably**: creators should see fewer confusing restart patterns while waiting for long-running generations
+* **Retry behavior is now better aligned with draft workflows**: video tasks launched from draft creation are managed in a way that feels more consistent with the overall draft experience
+* **In-progress draft videos are less likely to feel like they silently reset**: progress tracking now better reflects the same generation attempt instead of creating a more ambiguous experience
+* **Successful draft completions should feel steadier over extended waits**: longer processing sessions are now better supported without making the result feel detached from the original request
+* **Draft creation flows now better preserve user expectations during video generation**: the system more clearly follows through on the task the creator originally started
+
+---
+
+### 🔁 **Video Task Follow-Up Is More Consistent**
+
+* **Ongoing video generation checks now stay more focused on the active task**: creators should get a more continuous experience from submission through completion
+* **Task completion handling feels more reliable for draft video jobs**: finished results are better reflected without unnecessary interruption in the draft flow
+* **Polling behavior now better supports delayed-but-successful generations**: users are less likely to experience uncertainty when a video takes longer to finish
+* **The path from generation request to returned video feels smoother**: draft outputs now arrive with a more dependable handoff back into the creation experience
+* **Longer-running video tasks are now better supported in practical use**: creators can expect steadier handling when generation does not finish immediately
+
+---
+
+### 🧾 **Generation History and Request Context Are Better Preserved**
+
+* **Video generation records now retain clearer retry-related context**: task history is better prepared to reflect how a generation was intended to run
+* **Draft-originated video jobs now carry more complete request details**: creators benefit from improved consistency when the system revisits or tracks a task
+* **Subtask logging is more aligned across video generation flows**: history handling now feels more unified rather than varying between similar creation paths
+* **Troubleshooting and task follow-up should feel less opaque from the user side**: creators are less likely to encounter unclear behavior when revisiting a generation outcome
+* **Task records now better support reliable status continuity**: the experience around waiting, refreshing, and checking results feels more coherent
+
+---
+
+### ⚙️ **Queue Reliability Has Been Improved for Background Processing**
+
+* **Background generation jobs now recover more gracefully from temporary interruptions**: creators should see fewer one-off failures caused by short-lived processing issues
+* **Automatic retry support has been strengthened for queued work**: pending creation tasks are better protected when the system needs another chance to finish them
+* **Job handling now feels more dependable during busy or unstable moments**: creators can expect a steadier experience when submitting generation requests
+* **The handoff between submission and background execution is more resilient**: tasks are better positioned to continue processing instead of stopping too early
+* **Overall generation stability has been improved behind the scenes**: these updates help more requests reach a final result with less friction
+
+---
+
+### ✨ **Overall Draft Creation Experience Feels More Stable**
+
+* **Draft video generation now behaves more consistently from start to finish**: the creation flow feels less fragmented during longer processing windows
+* **Result delivery is better aligned with the creator’s original action**: submitted draft video tasks now feel more directly connected to the outcome users receive
+* **Failure recovery has been polished across generation pathways**: creators should notice fewer interruptions caused by transient background issues
+* **Video creation flows now provide a steadier end-to-end experience**: from submission to completion, the process feels more intentional and reliable
+* **General stability and predictability have been improved across draft video scenarios**: recent fixes make AI-assisted drafting feel more trustworthy overall
+
+</Update>
+
 <Update label="2026.6.16" description="2.4.56" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.56
