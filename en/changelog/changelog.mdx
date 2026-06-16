@@ -2,6 +2,38 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.16" description="2.0.55" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.55
+
+### 🧹 Streamlined Task Management
+
+* **Task creation has been consolidated into simplified workflows**：the previous separate “Create Task” path has been removed, reducing confusion and guiding all task setup through a unified entry point.
+* **Fewer redundant forms and options when starting a new campaign**：you now experience a cleaner, more focused task setup that only asks for what truly matters for your project.
+* **No more duplicate validation rules**：by retiring a legacy creation API, the system applies a single, consistent validation logic from start to finish, minimizing unexpected rejections.
+* **All existing tasks and campaigns remain unaffected**：you can continue to manage, edit, and review your current tasks without any interruption.
+* **The change applies automatically across the web platform**：no manual migration or reconfiguration is needed on your side.
+
+---
+
+### 🧱 Behind‑the‑Scenes Simplification
+
+* **The task data model has been trimmed down**：internal definitions that were only used by the deprecated creation path have been cleaned up, making the platform lighter and more responsive.
+* **Maintenance overhead is reduced**：removing unused code paths means our team can deliver future improvements faster and with fewer side effects.
+* **Consistent task structure across all task types**：the remaining task operations now share a unified data shape, which eliminates subtle differences that could cause errors when switching between task types.
+* **Third‑party integrations remain stable**：the adjustments are purely internal and do not alter how your tasks connect with external services.
+
+---
+
+### 🔄 Ongoing Stability and Maintenance
+
+* **Minor performance boost in task saving and listing**：the removal of outdated validation schemas reduces the amount of data processed on every save, leading to slightly quicker response times.
+* **Cleaner audit and operation history**：since the deprecated creation endpoint is gone, your task history no longer shows entries from that path, making the log easier to understand.
+* **Platform resilience improved**：less code to maintain means a lower chance of bugs that could interfere with your live campaigns.
+* **No downtime required**：this update was deployed seamlessly, and all ongoing tasks continued running without a hitch.
+
+</Update>
+
 <Update label="2026.6.16" description="2.0.54" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.54
