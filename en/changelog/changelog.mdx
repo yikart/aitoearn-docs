@@ -2,6 +2,56 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.16" description="2.0.54" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.54
+
+### 🎯 Task Update Logic Refined for Every Task Type
+
+* **Brand-comment, follow-account, interaction, promotion, and sample tasks now use their own dedicated update flows**：each task type’s edit logic is independently tailored, ensuring that when you modify a task, only the fields that matter for that task type are validated and saved.
+* **Mixed-up configurations are a thing of the past**：before this release, updating a promotion task could inadvertently carry over fields meant for an interaction task; now the editor automatically scopes the update to the correct task type, eliminating cross‑type confusion.
+* **You always see the right update form**：when you click “Edit” on a task, the platform instantly recognizes the task type and gives you only the relevant options, so you never accidentally adjust a setting that doesn’t apply.
+* **Task duplication and resubmission feel more consistent**：because each task type’s update logic is self‑contained, copying a task or restarting a paused campaign behaves exactly as you’d expect, without unexpected field fallbacks.
+* **Editing an active task no longer risks silent data mismatches**：the strict per‑type update paths prevent edge cases where a saved change could partially apply, protecting your live campaigns from misaligned budget or targeting info.
+
+---
+
+### 🧱 Stronger Editing Safeguards
+
+* **The editor now actively rejects inappropriate fields for the task type**：if a backend request accidentally includes a field that doesn’t belong to the task type you’re editing, the system simply ignores it rather than mixing it into the saved data.
+* **Your changes are validated against a precise blueprint per task type**：instead of a one‑size‑fits‑all checklist, each task type has its own validation blueprint, so an interaction task’s exposure limits won’t be confused with a sample task’s delivery requirements.
+* **You regain confidence when updating tasks in a hurry**：even if you switch between managing multiple task types in a single session, the platform always applies the correct rules set, making quick edits as safe as a carefully planned campaign update.
+* **Reduced risk of accidental budget miscalculations during updates**：since cost‑related fields are now handled within type‑specific update logic, tweaking a task’s reach or reward no longer introduces subtle pricing errors.
+
+---
+
+### ⚙️ Smoother Collaboration Between Task Management and Reward Systems
+
+* **Task updates communicate more directly with the reward calculation engine**：the refined update logic removes redundant interpretation steps, so when you adjust a milestone or budget, the reward engine immediately works with the right numbers.
+* **Background services handle edits more predictably**：by aligning the data structures per task type, the platform reduces intermittent delays that used to occur when edits prompted multiple services to re‑calculate the same task.
+* **Faster save and publish times for complex task types**：promotion and sample tasks, which often carry extensive target and budget details, now update with less overhead, shaving milliseconds off every successful edit.
+* **The audit trail stays cleaner**：with type‑specific update records, the history of your task changes is easier to review and reconcile, which benefits both you and our support team.
+
+---
+
+### 🔒 Data Integrity and Future‑Proofing
+
+* **Your existing tasks remain untouched**：this internal refactoring only affects how future updates are processed; all current running tasks continue to operate on their original, valid data.
+* **No new steps added to your workflow**：the task editor UI and the update process feel identical – the improvements are purely in the background validation and data‑handling layers.
+* **A foundation for richer per‑type editing features ahead**：by giving each task type its own update logic now, we pave the way for more advanced, type‑specific settings in upcoming releases, like custom review cycles or dynamic budget rules.
+* **The platform becomes more resilient to scale**：as the number of active tasks grows, the decoupled per‑type update design prevents bottlenecks, so editing a follow‑account task won’t interfere with someone else editing a brand‑comment task.
+
+---
+
+### 🔄 Ongoing Stability and Maintenance
+
+* **Service memory footprint reduced slightly**：the specialization of update DTOs allows the backend to discard irrelevant code paths earlier, freeing up resources for your actual task work.
+* **Easier for our operations team to diagnose edit failures**：type‑specific error boundaries mean that when a save fails, the system can pinpoint the exact field and type, often resolving issues proactively.
+* **No downtime required**：this release was rolled out seamlessly, and all your ongoing campaigns, reviews, and payouts continued without interruption.
+* **Consistent across all platform surfaces**：although you’re seeing the changelog for web, the same update improvements apply whether you access AiToEarn via the browser or any other supported environment.
+
+</Update>
+
 <Update label="2026.6.16" description="2.0.50" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.50
