@@ -2,6 +2,59 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.16" description="2.0.50" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.50
+
+### 🎯 Milestone Reward Reliability Improved
+
+* **Milestone reward configurations now save reliably every time**：the underlying data structure for milestone rewards has been aligned, eliminating edge cases where a saved reward could fail to be properly stored.
+* **Your reward settings stay exactly as you define them**：when you edit a task’s milestone targets and bonus amounts, the platform now guarantees those values are retained without silent drops.
+* **More accurate payout calculations**：by ensuring the reward schema is consistently applied, the engine now reads milestone configurations without ambiguity, so you receive the correct bonuses when your tasks reach each milestone.
+* **Affects all task types that use milestones**：whether you create a brand-comment, follow-account, or interaction task, the improved reliability applies everywhere milestones are supported.
+* **No need to re‑create existing tasks**：any active tasks with milestone rewards continue to work, and the fix automatically takes effect for all subsequent edits.
+
+---
+
+### 🧱 Stronger Data Integrity for Task Configurations
+
+* **Reward fields are now more robust against unexpected input**：the platform enforces a standardized schema for milestone definitions, preventing malformed or incomplete reward entries from being accepted.
+* **Task creation and duplication remain seamless**：the behind‑the‑scenes type enforcement works without changing the UI, so you can duplicate a task and its milestones without worry.
+* **Internal validation catches misconfigurations earlier**：if a milestone setup does not meet the required structure, the system now surfaces the issue during task save rather than later during reward calculation.
+* **Consistent data format across all environments**：the same strict schema is used whether you access the platform from the web or any other surface, keeping your task definitions portable and dependable.
+* **Background audit trails are more complete**：with cleaner milestone data, operational reviews of reward histories become simpler and faster.
+
+---
+
+### 🔒 Reward Safety Without Added Friction
+
+* **No change to how you set milestones**：the task editor remains identical; you simply fill in the milestone targets and rewards as before, and the platform takes care of the rest.
+* **Protects against accidental reward mis‑configuration**：the stricter data handling reduces the chance of someone unintentionally linking a milestone to a missing or incorrect reward value.
+* **Fair payouts remain our priority**：this improvement reinforces our commitment to ensuring every reward you earn is calculated accurately from the moment a task goes live.
+* **Your task analytics stay trustworthy**：with reliable milestone data, the earning reports you view after task completion reflect true milestone achievements.
+
+---
+
+### ⚙️ Backend Efficiency & Maintainability
+
+* **Streamlined task data processing**：the unify of milestone schema removes redundant checks, making task save and load operations marginally faster, especially for complex campaigns.
+* **Health of the task‑database layer improved**：regular maintenance identified this schema inconsistency, and the fix contributes to a healthier, more predictable data store.
+* **Cleaner internal coordination between task creation and reward engines**：with aligned data expectations, the services that calculate milestone payouts communicate more directly, reducing rare timing issues.
+* **A small but meaningful contribution to platform scalability**：as the number of active milestone‑based tasks grows, the stable schema ensures the reward system can scale without unexpected breakage.
+* **Continuous investment in operational excellence**：these quiet, precise refinements keep the platform solid while we work on the next wave of features.
+
+---
+
+### 🔄 Ongoing Stability & Consistency
+
+* **Database migration keeps existing data intact**：the schema alignment does not require any data migration for current tasks; your records are safe and automatically match the updated standard.
+* **Reduced risk of reward discrepancies during high‑traffic periods**：with the data layer more resilient, large numbers of simultaneous task edits or creations are less likely to introduce inconsistencies.
+* **Easier troubleshooting for the operations team**：uniform milestone data means support can diagnose reward‑related questions more quickly, often resolving them before you notice.
+* **A cleaner foundation for future reward features**：by tightening the structure now, we pave the way for more flexible and creative milestone rules down the line.
+* **No interruption to your daily workflow**：this release is purely under the hood, and all task, review, and reward flows operate as smoothly as ever.
+
+</Update>
+
 <Update label="2026.6.15" description="2.0.47" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.47
