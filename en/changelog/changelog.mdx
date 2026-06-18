@@ -2,6 +2,46 @@
 title: "Changelog"
 description:
 ---
+<Update label="2026.6.18" description="2.0.73" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.0.73
+
+### 🎬 Quick Video Draft Saving Fix
+
+* **Video Draft Storage Repaired**: An issue that could prevent generated quick videos from being saved as drafts has been resolved, ensuring your work is always securely stored.
+* **Consistent Asset Archiving**: Drafts now use a unified internal material storage mechanism, removing the mismatch that occasionally led to save failures or silent data loss.
+* **Seamless Creative Workflow**: Creators can now reliably save progress mid‑session and return later, with every draft immediately visible in the project list.
+* **No Impact on Existing Drafts**: All previously saved drafts remain untouched; the fix applies automatically to any new quick video generation and backward compatibility is fully preserved.
+
+---
+
+### 📦 Draft Asset Handling Refined
+
+* **Standardised Video Draft Creation**: The service responsible for generating quick video drafts has been realigned to use the canonical material pipeline, ensuring every output is correctly tracked.
+* **Elimination of Legacy Storage Paths**: Obsolete, alternative storage codepaths have been retired, reducing confusion in asset retrieval and preventing silent errors.
+* **Metadata Integrity Strengthened**: Draft videos now carry complete source, status, and type information from the moment of creation, making them easier to identify and manage across the platform.
+* **Consistent Behaviour Across Resolutions**: Whether you choose 720p or 480p output, draft handling now follows the same reliable routine, removing resolution‑specific edge cases.
+
+---
+
+### 🔄 Generation Task Consistency Improvements
+
+* **Draft‑Save Success Now Mirrors Real‑Time Status**: The creation panel updates instantly when a draft is successfully stored, eliminating the previous delay or occasional missing notification.
+* **Post‑Save Workflow Alignment**: Tasks that move from "drafting" to "ready to submit" rely on fully confirmed asset records, preventing downstream submission confusion.
+* **Failure Feedback Loop Closed**: When a draft save cannot be completed, the system now provides clearer feedback, helping creators quickly retry without guesswork.
+* **Full Integration with Credit Settlement**: Draft saves no longer risk interfering with point deductions or refunds, as the corrected storage synchronises tightly with the settlement lifecycle.
+
+---
+
+### 🧹 Platform Stability & Housekeeping
+
+* **Internal Dependency Clean‑Up**: Removed redundant service wiring that previously duplicated video‑storage responsibilities, making the codebase lighter and faster to maintain.
+* **Proactive Unit Test Expansion**: Added targeted test scenarios that simulate various draft‑saving edge cases, guarding against future regressions in the quick video workflow.
+* **Diagnostic Signal Enrichment**: Instrumentation around draft creation has been deepened, enabling our operations team to pinpoint anomalies sooner without waiting for user reports.
+* **Transparent Roll‑Out**: All improvements are applied server‑side; creators and advertisers enjoy the enhanced reliability instantly, with zero configuration or workflow changes needed.
+
+</Update>
+
 <Update label="2026.6.18" description="2.0.70" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.0.70
