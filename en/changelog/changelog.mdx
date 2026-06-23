@@ -3,6 +3,55 @@ title: "Changelog"
 description:
 ---
 
+<Update label="2026.6.23" description="2.4.78" tags={["Web"]}>
+
+# 🚀 AiToEarn 2.4.78
+
+### 🔁 **Connected Channel Authorization Is Now More Reliable**
+
+* **Authorization callbacks now support more valid environments**: connected account setup is less likely to fail when creators complete authorization from different supported access contexts
+* **Account connection flows are more forgiving**: valid callback scenarios are now better recognized instead of being rejected too aggressively
+* **Channel login and linking feel steadier**: creators should encounter fewer interruptions while connecting publishing accounts
+* **Authorization handoff behavior has been refined**: the transition from account approval back into AiToEarn now feels more dependable
+
+---
+
+### 🔐 **Credential Refresh Handling Has Been Strengthened**
+
+* **Expiring channel access is now handled more consistently**: connected accounts are better supported when credentials need to be refreshed in the background
+* **Large batches of account checks now behave more reliably**: refresh coverage has been improved so more connected accounts can be processed smoothly over time
+* **Refresh conflicts are now handled more gracefully**: when an account is already being updated, the experience is less likely to surface confusing failures
+* **Ongoing account availability is more dependable**: creators should see fewer disruptions caused by credentials nearing expiration
+
+---
+
+### 🎬 **Media Relay And Video Creation Flows Are More Resilient**
+
+* **Video generation handoffs now tolerate more response formats**: creation tasks are less likely to break when supported media services return results in slightly different shapes
+* **Media relay errors are now surfaced more cleanly**: failures during asset transfer are handled in a more predictable and user-friendly way
+* **AI video task submission is more robust**: creators should experience fewer avoidable interruptions when starting video generation jobs
+* **Multi-step media processing now feels steadier**: moving assets through connected creation flows is less fragile than before
+
+---
+
+### 🧠 **Draft And AI Workflow Stability Has Improved**
+
+* **Draft generation flows now better cover real-world media scenarios**: planning and content preparation experiences are more reliable when working with richer assets
+* **Creation tasks now recover better from edge cases**: uncommon processing paths are less likely to cause unexpected task failures
+* **AI availability checks are better aligned across flows**: supported generation experiences now behave more consistently from entry point to completion
+* **End-to-end creation journeys feel more predictable**: users should see smoother behavior when moving from idea preparation into generated output
+
+---
+
+### 🧩 **Channel Account Management Has Been Polished**
+
+* **Default account grouping now behaves more consistently**: account assignment is less likely to become confusing when optional grouping details are not provided
+* **Connected account setup now preserves expected organization behavior**: creators should see fewer surprises while adding new publishing accounts
+* **Account-related edge cases have been reduced**: several uncommon connection and management scenarios now resolve more cleanly
+* **Overall channel management feels steadier**: this release improves reliability across authorization, account setup, and ongoing connected account health
+
+</Update>
+
 <Update label="2026.6.22" description="2.4.76" tags={["Web"]}>
 
 # 🚀 AiToEarn 2.4.76
