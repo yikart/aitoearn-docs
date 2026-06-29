@@ -15,6 +15,18 @@
     "languages": [
       {
         "language": "en",
+        "anchors": [
+          {
+            "anchor": "Github",
+            "href": "https://github.com/yikart/AiToEarn",
+            "icon": "github"
+          },
+          {
+            "anchor": "Status",
+            "href": "https://aitoearn.ai/en/uptime",
+            "icon": "signal"
+          }
+        ],
         "tabs": [
           {
             "tab": "Creators",
@@ -75,6 +87,18 @@
       },
       {
         "language": "zh",
+        "anchors": [
+          {
+            "anchor": "Github",
+            "href": "https://github.com/yikart/AiToEarn",
+            "icon": "github"
+          },
+          {
+            "anchor": "Status",
+            "href": "https://aitoearn.cn/zh-CN/uptime",
+            "icon": "signal"
+          }
+        ],
         "tabs": [
           {
             "tab": "创作者",
@@ -140,20 +164,7 @@
         ]
       }
     ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Github",
-          "href": "https://github.com/yikart/AiToEarn",
-          "icon": "github"
-        },
-        {
-          "anchor": "Status",
-          "href": "https://status.aitoearn.ai/",
-          "icon": "signal"
-        }
-      ]
-    }
+    "global": {}
   },
   "logo": {
     "light": "/logo/light.svg",
