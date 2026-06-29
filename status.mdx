@@ -1,0 +1,30 @@
+---
+title: "Aitoearn Status"
+description: "Redirect to the matching Aitoearn uptime page."
+---
+
+<script>
+  {`
+    (function () {
+      var chineseStatusUrl = "https://aitoearn.cn/zh-CN/uptime";
+      var englishStatusUrl = "https://aitoearn.ai/en/uptime";
+      var host = window.location.hostname.toLowerCase();
+      var referrer = document.referrer.toLowerCase();
+      var locale = (navigator.language || "").toLowerCase();
+
+      var shouldUseChinese =
+        host.endsWith("aitoearn.cn") ||
+        referrer.indexOf("/zh") !== -1 ||
+        referrer.indexOf("aitoearn.cn") !== -1 ||
+        locale.indexOf("zh") === 0;
+
+      window.location.replace(shouldUseChinese ? chineseStatusUrl : englishStatusUrl);
+    })();
+  `}
+</script>
+
+Redirecting to Aitoearn status.
+
+[English status](https://aitoearn.ai/en/uptime)
+
+[Chinese status](https://aitoearn.cn/zh-CN/uptime)
