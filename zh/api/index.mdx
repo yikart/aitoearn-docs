@@ -5,4 +5,23 @@ description: "AiToEarn 开放平台 API 文档"
 
 # API 文档
 
-内容建设中。
+本节基于 OpenAPI 生成 AiToEarn 开放平台交互式 API 文档，支持在线调试、代码示例、鉴权输入和响应示例切换。
+
+<Info>
+  大多数接口使用 `X-Api-Key` 鉴权。业务是否成功以响应体 `code === 0` 为准，不只看 HTTP 状态码。
+</Info>
+
+## 调试地址
+
+- 中国站：`https://aitoearn.cn`
+- 国际站：`https://aitoearn.ai`
+
+在接口页右侧的调试面板中可以切换 server，并填写对应的 API Key。
+
+## 覆盖范围
+
+- AI 服务：视频生成、图像生成、模型中转。
+- 渠道管理：账号、内容发布、平台、互动、作品、账号分组、授权。
+- 资源管理：上传签名与上传确认。
+
+左侧 API 分组由 `openapi/zh/aitoearn.openapi.json` 自动生成。

@@ -1,0 +1,795 @@
+[
+  {
+    "index": 1,
+    "method": "GET",
+    "path": "/api/ai/models/video/generation",
+    "operationId": "VideoController_getVideoGenerationModels",
+    "tag": "AI 服务/视频生成",
+    "summary": "视频生成模型列表和参数",
+    "hasRequestBody": false,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 2,
+    "method": "POST",
+    "path": "/api/ai/video/generations",
+    "operationId": "VideoController_videoGeneration",
+    "tag": "AI 服务/视频生成",
+    "summary": "生成视频",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 3,
+    "method": "GET",
+    "path": "/api/ai/video/generations",
+    "operationId": "VideoController_listVideoTasks",
+    "tag": "AI 服务/视频生成",
+    "summary": "视频任务列表",
+    "hasRequestBody": false,
+    "parameterCount": 2,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 4,
+    "method": "GET",
+    "path": "/api/ai/video/generations/{taskId}",
+    "operationId": "VideoController_getVideoTaskStatus",
+    "tag": "AI 服务/视频生成",
+    "summary": "查询视频任务状态",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 5,
+    "method": "GET",
+    "path": "/api/ai/models/image/generation",
+    "operationId": "ImageController_getImageGenerationModels",
+    "tag": "AI 服务/图像生成",
+    "summary": "图像生成模型参数",
+    "hasRequestBody": false,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 6,
+    "method": "GET",
+    "path": "/api/ai/models/image/edit",
+    "operationId": "ImageController_getImageEditModels",
+    "tag": "AI 服务/图像生成",
+    "summary": "图像编辑模型参数",
+    "hasRequestBody": false,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 7,
+    "method": "POST",
+    "path": "/api/ai/image/generate",
+    "operationId": "ImageController_generateImage",
+    "tag": "AI 服务/图像生成",
+    "summary": "生成图像",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 8,
+    "method": "POST",
+    "path": "/api/ai/image/edit",
+    "operationId": "ImageController_editImage",
+    "tag": "AI 服务/图像生成",
+    "summary": "编辑图像",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 9,
+    "method": "POST",
+    "path": "/api/ai/image/generate/async",
+    "operationId": "ImageController_generateImageAsync",
+    "tag": "AI 服务/图像生成",
+    "summary": "异步生成图像",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 10,
+    "method": "POST",
+    "path": "/api/ai/image/edit/async",
+    "operationId": "ImageController_editImageAsync",
+    "tag": "AI 服务/图像生成",
+    "summary": "异步编辑图像",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 11,
+    "method": "GET",
+    "path": "/api/ai/image/task/{logId}",
+    "operationId": "ImageController_getImageTaskStatus",
+    "tag": "AI 服务/图像生成",
+    "summary": "查询图像任务状态",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 12,
+    "method": "GET",
+    "path": "/api/ai/models/chat",
+    "operationId": "ChatController_getChatModels",
+    "tag": "AI 服务/模型中转",
+    "summary": "对话模型列表",
+    "hasRequestBody": false,
+    "parameterCount": 2,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 13,
+    "method": "POST",
+    "path": "/api/ai/chat/completions",
+    "operationId": "RelayController_chatCompletions",
+    "tag": "AI 服务/模型中转",
+    "summary": "中转 Chat Completions（OpenAI 规范）",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 14,
+    "method": "POST",
+    "path": "/api/ai/v1/messages",
+    "operationId": "RelayController_claudeMessages",
+    "tag": "AI 服务/模型中转",
+    "summary": "中转 Messages（Anthropic 规范，SSE）",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 15,
+    "method": "POST",
+    "path": "/api/ai/v1beta/models/{model}:generateContent",
+    "operationId": "RelayController_geminiGenerateContent",
+    "tag": "AI 服务/模型中转",
+    "summary": "中转 GenerateContent（Gemini 规范）",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 16,
+    "method": "POST",
+    "path": "/api/ai/v1beta/models/{model}:streamGenerateContent",
+    "operationId": "RelayController_geminiStreamGenerateContent",
+    "tag": "AI 服务/模型中转",
+    "summary": "中转 StreamGenerateContent（Gemini 规范，SSE）",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 17,
+    "method": "POST",
+    "path": "/api/ai/images/generations",
+    "operationId": "RelayController_imagesGenerations",
+    "tag": "AI 服务/模型中转",
+    "summary": "中转图像生成（OpenAI 规范）",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 18,
+    "method": "POST",
+    "path": "/api/ai/images/edits",
+    "operationId": "RelayController_imagesEdits",
+    "tag": "AI 服务/模型中转",
+    "summary": "中转图像编辑（OpenAI 规范）",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 19,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts",
+    "operationId": "AccountsController_list_v2",
+    "tag": "渠道管理/账号",
+    "summary": "账号列表",
+    "hasRequestBody": false,
+    "parameterCount": 5,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 20,
+    "method": "DELETE",
+    "path": "/api/v2/channels/accounts",
+    "operationId": "AccountsController_deleteMany_v2",
+    "tag": "渠道管理/账号",
+    "summary": "批量删除账号",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 21,
+    "method": "POST",
+    "path": "/api/v2/channels/accounts",
+    "operationId": "AccountsController_create_v2",
+    "tag": "渠道管理/账号",
+    "summary": "创建账号",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 22,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts/{accountId}",
+    "operationId": "AccountsController_getById_v2",
+    "tag": "渠道管理/账号",
+    "summary": "账号详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 23,
+    "method": "DELETE",
+    "path": "/api/v2/channels/accounts/{accountId}",
+    "operationId": "AccountsController_delete_v2",
+    "tag": "渠道管理/账号",
+    "summary": "删除账号",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 24,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts/{accountId}/auth-status",
+    "operationId": "AccountsController_authStatus_v2",
+    "tag": "渠道管理/账号",
+    "summary": "账号授权状态",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 25,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts/{accountId}/analytics",
+    "operationId": "AccountsController_accountAnalytics_v2",
+    "tag": "渠道管理/账号",
+    "summary": "账号数据",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 26,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+    "operationId": "AccountsController_publishOptionValues_v2",
+    "tag": "渠道管理/账号",
+    "summary": "获取账号发布选项取值",
+    "hasRequestBody": false,
+    "parameterCount": 2,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 27,
+    "method": "POST",
+    "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+    "operationId": "AccountsController_createPublishOptionValue_v2",
+    "tag": "渠道管理/账号",
+    "summary": "创建账号发布选项取值",
+    "hasRequestBody": true,
+    "parameterCount": 2,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 28,
+    "method": "POST",
+    "path": "/api/v2/channels/publish/flows",
+    "operationId": "PublishFlowController_createFlow_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "创建发布 Flow",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 29,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/flows/{flowId}",
+    "operationId": "PublishFlowController_getFlow_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取 Flow 详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 30,
+    "method": "POST",
+    "path": "/api/v2/channels/publish/tasks/{taskId}/publish-now",
+    "operationId": "PublishTaskController_publishNow_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "立即发布",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 31,
+    "method": "POST",
+    "path": "/api/v2/channels/publish/tasks/{taskId}/retry",
+    "operationId": "PublishTaskController_retryTask_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "重试发布任务",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 32,
+    "method": "DELETE",
+    "path": "/api/v2/channels/publish/tasks/{taskId}",
+    "operationId": "PublishTaskController_cancelTask_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "取消发布任务",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 33,
+    "method": "PATCH",
+    "path": "/api/v2/channels/publish/tasks/{taskId}/publish-at",
+    "operationId": "PublishTaskController_updatePublishAt_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "修改发布时间",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 34,
+    "method": "POST",
+    "path": "/api/v2/channels/publish/tasks/{taskId}/update",
+    "operationId": "PublishTaskController_updatePublished_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "更新已发布内容",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 35,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/records",
+    "operationId": "PublishRecordController_listRecords_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取发布历史",
+    "hasRequestBody": false,
+    "parameterCount": 4,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 36,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/records/queued",
+    "operationId": "PublishRecordController_listQueued_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取排队中的任务",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 37,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/records/published",
+    "operationId": "PublishRecordController_listPublished_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取已发布的任务",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 38,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/records/public/{recordId}",
+    "operationId": "PublishRecordController_getPublicRecord_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "公开查询发布记录",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 39,
+    "method": "DELETE",
+    "path": "/api/v2/channels/publish/records/{recordId}",
+    "operationId": "PublishRecordController_deleteRecord_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "删除发布记录",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 40,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/records/{recordId}",
+    "operationId": "PublishRecordController_getRecord_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取发布记录详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 41,
+    "method": "PATCH",
+    "path": "/api/v2/channels/publish/records/{recordId}/work-link",
+    "operationId": "PublishRecordController_updateWorkLink_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "更新作品链接状态",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 42,
+    "method": "GET",
+    "path": "/api/v2/channels/publish/records/{recordId}/user-action",
+    "operationId": "PublishRecordController_getUserAction_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取用户操作信息",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 43,
+    "method": "GET",
+    "path": "/api/v2/channels/platforms",
+    "operationId": "PlatformsController_listPlatforms_v2",
+    "tag": "渠道管理/平台",
+    "summary": "获取所有平台元数据",
+    "hasRequestBody": false,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 44,
+    "method": "GET",
+    "path": "/api/v2/channels/platforms/{platform}/publish-options",
+    "operationId": "PlatformsController_listPublishOptions_v2",
+    "tag": "渠道管理/平台",
+    "summary": "获取平台动态发布选项",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 45,
+    "method": "GET",
+    "path": "/api/v2/channels/engagement/comments",
+    "operationId": "EngagementController_listComments_v2",
+    "tag": "渠道管理/互动",
+    "summary": "获取评论列表",
+    "hasRequestBody": false,
+    "parameterCount": 4,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 46,
+    "method": "POST",
+    "path": "/api/v2/channels/engagement/comments",
+    "operationId": "EngagementController_createComment_v2",
+    "tag": "渠道管理/互动",
+    "summary": "发表评论",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 47,
+    "method": "POST",
+    "path": "/api/v2/channels/engagement/function",
+    "operationId": "EngagementController_callFunction_v2",
+    "tag": "渠道管理/互动",
+    "summary": "调用互动函数",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 48,
+    "method": "GET",
+    "path": "/api/v2/channels/works/link-info",
+    "operationId": "WorksController_getLinkInfo_v2",
+    "tag": "渠道管理/作品",
+    "summary": "解析作品链接",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 49,
+    "method": "GET",
+    "path": "/api/v2/channels/works/{platform}",
+    "operationId": "WorksController_listWorks_v2",
+    "tag": "渠道管理/作品",
+    "summary": "获取账号作品列表",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 50,
+    "method": "GET",
+    "path": "/api/v2/channels/works/{platform}/{platformWorkId}",
+    "operationId": "WorksController_getDetail_v2",
+    "tag": "渠道管理/作品",
+    "summary": "获取作品详情",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 51,
+    "method": "GET",
+    "path": "/api/v2/channels/works/{platform}/{platformWorkId}/analytics",
+    "operationId": "WorksController_getAnalytics_v2",
+    "tag": "渠道管理/作品",
+    "summary": "获取作品数据",
+    "hasRequestBody": false,
+    "parameterCount": 5,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 52,
+    "method": "POST",
+    "path": "/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify",
+    "operationId": "WorksController_verifyOwnership_v2",
+    "tag": "渠道管理/作品",
+    "summary": "验证作品归属",
+    "hasRequestBody": true,
+    "parameterCount": 2,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 53,
+    "method": "GET",
+    "path": "/api/v2/channels/account-groups",
+    "operationId": "AccountGroupsController_list_v2",
+    "tag": "渠道管理/账号分组",
+    "summary": "账号分组列表",
+    "hasRequestBody": false,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 54,
+    "method": "POST",
+    "path": "/api/v2/channels/account-groups",
+    "operationId": "AccountGroupsController_create_v2",
+    "tag": "渠道管理/账号分组",
+    "summary": "创建账号分组",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 55,
+    "method": "DELETE",
+    "path": "/api/v2/channels/account-groups",
+    "operationId": "AccountGroupsController_deleteMany_v2",
+    "tag": "渠道管理/账号分组",
+    "summary": "删除账号分组",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 56,
+    "method": "PATCH",
+    "path": "/api/v2/channels/account-groups/{groupId}",
+    "operationId": "AccountGroupsController_update_v2",
+    "tag": "渠道管理/账号分组",
+    "summary": "更新账号分组",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 57,
+    "method": "PATCH",
+    "path": "/api/v2/channels/account-groups/{groupId}/accounts/rank",
+    "operationId": "AccountGroupsController_sortAccounts_v2",
+    "tag": "渠道管理/账号分组",
+    "summary": "更新分组内账号排序",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 58,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts/auth/{platform}",
+    "operationId": "AuthController_startAuth_v2",
+    "tag": "渠道管理/授权",
+    "summary": "开始平台授权",
+    "hasRequestBody": false,
+    "parameterCount": 4,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 59,
+    "method": "GET",
+    "path": "/api/v2/channels/accounts/auth/{platform}/status/{sessionId}",
+    "operationId": "AuthController_getAuthStatus_v2",
+    "tag": "渠道管理/授权",
+    "summary": "查询授权状态",
+    "hasRequestBody": false,
+    "parameterCount": 2,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 60,
+    "method": "POST",
+    "path": "/api/assets/uploadSign",
+    "operationId": "AssetsHttpController_createUploadSign",
+    "tag": "资源管理",
+    "summary": "生成上传签名 URL",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 61,
+    "method": "POST",
+    "path": "/api/assets/{id}/confirm",
+    "operationId": "AssetsHttpController_confirmUpload",
+    "tag": "资源管理",
+    "summary": "确认资源上传",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  }
+]
