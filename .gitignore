@@ -1,1 +1,8 @@
 .DS_Store
+.idea/
+*.idea/
+node_modules/
+.mintlify/
+.vercel/
+dist/
+build/

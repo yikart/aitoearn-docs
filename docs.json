@@ -1,195 +1,152 @@
 {
-  "$schema": "https://aitoearn.ai/docs.json",
-  "theme": "mint",
-  "name": "Aitoearn Help",
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "luma",
+  "name": "AiToEarn Open Platform",
+  "description": "AiToEarn 开放平台文档",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#A989FF",
+    "light": "#B8A1FF",
+    "dark": "#8B63F7"
   },
   "favicon": "/favicon.svg",
-  "css": [
-    "/style.css"
-  ],
+  "logo": {
+    "light": "/assets/logo/logo-light.png",
+    "dark": "/assets/logo/logo-dark.png",
+    "href": "/zh/home"
+  },
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
+  "icons": {
+    "library": "lucide"
+  },
   "navigation": {
     "languages": [
       {
-        "language": "en",
+        "language": "zh",
+        "default": true,
+        "navbar": {
+          "links": [
+            {
+              "type": "github",
+              "href": "https://github.com/yikart/AiToEarn",
+              "label": "GitHub"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "前往 AiToEarn",
+            "href": "https://aitoearn.cn/"
+          }
+        },
         "tabs": [
           {
-            "tab": "Creators",
-            "dropdowns": [
+            "tab": "首页",
+            "hidden": true,
+            "groups": [
               {
-                "dropdown": "Quick Start",
-                "icon": "rocket",
+                "group": "首页",
+                "hidden": true,
                 "pages": [
-                  "en/help-center/social-platforms",
-                  "en/help-center/getting-started/4-what-is-aitoearn",
-                  "en/help-center/getting-started/3-getting-started-with-aitoearn-publishing-features",
-                  "en/help-center/getting-started/8-getting-started-with-aitoearn-engagement-features",
-                  "en/help-center/getting-started/7-getting-started-with-aitoearn-analytics-features"
-                ]
-              },
-              {
-                "dropdown": "Social Media Channels",
-                "icon": "share-nodes",
-                "pages": [
-                  "en/help-center/social-platforms/554-using-instagram-with-aitoearn",
-                  "en/help-center/social-platforms/555-using-facebook-with-aitoearn",
-                  "en/help-center/social-platforms/556-using-threads-with-aitoearn",
-                  "en/help-center/social-platforms/557-using-youtube-with-aitoearn",
-                  "en/help-center/social-platforms/558-using-pinterest-with-aitoearn",
-                  "en/help-center/social-platforms/559-using-tiktok-with-aitoearn",
-                  "en/help-center/social-platforms/560-using-linkedin-with-aitoearn",
-                  "en/help-center/social-platforms/561-using-twitter-with-aitoearn",
-                  "en/help-center/social-platforms/562-using-rednote-with-aitoearn",
-                  "en/help-center/social-platforms/563-using-douyin-with-aitoearn",
-                  "en/help-center/social-platforms/565-using-kwai-with-aitoearn",
-                  "en/help-center/social-platforms/567-using-bilibili-with-aitoearn",
-                  "en/help-center/social-platforms/564-using-wechatchannels-with-aitoearn",
-                  "en/help-center/social-platforms/566-using-wechatofficial-with-aitoearn"
-                ]
-              },
-              {
-                "dropdown": "Pricing",
-                "icon": "credit-card",
-                "pages": [
-                  "en/help-center/pricing/agent-price"
+                  "zh/home"
                 ]
               }
             ]
           },
           {
-            "tab": "ChangeLog",
-            "pages": [
-              "en/changelog/changelog"
+            "tab": "使用",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "使用",
+                "pages": [
+                  "zh/use/index"
+                ]
+              }
             ]
           },
           {
-            "tab": "Downloads",
-            "pages": [
-              "en/downloads"
+            "tab": "API 文档",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "API 文档",
+                "pages": [
+                  "zh/api/index"
+                ]
+              }
             ]
           }
         ]
       },
       {
-        "language": "zh",
+        "language": "en",
+        "navbar": {
+          "links": [
+            {
+              "type": "github",
+              "href": "https://github.com/yikart/AiToEarn",
+              "label": "GitHub"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "Go to AiToEarn",
+            "href": "https://aitoearn.ai/"
+          }
+        },
         "tabs": [
           {
-            "tab": "创作者",
-            "dropdowns": [
+            "tab": "Home",
+            "hidden": true,
+            "groups": [
               {
-                "dropdown": "快速开始",
-                "icon": "rocket",
+                "group": "Home",
+                "hidden": true,
                 "pages": [
-                  "zh/help-center/social-platforms",
-                  "zh/help-center/getting-started/4-what-is-aitoearn",
-                  "zh/help-center/getting-started/3-getting-started-with-aitoearn-publishing-features",
-                  "zh/help-center/getting-started/8-getting-started-with-aitoearn-engagement-features",
-                  "zh/help-center/getting-started/7-getting-started-with-aitoearn-analytics-features"
-                ]
-              },
-              {
-                "dropdown": "社交媒体频道",
-                "icon": "share-nodes",
-                "pages": [
-                  "zh/help-center/social-platforms/554-using-instagram-with-aitoearn",
-                  "zh/help-center/social-platforms/555-using-facebook-with-aitoearn",
-                  "zh/help-center/social-platforms/556-using-threads-with-aitoearn",
-                  "zh/help-center/social-platforms/557-using-youtube-with-aitoearn",
-                  "zh/help-center/social-platforms/558-using-pinterest-with-aitoearn",
-                  "zh/help-center/social-platforms/559-using-tiktok-with-aitoearn",
-                  "zh/help-center/social-platforms/560-using-linkedin-with-aitoearn",
-                  "zh/help-center/social-platforms/561-using-twitter-with-aitoearn",
-                  "zh/help-center/social-platforms/562-using-rednote-with-aitoearn",
-                  "zh/help-center/social-platforms/563-using-douyin-with-aitoearn",
-                  "zh/help-center/social-platforms/567-using-bilibili-with-aitoearn",
-                  "zh/help-center/social-platforms/565-using-kwai-with-aitoearn",
-                  "zh/help-center/social-platforms/564-using-wechatchannels-with-aitoearn",
-                  "zh/help-center/social-platforms/566-using-wechatofficial-with-aitoearn"               
-                ]
-              },
-              {
-                "dropdown": "计费",
-                "icon": "credit-card",
-                "pages": [
-                  "zh/help-center/pricing/agent-price"
+                  "en/home"
                 ]
               }
             ]
           },
           {
-            "tab": "内容出海",
-            "pages": [
-              "zh/overseas/about"
+            "tab": "Use",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Use",
+                "pages": [
+                  "en/use/index"
+                ]
+              }
             ]
           },
           {
-            "tab": "更新日志",
-            "pages": [
-              "zh/changelog/changelog"
-            ]
-          },
-          {
-            "tab": "下载",
-            "pages": [
-              "zh/downloads"
+            "tab": "API Docs",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "API Docs",
+                "pages": [
+                  "en/api/index"
+                ]
+              }
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Github",
-          "href": "https://github.com/yikart/AiToEarn",
-          "icon": "github"
-        },
-        {
-          "anchor": "Status",
-          "href": "/status",
-          "icon": "signal"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg",
-    "href": "https://aitoearn.ai"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hello@aitoearn.ai"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Get Started",
-      "href": "https://aitoearn.ai/en/accounts"
-    }
+    ]
   },
   "contextual": {
     "options": [
       "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+      "view"
     ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/aitoearn",
-      "github": "https://github.com/aitoearn",
-      "linkedin": "https://linkedin.com/company/aitoearn"
+      "github": "https://github.com/yikart/AiToEarn"
     }
   }
 }

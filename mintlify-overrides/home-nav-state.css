@@ -1,0 +1,33 @@
+html[data-current-path="/zh/home"] nav[aria-label="Main"] a[aria-current="location"],
+html[data-current-path="/zh/home"] nav[aria-label="Main"] a[href="/zh/use"],
+html[data-current-path="/en/home"] nav[aria-label="Main"] a[aria-current="location"],
+html[data-current-path="/en/home"] nav[aria-label="Main"] a[href="/en/use"] {
+  color: rgb(var(--gray-600)) !important;
+  background: transparent none !important;
+  box-shadow: none !important;
+}
+
+html.dark[data-current-path="/zh/home"] nav[aria-label="Main"] a[aria-current="location"],
+html.dark[data-current-path="/zh/home"] nav[aria-label="Main"] a[href="/zh/use"],
+html.dark[data-current-path="/en/home"] nav[aria-label="Main"] a[aria-current="location"],
+html.dark[data-current-path="/en/home"] nav[aria-label="Main"] a[href="/en/use"] {
+  color: rgb(var(--gray-400)) !important;
+  background: transparent none !important;
+  box-shadow: none !important;
+}
+
+html[data-current-path="/zh/home"] nav[aria-label="Main"] a[aria-current="location"]:hover,
+html[data-current-path="/zh/home"] nav[aria-label="Main"] a[href="/zh/use"]:hover,
+html[data-current-path="/en/home"] nav[aria-label="Main"] a[aria-current="location"]:hover,
+html[data-current-path="/en/home"] nav[aria-label="Main"] a[href="/en/use"]:hover {
+  color: rgb(var(--gray-900)) !important;
+  background: rgb(var(--gray-950) / 0.03) !important;
+}
+
+html.dark[data-current-path="/zh/home"] nav[aria-label="Main"] a[aria-current="location"]:hover,
+html.dark[data-current-path="/zh/home"] nav[aria-label="Main"] a[href="/zh/use"]:hover,
+html.dark[data-current-path="/en/home"] nav[aria-label="Main"] a[aria-current="location"]:hover,
+html.dark[data-current-path="/en/home"] nav[aria-label="Main"] a[href="/en/use"]:hover {
+  color: rgb(var(--gray-200)) !important;
+  background: rgb(255 255 255 / 0.03) !important;
+}

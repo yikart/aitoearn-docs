@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "crawl:buffer": "node scripts/crawl.mjs --base https://support.buffer.com --out import/content.json",
-    "import": "node scripts/import.mjs import/content.json"
+    "build:overrides": "tsc -p tsconfig.overrides.json",
+    "check": "npm run build:overrides && mint validate && mint broken-links",
+    "dev": "npm run build:overrides && mint dev"
   },
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.12"
+  "devDependencies": {
+    "mint": "^4.2.659",
+    "typescript": "^6.0.3"
   }
 }
-
-

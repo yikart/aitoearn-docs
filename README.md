@@ -1,44 +1,36 @@
-# Aitoearn Starter Kit
+# AiToEarn Open Platform Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+这是 AiToEarn 开放平台文档站，基于 Mintlify 维护。
 
-Click the green **Use this template** button at the top of this repo to copy the Aitoearn starter kit. The starter kit contains examples with
+## 目录
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+- `docs.json`：Mintlify 站点配置和导航入口。
+- `zh/`：中文文档页面。
+- `en/`：英文文档页面。
+- `assets/`：文档站静态资源。
+- `src/mintlify-overrides/`：Mintlify 原生配置无法表达的 TypeScript 源码。
+- `mintlify-overrides/`：Mintlify 实际加载的自定义 JS/CSS 产物。
 
-**[Follow the full quickstart guide](https://starter.aitoearn.com/quickstart)**
+## 本地预览
 
-## Development
+仅在需要预览时运行：
 
-Install the [Aitoearn CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
+```bash
+npm run dev
 ```
+
+`npm run dev` 会先编译 `src/mintlify-overrides/` 下的 TypeScript override。
+
+如果本机未安装 Mintlify CLI，先安装：
+
+```bash
 npm i -g mint
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+## 维护规则
 
-```
-mint dev
-```
-
-View your local preview at `http://localhost:3000`.
-
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.aitoearn.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Aitoearn documentation](https://aitoearn.com/docs)
-- [Aitoearn community](https://aitoearn.com/community)
+- 新增或删除页面时，必须同步更新 `docs.json`。
+- 中文内容放在 `zh/`，英文内容放在 `en/`，不要混写。
+- 不恢复旧帮助中心、旧迁移内容、批量抓取脚本或模板示例。
+- 外部代码仓库地址统一使用 `https://github.com/yikart/AiToEarn`。
+- 修改 Mintlify 自定义脚本时，先改 `src/mintlify-overrides/`，再运行 `npm run build:overrides`。
