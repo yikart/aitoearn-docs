@@ -7,6 +7,7 @@ const websiteRoot = path.join(repoRoot, 'aitoearn-website')
 const backendRoot = process.env.AITOEARN_BACKEND_ROOT || 'E:/project-dev/node/yika/aitoearn-monorepo'
 const sourceSpecPath = path.join(websiteRoot, 'docs/openPlatform/默认模块.openapi.json')
 const targetSpecPath = path.join(docsRoot, 'openapi/zh/aitoearn.openapi.json')
+const specOverridesPath = path.join(docsRoot, 'openapi/spec-overrides.json')
 const inventoryPath = path.join(docsRoot, 'openapi/endpoint-inventory.json')
 const matrixPath = path.join(docsRoot, 'openapi/backend-coverage-matrix.json')
 const docsJsonPath = path.join(docsRoot, 'docs.json')
@@ -594,11 +595,87 @@ function syncDocsJson(endpoints) {
   writeJson(docsJsonPath, docsJson)
 }
 
+function applyParameterOverrides(endpoint, operation, overridesMap, parameterLocation) {
+  for (const [parameterName, patch] of Object.entries(overridesMap)) {
+    const index = (operation.parameters || []).findIndex(item => item.name === parameterName && item.in === parameterLocation)
+    if (index === -1) {
+      throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} ${parameterLocation}Parameters has unknown parameter: ${parameterName}`)
+    }
+    if (patch === null) {
+      operation.parameters.splice(index, 1)
+      continue
+    }
+    for (const [key, value] of Object.entries(patch)) {
+      if (value === null) {
+        delete operation.parameters[index][key]
+      }
+      else {
+        operation.parameters[index][key] = value
+      }
+    }
+  }
+}
+
+function applySpecOverride(targetSpec, endpoint, operation, override) {
+  if (!override) {
+    return
+  }
+  if (override.summary) {
+    operation.summary = override.summary
+  }
+  if (override.tag) {
+    operation.tags = [override.tag]
+  }
+  if (override.description) {
+    operation.description = override.description
+  }
+  if (override.queryParameters) {
+    applyParameterOverrides(endpoint, operation, override.queryParameters, 'query')
+  }
+  if (override.pathParameters) {
+    applyParameterOverrides(endpoint, operation, override.pathParameters, 'path')
+  }
+  if (override.bodyProperties) {
+    let schema = operation.requestBody?.content?.['application/json']?.schema
+    if (schema?.$ref) {
+      schema = targetSpec.components?.schemas?.[schema.$ref.split('/').pop()]
+    }
+    for (const [propertyName, patch] of Object.entries(override.bodyProperties)) {
+      const property = schema?.properties?.[propertyName]
+      if (!property) {
+        throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} bodyProperties has unknown property: ${propertyName}`)
+      }
+      if (patch === null) {
+        delete schema.properties[propertyName]
+        if (Array.isArray(schema.required)) {
+          schema.required = schema.required.filter(name => name !== propertyName)
+        }
+        continue
+      }
+      for (const [key, value] of Object.entries(patch)) {
+        if (value === null) {
+          delete property[key]
+        }
+        else {
+          property[key] = value
+        }
+      }
+    }
+  }
+}
+
 function generate() {
   const sourceSpec = readJson(sourceSpecPath)
   const endpoints = listEndpoints(sourceSpec)
   if (endpoints.length !== 61) {
     throw new Error(`Expected 61 endpoints, got ${endpoints.length}`)
+  }
+
+  const specOverrides = readJson(specOverridesPath)
+  const endpointKeys = new Set(endpoints.map(item => `${item.method} ${item.path}`))
+  const unknownOverrideKeys = Object.keys(specOverrides).filter(key => !endpointKeys.has(key))
+  if (unknownOverrideKeys.length > 0) {
+    throw new Error(`spec-overrides.json has keys not present in the source spec: ${unknownOverrideKeys.join(', ')}`)
   }
 
   const controllerFiles = controllerRoots.flatMap(walkTsFiles)
@@ -641,6 +718,7 @@ function generate() {
 
   for (const endpoint of endpoints) {
     const operation = targetSpec.paths[endpoint.path][endpoint.method.toLowerCase()]
+    applySpecOverride(targetSpec, endpoint, operation, specOverrides[`${endpoint.method} ${endpoint.path}`])
     const { className, methodName } = parseOperationId(endpoint.operationId)
     const controller = findControllerFile(controllerFiles, className, methodName)
     const controllerMethod = controller?.method
@@ -760,9 +838,34 @@ function generate() {
 
   writeJson(inventoryPath, endpoints)
   writeJson(matrixPath, matrix)
+  if (Array.isArray(targetSpec.tags)) {
+    const usedTags = new Set()
+    for (const pathItem of Object.values(targetSpec.paths || {})) {
+      for (const [method, operation] of Object.entries(pathItem || {})) {
+        if (!httpMethods.has(method)) {
+          continue
+        }
+        for (const tag of operation.tags || []) {
+          usedTags.add(tag)
+          const parentTag = tag.split('/')[0]
+          usedTags.add(parentTag)
+        }
+      }
+    }
+    targetSpec.tags = targetSpec.tags.filter(item => usedTags.has(item.name))
+    for (const tag of usedTags) {
+      if (!targetSpec.tags.some(item => item.name === tag)) {
+        targetSpec.tags.push({ name: tag })
+      }
+    }
+  }
   sanitizeOpenApi30(targetSpec)
   writeJson(targetSpecPath, targetSpec)
-  syncDocsJson(endpoints)
+  const navigationEndpoints = endpoints.map((endpoint) => {
+    const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
+    return override?.tag ? { ...endpoint, tag: override.tag } : endpoint
+  })
+  syncDocsJson(navigationEndpoints)
 
   const completed = matrix.filter(item => item.status === 'completed').length
   console.log(JSON.stringify({

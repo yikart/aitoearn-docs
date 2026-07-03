@@ -116,20 +116,20 @@
                   "POST /api/ai/image/edit",
                   "POST /api/ai/image/generate/async",
                   "POST /api/ai/image/edit/async",
-                  "GET /api/ai/image/task/{logId}"
+                  "GET /api/ai/image/task/{logId}",
+                  "POST /api/ai/images/generations",
+                  "POST /api/ai/images/edits"
                 ]
               },
               {
-                "group": "AI 服务/模型中转",
+                "group": "AI 服务/大语言模型",
                 "openapi": "openapi/zh/aitoearn.openapi.json",
                 "pages": [
                   "GET /api/ai/models/chat",
                   "POST /api/ai/chat/completions",
                   "POST /api/ai/v1/messages",
                   "POST /api/ai/v1beta/models/{model}:generateContent",
-                  "POST /api/ai/v1beta/models/{model}:streamGenerateContent",
-                  "POST /api/ai/images/generations",
-                  "POST /api/ai/images/edits"
+                  "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
                 ]
               },
               {

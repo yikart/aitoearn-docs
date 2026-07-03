@@ -1301,6 +1301,7 @@
     ],
     "serviceMethodsVisited": [
       "createFlow",
+      "resolveFlowAccounts",
       "createFlowRecords",
       "mergeContent",
       "resolveMediaRules",
@@ -1327,7 +1328,7 @@
       {
         "name": "ChannelAccountNotFound",
         "code": 15021,
-        "message": "账户不存在"
+        "message": "渠道账号未找到"
       },
       {
         "name": "ChannelPublishDuplicateItem",
@@ -1605,7 +1606,7 @@
       {
         "name": "ChannelAccountNotFound",
         "code": 15021,
-        "message": "账户不存在"
+        "message": "渠道账号未找到"
       },
       {
         "name": "ChannelPublishCancelNotSupported",
@@ -1736,10 +1737,10 @@
     "serviceMethodsVisited": [
       "requestUpdate",
       "getTaskForUser",
+      "requireAccountId",
       "getPublishRuntime",
       "buildPendingUpdate",
       "resolveMediaRules",
-      "requireAccountId",
       "hasActiveMediaAdaptation",
       "throwValidationFailed"
     ],
@@ -1756,7 +1757,7 @@
       {
         "name": "ChannelAccountNotFound",
         "code": 15021,
-        "message": "账户不存在"
+        "message": "渠道账号未找到"
       },
       {
         "name": "ChannelPublishPlatformNotSupported",
@@ -2000,7 +2001,7 @@
       {
         "name": "PublishTaskStatusInvalid",
         "code": 15018,
-        "message": "任务已发布或正在进行中"
+        "message": "发布任务状态不允许此操作"
       }
     ],
     "customExceptions": [],
@@ -2171,7 +2172,7 @@
       {
         "name": "PublishTaskStatusInvalid",
         "code": 15018,
-        "message": "任务已发布或正在进行中"
+        "message": "发布任务状态不允许此操作"
       }
     ],
     "customExceptions": [],

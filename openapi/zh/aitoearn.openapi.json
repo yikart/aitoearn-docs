@@ -17,9 +17,6 @@
       "name": "AI 服务/图像生成"
     },
     {
-      "name": "AI 服务/模型中转"
-    },
-    {
       "name": "渠道管理"
     },
     {
@@ -45,12 +42,15 @@
     },
     {
       "name": "资源管理"
+    },
+    {
+      "name": "AI 服务/大语言模型"
     }
   ],
   "paths": {
     "/api/ai/models/video/generation": {
       "get": {
-        "summary": "视频生成模型列表和参数",
+        "summary": "视频生成模型",
         "deprecated": false,
         "description": "接口说明：获取当前账号可用的视频生成模型及参数范围，包括模型名称、分辨率、画面比例、时长和价格信息，以用于生成视频接口完成参数选择和请求参数校验。",
         "operationId": "VideoController_getVideoGenerationModels",
@@ -510,7 +510,7 @@
       "post": {
         "summary": "生成视频",
         "deprecated": false,
-        "description": "接口说明：提交视频生成任务，支持 seedance 系列模型；可传入参考图片、视频、音频，生成成功后可保存到指定素材组。任务异步执行，返回 taskId 用于轮询结果。",
+        "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
         "operationId": "VideoController_videoGeneration",
         "tags": [
           "AI 服务/视频生成"
@@ -524,13 +524,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "模型名称\n- seedance-2-fast-beta：支持 480p、720p；时长 4-15 秒；宽高比 21:9、16:9、4:3、1:1、3:4、9:16\n- seedance-2-beta：支持 720p；时长 4-15 秒；宽高比 21:9、16:9、4:3、1:1、3:4、9:16\n- seedance-2-beta-1080p：支持 1080p；时长 8-15 秒；宽高比 16:9、9:16、1:1\n",
-                    "minLength": 1,
-                    "enum": [
-                      "seedance-2-fast-beta",
-                      "seedance-2-beta",
-                      "seedance-2-beta-1080p"
-                    ]
+                    "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",
+                    "minLength": 1
                   },
                   "prompt": {
                     "type": "string",
@@ -538,40 +533,22 @@
                     "maxLength": 4000,
                     "description": "提示词，长度 1-4000 字符"
                   },
-                  "groupId": {
-                    "description": "素材组 ID，传入后生成成功时保存到该素材组",
-                    "type": "string"
-                  },
-                  "image": {
-                    "description": "单张参考图片 URL，与 images 合计最多 9 张；图片、视频、音频参考媒体合计最多 12 个",
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    ]
-                  },
                   "images": {
-                    "description": "参考图片 URL 列表，与 image 合计最多 9 张；图片、视频、音频参考媒体合计最多 12 个",
+                    "description": "参考图片 URL 列表。最大数量与格式限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].maxInputImages` 和 `data[n].inputConstraints` 为准。",
                     "type": "array",
                     "items": {
                       "type": "string"
                     }
                   },
                   "videos": {
-                    "description": "参考视频 URL 列表，最多 3 个；图片、视频、音频参考媒体合计最多 12 个\n支持格式：mp4、mov\n单个时长：2-15 秒；总时长最多 15 秒\n单个文件最大 50MB；宽高比 0.4-2.5；宽度 300-6000；像素数 409600-2086876；帧率 24-60。\n",
+                    "description": "参考视频 URL 列表。是否支持视频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。",
                     "type": "array",
                     "items": {
                       "type": "string"
                     }
                   },
                   "audios": {
-                    "description": "参考音频 URL 列表，最多 3 个；图片、视频、音频参考媒体合计最多 12 个\n支持格式：wav、mp3\n单个时长：2-15 秒；总时长最多 15 秒；单个文件最大 15MB\n",
+                    "description": "参考音频 URL 列表。是否支持音频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -579,7 +556,7 @@
                   },
                   "resolution": {
                     "type": "string",
-                    "description": "分辨率\nseedance-2-fast-beta 支持 480p、720p\nseedance-2-beta 只支持 720p\nseedance-2-beta-1080p 只支持 1080p\n",
+                    "description": "视频分辨率。可选值随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].resolutions` 为准。",
                     "enum": [
                       "480p",
                       "720p",
@@ -587,21 +564,12 @@
                     ]
                   },
                   "ratio": {
-                    "description": "宽高比\nseedance-2-fast-beta、seedance-2-beta 支持 21:9、16:9、4:3、1:1、3:4、9:16\nseedance-2-beta-1080p 支持 16:9、9:16、1:1\n",
+                    "description": "视频宽高比。可选值随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].aspectRatios` 为准。",
                     "type": "string"
                   },
                   "duration": {
-                    "description": "时长（秒）\nseedance-2-fast-beta、seedance-2-beta 支持 4-15 秒\nseedance-2-beta-1080p 支持 8-15 秒\n",
+                    "description": "视频时长（秒）。可选范围随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].durations` 为准。",
                     "type": "number"
-                  },
-                  "source": {
-                    "description": "消费来源",
-                    "type": "string",
-                    "enum": [
-                      "ai_video",
-                      "ai_draft_generation",
-                      "plugin"
-                    ]
                   }
                 },
                 "required": [
@@ -954,7 +922,7 @@
     },
     "/api/ai/video/generations/{taskId}": {
       "get": {
-        "summary": "查询视频任务状态",
+        "summary": "视频任务状态",
         "deprecated": false,
         "description": "接口说明：根据 taskId 查询视频生成任务的执行状态与结果。",
         "operationId": "VideoController_getVideoTaskStatus",
@@ -1108,9 +1076,9 @@
     },
     "/api/ai/models/image/generation": {
       "get": {
-        "summary": "图像生成模型参数",
+        "summary": "图像生成模型",
         "deprecated": false,
-        "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。",
+        "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)及对应的编辑图像接口。",
         "operationId": "ImageController_getImageGenerationModels",
         "tags": [
           "AI 服务/图像生成"
@@ -1291,9 +1259,9 @@
     },
     "/api/ai/models/image/edit": {
       "get": {
-        "summary": "图像编辑模型参数",
+        "summary": "图像编辑模型",
         "deprecated": false,
-        "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。",
+        "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)及对应的生成图像接口。",
         "operationId": "ImageController_getImageEditModels",
         "tags": [
           "AI 服务/图像生成"
@@ -1390,7 +1358,7 @@
       "post": {
         "summary": "生成图像",
         "deprecated": false,
-        "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。",
+        "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/ai-服务图像生成/编辑图像)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/ai-服务图像生成/openai-图像生成)。",
         "operationId": "ImageController_generateImage",
         "tags": [
           "AI 服务/图像生成"
@@ -1410,7 +1378,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "description": "图片生成模型"
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
                   },
                   "n": {
                     "description": "生成图片数量",
@@ -1419,7 +1387,7 @@
                     "maximum": 10
                   },
                   "quality": {
-                    "description": "图片质量",
+                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。",
                     "type": "string"
                   },
                   "response_format": {
@@ -1431,25 +1399,12 @@
                     ]
                   },
                   "size": {
-                    "description": "图片尺寸",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "style": {
-                    "description": "图片风格",
+                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
                     "type": "string"
-                  },
-                  "user": {
-                    "description": "用户标识符",
-                    "type": "string"
-                  },
-                  "source": {
-                    "description": "消费来源",
-                    "type": "string",
-                    "enum": [
-                      "ai_image",
-                      "ai_draft_generation",
-                      "plugin"
-                    ]
                   }
                 },
                 "required": [
@@ -1585,7 +1540,7 @@
       "post": {
         "summary": "编辑图像",
         "deprecated": false,
-        "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。",
+        "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘或风格化。如需仅用文字生成全新图像（文生图），请使用[「生成图像」](/api-reference/ai-服务图像生成/生成图像)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像编辑」](/api-reference/ai-服务图像生成/openai-图像编辑)。",
         "operationId": "ImageController_editImage",
         "tags": [
           "AI 服务/图像生成"
@@ -1599,7 +1554,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "图片编辑模型"
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
                   },
                   "image": {
                     "anyOf": [
@@ -1622,7 +1577,7 @@
                     "description": "编辑描述"
                   },
                   "mask": {
-                    "description": "遮罩图片",
+                    "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。",
                     "type": "string"
                   },
                   "n": {
@@ -1632,7 +1587,7 @@
                     "maximum": 1
                   },
                   "size": {
-                    "description": "图片尺寸",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "response_format": {
@@ -1641,19 +1596,6 @@
                     "enum": [
                       "url",
                       "b64_json"
-                    ]
-                  },
-                  "user": {
-                    "description": "用户标识符",
-                    "type": "string"
-                  },
-                  "source": {
-                    "description": "消费来源",
-                    "type": "string",
-                    "enum": [
-                      "ai_image",
-                      "ai_draft_generation",
-                      "plugin"
                     ]
                   }
                 },
@@ -1791,7 +1733,7 @@
       "post": {
         "summary": "异步生成图像",
         "deprecated": false,
-        "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。",
+        "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「异步编辑图像」](/api-reference/ai-服务图像生成/异步编辑图像)接口。",
         "operationId": "ImageController_generateImageAsync",
         "tags": [
           "AI 服务/图像生成"
@@ -1811,7 +1753,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "description": "图片生成模型"
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
                   },
                   "n": {
                     "description": "生成图片数量",
@@ -1820,7 +1762,7 @@
                     "maximum": 10
                   },
                   "quality": {
-                    "description": "图片质量",
+                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。",
                     "type": "string"
                   },
                   "response_format": {
@@ -1832,25 +1774,12 @@
                     ]
                   },
                   "size": {
-                    "description": "图片尺寸",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "style": {
-                    "description": "图片风格",
+                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
                     "type": "string"
-                  },
-                  "user": {
-                    "description": "用户标识符",
-                    "type": "string"
-                  },
-                  "source": {
-                    "description": "消费来源",
-                    "type": "string",
-                    "enum": [
-                      "ai_image",
-                      "ai_draft_generation",
-                      "plugin"
-                    ]
                   }
                 },
                 "required": [
@@ -1985,7 +1914,7 @@
       "post": {
         "summary": "异步编辑图像",
         "deprecated": false,
-        "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。",
+        "description": "接口说明：异步编辑图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「异步生成图像」](/api-reference/ai-服务图像生成/异步生成图像)接口。",
         "operationId": "ImageController_editImageAsync",
         "tags": [
           "AI 服务/图像生成"
@@ -1999,7 +1928,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "图片编辑模型"
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
                   },
                   "image": {
                     "anyOf": [
@@ -2022,7 +1951,7 @@
                     "description": "编辑描述"
                   },
                   "mask": {
-                    "description": "遮罩图片",
+                    "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。",
                     "type": "string"
                   },
                   "n": {
@@ -2032,7 +1961,7 @@
                     "maximum": 1
                   },
                   "size": {
-                    "description": "图片尺寸",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "response_format": {
@@ -2041,19 +1970,6 @@
                     "enum": [
                       "url",
                       "b64_json"
-                    ]
-                  },
-                  "user": {
-                    "description": "用户标识符",
-                    "type": "string"
-                  },
-                  "source": {
-                    "description": "消费来源",
-                    "type": "string",
-                    "enum": [
-                      "ai_image",
-                      "ai_draft_generation",
-                      "plugin"
                     ]
                   }
                 },
@@ -2188,7 +2104,7 @@
     },
     "/api/ai/image/task/{logId}": {
       "get": {
-        "summary": "查询图像任务状态",
+        "summary": "图像任务状态",
         "deprecated": false,
         "description": "接口说明：根据 logId 查询异步图像任务的执行状态与结果。",
         "operationId": "ImageController_getImageTaskStatus",
@@ -2315,31 +2231,12 @@
       "get": {
         "summary": "对话模型列表",
         "deprecated": false,
-        "description": "接口说明：获取当前账号可用的对话模型列表及能力信息，用于在调用模型中转或聊天接口前选择模型、展示模型能力和价格信息。",
+        "description": "接口说明：获取当前账号可用的对话模型列表及能力信息，用于在调用对话接口前选择模型、展示模型能力和价格信息。",
         "operationId": "ChatController_getChatModels",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/大语言模型"
         ],
-        "parameters": [
-          {
-            "name": "channel",
-            "in": "query",
-            "description": "渠道标识",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "scene",
-            "in": "query",
-            "description": "业务场景",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -2447,12 +2344,12 @@
     },
     "/api/ai/chat/completions": {
       "post": {
-        "summary": "中转 Chat Completions（OpenAI 规范）",
+        "summary": "OpenAI 对话",
         "deprecated": false,
-        "description": "接口说明：兼容 OpenAI Chat Completions 规范的中转接口，支持 stream；OpenAI SDK 默认携带 Authorization: Bearer 头，按 ApiKey 鉴权计费。",
+        "description": "接口说明：OpenAI Chat Completions API 的兼容端点，支持 `stream` 流式输出。请求、响应与错误格式完全遵循 OpenAI 规范；鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_chatCompletions",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/大语言模型"
         ],
         "parameters": [],
         "requestBody": {
@@ -2518,12 +2415,12 @@
     },
     "/api/ai/v1/messages": {
       "post": {
-        "summary": "中转 Messages（Anthropic 规范，SSE）",
+        "summary": "Anthropic 对话",
         "deprecated": false,
-        "description": "接口说明：兼容 Anthropic /v1/messages 规范的流式中转接口；Anthropic SDK 默认携带 x-api-key 头。",
+        "description": "接口说明：Anthropic Messages API（`/v1/messages`）的兼容端点，支持流式输出（SSE）。请求、响应与错误格式遵循 Anthropic 规范；鉴权使用 `x-api-key` 头（Anthropic SDK 默认携带），已有 Anthropic SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_claudeMessages",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/大语言模型"
         ],
         "parameters": [],
         "requestBody": {
@@ -2589,18 +2486,18 @@
     },
     "/api/ai/v1beta/models/{model}:generateContent": {
       "post": {
-        "summary": "中转 GenerateContent（Gemini 规范）",
+        "summary": "Gemini 对话",
         "deprecated": false,
-        "description": "接口说明：兼容 Gemini :generateContent 规范的非流式聚合中转接口；Gemini SDK 默认携带 x-goog-api-key 头。",
+        "description": "接口说明：Gemini `:generateContent` API 的兼容端点（非流式，聚合返回完整结果）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_geminiGenerateContent",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/大语言模型"
         ],
         "parameters": [
           {
             "name": "model",
             "in": "path",
-            "description": "",
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
             "required": true,
             "example": "",
             "schema": {
@@ -2616,7 +2513,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "Gemini 模型名称"
+                    "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口返回的 `data[n].name`。"
                   },
                   "contents": {
                     "type": "array",
@@ -2775,18 +2672,18 @@
     },
     "/api/ai/v1beta/models/{model}:streamGenerateContent": {
       "post": {
-        "summary": "中转 StreamGenerateContent（Gemini 规范，SSE）",
+        "summary": "Gemini 流式对话",
         "deprecated": false,
-        "description": "接口说明：兼容 Gemini :streamGenerateContent 规范的流式中转接口（SSE）。",
+        "description": "接口说明：Gemini `:streamGenerateContent` API 的兼容端点（流式输出，SSE）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_geminiStreamGenerateContent",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/大语言模型"
         ],
         "parameters": [
           {
             "name": "model",
             "in": "path",
-            "description": "",
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
             "required": true,
             "example": "",
             "schema": {
@@ -2802,7 +2699,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "Gemini 模型名称"
+                    "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口返回的 `data[n].name`。"
                   },
                   "contents": {
                     "type": "array",
@@ -3012,12 +2909,12 @@
     },
     "/api/ai/images/generations": {
       "post": {
-        "summary": "中转图像生成（OpenAI 规范）",
+        "summary": "OpenAI 图像生成",
         "deprecated": false,
-        "description": "接口说明：兼容 OpenAI /images/generations 规范的图像生成中转接口；OpenAI SDK 默认携带 Authorization: Bearer 头。",
+        "description": "接口说明：OpenAI Images API `/v1/images/generations` 的兼容端点（文生图）。请求、响应与错误格式完全遵循 OpenAI 规范：返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「生成图像」](/api-reference/ai-服务图像生成/生成图像)接口。",
         "operationId": "RelayController_imagesGenerations",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/图像生成"
         ],
         "parameters": [],
         "requestBody": {
@@ -3083,12 +2980,12 @@
     },
     "/api/ai/images/edits": {
       "post": {
-        "summary": "中转图像编辑（OpenAI 规范）",
+        "summary": "OpenAI 图像编辑",
         "deprecated": false,
-        "description": "接口说明：兼容 OpenAI /images/edits 规范的图像编辑中转接口。",
+        "description": "接口说明：OpenAI Images API `/v1/images/edits` 的兼容端点（图生图）。请求、响应与错误格式完全遵循 OpenAI 规范：支持 `application/json` 与 `multipart/form-data`（可直接上传图片与遮罩文件），返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「编辑图像」](/api-reference/ai-服务图像生成/编辑图像)接口。",
         "operationId": "RelayController_imagesEdits",
         "tags": [
-          "AI 服务/模型中转"
+          "AI 服务/图像生成"
         ],
         "parameters": [],
         "requestBody": {
@@ -4060,7 +3957,7 @@
     },
     "/api/v2/channels/accounts/{accountId}/analytics": {
       "get": {
-        "summary": "账号数据",
+        "summary": "账号数据统计",
         "deprecated": false,
         "description": "接口说明：获取指定账号的运营数据统计。",
         "operationId": "AccountsController_accountAnalytics_v2",
@@ -4219,7 +4116,7 @@
     },
     "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
       "get": {
-        "summary": "获取账号发布选项取值",
+        "summary": "发布选项可选值",
         "deprecated": false,
         "description": "接口说明：获取账号在某平台动态发布选项字段下的可选取值。",
         "operationId": "AccountsController_publishOptionValues_v2",
@@ -4367,7 +4264,7 @@
         }
       },
       "post": {
-        "summary": "创建账号发布选项取值",
+        "summary": "创建发布选项值",
         "deprecated": false,
         "description": "接口说明：为账号在某平台动态发布选项字段下创建新的取值。",
         "operationId": "AccountsController_createPublishOptionValue_v2",
@@ -4531,7 +4428,7 @@
     },
     "/api/v2/channels/publish/flows": {
       "post": {
-        "summary": "创建发布 Flow",
+        "summary": "创建发布流程",
         "deprecated": false,
         "description": "接口说明：创建多平台发布 flow，一次请求可生成多个单平台任务。\n请求参数中资源url只接受assets.aitoearn.ai(国际版)/assets.aitoearn.cn(中国版)域名下文件url，资源url需要与接口请求地址对应。\n例如：assets.aitoearn.cn请求地址需传入assets.aitoearn.cn域名下资源url，资源上传请先通过“生成上传签名 URL”接口上传文件。",
         "operationId": "PublishFlowController_createFlow_v2",
@@ -7081,7 +6978,7 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "账户不存在",
+                      "message": "渠道账号未找到",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -7198,7 +7095,7 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "账户不存在"
+              "message": "渠道账号未找到"
             },
             {
               "name": "ChannelPublishDuplicateItem",
@@ -7247,7 +7144,7 @@
     },
     "/api/v2/channels/publish/flows/{flowId}": {
       "get": {
-        "summary": "获取 Flow 详情",
+        "summary": "发布流程详情",
         "deprecated": false,
         "description": "接口说明：根据 flowId 获取发布 flow 聚合信息",
         "operationId": "PublishFlowController_getFlow_v2",
@@ -7805,7 +7702,7 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "账户不存在",
+                      "message": "渠道账号未找到",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -7882,7 +7779,7 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "账户不存在"
+              "message": "渠道账号未找到"
             },
             {
               "name": "ChannelPublishCancelNotSupported",
@@ -8300,7 +8197,7 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "账户不存在",
+                      "message": "渠道账号未找到",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -8392,7 +8289,7 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "账户不存在"
+              "message": "渠道账号未找到"
             },
             {
               "name": "ChannelPublishPlatformNotSupported",
@@ -8431,7 +8328,7 @@
     },
     "/api/v2/channels/publish/records": {
       "get": {
-        "summary": "获取发布历史",
+        "summary": "发布记录列表",
         "deprecated": false,
         "description": "接口说明：分页获取用户发布历史记录",
         "operationId": "PublishRecordController_listRecords_v2",
@@ -8612,7 +8509,7 @@
     },
     "/api/v2/channels/publish/records/queued": {
       "get": {
-        "summary": "获取排队中的任务",
+        "summary": "待发布列表",
         "deprecated": false,
         "description": "接口说明：获取用户排队中的发布任务",
         "operationId": "PublishRecordController_listQueued_v2",
@@ -8782,7 +8679,7 @@
     },
     "/api/v2/channels/publish/records/published": {
       "get": {
-        "summary": "获取已发布的任务",
+        "summary": "已发布列表",
         "deprecated": false,
         "description": "接口说明：获取用户已发布的任务",
         "operationId": "PublishRecordController_listPublished_v2",
@@ -8952,7 +8849,7 @@
     },
     "/api/v2/channels/publish/records/public/{recordId}": {
       "get": {
-        "summary": "公开查询发布记录",
+        "summary": "公开记录详情",
         "deprecated": false,
         "description": "接口说明：根据记录 ID 公开查询发布状态、作品链接等基础信息",
         "operationId": "PublishRecordController_getPublicRecord_v2",
@@ -9162,7 +9059,7 @@
                     "summary": "PublishTaskStatusInvalid (15018)",
                     "value": {
                       "code": 15018,
-                      "message": "任务已发布或正在进行中",
+                      "message": "发布任务状态不允许此操作",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -9197,14 +9094,14 @@
             {
               "name": "PublishTaskStatusInvalid",
               "code": 15018,
-              "message": "任务已发布或正在进行中"
+              "message": "发布任务状态不允许此操作"
             }
           ],
           "rawResponse": false
         }
       },
       "get": {
-        "summary": "获取发布记录详情",
+        "summary": "发布记录详情",
         "deprecated": false,
         "description": "接口说明：根据记录 ID 获取发布记录详情",
         "operationId": "PublishRecordController_getRecord_v2",
@@ -9339,7 +9236,7 @@
     },
     "/api/v2/channels/publish/records/{recordId}/work-link": {
       "patch": {
-        "summary": "更新作品链接状态",
+        "summary": "更正作品链接",
         "deprecated": false,
         "description": "接口说明：更新当前用户发布记录的作品链接状态；ready 时会解析作品链接并同步作品 ID 等派生字段。",
         "operationId": "PublishRecordController_updateWorkLink_v2",
@@ -9550,7 +9447,7 @@
     },
     "/api/v2/channels/publish/records/{recordId}/user-action": {
       "get": {
-        "summary": "获取用户操作信息",
+        "summary": "App 拉起链接",
         "deprecated": false,
         "description": "接口说明：获取抖音等待用户操作发布记录的 App scheme 和短链接",
         "operationId": "PublishRecordController_getUserAction_v2",
@@ -9669,7 +9566,7 @@
                     "summary": "PublishTaskStatusInvalid (15018)",
                     "value": {
                       "code": 15018,
-                      "message": "任务已发布或正在进行中",
+                      "message": "发布任务状态不允许此操作",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -9714,7 +9611,7 @@
             {
               "name": "PublishTaskStatusInvalid",
               "code": 15018,
-              "message": "任务已发布或正在进行中"
+              "message": "发布任务状态不允许此操作"
             }
           ],
           "rawResponse": false
@@ -9723,7 +9620,7 @@
     },
     "/api/v2/channels/platforms": {
       "get": {
-        "summary": "获取所有平台元数据",
+        "summary": "平台列表",
         "deprecated": false,
         "description": "接口说明：返回已注册平台的元数据列表，包括展示名、logo、能力声明等",
         "operationId": "PlatformsController_listPlatforms_v2",
@@ -9899,7 +9796,7 @@
     },
     "/api/v2/channels/platforms/{platform}/publish-options": {
       "get": {
-        "summary": "获取平台动态发布选项",
+        "summary": "平台发布选项",
         "deprecated": false,
         "description": "接口说明：返回该平台发布选项字段的动态取值来源",
         "operationId": "PlatformsController_listPublishOptions_v2",
@@ -10019,7 +9916,7 @@
     },
     "/api/v2/channels/engagement/comments": {
       "get": {
-        "summary": "获取评论列表",
+        "summary": "评论列表",
         "deprecated": false,
         "description": "接口说明：获取指定作品的评论列表",
         "operationId": "EngagementController_listComments_v2",
@@ -10546,7 +10443,7 @@
     },
     "/api/v2/channels/engagement/function": {
       "post": {
-        "summary": "调用互动函数",
+        "summary": "执行互动操作",
         "deprecated": false,
         "description": "接口说明：调用平台支持的互动函数",
         "operationId": "EngagementController_callFunction_v2",
@@ -10965,7 +10862,7 @@
     },
     "/api/v2/channels/works/{platform}": {
       "get": {
-        "summary": "获取账号作品列表",
+        "summary": "作品列表",
         "deprecated": false,
         "description": "接口说明：获取指定平台账号的作品列表",
         "operationId": "WorksController_listWorks_v2",
@@ -11267,7 +11164,7 @@
     },
     "/api/v2/channels/works/{platform}/{platformWorkId}": {
       "get": {
-        "summary": "获取作品详情",
+        "summary": "作品详情",
         "deprecated": false,
         "description": "接口说明：获取指定作品的详细信息",
         "operationId": "WorksController_getDetail_v2",
@@ -11471,7 +11368,7 @@
     },
     "/api/v2/channels/works/{platform}/{platformWorkId}/analytics": {
       "get": {
-        "summary": "获取作品数据",
+        "summary": "作品数据统计",
         "deprecated": false,
         "description": "接口说明：获取指定作品的分析数据",
         "operationId": "WorksController_getAnalytics_v2",
@@ -11829,7 +11726,7 @@
     },
     "/api/v2/channels/account-groups": {
       "get": {
-        "summary": "账号分组列表",
+        "summary": "分组列表",
         "deprecated": false,
         "description": "接口说明：获取当前用户的账号分组列表。",
         "operationId": "AccountGroupsController_list_v2",
@@ -11931,7 +11828,7 @@
         }
       },
       "post": {
-        "summary": "创建账号分组",
+        "summary": "创建分组",
         "deprecated": false,
         "description": "接口说明：创建账号分组。",
         "operationId": "AccountGroupsController_create_v2",
@@ -12084,7 +11981,7 @@
         }
       },
       "delete": {
-        "summary": "删除账号分组",
+        "summary": "批量删除分组",
         "deprecated": false,
         "description": "接口说明：根据 ID 列表批量删除账号分组。",
         "operationId": "AccountGroupsController_deleteMany_v2",
@@ -12210,7 +12107,7 @@
     },
     "/api/v2/channels/account-groups/{groupId}": {
       "patch": {
-        "summary": "更新账号分组",
+        "summary": "更新分组",
         "deprecated": false,
         "description": "接口说明：根据 groupId 更新分组信息。",
         "operationId": "AccountGroupsController_update_v2",
@@ -12388,7 +12285,7 @@
     },
     "/api/v2/channels/account-groups/{groupId}/accounts/rank": {
       "patch": {
-        "summary": "更新分组内账号排序",
+        "summary": "调整账号排序",
         "deprecated": false,
         "description": "接口说明：更新指定分组内的账号排序。",
         "operationId": "AccountGroupsController_sortAccounts_v2",
@@ -12531,7 +12428,7 @@
     },
     "/api/v2/channels/accounts/auth/{platform}": {
       "get": {
-        "summary": "开始平台授权",
+        "summary": "发起平台授权",
         "deprecated": false,
         "description": "接口说明：生成平台 OAuth 授权 URL",
         "operationId": "AuthController_startAuth_v2",
@@ -12674,7 +12571,7 @@
     },
     "/api/v2/channels/accounts/auth/{platform}/status/{sessionId}": {
       "get": {
-        "summary": "查询授权状态",
+        "summary": "授权会话状态",
         "deprecated": false,
         "description": "接口说明：轮询平台授权 Session 状态",
         "operationId": "AuthController_getAuthStatus_v2",
@@ -12862,7 +12759,7 @@
     },
     "/api/assets/uploadSign": {
       "post": {
-        "summary": "生成上传签名 URL",
+        "summary": "生成上传签名",
         "deprecated": false,
         "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。",
         "operationId": "AssetsHttpController_createUploadSign",
@@ -14266,7 +14163,7 @@
           },
           "model": {
             "type": "string",
-            "description": "模型 ID"
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
           },
           "max_tokens": {
             "default": 32000,
@@ -14274,19 +14171,6 @@
             "minimum": 1,
             "maximum": 9007199254740991,
             "description": "最大token值"
-          },
-          "billingGroupId": {
-            "description": "计费分组 ID，相同分组的连续 Chat 调用合并扣费日志",
-            "type": "string",
-            "minLength": 1
-          },
-          "source": {
-            "description": "消费来源",
-            "type": "string",
-            "enum": [
-              "ai_chat",
-              "plugin"
-            ]
           }
         },
         "required": [
@@ -14598,20 +14482,7 @@
           },
           "model": {
             "type": "string",
-            "description": "模型ID"
-          },
-          "billingGroupId": {
-            "description": "计费分组 ID，相同分组的连续 Chat 调用合并扣费日志",
-            "type": "string",
-            "minLength": 1
-          },
-          "source": {
-            "description": "消费来源",
-            "type": "string",
-            "enum": [
-              "ai_chat",
-              "plugin"
-            ]
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
           },
           "stream": {
             "description": "是否流式返回",
@@ -15006,7 +14877,7 @@
           },
           "model": {
             "type": "string",
-            "description": "模型 ID"
+            "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
           },
           "n": {
             "type": "integer",
@@ -15016,7 +14887,7 @@
           },
           "quality": {
             "type": "string",
-            "description": "质量档位"
+            "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。"
           },
           "response_format": {
             "type": "string",
@@ -15028,24 +14899,11 @@
           },
           "size": {
             "type": "string",
-            "description": "图片尺寸大小"
+            "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
           },
           "style": {
             "type": "string",
-            "description": "风格参数"
-          },
-          "user": {
-            "type": "string",
-            "description": "用户标识符"
-          },
-          "source": {
-            "type": "string",
-            "enum": [
-              "ai_image",
-              "ai_draft_generation",
-              "plugin"
-            ],
-            "description": "来源"
+            "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
           }
         },
         "required": [
@@ -15094,7 +14952,7 @@
         "properties": {
           "model": {
             "type": "string",
-            "description": "模型 ID"
+            "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
           },
           "image": {
             "anyOf": [
@@ -15116,7 +14974,7 @@
           },
           "mask": {
             "type": "string",
-            "description": "遮罩图片"
+            "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
           },
           "n": {
             "type": "integer",
@@ -15126,7 +14984,7 @@
           },
           "size": {
             "type": "string",
-            "description": "图片尺寸大小"
+            "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
           },
           "response_format": {
             "type": "string",
@@ -15135,19 +14993,6 @@
               "b64_json"
             ],
             "description": "返回格式"
-          },
-          "user": {
-            "type": "string",
-            "description": "用户标识符"
-          },
-          "source": {
-            "type": "string",
-            "enum": [
-              "ai_image",
-              "ai_draft_generation",
-              "plugin"
-            ],
-            "description": "来源"
           }
         },
         "required": [
