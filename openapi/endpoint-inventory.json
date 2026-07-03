@@ -261,19 +261,6 @@
   },
   {
     "index": 21,
-    "method": "POST",
-    "path": "/api/v2/channels/accounts",
-    "operationId": "AccountsController_create_v2",
-    "tag": "渠道管理/账号",
-    "summary": "创建账号",
-    "hasRequestBody": true,
-    "parameterCount": 0,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 22,
     "method": "GET",
     "path": "/api/v2/channels/accounts/{accountId}",
     "operationId": "AccountsController_getById_v2",
@@ -286,7 +273,7 @@
     ]
   },
   {
-    "index": 23,
+    "index": 22,
     "method": "DELETE",
     "path": "/api/v2/channels/accounts/{accountId}",
     "operationId": "AccountsController_delete_v2",
@@ -299,7 +286,7 @@
     ]
   },
   {
-    "index": 24,
+    "index": 23,
     "method": "GET",
     "path": "/api/v2/channels/accounts/{accountId}/auth-status",
     "operationId": "AccountsController_authStatus_v2",
@@ -312,20 +299,7 @@
     ]
   },
   {
-    "index": 25,
-    "method": "GET",
-    "path": "/api/v2/channels/accounts/{accountId}/analytics",
-    "operationId": "AccountsController_accountAnalytics_v2",
-    "tag": "渠道管理/账号",
-    "summary": "账号数据",
-    "hasRequestBody": false,
-    "parameterCount": 3,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 26,
+    "index": 24,
     "method": "GET",
     "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
     "operationId": "AccountsController_publishOptionValues_v2",
@@ -338,7 +312,7 @@
     ]
   },
   {
-    "index": 27,
+    "index": 25,
     "method": "POST",
     "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
     "operationId": "AccountsController_createPublishOptionValue_v2",
@@ -351,7 +325,7 @@
     ]
   },
   {
-    "index": 28,
+    "index": 26,
     "method": "POST",
     "path": "/api/v2/channels/publish/flows",
     "operationId": "PublishFlowController_createFlow_v2",
@@ -364,7 +338,7 @@
     ]
   },
   {
-    "index": 29,
+    "index": 27,
     "method": "GET",
     "path": "/api/v2/channels/publish/flows/{flowId}",
     "operationId": "PublishFlowController_getFlow_v2",
@@ -377,7 +351,7 @@
     ]
   },
   {
-    "index": 30,
+    "index": 28,
     "method": "POST",
     "path": "/api/v2/channels/publish/tasks/{taskId}/publish-now",
     "operationId": "PublishTaskController_publishNow_v2",
@@ -390,7 +364,7 @@
     ]
   },
   {
-    "index": 31,
+    "index": 29,
     "method": "POST",
     "path": "/api/v2/channels/publish/tasks/{taskId}/retry",
     "operationId": "PublishTaskController_retryTask_v2",
@@ -403,7 +377,7 @@
     ]
   },
   {
-    "index": 32,
+    "index": 30,
     "method": "DELETE",
     "path": "/api/v2/channels/publish/tasks/{taskId}",
     "operationId": "PublishTaskController_cancelTask_v2",
@@ -416,7 +390,7 @@
     ]
   },
   {
-    "index": 33,
+    "index": 31,
     "method": "PATCH",
     "path": "/api/v2/channels/publish/tasks/{taskId}/publish-at",
     "operationId": "PublishTaskController_updatePublishAt_v2",
@@ -429,20 +403,7 @@
     ]
   },
   {
-    "index": 34,
-    "method": "POST",
-    "path": "/api/v2/channels/publish/tasks/{taskId}/update",
-    "operationId": "PublishTaskController_updatePublished_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "更新已发布内容",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 35,
+    "index": 32,
     "method": "GET",
     "path": "/api/v2/channels/publish/records",
     "operationId": "PublishRecordController_listRecords_v2",
@@ -455,7 +416,7 @@
     ]
   },
   {
-    "index": 36,
+    "index": 33,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/queued",
     "operationId": "PublishRecordController_listQueued_v2",
@@ -468,7 +429,7 @@
     ]
   },
   {
-    "index": 37,
+    "index": 34,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/published",
     "operationId": "PublishRecordController_listPublished_v2",
@@ -481,20 +442,7 @@
     ]
   },
   {
-    "index": 38,
-    "method": "GET",
-    "path": "/api/v2/channels/publish/records/public/{recordId}",
-    "operationId": "PublishRecordController_getPublicRecord_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "公开查询发布记录",
-    "hasRequestBody": false,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 39,
+    "index": 35,
     "method": "DELETE",
     "path": "/api/v2/channels/publish/records/{recordId}",
     "operationId": "PublishRecordController_deleteRecord_v2",
@@ -507,7 +455,7 @@
     ]
   },
   {
-    "index": 40,
+    "index": 36,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/{recordId}",
     "operationId": "PublishRecordController_getRecord_v2",
@@ -520,20 +468,7 @@
     ]
   },
   {
-    "index": 41,
-    "method": "PATCH",
-    "path": "/api/v2/channels/publish/records/{recordId}/work-link",
-    "operationId": "PublishRecordController_updateWorkLink_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "更新作品链接状态",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 42,
+    "index": 37,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/{recordId}/user-action",
     "operationId": "PublishRecordController_getUserAction_v2",
@@ -546,7 +481,7 @@
     ]
   },
   {
-    "index": 43,
+    "index": 38,
     "method": "GET",
     "path": "/api/v2/channels/platforms",
     "operationId": "PlatformsController_listPlatforms_v2",
@@ -559,7 +494,7 @@
     ]
   },
   {
-    "index": 44,
+    "index": 39,
     "method": "GET",
     "path": "/api/v2/channels/platforms/{platform}/publish-options",
     "operationId": "PlatformsController_listPublishOptions_v2",
@@ -572,46 +507,7 @@
     ]
   },
   {
-    "index": 45,
-    "method": "GET",
-    "path": "/api/v2/channels/engagement/comments",
-    "operationId": "EngagementController_listComments_v2",
-    "tag": "渠道管理/互动",
-    "summary": "获取评论列表",
-    "hasRequestBody": false,
-    "parameterCount": 4,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 46,
-    "method": "POST",
-    "path": "/api/v2/channels/engagement/comments",
-    "operationId": "EngagementController_createComment_v2",
-    "tag": "渠道管理/互动",
-    "summary": "发表评论",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 47,
-    "method": "POST",
-    "path": "/api/v2/channels/engagement/function",
-    "operationId": "EngagementController_callFunction_v2",
-    "tag": "渠道管理/互动",
-    "summary": "调用互动函数",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ]
-  },
-  {
-    "index": 48,
+    "index": 40,
     "method": "GET",
     "path": "/api/v2/channels/works/link-info",
     "operationId": "WorksController_getLinkInfo_v2",
@@ -624,7 +520,7 @@
     ]
   },
   {
-    "index": 49,
+    "index": 41,
     "method": "GET",
     "path": "/api/v2/channels/works/{platform}",
     "operationId": "WorksController_listWorks_v2",
@@ -637,7 +533,7 @@
     ]
   },
   {
-    "index": 50,
+    "index": 42,
     "method": "GET",
     "path": "/api/v2/channels/works/{platform}/{platformWorkId}",
     "operationId": "WorksController_getDetail_v2",
@@ -650,7 +546,7 @@
     ]
   },
   {
-    "index": 51,
+    "index": 43,
     "method": "GET",
     "path": "/api/v2/channels/works/{platform}/{platformWorkId}/analytics",
     "operationId": "WorksController_getAnalytics_v2",
@@ -663,7 +559,7 @@
     ]
   },
   {
-    "index": 52,
+    "index": 44,
     "method": "POST",
     "path": "/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify",
     "operationId": "WorksController_verifyOwnership_v2",
@@ -676,7 +572,7 @@
     ]
   },
   {
-    "index": 53,
+    "index": 45,
     "method": "GET",
     "path": "/api/v2/channels/account-groups",
     "operationId": "AccountGroupsController_list_v2",
@@ -689,7 +585,7 @@
     ]
   },
   {
-    "index": 54,
+    "index": 46,
     "method": "POST",
     "path": "/api/v2/channels/account-groups",
     "operationId": "AccountGroupsController_create_v2",
@@ -702,7 +598,7 @@
     ]
   },
   {
-    "index": 55,
+    "index": 47,
     "method": "DELETE",
     "path": "/api/v2/channels/account-groups",
     "operationId": "AccountGroupsController_deleteMany_v2",
@@ -715,7 +611,7 @@
     ]
   },
   {
-    "index": 56,
+    "index": 48,
     "method": "PATCH",
     "path": "/api/v2/channels/account-groups/{groupId}",
     "operationId": "AccountGroupsController_update_v2",
@@ -728,7 +624,7 @@
     ]
   },
   {
-    "index": 57,
+    "index": 49,
     "method": "PATCH",
     "path": "/api/v2/channels/account-groups/{groupId}/accounts/rank",
     "operationId": "AccountGroupsController_sortAccounts_v2",
@@ -741,7 +637,7 @@
     ]
   },
   {
-    "index": 58,
+    "index": 50,
     "method": "GET",
     "path": "/api/v2/channels/accounts/auth/{platform}",
     "operationId": "AuthController_startAuth_v2",
@@ -754,7 +650,7 @@
     ]
   },
   {
-    "index": 59,
+    "index": 51,
     "method": "GET",
     "path": "/api/v2/channels/accounts/auth/{platform}/status/{sessionId}",
     "operationId": "AuthController_getAuthStatus_v2",
@@ -767,7 +663,7 @@
     ]
   },
   {
-    "index": 60,
+    "index": 52,
     "method": "POST",
     "path": "/api/assets/uploadSign",
     "operationId": "AssetsHttpController_createUploadSign",
@@ -780,7 +676,7 @@
     ]
   },
   {
-    "index": 61,
+    "index": 53,
     "method": "POST",
     "path": "/api/assets/{id}/confirm",
     "operationId": "AssetsHttpController_confirmUpload",

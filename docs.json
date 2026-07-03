@@ -138,11 +138,9 @@
                 "pages": [
                   "GET /api/v2/channels/accounts",
                   "DELETE /api/v2/channels/accounts",
-                  "POST /api/v2/channels/accounts",
                   "GET /api/v2/channels/accounts/{accountId}",
                   "DELETE /api/v2/channels/accounts/{accountId}",
                   "GET /api/v2/channels/accounts/{accountId}/auth-status",
-                  "GET /api/v2/channels/accounts/{accountId}/analytics",
                   "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
                   "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values"
                 ]
@@ -157,14 +155,11 @@
                   "POST /api/v2/channels/publish/tasks/{taskId}/retry",
                   "DELETE /api/v2/channels/publish/tasks/{taskId}",
                   "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at",
-                  "POST /api/v2/channels/publish/tasks/{taskId}/update",
                   "GET /api/v2/channels/publish/records",
                   "GET /api/v2/channels/publish/records/queued",
                   "GET /api/v2/channels/publish/records/published",
-                  "GET /api/v2/channels/publish/records/public/{recordId}",
                   "DELETE /api/v2/channels/publish/records/{recordId}",
                   "GET /api/v2/channels/publish/records/{recordId}",
-                  "PATCH /api/v2/channels/publish/records/{recordId}/work-link",
                   "GET /api/v2/channels/publish/records/{recordId}/user-action"
                 ]
               },
@@ -174,15 +169,6 @@
                 "pages": [
                   "GET /api/v2/channels/platforms",
                   "GET /api/v2/channels/platforms/{platform}/publish-options"
-                ]
-              },
-              {
-                "group": "渠道管理/互动",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/engagement/comments",
-                  "POST /api/v2/channels/engagement/comments",
-                  "POST /api/v2/channels/engagement/function"
                 ]
               },
               {

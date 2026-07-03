@@ -217,9 +217,26 @@
       "source": null
     }
   },
-  "GET /api/v2/channels/accounts/{accountId}/analytics": {
-    "summary": "账号数据统计"
+  "GET /api/v2/channels/accounts": {
+    "queryParameters": {
+      "spaceIds": null,
+      "groupId": null,
+      "types": {
+        "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
+        "schema": {
+          "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。"
+        }
+      },
+      "status": {
+        "description": "账号状态：`1` 正常（可用），`0` 异常（不可用）。",
+        "schema": {
+          "description": "账号状态：`1` 正常（可用），`0` 异常（不可用）。"
+        }
+      }
+    }
   },
+  "POST /api/v2/channels/accounts": null,
+  "GET /api/v2/channels/accounts/{accountId}/analytics": null,
   "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
     "summary": "发布选项可选值"
   },
@@ -241,15 +258,12 @@
   "GET /api/v2/channels/publish/records/published": {
     "summary": "已发布列表"
   },
-  "GET /api/v2/channels/publish/records/public/{recordId}": {
-    "summary": "公开记录详情"
-  },
+  "POST /api/v2/channels/publish/tasks/{taskId}/update": null,
+  "GET /api/v2/channels/publish/records/public/{recordId}": null,
   "GET /api/v2/channels/publish/records/{recordId}": {
     "summary": "发布记录详情"
   },
-  "PATCH /api/v2/channels/publish/records/{recordId}/work-link": {
-    "summary": "更正作品链接"
-  },
+  "PATCH /api/v2/channels/publish/records/{recordId}/work-link": null,
   "GET /api/v2/channels/publish/records/{recordId}/user-action": {
     "summary": "App 拉起链接"
   },
@@ -259,12 +273,9 @@
   "GET /api/v2/channels/platforms/{platform}/publish-options": {
     "summary": "平台发布选项"
   },
-  "GET /api/v2/channels/engagement/comments": {
-    "summary": "评论列表"
-  },
-  "POST /api/v2/channels/engagement/function": {
-    "summary": "执行互动操作"
-  },
+  "GET /api/v2/channels/engagement/comments": null,
+  "POST /api/v2/channels/engagement/comments": null,
+  "POST /api/v2/channels/engagement/function": null,
   "GET /api/v2/channels/works/{platform}": {
     "summary": "作品列表"
   },
