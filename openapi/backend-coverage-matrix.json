@@ -905,88 +905,6 @@
   },
   {
     "index": 21,
-    "method": "POST",
-    "path": "/api/v2/channels/accounts",
-    "operationId": "AccountsController_create_v2",
-    "tag": "渠道管理/账号",
-    "summary": "创建账号",
-    "hasRequestBody": true,
-    "parameterCount": 0,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "AccountsController",
-    "controllerMethod": "create",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "accountService",
-        "type": "AccountService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
-        "method": "addAccount"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "addAccount",
-      "createPluginAccount",
-      "normalizeCreateInput",
-      "normalizeWeChatChannelsCreateInput",
-      "resolveWritableGroupId",
-      "saveWritableAccount",
-      "emitAccountConnected"
-    ],
-    "responseCodes": [
-      "AccountCreateFailed",
-      "AccountGroupNotFound",
-      "ChannelAccountAlreadyConnectedToAnotherUser",
-      "ChannelAccountCreateNotSupported",
-      "ChannelAccountCreateRequiredFieldMissing",
-      "ChannelPlatformResponseInvalid"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "AccountCreateFailed",
-        "code": 12604,
-        "message": "账号创建失败"
-      },
-      {
-        "name": "AccountGroupNotFound",
-        "code": 12601,
-        "message": "账号分组未找到"
-      },
-      {
-        "name": "ChannelAccountAlreadyConnectedToAnotherUser",
-        "code": 15082,
-        "message": "该渠道账号已绑定到其他用户"
-      },
-      {
-        "name": "ChannelAccountCreateNotSupported",
-        "code": 15081,
-        "message": "该平台暂不支持通过此接口创建账号"
-      },
-      {
-        "name": "ChannelAccountCreateRequiredFieldMissing",
-        "code": 15092,
-        "message": "缺少渠道账号创建必填字段"
-      },
-      {
-        "name": "ChannelPlatformResponseInvalid",
-        "code": 15072,
-        "message": "{{platform}} 平台接口返回数据无效"
-      }
-    ],
-    "customExceptions": [],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 22,
     "method": "GET",
     "path": "/api/v2/channels/accounts/{accountId}",
     "operationId": "AccountsController_getById_v2",
@@ -1037,7 +955,7 @@
     "notes": []
   },
   {
-    "index": 23,
+    "index": 22,
     "method": "DELETE",
     "path": "/api/v2/channels/accounts/{accountId}",
     "operationId": "AccountsController_delete_v2",
@@ -1084,7 +1002,7 @@
     "notes": []
   },
   {
-    "index": 24,
+    "index": 23,
     "method": "GET",
     "path": "/api/v2/channels/accounts/{accountId}/auth-status",
     "operationId": "AccountsController_authStatus_v2",
@@ -1122,45 +1040,7 @@
     "notes": []
   },
   {
-    "index": 25,
-    "method": "GET",
-    "path": "/api/v2/channels/accounts/{accountId}/analytics",
-    "operationId": "AccountsController_accountAnalytics_v2",
-    "tag": "渠道管理/账号",
-    "summary": "账号数据",
-    "hasRequestBody": false,
-    "parameterCount": 3,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "AccountsController",
-    "controllerMethod": "accountAnalytics",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "analyticsService",
-        "type": "AnalyticsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/analytics/analytics.service.ts",
-        "method": "fetchAccountAnalytics"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "fetchAccountAnalytics"
-    ],
-    "responseCodes": [],
-    "responseCodeValues": [],
-    "customExceptions": [],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 26,
+    "index": 24,
     "method": "GET",
     "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
     "operationId": "AccountsController_publishOptionValues_v2",
@@ -1216,7 +1096,7 @@
     "notes": []
   },
   {
-    "index": 27,
+    "index": 25,
     "method": "POST",
     "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
     "operationId": "AccountsController_createPublishOptionValue_v2",
@@ -1272,7 +1152,7 @@
     "notes": []
   },
   {
-    "index": 28,
+    "index": 26,
     "method": "POST",
     "path": "/api/v2/channels/publish/flows",
     "operationId": "PublishFlowController_createFlow_v2",
@@ -1379,7 +1259,7 @@
     "notes": []
   },
   {
-    "index": 29,
+    "index": 27,
     "method": "GET",
     "path": "/api/v2/channels/publish/flows/{flowId}",
     "operationId": "PublishFlowController_getFlow_v2",
@@ -1425,7 +1305,7 @@
     "notes": []
   },
   {
-    "index": 30,
+    "index": 28,
     "method": "POST",
     "path": "/api/v2/channels/publish/tasks/{taskId}/publish-now",
     "operationId": "PublishTaskController_publishNow_v2",
@@ -1491,7 +1371,7 @@
     "notes": []
   },
   {
-    "index": 31,
+    "index": 29,
     "method": "POST",
     "path": "/api/v2/channels/publish/tasks/{taskId}/retry",
     "operationId": "PublishTaskController_retryTask_v2",
@@ -1558,7 +1438,7 @@
     "notes": []
   },
   {
-    "index": 32,
+    "index": 30,
     "method": "DELETE",
     "path": "/api/v2/channels/publish/tasks/{taskId}",
     "operationId": "PublishTaskController_cancelTask_v2",
@@ -1640,7 +1520,7 @@
     "notes": []
   },
   {
-    "index": 33,
+    "index": 31,
     "method": "PATCH",
     "path": "/api/v2/channels/publish/tasks/{taskId}/publish-at",
     "operationId": "PublishTaskController_updatePublishAt_v2",
@@ -1707,96 +1587,7 @@
     "notes": []
   },
   {
-    "index": 34,
-    "method": "POST",
-    "path": "/api/v2/channels/publish/tasks/{taskId}/update",
-    "operationId": "PublishTaskController_updatePublished_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "更新已发布内容",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "PublishTaskController",
-    "controllerMethod": "updatePublished",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "publishTaskService",
-        "type": "PublishTaskService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
-        "method": "requestUpdate"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "requestUpdate",
-      "getTaskForUser",
-      "requireAccountId",
-      "getPublishRuntime",
-      "buildPendingUpdate",
-      "resolveMediaRules",
-      "hasActiveMediaAdaptation",
-      "throwValidationFailed"
-    ],
-    "responseCodes": [
-      "ChannelAccountNotFound",
-      "ChannelPublishPlatformNotSupported",
-      "ChannelPublishPlatformWorkIdMissing",
-      "ChannelPublishUpdateNotAllowed",
-      "ChannelPublishUpdateNotSupported",
-      "ChannelPublishValidationFailed",
-      "PublishTaskNotFound"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "ChannelAccountNotFound",
-        "code": 15021,
-        "message": "渠道账号未找到"
-      },
-      {
-        "name": "ChannelPublishPlatformNotSupported",
-        "code": 15062,
-        "message": "该平台不支持发布"
-      },
-      {
-        "name": "ChannelPublishPlatformWorkIdMissing",
-        "code": 15060,
-        "message": "缺少平台作品 ID"
-      },
-      {
-        "name": "ChannelPublishUpdateNotAllowed",
-        "code": 15059,
-        "message": "当前任务状态不允许更新"
-      },
-      {
-        "name": "ChannelPublishUpdateNotSupported",
-        "code": 15061,
-        "message": "该平台不支持更新已发布作品"
-      },
-      {
-        "name": "ChannelPublishValidationFailed",
-        "code": 15051,
-        "message": "发布内容校验失败"
-      },
-      {
-        "name": "PublishTaskNotFound",
-        "code": 15004,
-        "message": "未发现任务"
-      }
-    ],
-    "customExceptions": [],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 35,
+    "index": 32,
     "method": "GET",
     "path": "/api/v2/channels/publish/records",
     "operationId": "PublishRecordController_listRecords_v2",
@@ -1834,7 +1625,7 @@
     "notes": []
   },
   {
-    "index": 36,
+    "index": 33,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/queued",
     "operationId": "PublishRecordController_listQueued_v2",
@@ -1872,7 +1663,7 @@
     "notes": []
   },
   {
-    "index": 37,
+    "index": 34,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/published",
     "operationId": "PublishRecordController_listPublished_v2",
@@ -1910,55 +1701,7 @@
     "notes": []
   },
   {
-    "index": 38,
-    "method": "GET",
-    "path": "/api/v2/channels/publish/records/public/{recordId}",
-    "operationId": "PublishRecordController_getPublicRecord_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "公开查询发布记录",
-    "hasRequestBody": false,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "PublishRecordController",
-    "controllerMethod": "getPublicRecord",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": false,
-    "isPublic": true,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": null,
-    "serviceCalls": [
-      {
-        "property": "recordReadService",
-        "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
-        "method": "getPublicDetail"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "getPublicDetail"
-    ],
-    "responseCodes": [
-      "PublishRecordNotFound"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "PublishRecordNotFound",
-        "code": 15000,
-        "message": "发布记录未找到"
-      }
-    ],
-    "customExceptions": [
-      "RelayAuthException"
-    ],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 39,
+    "index": 35,
     "method": "DELETE",
     "path": "/api/v2/channels/publish/records/{recordId}",
     "operationId": "PublishRecordController_deleteRecord_v2",
@@ -2010,7 +1753,7 @@
     "notes": []
   },
   {
-    "index": 40,
+    "index": 36,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/{recordId}",
     "operationId": "PublishRecordController_getRecord_v2",
@@ -2058,66 +1801,7 @@
     "notes": []
   },
   {
-    "index": 41,
-    "method": "PATCH",
-    "path": "/api/v2/channels/publish/records/{recordId}/work-link",
-    "operationId": "PublishRecordController_updateWorkLink_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "更新作品链接状态",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "PublishRecordController",
-    "controllerMethod": "updateWorkLink",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "recordReadService",
-        "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
-        "method": "updateWorkLink"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "updateWorkLink",
-      "toWorkLinkInfoData"
-    ],
-    "responseCodes": [
-      "InvalidWorkLink",
-      "PublishRecordNotFound",
-      "PublishTaskInvalid"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "InvalidWorkLink",
-        "code": 15036,
-        "message": "作品链接无效"
-      },
-      {
-        "name": "PublishRecordNotFound",
-        "code": 15000,
-        "message": "发布记录未找到"
-      },
-      {
-        "name": "PublishTaskInvalid",
-        "code": 15035,
-        "message": "发布任务无效"
-      }
-    ],
-    "customExceptions": [],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 42,
+    "index": 37,
     "method": "GET",
     "path": "/api/v2/channels/publish/records/{recordId}/user-action",
     "operationId": "PublishRecordController_getUserAction_v2",
@@ -2181,7 +1865,7 @@
     "notes": []
   },
   {
-    "index": 43,
+    "index": 38,
     "method": "GET",
     "path": "/api/v2/channels/platforms",
     "operationId": "PlatformsController_listPlatforms_v2",
@@ -2219,7 +1903,7 @@
     "notes": []
   },
   {
-    "index": 44,
+    "index": 39,
     "method": "GET",
     "path": "/api/v2/channels/platforms/{platform}/publish-options",
     "operationId": "PlatformsController_listPublishOptions_v2",
@@ -2258,197 +1942,7 @@
     "notes": []
   },
   {
-    "index": 45,
-    "method": "GET",
-    "path": "/api/v2/channels/engagement/comments",
-    "operationId": "EngagementController_listComments_v2",
-    "tag": "渠道管理/互动",
-    "summary": "获取评论列表",
-    "hasRequestBody": false,
-    "parameterCount": 4,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "EngagementController",
-    "controllerMethod": "listComments",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/engagement/engagement.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "engagementService",
-        "type": "EngagementService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/engagement/engagement.service.ts",
-        "method": "listComments"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "listComments",
-      "getPlatformCredential",
-      "callPlatformProvider"
-    ],
-    "responseCodes": [
-      "AccountNotFound",
-      "ChannelAuthPlatformMismatch",
-      "ChannelPlatformOperationNotSupported"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "AccountNotFound",
-        "code": 12600,
-        "message": "账号未找到"
-      },
-      {
-        "name": "ChannelAuthPlatformMismatch",
-        "code": 15040,
-        "message": "授权平台不匹配"
-      },
-      {
-        "name": "ChannelPlatformOperationNotSupported",
-        "code": 15080,
-        "message": "{{platform}} 不支持该操作"
-      }
-    ],
-    "customExceptions": [
-      "RelayAccountException"
-    ],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 46,
-    "method": "POST",
-    "path": "/api/v2/channels/engagement/comments",
-    "operationId": "EngagementController_createComment_v2",
-    "tag": "渠道管理/互动",
-    "summary": "发表评论",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "EngagementController",
-    "controllerMethod": "createComment",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/engagement/engagement.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "engagementService",
-        "type": "EngagementService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/engagement/engagement.service.ts",
-        "method": "createComment"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "createComment",
-      "getPlatformCredential",
-      "callPlatformProvider"
-    ],
-    "responseCodes": [
-      "AccountNotFound",
-      "ChannelAuthPlatformMismatch",
-      "ChannelPlatformOperationNotSupported"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "AccountNotFound",
-        "code": 12600,
-        "message": "账号未找到"
-      },
-      {
-        "name": "ChannelAuthPlatformMismatch",
-        "code": 15040,
-        "message": "授权平台不匹配"
-      },
-      {
-        "name": "ChannelPlatformOperationNotSupported",
-        "code": 15080,
-        "message": "{{platform}} 不支持该操作"
-      }
-    ],
-    "customExceptions": [
-      "RelayAccountException"
-    ],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 47,
-    "method": "POST",
-    "path": "/api/v2/channels/engagement/function",
-    "operationId": "EngagementController_callFunction_v2",
-    "tag": "渠道管理/互动",
-    "summary": "调用互动函数",
-    "hasRequestBody": true,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "default"
-    ],
-    "controllerClass": "EngagementController",
-    "controllerMethod": "callFunction",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/engagement/engagement.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": false,
-    "apiKeyHeader": "X-Api-Key",
-    "serviceCalls": [
-      {
-        "property": "engagementService",
-        "type": "EngagementService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/engagement/engagement.service.ts",
-        "method": "callFunction"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "callFunction",
-      "throwUnsupported",
-      "getPlatformCredential",
-      "callPlatformProvider",
-      "toLikeInput",
-      "toCommentActionInput",
-      "toAccountActionInput"
-    ],
-    "responseCodes": [
-      "AccountNotFound",
-      "ChannelAuthPlatformMismatch",
-      "ChannelPlatformOperationNotSupported"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "AccountNotFound",
-        "code": 12600,
-        "message": "账号未找到"
-      },
-      {
-        "name": "ChannelAuthPlatformMismatch",
-        "code": 15040,
-        "message": "授权平台不匹配"
-      },
-      {
-        "name": "ChannelPlatformOperationNotSupported",
-        "code": 15080,
-        "message": "{{platform}} 不支持该操作"
-      }
-    ],
-    "customExceptions": [
-      "RelayAccountException"
-    ],
-    "aiServiceTracked": false,
-    "status": "completed",
-    "notes": []
-  },
-  {
-    "index": 48,
+    "index": 40,
     "method": "GET",
     "path": "/api/v2/channels/works/link-info",
     "operationId": "WorksController_getLinkInfo_v2",
@@ -2507,7 +2001,7 @@
     "notes": []
   },
   {
-    "index": 49,
+    "index": 41,
     "method": "GET",
     "path": "/api/v2/channels/works/{platform}",
     "operationId": "WorksController_listWorks_v2",
@@ -2570,7 +2064,7 @@
     "notes": []
   },
   {
-    "index": 50,
+    "index": 42,
     "method": "GET",
     "path": "/api/v2/channels/works/{platform}/{platformWorkId}",
     "operationId": "WorksController_getDetail_v2",
@@ -2640,7 +2134,7 @@
     "notes": []
   },
   {
-    "index": 51,
+    "index": 43,
     "method": "GET",
     "path": "/api/v2/channels/works/{platform}/{platformWorkId}/analytics",
     "operationId": "WorksController_getAnalytics_v2",
@@ -2678,7 +2172,7 @@
     "notes": []
   },
   {
-    "index": 52,
+    "index": 44,
     "method": "POST",
     "path": "/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify",
     "operationId": "WorksController_verifyOwnership_v2",
@@ -2735,7 +2229,7 @@
     "notes": []
   },
   {
-    "index": 53,
+    "index": 45,
     "method": "GET",
     "path": "/api/v2/channels/account-groups",
     "operationId": "AccountGroupsController_list_v2",
@@ -2773,7 +2267,7 @@
     "notes": []
   },
   {
-    "index": 54,
+    "index": 46,
     "method": "POST",
     "path": "/api/v2/channels/account-groups",
     "operationId": "AccountGroupsController_create_v2",
@@ -2811,7 +2305,7 @@
     "notes": []
   },
   {
-    "index": 55,
+    "index": 47,
     "method": "DELETE",
     "path": "/api/v2/channels/account-groups",
     "operationId": "AccountGroupsController_deleteMany_v2",
@@ -2857,7 +2351,7 @@
     "notes": []
   },
   {
-    "index": 56,
+    "index": 48,
     "method": "PATCH",
     "path": "/api/v2/channels/account-groups/{groupId}",
     "operationId": "AccountGroupsController_update_v2",
@@ -2904,7 +2398,7 @@
     "notes": []
   },
   {
-    "index": 57,
+    "index": 49,
     "method": "PATCH",
     "path": "/api/v2/channels/account-groups/{groupId}/accounts/rank",
     "operationId": "AccountGroupsController_sortAccounts_v2",
@@ -2942,7 +2436,7 @@
     "notes": []
   },
   {
-    "index": 58,
+    "index": 50,
     "method": "GET",
     "path": "/api/v2/channels/accounts/auth/{platform}",
     "operationId": "AuthController_startAuth_v2",
@@ -2973,7 +2467,7 @@
     ]
   },
   {
-    "index": 59,
+    "index": 51,
     "method": "GET",
     "path": "/api/v2/channels/accounts/auth/{platform}/status/{sessionId}",
     "operationId": "AuthController_getAuthStatus_v2",
@@ -3042,7 +2536,7 @@
     "notes": []
   },
   {
-    "index": 60,
+    "index": 52,
     "method": "POST",
     "path": "/api/assets/uploadSign",
     "operationId": "AssetsHttpController_createUploadSign",
@@ -3091,7 +2585,7 @@
     ]
   },
   {
-    "index": 61,
+    "index": 53,
     "method": "POST",
     "path": "/api/assets/{id}/confirm",
     "operationId": "AssetsHttpController_confirmUpload",

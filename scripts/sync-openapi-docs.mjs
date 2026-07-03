@@ -595,6 +595,24 @@ function syncDocsJson(endpoints) {
   writeJson(docsJsonPath, docsJson)
 }
 
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+}
+
+function mergePatch(target, patch) {
+  for (const [key, value] of Object.entries(patch)) {
+    if (value === null) {
+      delete target[key]
+    }
+    else if (isPlainObject(value) && isPlainObject(target[key])) {
+      mergePatch(target[key], value)
+    }
+    else {
+      target[key] = value
+    }
+  }
+}
+
 function applyParameterOverrides(endpoint, operation, overridesMap, parameterLocation) {
   for (const [parameterName, patch] of Object.entries(overridesMap)) {
     const index = (operation.parameters || []).findIndex(item => item.name === parameterName && item.in === parameterLocation)
@@ -605,14 +623,7 @@ function applyParameterOverrides(endpoint, operation, overridesMap, parameterLoc
       operation.parameters.splice(index, 1)
       continue
     }
-    for (const [key, value] of Object.entries(patch)) {
-      if (value === null) {
-        delete operation.parameters[index][key]
-      }
-      else {
-        operation.parameters[index][key] = value
-      }
-    }
+    mergePatch(operation.parameters[index], patch)
   }
 }
 
@@ -652,14 +663,7 @@ function applySpecOverride(targetSpec, endpoint, operation, override) {
         }
         continue
       }
-      for (const [key, value] of Object.entries(patch)) {
-        if (value === null) {
-          delete property[key]
-        }
-        else {
-          property[key] = value
-        }
-      }
+      mergePatch(property, patch)
     }
   }
 }
@@ -683,6 +687,19 @@ function generate() {
   const messageMap = parseMessageMap()
   const targetSpec = structuredClone(sourceSpec)
   const matrix = []
+
+  // 覆盖条目为 null 表示整个接口不进入文档：从目标 spec、清单、矩阵和导航中一并剔除。
+  const documentedEndpoints = endpoints.filter((endpoint) => {
+    if (specOverrides[`${endpoint.method} ${endpoint.path}`] !== null) {
+      return true
+    }
+    const pathItem = targetSpec.paths[endpoint.path]
+    delete pathItem[endpoint.method.toLowerCase()]
+    if (!Object.keys(pathItem).some(method => httpMethods.has(method))) {
+      delete targetSpec.paths[endpoint.path]
+    }
+    return false
+  }).map((endpoint, index) => ({ ...endpoint, index: index + 1 }))
 
   targetSpec.info = {
     ...targetSpec.info,
@@ -716,7 +733,7 @@ function generate() {
     },
   }
 
-  for (const endpoint of endpoints) {
+  for (const endpoint of documentedEndpoints) {
     const operation = targetSpec.paths[endpoint.path][endpoint.method.toLowerCase()]
     applySpecOverride(targetSpec, endpoint, operation, specOverrides[`${endpoint.method} ${endpoint.path}`])
     const { className, methodName } = parseOperationId(endpoint.operationId)
@@ -836,7 +853,7 @@ function generate() {
     matrix.push(mapping)
   }
 
-  writeJson(inventoryPath, endpoints)
+  writeJson(inventoryPath, documentedEndpoints)
   writeJson(matrixPath, matrix)
   if (Array.isArray(targetSpec.tags)) {
     const usedTags = new Set()
@@ -861,7 +878,7 @@ function generate() {
   }
   sanitizeOpenApi30(targetSpec)
   writeJson(targetSpecPath, targetSpec)
-  const navigationEndpoints = endpoints.map((endpoint) => {
+  const navigationEndpoints = documentedEndpoints.map((endpoint) => {
     const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
     return override?.tag ? { ...endpoint, tag: override.tag } : endpoint
   })
