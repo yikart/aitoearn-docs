@@ -6,6 +6,7 @@
 
 - `home-nav-state.css`：首页取消 `使用 / Use` 顶部菜单视觉高亮。
 - `home-nav-state.js`：由 `src/mintlify-overrides/home-nav-state.ts` 编译生成，移除首页误加的 `aria-current`。
+- `sidebar-width.css`：桌面端侧边栏由 14rem 加宽到 17rem 并收窄导航内边距，让 API 长接口名单行显示；`#sidebar-content` 宽度、`#body-content` 让位 padding、`#content-area` 居中公式三处必须同步改。
 
 ## 维护规则
 

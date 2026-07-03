@@ -1,0 +1,22 @@
+/* 侧边栏加宽：默认 14rem/224px 容不下 API 接口长标题（英文协议名会词内断行）。
+   加宽到 17rem 并收窄导航列表内边距后，除 Gemini streamGenerateContent 外全部单行。
+   三处必须同步：sidebar-content 宽度、body-content 让位 padding、content-area 居中公式。
+   仅作用于 lg（>=1024px），移动端抽屉不受影响。 */
+@media (min-width: 1024px) {
+  #sidebar-content {
+    width: 17rem;
+  }
+
+  #body-content {
+    padding-left: 17rem;
+  }
+
+  #content-area {
+    margin-left: max(0px, calc(50vw - 348px - 17rem));
+  }
+
+  #navigation-items {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
