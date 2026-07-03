@@ -35,6 +35,13 @@
 - 不要直接修改 `mintlify-overrides/*.js`；先改 TypeScript 源码，再运行 `npm run build:overrides`。
 - 自定义 CSS 必须限制作用路径和选择器范围，避免全站副作用。
 
+## OpenAPI Rules
+
+- `openapi/zh/aitoearn.openapi.json` 是同步脚本的生成产物，禁止直接编辑；接口文档的一切人工定制（标题、分组、说明、参数增删改）都写入 `openapi/spec-overrides.json`，再运行 `node scripts/sync-openapi-docs.mjs` 重新生成。
+- 后端 zod 生成的查询/路径参数存在两层 description：参数层和 `schema.description`，Mintlify 页面优先渲染 schema 层。覆盖参数说明时必须两层同时写入，只改参数层页面不会变化。
+- 修改接口文档后必须用本地预览确认页面实际渲染效果，不能只检查生成 JSON 中的字段值。
+- 接口标题（summary）和分组（tag）决定页面 URL；修改前先在 `spec-overrides.json` 和 `zh/` 目录搜索指向旧 URL 的站内链接并同步更新，新链接需在本地预览实测可达。
+
 ## Development
 
 - 不主动启动 `mint dev`、`npm run dev` 或其它本地服务，除非用户明确要求预览。
