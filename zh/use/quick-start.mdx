@@ -75,7 +75,44 @@ description: "用最短路径跑通 AiToEarn Open Platform：准备 API Key、�
 
 ## 第三步：提交一个 AI 生成任务
 
-下面示例提交一个视频生成任务。
+### 图片生成
+
+建议先用图片生成接口验证鉴权和模型调用链路。图片生成接口会在本次请求中等待生成完成，并直接返回图片结果，因此响应时间可能会比普通查询类接口更长。
+
+<CodeGroup>
+
+```bash Windows
+curl -k --location "https://aitoearn.cn/api/ai/image/generate" ^
+  --header "X-Api-Key: <your-api-key>" ^
+  --header "Content-Type: application/json" ^
+  --data "{\"prompt\": \"生成一张简约电影海报\", \"model\": \"gpt-image-2\", \"n\": 1, \"quality\": \"auto\", \"response_format\": \"url\", \"size\": \"1024x1024\"}"
+```
+
+```bash macOS / Linux
+curl -k --location "https://aitoearn.cn/api/ai/image/generate" \
+  --header "X-Api-Key: <your-api-key>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "prompt": "生成一张电影海报简约",
+    "model": "gpt-image-2",
+    "n": 1,
+    "quality": "auto",
+    "response_format": "url",
+    "size": "1024x1024"
+  }'
+```
+
+</CodeGroup>
+
+图像生成的必填字段是 `model` 和 `prompt`。`n` 表示生成数量，`quality`、`response_format`、`size` 等参数按模型能力选择传入即可。
+
+<Info>
+  同步图片生成会直接返回图片结果。如果网络、模型排队或图片生成耗时较长，请等待请求完成，不要把它当作普通秒级查询接口处理。
+</Info>
+
+### 视频生成
+
+如果你要验证视频生成链路，可以继续提交一个异步视频生成任务。
 
 <CodeGroup>
 
