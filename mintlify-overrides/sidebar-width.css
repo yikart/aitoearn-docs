@@ -19,4 +19,15 @@
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
+
+  /* 首页使用 custom mode 且没有左侧目录，不参与内容页的侧栏让位。 */
+  html[data-current-path="/zh/home"] #body-content,
+  html[data-current-path="/en/home"] #body-content {
+    padding-left: 0;
+  }
+
+  html[data-current-path="/zh/home"] #content-area,
+  html[data-current-path="/en/home"] #content-area {
+    margin-left: 0;
+  }
 }
