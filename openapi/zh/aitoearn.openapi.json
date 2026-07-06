@@ -3096,8 +3096,7 @@
                   "instagram",
                   "threads",
                   "pinterest",
-                  "linkedin",
-                  "google_business"
+                  "linkedin"
                 ]
               }
             }
@@ -3693,7 +3692,7 @@
       "get": {
         "summary": "发布选项可选值",
         "deprecated": false,
-        "description": "接口说明：获取账号在某平台动态发布选项字段下的可选取值。",
+        "description": "接口说明：查询某个已授权渠道账号在指定发布选项字段下的可选值，用于在创建发布任务前让用户选择平台要求的额外参数。\n\n所有平台侧额外参数的查询都使用本接口。典型场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。\n\n调用流程：先调用[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；将返回项中的 `field` 放到本接口路径参数 `field`。如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为本接口 query 参数传入，例如 Threads 地点可传 `keyword` 或经纬度。",
         "operationId": "AccountsController_publishOptionValues_v2",
         "tags": [
           "渠道管理/账号"
@@ -3702,21 +3701,23 @@
           {
             "name": "accountId",
             "in": "path",
-            "description": "渠道账号 ID",
+            "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。"
             }
           },
           {
             "name": "field",
             "in": "path",
-            "description": "发布选项",
+            "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。"
             }
           }
         ],
@@ -3841,7 +3842,7 @@
       "post": {
         "summary": "创建发布选项值",
         "deprecated": false,
-        "description": "接口说明：为账号在某平台动态发布选项字段下创建新的取值。",
+        "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/渠道管理账号/发布选项可选值)接口查询后选择。",
         "operationId": "AccountsController_createPublishOptionValue_v2",
         "tags": [
           "渠道管理/账号"
@@ -3850,21 +3851,23 @@
           {
             "name": "accountId",
             "in": "path",
-            "description": "渠道账号 ID",
+            "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。"
             }
           },
           {
             "name": "field",
             "in": "path",
-            "description": "发布选项",
+            "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
             }
           }
         ],
@@ -3874,13 +3877,14 @@
               "schema": {
                 "type": "object",
                 "additionalProperties": true,
-                "description": "发布选项创建参数",
+                "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回项中的 `createSchema` 为准。",
                 "properties": {}
               },
               "examples": {}
             }
           },
-          "required": true
+          "required": true,
+          "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。"
         },
         "responses": {
           "200": {
@@ -8714,7 +8718,7 @@
       "get": {
         "summary": "平台发布选项",
         "deprecated": false,
-        "description": "接口说明：返回该平台发布选项字段的动态取值来源",
+        "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/渠道管理账号/发布选项可选值)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/渠道管理账号/创建发布选项值)接口。",
         "operationId": "PlatformsController_listPublishOptions_v2",
         "tags": [
           "渠道管理/平台"
@@ -8723,11 +8727,12 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "平台标识",
+            "description": "平台标识。取值来自[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "平台标识。取值来自[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
             }
           }
         ],

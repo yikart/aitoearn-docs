@@ -646,6 +646,12 @@ function applySpecOverride(targetSpec, endpoint, operation, override) {
   if (override.pathParameters) {
     applyParameterOverrides(endpoint, operation, override.pathParameters, 'path')
   }
+  if (override.requestBody) {
+    if (!operation.requestBody) {
+      throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} has no requestBody`)
+    }
+    mergePatch(operation.requestBody, override.requestBody)
+  }
   if (override.bodyProperties) {
     let schema = operation.requestBody?.content?.['application/json']?.schema
     if (schema?.$ref) {
