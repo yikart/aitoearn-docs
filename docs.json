@@ -81,7 +81,8 @@
               {
                 "group": "使用",
                 "pages": [
-                  "zh/use/index"
+                  "zh/use/introduction",
+                  "zh/use/quick-start"
                 ]
               }
             ]
