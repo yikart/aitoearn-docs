@@ -2,7 +2,7 @@
 (function () {
     const HOME_PATHS = new Set(['/zh/home', '/en/home']);
     const HOME_ACTIVE_FALLBACK_HREFS = new Map([
-        ['/zh/home', '/zh/use'],
+        ['/zh/home', '/zh/use/introduction'],
         ['/en/home', '/en/use'],
     ]);
     const INACTIVE_ATTRIBUTE = 'data-aitoearn-home-inactive';

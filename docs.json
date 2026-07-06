@@ -82,7 +82,8 @@
                 "group": "使用",
                 "pages": [
                   "zh/use/introduction",
-                  "zh/use/quick-start"
+                  "zh/use/api-key/index",
+                  "zh/use/publish-flow/index"
                 ]
               }
             ]

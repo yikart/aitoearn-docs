@@ -3,32 +3,32 @@
     "summary": "视频生成模型"
   },
   "POST /api/ai/video/generations": {
-    "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
+    "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
     "bodyProperties": {
       "model": {
-        "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",
+        "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",
         "enum": null
       },
       "groupId": null,
       "image": null,
       "source": null,
       "images": {
-        "description": "参考图片 URL 列表。最大数量与格式限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].maxInputImages` 和 `data[n].inputConstraints` 为准。"
+        "description": "参考图片 URL 列表。最大数量与格式限制随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].maxInputImages` 和 `data[n].inputConstraints` 为准。"
       },
       "videos": {
-        "description": "参考视频 URL 列表。是否支持视频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。"
+        "description": "参考视频 URL 列表。是否支持视频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。"
       },
       "audios": {
-        "description": "参考音频 URL 列表。是否支持音频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。"
+        "description": "参考音频 URL 列表。是否支持音频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。"
       },
       "resolution": {
-        "description": "视频分辨率。可选值随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].resolutions` 为准。"
+        "description": "视频分辨率。可选值随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].resolutions` 为准。"
       },
       "ratio": {
-        "description": "视频宽高比。可选值随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].aspectRatios` 为准。"
+        "description": "视频宽高比。可选值随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].aspectRatios` 为准。"
       },
       "duration": {
-        "description": "视频时长（秒）。可选范围随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].durations` 为准。"
+        "description": "视频时长（秒）。可选范围随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].durations` 为准。"
       }
     }
   },
@@ -37,39 +37,39 @@
   },
   "GET /api/ai/models/image/generation": {
     "summary": "图像生成模型",
-    "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)及对应的编辑图像接口。"
+    "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)及对应的编辑图像接口。"
   },
   "GET /api/ai/models/image/edit": {
     "summary": "图像编辑模型",
-    "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)及对应的生成图像接口。"
+    "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)及对应的生成图像接口。"
   },
   "POST /api/ai/image/generate": {
-    "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/ai-服务图像生成/编辑图像)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/ai-服务图像生成/openai-图像生成)。",
+    "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/post-api-ai-images-generations)。",
     "bodyProperties": {
       "model": {
-        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
       },
       "quality": {
-        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。"
+        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
       },
       "style": {
-        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
+        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
       },
       "user": null,
       "source": null
     }
   },
   "POST /api/ai/image/edit": {
-    "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘或风格化。如需仅用文字生成全新图像（文生图），请使用[「生成图像」](/api-reference/ai-服务图像生成/生成图像)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像编辑」](/api-reference/ai-服务图像生成/openai-图像编辑)。",
+    "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘或风格化。如需仅用文字生成全新图像（文生图），请使用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像编辑」](/api-reference/post-api-ai-images-edits)。",
     "bodyProperties": {
       "model": {
-        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
       },
       "mask": {
         "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
@@ -79,32 +79,32 @@
     }
   },
   "POST /api/ai/image/generate/async": {
-    "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「异步编辑图像」](/api-reference/ai-服务图像生成/异步编辑图像)接口。",
+    "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「异步编辑图像」](/api-reference/post-api-ai-image-edit-async)接口。",
     "bodyProperties": {
       "model": {
-        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
       },
       "quality": {
-        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。"
+        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
       },
       "style": {
-        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
+        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
       },
       "user": null,
       "source": null
     }
   },
   "POST /api/ai/image/edit/async": {
-    "description": "接口说明：异步编辑图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「异步生成图像」](/api-reference/ai-服务图像生成/异步生成图像)接口。",
+    "description": "接口说明：异步编辑图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「异步生成图像」](/api-reference/post-api-ai-image-generate-async)接口。",
     "bodyProperties": {
       "model": {
-        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
       },
       "mask": {
         "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
@@ -127,10 +127,10 @@
   "POST /api/ai/chat/completions": {
     "tag": "AI 服务/大语言模型",
     "summary": "OpenAI 对话",
-    "description": "接口说明：OpenAI Chat Completions API 的兼容端点，支持 `stream` 流式输出。请求、响应与错误格式完全遵循 OpenAI 规范；鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+    "description": "接口说明：OpenAI Chat Completions API 的兼容端点，支持 `stream` 流式输出。请求、响应与错误格式完全遵循 OpenAI 规范；鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
     "bodyProperties": {
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
       },
       "billingGroupId": null,
       "source": null
@@ -139,10 +139,10 @@
   "POST /api/ai/v1/messages": {
     "tag": "AI 服务/大语言模型",
     "summary": "Anthropic 对话",
-    "description": "接口说明：Anthropic Messages API（`/v1/messages`）的兼容端点，支持流式输出（SSE）。请求、响应与错误格式遵循 Anthropic 规范；鉴权使用 `x-api-key` 头（Anthropic SDK 默认携带），已有 Anthropic SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+    "description": "接口说明：Anthropic Messages API（`/v1/messages`）的兼容端点，支持流式输出（SSE）。请求、响应与错误格式遵循 Anthropic 规范；鉴权使用 `x-api-key` 头（Anthropic SDK 默认携带），已有 Anthropic SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
     "bodyProperties": {
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
       },
       "billingGroupId": null,
       "source": null
@@ -151,49 +151,49 @@
   "POST /api/ai/v1beta/models/{model}:generateContent": {
     "tag": "AI 服务/大语言模型",
     "summary": "Gemini 对话",
-    "description": "接口说明：Gemini `:generateContent` API 的兼容端点（非流式，聚合返回完整结果）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+    "description": "接口说明：Gemini `:generateContent` API 的兼容端点（非流式，聚合返回完整结果）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
     "pathParameters": {
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
       }
     },
     "bodyProperties": {
       "model": {
-        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口返回的 `data[n].name`。"
+        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。"
       }
     }
   },
   "POST /api/ai/v1beta/models/{model}:streamGenerateContent": {
     "tag": "AI 服务/大语言模型",
     "summary": "Gemini 流式对话",
-    "description": "接口说明：Gemini `:streamGenerateContent` API 的兼容端点（流式输出，SSE）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+    "description": "接口说明：Gemini `:streamGenerateContent` API 的兼容端点（流式输出，SSE）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
     "pathParameters": {
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
       }
     },
     "bodyProperties": {
       "model": {
-        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口返回的 `data[n].name`。"
+        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。"
       }
     }
   },
   "POST /api/ai/images/generations": {
     "tag": "AI 服务/图像生成",
     "summary": "OpenAI 图像生成",
-    "description": "接口说明：OpenAI Images API `/v1/images/generations` 的兼容端点（文生图）。请求、响应与错误格式完全遵循 OpenAI 规范：返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「生成图像」](/api-reference/ai-服务图像生成/生成图像)接口。",
+    "description": "接口说明：OpenAI Images API `/v1/images/generations` 的兼容端点（文生图）。请求、响应与错误格式完全遵循 OpenAI 规范：返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。",
     "bodyProperties": {
       "model": {
-        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
       },
       "quality": {
-        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。"
+        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
       },
       "style": {
-        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
+        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
       },
       "user": null,
       "source": null
@@ -202,13 +202,13 @@
   "POST /api/ai/images/edits": {
     "tag": "AI 服务/图像生成",
     "summary": "OpenAI 图像编辑",
-    "description": "接口说明：OpenAI Images API `/v1/images/edits` 的兼容端点（图生图）。请求、响应与错误格式完全遵循 OpenAI 规范：支持 `application/json` 与 `multipart/form-data`（可直接上传图片与遮罩文件），返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「编辑图像」](/api-reference/ai-服务图像生成/编辑图像)接口。",
+    "description": "接口说明：OpenAI Images API `/v1/images/edits` 的兼容端点（图生图）。请求、响应与错误格式完全遵循 OpenAI 规范：支持 `application/json` 与 `multipart/form-data`（可直接上传图片与遮罩文件），返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。",
     "bodyProperties": {
       "model": {
-        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
       },
       "mask": {
         "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
@@ -222,9 +222,9 @@
       "spaceIds": null,
       "groupId": null,
       "types": {
-        "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
+        "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
         "schema": {
-          "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
+          "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
           "items": {
             "enum": [
               "douyin",
@@ -257,7 +257,7 @@
   "GET /api/v2/channels/accounts/{accountId}/analytics": null,
   "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
     "summary": "发布选项可选值",
-    "description": "接口说明：查询某个已授权渠道账号在指定发布选项字段下的可选值，用于在创建发布任务前让用户选择平台要求的额外参数。\n\n所有平台侧额外参数的查询都使用本接口。典型场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。\n\n调用流程：先调用[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；将返回项中的 `field` 放到本接口路径参数 `field`。如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为本接口 query 参数传入，例如 Threads 地点可传 `keyword` 或经纬度。",
+    "description": "接口说明：查询某个已授权渠道账号在指定发布选项字段下的可选值，用于在创建发布任务前让用户选择平台要求的额外参数。\n\n所有平台侧额外参数的查询都使用本接口。典型场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。\n\n调用流程：先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；将返回项中的 `field` 放到本接口路径参数 `field`。如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为本接口 query 参数传入，例如 Threads 地点可传 `keyword` 或经纬度。",
     "pathParameters": {
       "accountId": {
         "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。",
@@ -266,16 +266,16 @@
         }
       },
       "field": {
-        "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。",
+        "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。",
         "schema": {
-          "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。"
+          "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。"
         }
       }
     }
   },
   "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
     "summary": "创建发布选项值",
-    "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/渠道管理账号/发布选项可选值)接口查询后选择。",
+    "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口查询后选择。",
     "pathParameters": {
       "accountId": {
         "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。",
@@ -284,18 +284,18 @@
         }
       },
       "field": {
-        "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
+        "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
         "schema": {
-          "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
+          "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
         }
       }
     },
     "requestBody": {
-      "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。",
+      "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。",
       "content": {
         "application/json": {
           "schema": {
-            "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回项中的 `createSchema` 为准。"
+            "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准。"
           }
         }
       }
@@ -330,12 +330,12 @@
   },
   "GET /api/v2/channels/platforms/{platform}/publish-options": {
     "summary": "平台发布选项",
-    "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/渠道管理账号/发布选项可选值)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/渠道管理账号/创建发布选项值)接口。",
+    "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。",
     "pathParameters": {
       "platform": {
-        "description": "平台标识。取值来自[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
+        "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
         "schema": {
-          "description": "平台标识。取值来自[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
+          "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
         }
       }
     }
@@ -371,7 +371,7 @@
     "summary": "发起平台授权"
   },
   "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}": {
-    "summary": "授权会话状态"
+    "summary": "获取授权状态"
   },
   "POST /api/assets/uploadSign": {
     "summary": "生成上传签名"

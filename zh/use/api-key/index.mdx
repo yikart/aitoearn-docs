@@ -1,0 +1,48 @@
+---
+title: "获取API KEY"
+description: "创建调用 AiToEarn 开放平台接口所需的访问凭证"
+---
+
+# 获取API KEY
+
+API Key 用来调用 AiToEarn 开放平台接口。后续所有 API 请求都需要在请求头中携带：
+
+```http
+X-Api-Key: 你的 API Key
+```
+
+<Warning>
+  API Key 等同于接口访问凭证。不要把它提交到公开仓库、前端源码、截图、聊天记录或客户端安装包中。生产环境建议由你的服务端保存并调用 AiToEarn API。
+</Warning>
+
+## 选择站点
+
+国内站和国际站的 API Key 不通用，请先根据要发布的平台选择站点。
+
+| 使用场景 | 站点 | 适合的平台 |
+| --- | --- | --- |
+| 中国地区社交平台 | [https://aitoearn.cn](https://aitoearn.cn) | 抖音、快手、B 站、小红书、微信视频号、微信公众号 |
+| 国际社交平台 | [https://aitoearn.ai](https://aitoearn.ai) | YouTube、TikTok、Twitter、Instagram、Threads、Pinterest、LinkedIn |
+
+## 创建 API Key
+
+1. 打开对应站点并登录 AiToEarn。
+2. 点击右上角入口进入设置。
+3. 在设置中打开 `API Key` 页面。
+4. 点击 `Create` 创建新的 API Key。
+5. 输入一个便于识别的名称，例如 `publish-demo`。
+6. 创建成功后立即复制并保存 API Key。
+
+![进入 AiToEarn 设置入口](/assets/use/api-key/01.png)
+
+![打开设置页面](/assets/use/api-key/02.png)
+
+![进入 API Key 页面](/assets/use/api-key/03.png)
+
+![点击创建 API Key](/assets/use/api-key/04.png)
+
+![填写名称并创建 API Key](/assets/use/api-key/05.png)
+
+## 下一步
+
+拿到 API Key 后，继续阅读 [发布流程](../publish-flow)，用它完成账号授权、素材上传和发布流程创建。

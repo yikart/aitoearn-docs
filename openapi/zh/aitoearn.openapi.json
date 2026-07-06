@@ -487,6 +487,13 @@
           }
         },
         "security": [],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-models-video-generation",
+          "metadata": {
+            "title": "视频生成模型",
+            "sidebarTitle": "视频生成模型"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
           "controllerMethod": "getVideoGenerationModels",
@@ -507,7 +514,7 @@
       "post": {
         "summary": "生成视频",
         "deprecated": false,
-        "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
+        "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
         "operationId": "VideoController_videoGeneration",
         "tags": [
           "AI 服务/视频生成"
@@ -521,7 +528,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",
+                    "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",
                     "minLength": 1
                   },
                   "prompt": {
@@ -531,21 +538,21 @@
                     "description": "提示词，长度 1-4000 字符"
                   },
                   "images": {
-                    "description": "参考图片 URL 列表。最大数量与格式限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].maxInputImages` 和 `data[n].inputConstraints` 为准。",
+                    "description": "参考图片 URL 列表。最大数量与格式限制随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].maxInputImages` 和 `data[n].inputConstraints` 为准。",
                     "type": "array",
                     "items": {
                       "type": "string"
                     }
                   },
                   "videos": {
-                    "description": "参考视频 URL 列表。是否支持视频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。",
+                    "description": "参考视频 URL 列表。是否支持视频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。",
                     "type": "array",
                     "items": {
                       "type": "string"
                     }
                   },
                   "audios": {
-                    "description": "参考音频 URL 列表。是否支持音频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。",
+                    "description": "参考音频 URL 列表。是否支持音频输入，以及数量、格式、时长、大小限制随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].modes` 和 `data[n].inputConstraints` 为准。",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -553,7 +560,7 @@
                   },
                   "resolution": {
                     "type": "string",
-                    "description": "视频分辨率。可选值随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].resolutions` 为准。",
+                    "description": "视频分辨率。可选值随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].resolutions` 为准。",
                     "enum": [
                       "480p",
                       "720p",
@@ -561,11 +568,11 @@
                     ]
                   },
                   "ratio": {
-                    "description": "视频宽高比。可选值随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].aspectRatios` 为准。",
+                    "description": "视频宽高比。可选值随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].aspectRatios` 为准。",
                     "type": "string"
                   },
                   "duration": {
-                    "description": "视频时长（秒）。可选范围随模型而不同，以[「视频生成模型」](/api-reference/ai-服务视频生成/视频生成模型)接口返回的 `data[n].durations` 为准。",
+                    "description": "视频时长（秒）。可选范围随模型而不同，以[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口返回的 `data[n].durations` 为准。",
                     "type": "number"
                   }
                 },
@@ -709,6 +716,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-video-generations",
+          "metadata": {
+            "title": "生成视频",
+            "sidebarTitle": "生成视频"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
           "controllerMethod": "videoGeneration",
@@ -895,6 +909,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-video-generations",
+          "metadata": {
+            "title": "视频任务列表",
+            "sidebarTitle": "视频任务列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
           "controllerMethod": "listVideoTasks",
@@ -1049,6 +1070,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-video-generations-task-id",
+          "metadata": {
+            "title": "视频任务状态",
+            "sidebarTitle": "视频任务状态"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
           "controllerMethod": "getVideoTaskStatus",
@@ -1075,7 +1103,7 @@
       "get": {
         "summary": "图像生成模型",
         "deprecated": false,
-        "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)及对应的编辑图像接口。",
+        "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)及对应的编辑图像接口。",
         "operationId": "ImageController_getImageGenerationModels",
         "tags": [
           "AI 服务/图像生成"
@@ -1238,6 +1266,13 @@
           }
         },
         "security": [],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-models-image-generation",
+          "metadata": {
+            "title": "图像生成模型",
+            "sidebarTitle": "图像生成模型"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "getImageGenerationModels",
@@ -1258,7 +1293,7 @@
       "get": {
         "summary": "图像编辑模型",
         "deprecated": false,
-        "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)及对应的生成图像接口。",
+        "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)及对应的生成图像接口。",
         "operationId": "ImageController_getImageEditModels",
         "tags": [
           "AI 服务/图像生成"
@@ -1335,6 +1370,13 @@
           }
         },
         "security": [],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-models-image-edit",
+          "metadata": {
+            "title": "图像编辑模型",
+            "sidebarTitle": "图像编辑模型"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "getImageEditModels",
@@ -1355,7 +1397,7 @@
       "post": {
         "summary": "生成图像",
         "deprecated": false,
-        "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/ai-服务图像生成/编辑图像)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/ai-服务图像生成/openai-图像生成)。",
+        "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/post-api-ai-images-generations)。",
         "operationId": "ImageController_generateImage",
         "tags": [
           "AI 服务/图像生成"
@@ -1375,7 +1417,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
                   },
                   "n": {
                     "description": "生成图片数量",
@@ -1384,7 +1426,7 @@
                     "maximum": 10
                   },
                   "quality": {
-                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。",
+                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
                     "type": "string"
                   },
                   "response_format": {
@@ -1396,11 +1438,11 @@
                     ]
                   },
                   "size": {
-                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "style": {
-                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
+                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
                     "type": "string"
                   }
                 },
@@ -1511,6 +1553,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-image-generate",
+          "metadata": {
+            "title": "生成图像",
+            "sidebarTitle": "生成图像"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "generateImage",
@@ -1537,7 +1586,7 @@
       "post": {
         "summary": "编辑图像",
         "deprecated": false,
-        "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘或风格化。如需仅用文字生成全新图像（文生图），请使用[「生成图像」](/api-reference/ai-服务图像生成/生成图像)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像编辑」](/api-reference/ai-服务图像生成/openai-图像编辑)。",
+        "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘或风格化。如需仅用文字生成全新图像（文生图），请使用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像编辑」](/api-reference/post-api-ai-images-edits)。",
         "operationId": "ImageController_editImage",
         "tags": [
           "AI 服务/图像生成"
@@ -1551,7 +1600,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
                   },
                   "image": {
                     "anyOf": [
@@ -1584,7 +1633,7 @@
                     "maximum": 1
                   },
                   "size": {
-                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "response_format": {
@@ -1704,6 +1753,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-image-edit",
+          "metadata": {
+            "title": "编辑图像",
+            "sidebarTitle": "编辑图像"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "editImage",
@@ -1730,7 +1786,7 @@
       "post": {
         "summary": "异步生成图像",
         "deprecated": false,
-        "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「异步编辑图像」](/api-reference/ai-服务图像生成/异步编辑图像)接口。",
+        "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「异步编辑图像」](/api-reference/post-api-ai-image-edit-async)接口。",
         "operationId": "ImageController_generateImageAsync",
         "tags": [
           "AI 服务/图像生成"
@@ -1750,7 +1806,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
                   },
                   "n": {
                     "description": "生成图片数量",
@@ -1759,7 +1815,7 @@
                     "maximum": 10
                   },
                   "quality": {
-                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。",
+                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
                     "type": "string"
                   },
                   "response_format": {
@@ -1771,11 +1827,11 @@
                     ]
                   },
                   "size": {
-                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "style": {
-                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
+                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
                     "type": "string"
                   }
                 },
@@ -1880,6 +1936,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-image-generate-async",
+          "metadata": {
+            "title": "异步生成图像",
+            "sidebarTitle": "异步生成图像"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "generateImageAsync",
@@ -1911,7 +1974,7 @@
       "post": {
         "summary": "异步编辑图像",
         "deprecated": false,
-        "description": "接口说明：异步编辑图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「异步生成图像」](/api-reference/ai-服务图像生成/异步生成图像)接口。",
+        "description": "接口说明：异步编辑图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「异步生成图像」](/api-reference/post-api-ai-image-generate-async)接口。",
         "operationId": "ImageController_editImageAsync",
         "tags": [
           "AI 服务/图像生成"
@@ -1925,7 +1988,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
                   },
                   "image": {
                     "anyOf": [
@@ -1958,7 +2021,7 @@
                     "maximum": 1
                   },
                   "size": {
-                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
                     "type": "string"
                   },
                   "response_format": {
@@ -2072,6 +2135,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-image-edit-async",
+          "metadata": {
+            "title": "异步编辑图像",
+            "sidebarTitle": "异步编辑图像"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "editImageAsync",
@@ -2208,6 +2278,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-image-task-log-id",
+          "metadata": {
+            "title": "图像任务状态",
+            "sidebarTitle": "图像任务状态"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
           "controllerMethod": "getImageTaskStatus",
@@ -2323,6 +2400,13 @@
           }
         },
         "security": [],
+        "x-mint": {
+          "href": "/api-reference/get-api-ai-models-chat",
+          "metadata": {
+            "title": "对话模型列表",
+            "sidebarTitle": "对话模型列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/chat/chat.controller.ts",
           "controllerMethod": "getChatModels",
@@ -2343,7 +2427,7 @@
       "post": {
         "summary": "OpenAI 对话",
         "deprecated": false,
-        "description": "接口说明：OpenAI Chat Completions API 的兼容端点，支持 `stream` 流式输出。请求、响应与错误格式完全遵循 OpenAI 规范；鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+        "description": "接口说明：OpenAI Chat Completions API 的兼容端点，支持 `stream` 流式输出。请求、响应与错误格式完全遵循 OpenAI 规范；鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_chatCompletions",
         "tags": [
           "AI 服务/大语言模型"
@@ -2394,6 +2478,13 @@
             "apikey-header-Authorization": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-chat-completions",
+          "metadata": {
+            "title": "OpenAI 对话",
+            "sidebarTitle": "OpenAI 对话"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
           "controllerMethod": "chatCompletions",
@@ -2414,7 +2505,7 @@
       "post": {
         "summary": "Anthropic 对话",
         "deprecated": false,
-        "description": "接口说明：Anthropic Messages API（`/v1/messages`）的兼容端点，支持流式输出（SSE）。请求、响应与错误格式遵循 Anthropic 规范；鉴权使用 `x-api-key` 头（Anthropic SDK 默认携带），已有 Anthropic SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+        "description": "接口说明：Anthropic Messages API（`/v1/messages`）的兼容端点，支持流式输出（SSE）。请求、响应与错误格式遵循 Anthropic 规范；鉴权使用 `x-api-key` 头（Anthropic SDK 默认携带），已有 Anthropic SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_claudeMessages",
         "tags": [
           "AI 服务/大语言模型"
@@ -2465,6 +2556,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-v1-messages",
+          "metadata": {
+            "title": "Anthropic 对话",
+            "sidebarTitle": "Anthropic 对话"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
           "controllerMethod": "claudeMessages",
@@ -2485,7 +2583,7 @@
       "post": {
         "summary": "Gemini 对话",
         "deprecated": false,
-        "description": "接口说明：Gemini `:generateContent` API 的兼容端点（非流式，聚合返回完整结果）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+        "description": "接口说明：Gemini `:generateContent` API 的兼容端点（非流式，聚合返回完整结果）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_geminiGenerateContent",
         "tags": [
           "AI 服务/大语言模型"
@@ -2494,7 +2592,7 @@
           {
             "name": "model",
             "in": "path",
-            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
             "required": true,
             "example": "",
             "schema": {
@@ -2510,7 +2608,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口返回的 `data[n].name`。"
+                    "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。"
                   },
                   "contents": {
                     "type": "array",
@@ -2651,6 +2749,13 @@
             "apikey-header-x-goog-api-key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-v1beta-models-model-generate-content",
+          "metadata": {
+            "title": "Gemini 对话",
+            "sidebarTitle": "Gemini 对话"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
           "controllerMethod": "geminiGenerateContent",
@@ -2671,7 +2776,7 @@
       "post": {
         "summary": "Gemini 流式对话",
         "deprecated": false,
-        "description": "接口说明：Gemini `:streamGenerateContent` API 的兼容端点（流式输出，SSE）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+        "description": "接口说明：Gemini `:streamGenerateContent` API 的兼容端点（流式输出，SSE）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
         "operationId": "RelayController_geminiStreamGenerateContent",
         "tags": [
           "AI 服务/大语言模型"
@@ -2680,7 +2785,7 @@
           {
             "name": "model",
             "in": "path",
-            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
             "required": true,
             "example": "",
             "schema": {
@@ -2696,7 +2801,7 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口返回的 `data[n].name`。"
+                    "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。"
                   },
                   "contents": {
                     "type": "array",
@@ -2888,6 +2993,13 @@
             "apikey-header-x-goog-api-key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-v1beta-models-model-stream-generate-content",
+          "metadata": {
+            "title": "Gemini 流式对话",
+            "sidebarTitle": "Gemini 流式对话"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
           "controllerMethod": "geminiStreamGenerateContent",
@@ -2908,7 +3020,7 @@
       "post": {
         "summary": "OpenAI 图像生成",
         "deprecated": false,
-        "description": "接口说明：OpenAI Images API `/v1/images/generations` 的兼容端点（文生图）。请求、响应与错误格式完全遵循 OpenAI 规范：返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「生成图像」](/api-reference/ai-服务图像生成/生成图像)接口。",
+        "description": "接口说明：OpenAI Images API `/v1/images/generations` 的兼容端点（文生图）。请求、响应与错误格式完全遵循 OpenAI 规范：返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。",
         "operationId": "RelayController_imagesGenerations",
         "tags": [
           "AI 服务/图像生成"
@@ -2959,6 +3071,13 @@
             "apikey-header-Authorization": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-images-generations",
+          "metadata": {
+            "title": "OpenAI 图像生成",
+            "sidebarTitle": "OpenAI 图像生成"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
           "controllerMethod": "imagesGenerations",
@@ -2979,7 +3098,7 @@
       "post": {
         "summary": "OpenAI 图像编辑",
         "deprecated": false,
-        "description": "接口说明：OpenAI Images API `/v1/images/edits` 的兼容端点（图生图）。请求、响应与错误格式完全遵循 OpenAI 规范：支持 `application/json` 与 `multipart/form-data`（可直接上传图片与遮罩文件），返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「编辑图像」](/api-reference/ai-服务图像生成/编辑图像)接口。",
+        "description": "接口说明：OpenAI Images API `/v1/images/edits` 的兼容端点（图生图）。请求、响应与错误格式完全遵循 OpenAI 规范：支持 `application/json` 与 `multipart/form-data`（可直接上传图片与遮罩文件），返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。",
         "operationId": "RelayController_imagesEdits",
         "tags": [
           "AI 服务/图像生成"
@@ -3030,6 +3149,13 @@
             "apikey-header-Authorization": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-ai-images-edits",
+          "metadata": {
+            "title": "OpenAI 图像编辑",
+            "sidebarTitle": "OpenAI 图像编辑"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
           "controllerMethod": "imagesEdits",
@@ -3074,11 +3200,11 @@
           {
             "name": "types",
             "in": "query",
-            "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
+            "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
             "required": false,
             "example": "",
             "schema": {
-              "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
+              "description": "平台类型数组。取值为各平台的枚举标识，先调用[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`），使用其返回的 `data[n].platform`。",
               "type": "array",
               "items": {
                 "type": "string",
@@ -3201,6 +3327,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-accounts",
+          "metadata": {
+            "title": "账号列表",
+            "sidebarTitle": "账号列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "list",
@@ -3310,6 +3443,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/delete-api-v2-channels-accounts",
+          "metadata": {
+            "title": "批量删除账号",
+            "sidebarTitle": "批量删除账号"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "deleteMany",
@@ -3439,6 +3579,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-accounts-account-id",
+          "metadata": {
+            "title": "账号详情",
+            "sidebarTitle": "账号详情"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "getById",
@@ -3557,6 +3704,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/delete-api-v2-channels-accounts-account-id",
+          "metadata": {
+            "title": "删除账号",
+            "sidebarTitle": "删除账号"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "delete",
@@ -3672,6 +3826,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-accounts-account-id-auth-status",
+          "metadata": {
+            "title": "账号授权状态",
+            "sidebarTitle": "账号授权状态"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "authStatus",
@@ -3692,7 +3853,7 @@
       "get": {
         "summary": "发布选项可选值",
         "deprecated": false,
-        "description": "接口说明：查询某个已授权渠道账号在指定发布选项字段下的可选值，用于在创建发布任务前让用户选择平台要求的额外参数。\n\n所有平台侧额外参数的查询都使用本接口。典型场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。\n\n调用流程：先调用[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；将返回项中的 `field` 放到本接口路径参数 `field`。如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为本接口 query 参数传入，例如 Threads 地点可传 `keyword` 或经纬度。",
+        "description": "接口说明：查询某个已授权渠道账号在指定发布选项字段下的可选值，用于在创建发布任务前让用户选择平台要求的额外参数。\n\n所有平台侧额外参数的查询都使用本接口。典型场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。\n\n调用流程：先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；将返回项中的 `field` 放到本接口路径参数 `field`。如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为本接口 query 参数传入，例如 Threads 地点可传 `keyword` 或经纬度。",
         "operationId": "AccountsController_publishOptionValues_v2",
         "tags": [
           "渠道管理/账号"
@@ -3712,12 +3873,12 @@
           {
             "name": "field",
             "in": "path",
-            "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。",
+            "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。",
             "required": true,
             "example": "",
             "schema": {
               "type": "string",
-              "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。"
+              "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。"
             }
           }
         ],
@@ -3813,6 +3974,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values",
+          "metadata": {
+            "title": "发布选项可选值",
+            "sidebarTitle": "发布选项可选值"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "publishOptionValues",
@@ -3842,7 +4010,7 @@
       "post": {
         "summary": "创建发布选项值",
         "deprecated": false,
-        "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/渠道管理账号/发布选项可选值)接口查询后选择。",
+        "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口查询后选择。",
         "operationId": "AccountsController_createPublishOptionValue_v2",
         "tags": [
           "渠道管理/账号"
@@ -3862,12 +4030,12 @@
           {
             "name": "field",
             "in": "path",
-            "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
+            "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
             "required": true,
             "example": "",
             "schema": {
               "type": "string",
-              "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
+              "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
             }
           }
         ],
@@ -3877,14 +4045,14 @@
               "schema": {
                 "type": "object",
                 "additionalProperties": true,
-                "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回项中的 `createSchema` 为准。",
+                "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准。",
                 "properties": {}
               },
               "examples": {}
             }
           },
           "required": true,
-          "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/渠道管理平台/平台发布选项)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。"
+          "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。"
         },
         "responses": {
           "200": {
@@ -3978,6 +4146,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values",
+          "metadata": {
+            "title": "创建发布选项值",
+            "sidebarTitle": "创建发布选项值"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
           "controllerMethod": "createPublishOptionValue",
@@ -6659,6 +6834,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-v2-channels-publish-flows",
+          "metadata": {
+            "title": "创建发布流程",
+            "sidebarTitle": "创建发布流程"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.controller.ts",
           "controllerMethod": "createFlow",
@@ -6838,6 +7020,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-publish-flows-flow-id",
+          "metadata": {
+            "title": "发布流程详情",
+            "sidebarTitle": "发布流程详情"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.controller.ts",
           "controllerMethod": "getFlow",
@@ -6989,6 +7178,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-v2-channels-publish-tasks-task-id-publish-now",
+          "metadata": {
+            "title": "立即发布",
+            "sidebarTitle": "立即发布"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
           "controllerMethod": "publishNow",
@@ -7157,6 +7353,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-v2-channels-publish-tasks-task-id-retry",
+          "metadata": {
+            "title": "重试发布任务",
+            "sidebarTitle": "重试发布任务"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
           "controllerMethod": "retryTask",
@@ -7343,6 +7546,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/delete-api-v2-channels-publish-tasks-task-id",
+          "metadata": {
+            "title": "取消发布任务",
+            "sidebarTitle": "取消发布任务"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
           "controllerMethod": "cancelTask",
@@ -7540,6 +7750,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/patch-api-v2-channels-publish-tasks-task-id-publish-at",
+          "metadata": {
+            "title": "修改发布时间",
+            "sidebarTitle": "修改发布时间"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
           "controllerMethod": "updatePublishAt",
@@ -7742,6 +7959,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-publish-records",
+          "metadata": {
+            "title": "发布记录列表",
+            "sidebarTitle": "发布记录列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
           "controllerMethod": "listRecords",
@@ -7912,6 +8136,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-publish-records-queued",
+          "metadata": {
+            "title": "待发布列表",
+            "sidebarTitle": "待发布列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
           "controllerMethod": "listQueued",
@@ -8082,6 +8313,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-publish-records-published",
+          "metadata": {
+            "title": "已发布列表",
+            "sidebarTitle": "已发布列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
           "controllerMethod": "listPublished",
@@ -8205,6 +8443,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/delete-api-v2-channels-publish-records-record-id",
+          "metadata": {
+            "title": "删除发布记录",
+            "sidebarTitle": "删除发布记录"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
           "controllerMethod": "deleteRecord",
@@ -8343,6 +8588,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-publish-records-record-id",
+          "metadata": {
+            "title": "发布记录详情",
+            "sidebarTitle": "发布记录详情"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
           "controllerMethod": "getRecord",
@@ -8501,6 +8753,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-publish-records-record-id-user-action",
+          "metadata": {
+            "title": "App 拉起链接",
+            "sidebarTitle": "App 拉起链接"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
           "controllerMethod": "getUserAction",
@@ -8698,6 +8957,13 @@
           }
         },
         "security": [],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-platforms",
+          "metadata": {
+            "title": "平台列表",
+            "sidebarTitle": "平台列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.controller.ts",
           "controllerMethod": "listPlatforms",
@@ -8718,7 +8984,7 @@
       "get": {
         "summary": "平台发布选项",
         "deprecated": false,
-        "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/渠道管理账号/发布选项可选值)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/渠道管理账号/创建发布选项值)接口。",
+        "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。",
         "operationId": "PlatformsController_listPublishOptions_v2",
         "tags": [
           "渠道管理/平台"
@@ -8727,12 +8993,12 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "平台标识。取值来自[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
+            "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
             "required": true,
             "example": "",
             "schema": {
               "type": "string",
-              "description": "平台标识。取值来自[「平台列表」](/api-reference/渠道管理平台/平台列表)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
+              "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
             }
           }
         ],
@@ -8819,6 +9085,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-platforms-platform-publish-options",
+          "metadata": {
+            "title": "平台发布选项",
+            "sidebarTitle": "平台发布选项"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.controller.ts",
           "controllerMethod": "listPublishOptions",
@@ -9004,6 +9277,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-works-link-info",
+          "metadata": {
+            "title": "解析作品链接",
+            "sidebarTitle": "解析作品链接"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
           "controllerMethod": "getLinkInfo",
@@ -9301,6 +9581,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-works-platform",
+          "metadata": {
+            "title": "作品列表",
+            "sidebarTitle": "作品列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
           "controllerMethod": "listWorks",
@@ -9500,6 +9787,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-works-platform-platform-work-id",
+          "metadata": {
+            "title": "作品详情",
+            "sidebarTitle": "作品详情"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
           "controllerMethod": "getDetail",
@@ -9708,6 +10002,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-works-platform-platform-work-id-analytics",
+          "metadata": {
+            "title": "作品数据统计",
+            "sidebarTitle": "作品数据统计"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
           "controllerMethod": "getAnalytics",
@@ -9868,6 +10169,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-v2-channels-works-platform-platform-work-id-ownership-verify",
+          "metadata": {
+            "title": "验证作品归属",
+            "sidebarTitle": "验证作品归属"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
           "controllerMethod": "verifyOwnership",
@@ -9983,6 +10291,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-account-groups",
+          "metadata": {
+            "title": "分组列表",
+            "sidebarTitle": "分组列表"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
           "controllerMethod": "list",
@@ -10136,6 +10451,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-v2-channels-account-groups",
+          "metadata": {
+            "title": "创建分组",
+            "sidebarTitle": "创建分组"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
           "controllerMethod": "create",
@@ -10254,6 +10576,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/delete-api-v2-channels-account-groups",
+          "metadata": {
+            "title": "批量删除分组",
+            "sidebarTitle": "批量删除分组"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
           "controllerMethod": "deleteMany",
@@ -10432,6 +10761,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/patch-api-v2-channels-account-groups-group-id",
+          "metadata": {
+            "title": "更新分组",
+            "sidebarTitle": "更新分组"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
           "controllerMethod": "update",
@@ -10581,6 +10917,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/patch-api-v2-channels-account-groups-group-id-accounts-rank",
+          "metadata": {
+            "title": "调整账号排序",
+            "sidebarTitle": "调整账号排序"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
           "controllerMethod": "sortAccounts",
@@ -10731,6 +11074,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-accounts-auth-platform",
+          "metadata": {
+            "title": "发起平台授权",
+            "sidebarTitle": "发起平台授权"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.controller.ts",
           "controllerMethod": "startAuth",
@@ -10742,7 +11092,7 @@
     },
     "/api/v2/channels/accounts/auth/{platform}/status/{sessionId}": {
       "get": {
-        "summary": "授权会话状态",
+        "summary": "获取授权状态",
         "deprecated": false,
         "description": "接口说明：轮询平台授权 Session 状态",
         "operationId": "AuthController_getAuthStatus_v2",
@@ -10889,6 +11239,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id",
+          "metadata": {
+            "title": "获取授权状态",
+            "sidebarTitle": "获取授权状态"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.controller.ts",
           "controllerMethod": "getAuthStatus",
@@ -11073,6 +11430,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-assets-upload-sign",
+          "metadata": {
+            "title": "生成上传签名",
+            "sidebarTitle": "生成上传签名"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/libs/assets/src/http/assets-http.controller-base.ts",
           "controllerMethod": "createUploadSign",
@@ -11226,6 +11590,13 @@
             "apikey-header-X-Api-Key": []
           }
         ],
+        "x-mint": {
+          "href": "/api-reference/post-api-assets-id-confirm",
+          "metadata": {
+            "title": "确认资源上传",
+            "sidebarTitle": "确认资源上传"
+          }
+        },
         "x-aitoearn-backend": {
           "controller": "E:/project-dev/node/yika/aitoearn-monorepo/libs/assets/src/http/assets-http.controller-base.ts",
           "controllerMethod": "confirmUpload",
@@ -12334,7 +12705,7 @@
           },
           "model": {
             "type": "string",
-            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
           },
           "max_tokens": {
             "default": 32000,
@@ -12653,7 +13024,7 @@
           },
           "model": {
             "type": "string",
-            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/ai-服务大语言模型/对话模型列表)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
           },
           "stream": {
             "description": "是否流式返回",
@@ -13048,7 +13419,7 @@
           },
           "model": {
             "type": "string",
-            "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+            "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
           },
           "n": {
             "type": "integer",
@@ -13058,7 +13429,7 @@
           },
           "quality": {
             "type": "string",
-            "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].qualities` 为准。"
+            "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
           },
           "response_format": {
             "type": "string",
@@ -13070,11 +13441,11 @@
           },
           "size": {
             "type": "string",
-            "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+            "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
           },
           "style": {
             "type": "string",
-            "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/ai-服务图像生成/图像生成模型)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
+            "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
           }
         },
         "required": [
@@ -13123,7 +13494,7 @@
         "properties": {
           "model": {
             "type": "string",
-            "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+            "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
           },
           "image": {
             "anyOf": [
@@ -13155,7 +13526,7 @@
           },
           "size": {
             "type": "string",
-            "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/ai-服务图像生成/图像编辑模型)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+            "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
           },
           "response_format": {
             "type": "string",

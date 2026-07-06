@@ -21,6 +21,13 @@ const commonRoot = path.join(backendRoot, 'libs/common/src')
 
 const httpMethods = new Set(['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'])
 const targetSpecRef = 'openapi/zh/aitoearn.openapi.json'
+const apiReferenceBasePath = '/api-reference'
+const legacyOpenApiRedirects = [
+  {
+    source: '/api-reference/渠道管理授权/授权会话状态',
+    destination: `${apiReferenceBasePath}/get-api-v2-channels-accounts-auth-platform-status-session-id`,
+  },
+]
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -55,6 +62,35 @@ function walkTsFiles(root) {
 
 function normalizePathForDocs(filePath) {
   return filePath.replaceAll('\\', '/')
+}
+
+function slugifyEndpointId(value) {
+  return value
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+function endpointHref(endpoint) {
+  return `${apiReferenceBasePath}/${slugifyEndpointId(`${endpoint.method} ${endpoint.path}`)}`
+}
+
+function defaultMintlifySlug(value) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replaceAll('/', '')
+    .replace(/\s+/g, '-')
+}
+
+function defaultOpenApiHref(operation) {
+  const tag = operation.tags?.[0]
+  const summary = operation.summary
+  if (!tag || !summary) {
+    return null
+  }
+  return `${apiReferenceBasePath}/${defaultMintlifySlug(tag)}/${defaultMintlifySlug(summary)}`
 }
 
 function parseOperationId(operationId) {
@@ -506,6 +542,32 @@ function buildNavigationGroups(endpoints) {
   return groups
 }
 
+function buildOpenApiRedirects(endpoints, targetSpec) {
+  const redirects = []
+  for (const endpoint of endpoints) {
+    const operation = targetSpec.paths?.[endpoint.path]?.[endpoint.method.toLowerCase()]
+    const source = operation ? defaultOpenApiHref(operation) : null
+    const destination = operation?.['x-mint']?.href
+    if (source && destination && source !== destination) {
+      redirects.push({ source, destination })
+    }
+  }
+  return redirects
+}
+
+function mergeRedirects(existingRedirects, generatedRedirects) {
+  const redirects = []
+  const sources = new Set()
+  for (const redirect of [...(existingRedirects || []), ...generatedRedirects]) {
+    if (!redirect?.source || !redirect?.destination || sources.has(redirect.source)) {
+      continue
+    }
+    redirects.push(redirect)
+    sources.add(redirect.source)
+  }
+  return redirects
+}
+
 function sanitizeOpenApi30(value) {
   if (Array.isArray(value)) {
     for (const item of value) {
@@ -571,7 +633,7 @@ function sanitizeOpenApi30(value) {
   return value
 }
 
-function syncDocsJson(endpoints) {
+function syncDocsJson(endpoints, targetSpec) {
   const docsJson = readJson(docsJsonPath)
   const zhLanguage = docsJson.navigation.languages.find(item => item.language === 'zh')
   const enLanguage = docsJson.navigation.languages.find(item => item.language === 'en')
@@ -591,6 +653,10 @@ function syncDocsJson(endpoints) {
       pages: ['en/api/index'],
     },
   ]
+  docsJson.redirects = mergeRedirects(
+    docsJson.redirects,
+    [...buildOpenApiRedirects(endpoints, targetSpec), ...legacyOpenApiRedirects],
+  )
 
   writeJson(docsJsonPath, docsJson)
 }
@@ -739,9 +805,28 @@ function generate() {
     },
   }
 
+  const endpointHrefs = new Set()
+  for (const endpoint of documentedEndpoints) {
+    const href = endpointHref(endpoint)
+    if (endpointHrefs.has(href)) {
+      throw new Error(`Duplicate generated OpenAPI href: ${href}`)
+    }
+    endpointHrefs.add(href)
+  }
+
   for (const endpoint of documentedEndpoints) {
     const operation = targetSpec.paths[endpoint.path][endpoint.method.toLowerCase()]
     applySpecOverride(targetSpec, endpoint, operation, specOverrides[`${endpoint.method} ${endpoint.path}`])
+    const existingMint = operation['x-mint'] || {}
+    operation['x-mint'] = {
+      ...existingMint,
+      href: endpointHref(endpoint),
+      metadata: {
+        ...(existingMint.metadata || {}),
+        title: operation.summary,
+        sidebarTitle: operation.summary,
+      },
+    }
     const { className, methodName } = parseOperationId(endpoint.operationId)
     const controller = findControllerFile(controllerFiles, className, methodName)
     const controllerMethod = controller?.method
@@ -888,7 +973,7 @@ function generate() {
     const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
     return override?.tag ? { ...endpoint, tag: override.tag } : endpoint
   })
-  syncDocsJson(navigationEndpoints)
+  syncDocsJson(navigationEndpoints, targetSpec)
 
   const completed = matrix.filter(item => item.status === 'completed').length
   console.log(JSON.stringify({
