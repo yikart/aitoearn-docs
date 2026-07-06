@@ -211,6 +211,42 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "帮助文档",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "概览",
+                "pages": [
+                  "zh/help/about",
+                  "zh/help/3-getting-started-with-aitoearn-publishing-features",
+                  "zh/help/4-what-is-aitoearn",
+                  "zh/help/social-platforms"
+                ]
+              },
+              {
+                "group": "社交平台",
+                "pages": [
+                  "zh/help/social-platforms/554-using-instagram-with-aitoearn",
+                  "zh/help/social-platforms/555-using-facebook-with-aitoearn",
+                  "zh/help/social-platforms/556-using-threads-with-aitoearn",
+                  "zh/help/social-platforms/557-using-youtube-with-aitoearn",
+                  "zh/help/social-platforms/558-using-pinterest-with-aitoearn",
+                  "zh/help/social-platforms/559-using-tiktok-with-aitoearn",
+                  "zh/help/social-platforms/560-using-linkedin-with-aitoearn",
+                  "zh/help/social-platforms/561-using-twitter-with-aitoearn",
+                  "zh/help/social-platforms/562-using-rednote-with-aitoearn",
+                  "zh/help/social-platforms/563-using-douyin-with-aitoearn",
+                  "zh/help/social-platforms/564-using-wechatchannels-with-aitoearn",
+                  "zh/help/social-platforms/565-using-kwai-with-aitoearn",
+                  "zh/help/social-platforms/566-using-wechatofficial-with-aitoearn",
+                  "zh/help/social-platforms/567-using-bilibili-with-aitoearn",
+                  "zh/help/social-platforms/568-daily-posting-limits",
+                  "zh/help/social-platforms/569-Charcter-limits-for-each-social-network"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -264,6 +300,42 @@
                 "group": "Overview",
                 "pages": [
                   "en/api/index"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Help Docs",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "en/help/about",
+                  "en/help/3-getting-started-with-aitoearn-publishing-features",
+                  "en/help/4-what-is-aitoearn",
+                  "en/help/social-platforms"
+                ]
+              },
+              {
+                "group": "Social Platforms",
+                "pages": [
+                  "en/help/social-platforms/554-using-instagram-with-aitoearn",
+                  "en/help/social-platforms/555-using-facebook-with-aitoearn",
+                  "en/help/social-platforms/556-using-threads-with-aitoearn",
+                  "en/help/social-platforms/557-using-youtube-with-aitoearn",
+                  "en/help/social-platforms/558-using-pinterest-with-aitoearn",
+                  "en/help/social-platforms/559-using-tiktok-with-aitoearn",
+                  "en/help/social-platforms/560-using-linkedin-with-aitoearn",
+                  "en/help/social-platforms/561-using-twitter-with-aitoearn",
+                  "en/help/social-platforms/562-using-rednote-with-aitoearn",
+                  "en/help/social-platforms/563-using-douyin-with-aitoearn",
+                  "en/help/social-platforms/564-using-wechatchannels-with-aitoearn",
+                  "en/help/social-platforms/565-using-kwai-with-aitoearn",
+                  "en/help/social-platforms/566-using-wechatofficial-with-aitoearn",
+                  "en/help/social-platforms/567-using-bilibili-with-aitoearn",
+                  "en/help/social-platforms/568-daily-posting-limits",
+                  "en/help/social-platforms/569-Charcter-limits-for-each-social-network"
                 ]
               }
             ]

@@ -1,0 +1,76 @@
+---
+title: "在 Aitoearn 中使用 Facebook"
+description: "有了 Aitoearn，无论您的社群身在何处，都能与他们在线互动。与您的 Facebook 主页粉丝分享帖子和 Reels。发布后，您可以分析帖子表现并与帖子评论互动，所有这一切都在一个工具中实现！"
+---
+由于 API 限制，我们目前无法连接到 Facebook 个人资料。了解更多关于 Facebook 页面和个人资料之间的区别。
+
+## 这些功能在 Facebook Pages 上可用
+
+| 发布 | 分析 | 互动 |
+| :--: | :--: | :--: |
+| ✓ | ✓ | ✓ |
+
+## 通过 Aitoearn 在 Facebook 上可用的功能
+
+由于 API 限制，Facebook 页面与群组的可用功能有所不同，请参考下表了解在安排帖子时可使用的能力。
+
+| **功能 & 注意事项** | **备注** |
+| --- | --- |
+| 发布内容 | @用户不支持；投票不支持；故事仅支持 1 张图片或 1 个视频 |
+| @用户 | Coming soon |
+| 每日发帖限制 | 每 24 小时 25 个帖子 |
+| 字符限制 | 每个帖子或短视频 5,000 个字符 |
+| 标签 | 编辑器中输入用于帖子或短视频的标签（故事暂不支持）；发布后会成为超链接 |
+
+> 注：分析中的“最佳发帖时间”功能暂不支持 Facebook。
+
+# Facebook 图片、视频和 GIF 规格
+
+Facebook 支持图片、视频和 GIF。但需要注意的是，Reels 的排程功能仅在 Facebook 专页中可用。
+
+| 分类 | 视频 | 图片 | GIF |
+| --- | --- | --- | --- |
+| **每条帖子允许数量** | 1（上传或链接） | 10 | 1 |
+| **视频时长** | Reels：3–90 秒；Video：最长 4 小时；Stories：3–60 秒 | 不适用 | 不适用 |
+| **文件大小** | Posts：≤ 1GB；Stories：≤ 1GB | Post：≤ 10MB；Stories：建议 ≤ 1MB（技术上限 4MB） | ≤ 3MB |
+| **尺寸/宽高比** | Video posts：16:9–9:16；Reels：9:16；Stories：9:16 | 建议 8192×8192 | 待定 |
+| **支持的文件格式** | Reels：MP4；Stories：MP4；Video Posts：MP4/MOV/AVI/M4V | Posts：JPG/PNG/WebP（上传后转 WebP）；Stories：JPEG/BMP/PNG/TIFF | GIF |
+| **自定义缩略图支持** | Video Posts：暂不支持；Reels：不适用 | 不适用 | 不适用 |
+| **推荐帧率** | 24–60 FPS | 不适用 | 不适用 |
+| **音频码率** | ≥ 128 kbps | 不适用 | 不适用 |
+| **自动播放** | ✓ | 不适用 | ✓ |
+| **替代文本（Alt text）** | 不适用 | ✓ | 不适用 |
+
+## 注意事项：
+
+保护 Facebook 帐户安全并避免被标记为垃圾邮件的最佳做法：
+
+当您将相同内容分享到多个 Facebook 主页时，同时发布的帖子可能会被 Facebook 标记为垃圾或机器人行为。这可能导致帖子发送失败且访问令牌被撤销，需要在 Aitoearn 中刷新账户。在某些情况下，Facebook 甚至可能暂时限制账户。
+
+建议将各主页的发布时间错开，例如：
+- 第 1 页：09:30
+- 第 2 页：09:34
+- 第 3 页：09:39
+- 第 4 页：09:42
+- 第 5 页：09:47
+
+# Facebook 错误库
+
+使用类似 Aitoearn 的排程工具时，社交网络有时会拒绝发布并返回错误。请在下表中查找你看到的“错误”并根据“解决方案”进行排查。
+
+| 错误 | 原因 | 解决方案 |
+| --- | --- | --- |
+| “该频道已达到每日发帖上限（The daily posting limit for this channel has been reached）” | 当日发布次数已达上限 | 减少当日排程频次，稍后再试。可参考“每日发帖上限”。 |
+| “Aitoearn 丢失了代表你发布的授权（lost authorization to post）” | 最近更改了 Facebook 密码或令牌失效，权限不足 | 参考“重新授权”指南重新授权；在 Facebook 的 Edit settings 中勾选所有所需页面/权限，回到 Ai to e a r n/Aitoearn 后“管理渠道”中刷新连接，再重试。 |
+| “请确保你是 FB 群组管理员并将 Aitoearn 添加为群组应用（Please ensure you're an Admin for the FB Group and Aitoearn has been added as an app）” | 授权账号不是该群组管理员或权限不足 | 确认授权用的个人资料仍是群组管理员；按 Facebook 帮助将 Aitoearn 应用添加到群组设置；回到仪表盘“管理渠道”刷新连接后重试。 |
+| “请确保你是页面管理员并开启双重验证（Two-Factor Authentication）” | 授权账号权限不足或未启用 2FA | 在 Facebook 中确认你对该页面拥有管理员权限并启用 2FA；返回仪表盘刷新连接并重试。 |
+| “上传媒体时出现问题（trouble uploading media/image）” | 上传时发生未知错误或图片格式/大小不符合要求 | 重试发布；确认图片为 JPG/PNG/HEIC 且 ≤ 4MB。 |
+| “疑似 Facebook Bug，帖子可能已发布（We're investigating a potential FB bug）” | Facebook 端发布异常但帖子可能已上线 | 先到 Facebook.com 检查帖子是否已发布；若已发布，请删除队列中的失败项；临时改为原生发布。 |
+| “需要完成页面发布授权（Publishing Authorization）” | Facebook 要求对高影响力页面进行发布授权 | 按 Facebook 指引完成发布授权并开启 2FA，确认定位服务已开启；返回仪表盘刷新频道。 |
+| “链接不符合社区规范（Your content couldn't be shared… goes against our Community Standards）” | 链接被举报或被判定违规 | 在 Facebook 直接尝试同样的发布；若仍失败，按提示向 Facebook 申诉。 |
+| “请登录 Facebook 并按提示操作（login to facebook.com and follow the prompts）” | 账号被临时安全校验 | 登录 Facebook 按提示完成操作后，回到仪表盘刷新频道并重试。 |
+| “触发页面限流/请求限制（we’re bumping into a few Facebook page limits）” | 24 小时内页面整体互动过低或触发限流 | 暂时降低发帖频率（如每 24 小时 1 条），提高内容互动后再恢复排程。 |
+| “未知错误（An unknown error has occurred）” | 未知临时性错误 | 稍后重试；若持续出现请联系支持。 |
+| “无发布权限（Aitoearn doesn’t have permission to post on your behalf）” | 连接时未完整勾选所需权限 | 重新授权并确保连接过程中勾选所有需要的页面与权限；刷新后重试。 |
+
+> 提示：重新授权时请确认登录的是具有管理员权限的 Facebook 个人资料，并在授权流程中勾选所有所需的“页面/群组/权限”。 
