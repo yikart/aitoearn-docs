@@ -54,7 +54,18 @@
         "tags": [
           "AI 服务/视频生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -519,7 +530,18 @@
         "tags": [
           "AI 服务/视频生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -764,6 +786,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "page",
             "in": "query",
             "description": "页码，从 1 开始，默认值1",
@@ -949,6 +981,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "taskId",
             "in": "path",
             "description": "任务 ID，由生成视频接口返回，用于任务状态或生成结果查询。",
@@ -1108,7 +1150,18 @@
         "tags": [
           "AI 服务/图像生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -1298,7 +1351,18 @@
         "tags": [
           "AI 服务/图像生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -1402,7 +1466,18 @@
         "tags": [
           "AI 服务/图像生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1591,7 +1666,18 @@
         "tags": [
           "AI 服务/图像生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1791,7 +1877,18 @@
         "tags": [
           "AI 服务/图像生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1979,7 +2076,18 @@
         "tags": [
           "AI 服务/图像生成"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2180,6 +2288,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "logId",
             "in": "path",
             "description": "任务日志ID，由异步图像生成编辑接口返回，用于任务状态或生成结果查询。",
@@ -2310,7 +2428,18 @@
         "tags": [
           "AI 服务/大语言模型"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -2510,7 +2639,18 @@
         "tags": [
           "AI 服务/大语言模型"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3183,6 +3323,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "ids",
             "in": "query",
             "description": "账号 ID 数组",
@@ -3359,6 +3509,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "ids",
             "in": "query",
             "description": "账号 ID 数组",
@@ -3476,6 +3636,16 @@
           "渠道管理/账号"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "accountId",
             "in": "path",
@@ -3617,6 +3787,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "accountId",
             "in": "path",
             "description": "渠道账号 ID",
@@ -3744,6 +3924,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "accountId",
             "in": "path",
             "description": "渠道账号 ID",
@@ -3859,6 +4049,16 @@
           "渠道管理/账号"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "accountId",
             "in": "path",
@@ -4016,6 +4216,16 @@
           "渠道管理/账号"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "accountId",
             "in": "path",
@@ -4189,7 +4399,18 @@
         "tags": [
           "渠道管理/内容发布"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -6914,6 +7135,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "flowId",
             "in": "path",
             "description": "发布 Flow ID",
@@ -7059,6 +7290,16 @@
           "渠道管理/内容发布"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "taskId",
             "in": "path",
@@ -7232,6 +7473,16 @@
           "渠道管理/内容发布"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "taskId",
             "in": "path",
@@ -7407,6 +7658,16 @@
           "渠道管理/内容发布"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "taskId",
             "in": "path",
@@ -7611,6 +7872,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "taskId",
             "in": "path",
             "description": "任务 ID",
@@ -7805,6 +8076,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "accountId",
             "in": "query",
             "description": "账号 ID",
@@ -7993,6 +8274,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "accountId",
             "in": "query",
             "description": "账号 ID",
@@ -8169,6 +8460,16 @@
           "渠道管理/内容发布"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "accountId",
             "in": "query",
@@ -8347,6 +8648,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "recordId",
             "in": "path",
             "description": "发布记录 ID",
@@ -8485,6 +8796,16 @@
           "渠道管理/内容发布"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "recordId",
             "in": "path",
@@ -8627,6 +8948,16 @@
           "渠道管理/内容发布"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "recordId",
             "in": "path",
@@ -8806,7 +9137,18 @@
         "tags": [
           "渠道管理/平台"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -8991,6 +9333,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "platform",
             "in": "path",
             "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
@@ -9118,6 +9470,16 @@
           "渠道管理/作品"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "platform",
             "in": "query",
@@ -9321,6 +9683,16 @@
           "渠道管理/作品"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "platform",
             "in": "path",
@@ -9631,6 +10003,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "platform",
             "in": "path",
             "description": "平台标识",
@@ -9842,6 +10224,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "platform",
             "in": "path",
             "description": "平台标识",
@@ -10036,6 +10428,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "platform",
             "in": "path",
             "description": "平台标识",
@@ -10212,7 +10614,18 @@
         "tags": [
           "渠道管理/账号分组"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -10321,7 +10734,18 @@
         "tags": [
           "渠道管理/账号分组"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -10483,6 +10907,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "ids",
             "in": "query",
             "description": "分组 ID 数组",
@@ -10615,6 +11049,16 @@
           "渠道管理/账号分组"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "groupId",
             "in": "path",
@@ -10801,6 +11245,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "groupId",
             "in": "path",
             "description": "分组 ID",
@@ -10951,6 +11405,16 @@
         ],
         "parameters": [
           {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
+          {
             "name": "platform",
             "in": "path",
             "description": "",
@@ -11100,6 +11564,16 @@
           "渠道管理/授权"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "platform",
             "in": "path",
@@ -11294,7 +11768,18 @@
         "tags": [
           "资源管理"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -11469,6 +11954,16 @@
           "资源管理"
         ],
         "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+            },
+            "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
+          },
           {
             "name": "id",
             "in": "path",
@@ -17723,7 +18218,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-Api-Key",
-        "description": "AiToEarn Open Platform API Key。"
+        "description": "需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。"
       },
       "apikey-header-Authorization": {
         "type": "apiKey",

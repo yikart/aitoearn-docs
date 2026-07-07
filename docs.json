@@ -18,8 +18,239 @@
     {
       "source": "/",
       "destination": "/en/home"
+    },
+    {
+      "source": "/use/api-key",
+      "destination": "/zh/use/api-key"
+    },
+    {
+      "source": "/use/api-key/",
+      "destination": "/zh/use/api-key"
+    },
+    {
+      "source": "/api-reference/ai-服务视频生成/视频生成模型",
+      "destination": "/api-reference/get-api-ai-models-video-generation"
+    },
+    {
+      "source": "/api-reference/ai-服务视频生成/生成视频",
+      "destination": "/api-reference/post-api-ai-video-generations"
+    },
+    {
+      "source": "/api-reference/ai-服务视频生成/视频任务列表",
+      "destination": "/api-reference/get-api-ai-video-generations"
+    },
+    {
+      "source": "/api-reference/ai-服务视频生成/视频任务状态",
+      "destination": "/api-reference/get-api-ai-video-generations-task-id"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/图像生成模型",
+      "destination": "/api-reference/get-api-ai-models-image-generation"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/图像编辑模型",
+      "destination": "/api-reference/get-api-ai-models-image-edit"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/生成图像",
+      "destination": "/api-reference/post-api-ai-image-generate"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/编辑图像",
+      "destination": "/api-reference/post-api-ai-image-edit"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/异步生成图像",
+      "destination": "/api-reference/post-api-ai-image-generate-async"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/异步编辑图像",
+      "destination": "/api-reference/post-api-ai-image-edit-async"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/图像任务状态",
+      "destination": "/api-reference/get-api-ai-image-task-log-id"
+    },
+    {
+      "source": "/api-reference/ai-服务大语言模型/对话模型列表",
+      "destination": "/api-reference/get-api-ai-models-chat"
+    },
+    {
+      "source": "/api-reference/ai-服务大语言模型/openai-对话",
+      "destination": "/api-reference/post-api-ai-chat-completions"
+    },
+    {
+      "source": "/api-reference/ai-服务大语言模型/anthropic-对话",
+      "destination": "/api-reference/post-api-ai-v1-messages"
+    },
+    {
+      "source": "/api-reference/ai-服务大语言模型/gemini-对话",
+      "destination": "/api-reference/post-api-ai-v1beta-models-model-generate-content"
+    },
+    {
+      "source": "/api-reference/ai-服务大语言模型/gemini-流式对话",
+      "destination": "/api-reference/post-api-ai-v1beta-models-model-stream-generate-content"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/openai-图像生成",
+      "destination": "/api-reference/post-api-ai-images-generations"
+    },
+    {
+      "source": "/api-reference/ai-服务图像生成/openai-图像编辑",
+      "destination": "/api-reference/post-api-ai-images-edits"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/账号列表",
+      "destination": "/api-reference/get-api-v2-channels-accounts"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/批量删除账号",
+      "destination": "/api-reference/delete-api-v2-channels-accounts"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/账号详情",
+      "destination": "/api-reference/get-api-v2-channels-accounts-account-id"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/删除账号",
+      "destination": "/api-reference/delete-api-v2-channels-accounts-account-id"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/账号授权状态",
+      "destination": "/api-reference/get-api-v2-channels-accounts-account-id-auth-status"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/发布选项可选值",
+      "destination": "/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values"
+    },
+    {
+      "source": "/api-reference/渠道管理账号/创建发布选项值",
+      "destination": "/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/创建发布流程",
+      "destination": "/api-reference/post-api-v2-channels-publish-flows"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/发布流程详情",
+      "destination": "/api-reference/get-api-v2-channels-publish-flows-flow-id"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/立即发布",
+      "destination": "/api-reference/post-api-v2-channels-publish-tasks-task-id-publish-now"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/重试发布任务",
+      "destination": "/api-reference/post-api-v2-channels-publish-tasks-task-id-retry"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/取消发布任务",
+      "destination": "/api-reference/delete-api-v2-channels-publish-tasks-task-id"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/修改发布时间",
+      "destination": "/api-reference/patch-api-v2-channels-publish-tasks-task-id-publish-at"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/发布记录列表",
+      "destination": "/api-reference/get-api-v2-channels-publish-records"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/待发布列表",
+      "destination": "/api-reference/get-api-v2-channels-publish-records-queued"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/已发布列表",
+      "destination": "/api-reference/get-api-v2-channels-publish-records-published"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/删除发布记录",
+      "destination": "/api-reference/delete-api-v2-channels-publish-records-record-id"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/发布记录详情",
+      "destination": "/api-reference/get-api-v2-channels-publish-records-record-id"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/app-拉起链接",
+      "destination": "/api-reference/get-api-v2-channels-publish-records-record-id-user-action"
+    },
+    {
+      "source": "/api-reference/渠道管理平台/平台列表",
+      "destination": "/api-reference/get-api-v2-channels-platforms"
+    },
+    {
+      "source": "/api-reference/渠道管理平台/平台发布选项",
+      "destination": "/api-reference/get-api-v2-channels-platforms-platform-publish-options"
+    },
+    {
+      "source": "/api-reference/渠道管理作品/解析作品链接",
+      "destination": "/api-reference/get-api-v2-channels-works-link-info"
+    },
+    {
+      "source": "/api-reference/渠道管理作品/作品列表",
+      "destination": "/api-reference/get-api-v2-channels-works-platform"
+    },
+    {
+      "source": "/api-reference/渠道管理作品/作品详情",
+      "destination": "/api-reference/get-api-v2-channels-works-platform-platform-work-id"
+    },
+    {
+      "source": "/api-reference/渠道管理作品/作品数据统计",
+      "destination": "/api-reference/get-api-v2-channels-works-platform-platform-work-id-analytics"
+    },
+    {
+      "source": "/api-reference/渠道管理作品/验证作品归属",
+      "destination": "/api-reference/post-api-v2-channels-works-platform-platform-work-id-ownership-verify"
+    },
+    {
+      "source": "/api-reference/渠道管理账号分组/分组列表",
+      "destination": "/api-reference/get-api-v2-channels-account-groups"
+    },
+    {
+      "source": "/api-reference/渠道管理账号分组/创建分组",
+      "destination": "/api-reference/post-api-v2-channels-account-groups"
+    },
+    {
+      "source": "/api-reference/渠道管理账号分组/批量删除分组",
+      "destination": "/api-reference/delete-api-v2-channels-account-groups"
+    },
+    {
+      "source": "/api-reference/渠道管理账号分组/更新分组",
+      "destination": "/api-reference/patch-api-v2-channels-account-groups-group-id"
+    },
+    {
+      "source": "/api-reference/渠道管理账号分组/调整账号排序",
+      "destination": "/api-reference/patch-api-v2-channels-account-groups-group-id-accounts-rank"
+    },
+    {
+      "source": "/api-reference/渠道管理授权/发起平台授权",
+      "destination": "/api-reference/get-api-v2-channels-accounts-auth-platform"
+    },
+    {
+      "source": "/api-reference/渠道管理授权/获取授权状态",
+      "destination": "/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id"
+    },
+    {
+      "source": "/api-reference/资源管理/生成上传签名",
+      "destination": "/api-reference/post-api-assets-upload-sign"
+    },
+    {
+      "source": "/api-reference/资源管理/确认资源上传",
+      "destination": "/api-reference/post-api-assets-id-confirm"
+    },
+    {
+      "source": "/api-reference/渠道管理授权/授权会话状态",
+      "destination": "/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id"
     }
   ],
+  "errors": {
+    "404": {
+      "redirect": false,
+      "title": "页面未找到",
+      "description": "没有找到对应文档。你可以返回[首页](/zh/home)，或查看[API Key 获取教程](/zh/use/api-key)。"
+    }
+  },
   "appearance": {
     "default": "system",
     "strict": false

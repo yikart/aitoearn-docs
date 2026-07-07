@@ -22,6 +22,8 @@ const commonRoot = path.join(backendRoot, 'libs/common/src')
 const httpMethods = new Set(['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'])
 const targetSpecRef = 'openapi/zh/aitoearn.openapi.json'
 const apiReferenceBasePath = '/api-reference'
+const apiKeyTutorialHref = '/zh/use/api-key'
+const xApiKeyDescription = `需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](${apiKeyTutorialHref})。`
 const legacyOpenApiRedirects = [
   {
     source: '/api-reference/渠道管理授权/授权会话状态',
@@ -523,6 +525,42 @@ function getSecurity(mapping) {
   return [{ 'apikey-header-X-Api-Key': [] }]
 }
 
+function syncXApiKeyHeaderParameter(operation, mapping) {
+  const shouldShowXApiKeyHeader = mapping.apiKeyHeader === 'X-Api-Key'
+    || (!mapping.requiresAuth && !mapping.apiKeyHeader)
+
+  if (!shouldShowXApiKeyHeader) {
+    return
+  }
+
+  operation.parameters = operation.parameters || []
+  const existingParameter = operation.parameters.find(parameter => (
+    !parameter.$ref
+    && parameter.in === 'header'
+    && parameter.name?.toLowerCase() === 'x-api-key'
+  ))
+  const apiKeyParameter = existingParameter || {
+    name: 'X-Api-Key',
+    in: 'header',
+    required: true,
+    schema: {
+      type: 'string',
+    },
+  }
+
+  apiKeyParameter.required = true
+  apiKeyParameter.description = xApiKeyDescription
+  apiKeyParameter.schema = {
+    ...(apiKeyParameter.schema || {}),
+    type: apiKeyParameter.schema?.type || 'string',
+    description: xApiKeyDescription,
+  }
+
+  if (!existingParameter) {
+    operation.parameters.unshift(apiKeyParameter)
+  }
+}
+
 function buildNavigationGroups(endpoints) {
   const groups = []
   const byTag = new Map()
@@ -789,7 +827,7 @@ function generate() {
       type: 'apiKey',
       in: 'header',
       name: 'X-Api-Key',
-      description: 'AiToEarn Open Platform API Key。',
+      description: xApiKeyDescription,
     },
     'apikey-header-Authorization': {
       type: 'apiKey',
@@ -900,6 +938,7 @@ function generate() {
     }
 
     operation.security = getSecurity(mapping)
+    syncXApiKeyHeaderParameter(operation, mapping)
     operation['x-aitoearn-backend'] = {
       controller: mapping.controllerFile,
       controllerMethod: mapping.controllerMethod,
