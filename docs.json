@@ -319,8 +319,12 @@
                 "group": "使用",
                 "pages": [
                   "zh/use/introduction",
+                  "zh/use/publish-flow/index",
+                  "zh/use/oss-upload/index",
                   "zh/use/api-key/index",
-                  "zh/use/publish-flow/index"
+                  "zh/use/video-generation/index",
+                  "zh/use/image-generation/index",
+                  "zh/use/large-language-model/index"
                 ]
               }
             ]

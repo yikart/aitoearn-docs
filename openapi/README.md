@@ -15,7 +15,7 @@ This directory stores the OpenAPI files used by Mintlify to generate interactive
 - Curate endpoint titles and request-body property descriptions in `spec-overrides.json` instead of editing `zh/aitoearn.openapi.json` directly; regenerate via `node scripts/sync-openapi-docs.mjs`. Titles should stay within 7 CJK characters so the sidebar renders on one line: GET endpoints use noun phrases (XX 列表 / XX 详情 / XX 状态), write endpoints start with a verb, avoid internal jargon.
 - When a request parameter's valid values come from another endpoint (e.g. `model` comes from a model-list endpoint), say so in its description: name the endpoint and the response field to pass (e.g. `data[n].name`).
 - Use OpenAPI `servers` to enable the Mintlify API playground.
-- Define auth in `components.securitySchemes` and apply it through `security`. For normal AiToEarn endpoints, `scripts/sync-openapi-docs.mjs` also injects a required `X-Api-Key` header parameter with the same Chinese tutorial link because Mintlify does not reliably render `securitySchemes.description` on API pages.
+- Define auth in `components.securitySchemes` and apply it through `security`. Do not add a separate `X-Api-Key` header parameter for normal AiToEarn endpoints; the API page should show auth in the authorization section only.
 - Add realistic `responses` and `examples` so readers can switch between success and error payloads.
 - For normal AiToEarn responses, success is determined by `code === 0`, not by HTTP status alone.
 - Preserve raw response behavior for compatibility endpoints marked with `@SkipResponseInterceptor()`.

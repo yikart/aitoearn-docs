@@ -525,40 +525,16 @@ function getSecurity(mapping) {
   return [{ 'apikey-header-X-Api-Key': [] }]
 }
 
-function syncXApiKeyHeaderParameter(operation, mapping) {
-  const shouldShowXApiKeyHeader = mapping.apiKeyHeader === 'X-Api-Key'
-    || (!mapping.requiresAuth && !mapping.apiKeyHeader)
-
-  if (!shouldShowXApiKeyHeader) {
+function syncXApiKeyHeaderParameter(operation) {
+  if (!Array.isArray(operation.parameters)) {
     return
   }
 
-  operation.parameters = operation.parameters || []
-  const existingParameter = operation.parameters.find(parameter => (
-    !parameter.$ref
-    && parameter.in === 'header'
-    && parameter.name?.toLowerCase() === 'x-api-key'
+  operation.parameters = operation.parameters.filter(parameter => (
+    parameter.$ref
+    || parameter.in !== 'header'
+    || parameter.name?.toLowerCase() !== 'x-api-key'
   ))
-  const apiKeyParameter = existingParameter || {
-    name: 'X-Api-Key',
-    in: 'header',
-    required: true,
-    schema: {
-      type: 'string',
-    },
-  }
-
-  apiKeyParameter.required = true
-  apiKeyParameter.description = xApiKeyDescription
-  apiKeyParameter.schema = {
-    ...(apiKeyParameter.schema || {}),
-    type: apiKeyParameter.schema?.type || 'string',
-    description: xApiKeyDescription,
-  }
-
-  if (!existingParameter) {
-    operation.parameters.unshift(apiKeyParameter)
-  }
 }
 
 function buildNavigationGroups(endpoints) {

@@ -302,7 +302,8 @@
     }
   },
   "POST /api/v2/channels/publish/flows": {
-    "summary": "创建发布流程"
+    "summary": "创建发布流程",
+    "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。"
   },
   "GET /api/v2/channels/publish/flows/{flowId}": {
     "summary": "发布流程详情"
@@ -374,6 +375,7 @@
     "summary": "获取授权状态"
   },
   "POST /api/assets/uploadSign": {
-    "summary": "生成上传签名"
+    "summary": "生成上传签名",
+    "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [OSS 上传使用教程](/zh/use/oss-upload)。"
   }
 }
