@@ -12,8 +12,14 @@
   "logo": {
     "light": "/assets/logo/logo-light.png",
     "dark": "/assets/logo/logo-dark.png",
-    "href": "/zh/home"
+    "href": "/en/home"
   },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/en/home"
+    }
+  ],
   "appearance": {
     "default": "system",
     "strict": false

@@ -4,9 +4,9 @@
 
 ## 文件清单
 
-- `home-nav-state.css`：首页取消 `使用 / Use` 顶部菜单视觉高亮。
+- `home-nav-state.css`：首页取消顶部中间菜单视觉高亮。
 - `home-nav-state.js`：由 `src/mintlify-overrides/home-nav-state.ts` 编译生成，移除首页误加的 `aria-current`。
-- `sidebar-width.css`：桌面端侧边栏由 14rem 加宽到 17rem 并收窄导航内边距，让 API 长接口名单行显示；`#sidebar-content` 宽度、`#body-content` 让位 padding、`#content-area` 居中公式三处必须同步改。首页 `zh/home`、`en/home` 使用 custom mode 且没有左侧目录，单独重置侧栏让位以保持整页水平居中。
+- `sidebar-width.css`：桌面端侧边栏由 14rem 加宽到 17rem 并收窄导航内边距，让 API 长接口名单行显示；`#sidebar-content` 宽度、`#body-content` 让位 padding、`#content-area` 居中公式三处必须同步改。首页 `/home`、`zh/home`、`en/home` 使用 custom mode 且没有左侧目录，单独重置侧栏让位以保持整页水平居中。
 
 ## 维护规则
 

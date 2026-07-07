@@ -35,11 +35,11 @@ Mintlify logo 配置以实际渲染为准：
 
 Mintlify `mint` 主题下的 `navigation.tabs` 会渲染为 header 下方的第二行 tab bar，不适合模拟 Dify 风格的一行顶部导航。当前改用 Dify 同类的 `luma` 主题，在 `navigation.languages[].tabs` 放置 `使用 / Use` 与 `API 文档 / API Docs` 作为顶部中间菜单；右侧动作区由 `navigation.languages[].navbar.links` 和 `primary` 维护。
 
-首页 `zh/home.mdx` 与 `en/home.mdx` 是独立入口页，使用 `mode: "custom"`，不加入 `使用 / Use` tab 的左侧目录；但需要在 navigation 中保留隐藏的 `首页 / Home` tab，确保 Mintlify 语言切换可以在 `zh/home` 与 `en/home` 之间映射，而不是回落到 `use` 页面。`使用 / Use` tab 的首个页面是 `zh/use/index.mdx` 与 `en/use/index.mdx`。
+首页入口为 `/en/home`，根路径 `/` 通过 `docs.json` 的 `redirects` 跳转到 `/en/home`。中文首页为 `zh/home.mdx`，英文首页为 `en/home.mdx`。两个页面都使用 `mode: "custom"`，不加入 `使用 / Use` tab 的左侧目录；但需要在 navigation 中保留隐藏的 `首页 / Home` tab，确保 Mintlify 语言切换可以在首页之间映射，而不是回落到 `use` 页面。`使用 / Use` tab 的首个页面是 `zh/use/introduction.mdx` 与 `en/use/index.mdx`。
 
-Mintlify `luma` 在隐藏首页 tab 上仍会把第一个可见 tab 渲染为 active，因此 `mintlify-overrides/home-nav-state.css` 中保留一段仅匹配 `data-current-path="/zh/home"` / `"/en/home"` 的最小样式覆盖，取消 `使用 / Use` 的视觉高亮；不要把这段覆盖扩展到其它页面。
+Mintlify `luma` 在隐藏首页 tab 上仍可能把某个可见 tab 渲染为 active，因此 `mintlify-overrides/home-nav-state.css` 中保留一段仅匹配 `data-current-path="/home"` / `"/zh/home"` / `"/en/home"` 的最小样式覆盖，取消顶部中间菜单的视觉高亮；不要把这段覆盖扩展到其它页面。
 
-`src/mintlify-overrides/home-nav-state.ts` 只处理同一个问题：在首页运行时移除顶部菜单误加的 `aria-current`，并清掉 active 背景。编译产物是 `mintlify-overrides/home-nav-state.js`，不得直接手改产物 JS，也不得用于其它导航行为。
+`src/mintlify-overrides/home-nav-state.ts` 只处理同一个问题：在首页运行时移除顶部中间菜单误加的 `aria-current`，并配合 CSS 清掉 active 背景。编译产物是 `mintlify-overrides/home-nav-state.js`，不得直接手改产物 JS，也不得用于其它导航行为。
 
 语言分流：
 

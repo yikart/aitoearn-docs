@@ -1,10 +1,6 @@
 "use strict";
 (function () {
-    const HOME_PATHS = new Set(['/zh/home', '/en/home']);
-    const HOME_ACTIVE_FALLBACK_HREFS = new Map([
-        ['/zh/home', '/zh/use/introduction'],
-        ['/en/home', '/en/use'],
-    ]);
+    const HOME_PATHS = new Set(['/home', '/zh/home', '/en/home']);
     const INACTIVE_ATTRIBUTE = 'data-aitoearn-home-inactive';
     function normalizePath(pathname) {
         let path = pathname.split('?')[0]?.split('#')[0] || '/';
@@ -28,34 +24,24 @@
         if (!(link instanceof HTMLElement) || link.getAttribute(INACTIVE_ATTRIBUTE) !== 'true') {
             return;
         }
-        link.style.removeProperty('background');
-        link.style.removeProperty('color');
-        link.classList.remove('!bg-transparent');
         link.removeAttribute(INACTIVE_ATTRIBUTE);
     }
-    function muteActiveLink(link) {
+    function muteHomeLink(link) {
         if (!(link instanceof HTMLElement)) {
             return;
         }
-        const isDark = document.documentElement.classList.contains('dark');
         link.removeAttribute('aria-current');
         link.setAttribute(INACTIVE_ATTRIBUTE, 'true');
-        link.classList.add('!bg-transparent');
-        link.style.setProperty('background', 'transparent', 'important');
-        link.style.setProperty('color', isDark ? 'rgb(var(--gray-400))' : 'rgb(var(--gray-600))', 'important');
     }
     function syncHomeNavState() {
         const currentPath = getCurrentPath();
         const isHome = HOME_PATHS.has(currentPath);
-        const fallbackHref = HOME_ACTIVE_FALLBACK_HREFS.get(currentPath);
-        document.querySelectorAll(`nav[aria-label="Main"] a[${INACTIVE_ATTRIBUTE}="true"]`).forEach(resetLink);
+        const mainNavLinks = document.querySelectorAll('nav[aria-label="Main"] a');
+        mainNavLinks.forEach(resetLink);
         if (!isHome) {
             return;
         }
-        document.querySelectorAll('nav[aria-label="Main"] a[aria-current="location"]').forEach(muteActiveLink);
-        if (fallbackHref) {
-            document.querySelectorAll(`nav[aria-label="Main"] a[href="${fallbackHref}"]`).forEach(muteActiveLink);
-        }
+        mainNavLinks.forEach(muteHomeLink);
     }
     function scheduleSync() {
         window.requestAnimationFrame(syncHomeNavState);
