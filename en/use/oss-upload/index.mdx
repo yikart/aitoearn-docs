@@ -1,0 +1,22 @@
+---
+title: "OSS upload"
+---
+
+Use OSS upload when your image, video, audio, or other asset is still local, private, or unavailable through a public URL.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first.
+</Info>
+
+## Integration order
+
+1. Call [Generate upload signature](/api-reference/post-api-assets-upload-sign).
+2. Upload the file with the returned upload information.
+3. Call [Confirm asset upload](/api-reference/post-api-assets-id-confirm).
+4. Use the returned asset URL in publishing or generation requests.
+
+## Common use cases
+
+- Add media assets to a publishing flow.
+- Provide reference images, videos, or audio for video generation.
+- Provide source images or masks for image editing.

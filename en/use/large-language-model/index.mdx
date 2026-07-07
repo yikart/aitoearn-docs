@@ -1,0 +1,25 @@
+---
+title: "Language models"
+---
+
+Language model integration starts with the chat model list. Copy the returned model name into an OpenAI, Anthropic, or Gemini compatible request.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first.
+</Info>
+
+<Info>
+  View language model pricing: [International site](https://aitoearn.ai/zh-CN/pricing#pricing-table-llm).
+</Info>
+
+## Integration order
+
+1. Call [Chat models](/api-reference/get-api-ai-models-chat).
+2. Copy `data[n].name` from the model list and pass it as `model`.
+3. Choose one compatible endpoint: [OpenAI chat](/api-reference/post-api-ai-chat-completions), [Anthropic messages](/api-reference/post-api-ai-v1-messages), [Gemini generateContent](/api-reference/post-api-ai-v1beta-models-model-generate-content), or [Gemini streamGenerateContent](/api-reference/post-api-ai-v1beta-models-model-stream-generate-content).
+
+## Header differences
+
+- OpenAI compatible requests use `Authorization: Bearer <API_KEY>`.
+- Anthropic compatible requests use `x-api-key: <API_KEY>`.
+- Gemini compatible requests use `x-goog-api-key: <API_KEY>` and put the model name in the `{model}` path parameter.

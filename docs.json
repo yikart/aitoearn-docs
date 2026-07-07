@@ -529,7 +529,13 @@
               {
                 "group": "Use",
                 "pages": [
-                  "en/use/index"
+                  "en/use/index",
+                  "en/use/publish-flow/index",
+                  "en/use/oss-upload/index",
+                  "en/use/api-key/index",
+                  "en/use/video-generation/index",
+                  "en/use/image-generation/index",
+                  "en/use/large-language-model/index"
                 ]
               }
             ]

@@ -1,0 +1,43 @@
+---
+title: "Video generation"
+---
+
+Video generation starts with the model list. Pick an available model, then create a generation task.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first.
+</Info>
+
+<Info>
+  View video generation model pricing: [International site](https://aitoearn.ai/zh-CN/pricing#pricing-table-video-gen).
+</Info>
+
+## Integration order
+
+1. Call [Video generation models](/api-reference/get-api-ai-models-video-generation) to list available video models.
+2. Copy `data[n].name` from the model list and pass it as `model`.
+3. Choose resolution, aspect ratio, duration, and reference assets from the same model item.
+4. Call [Generate video](/api-reference/post-api-ai-video-generations).
+5. Use the returned `data.id` to call [Video task status](/api-reference/get-api-ai-video-generations-task-id).
+
+If you need reference images, videos, or audio, use [OSS upload](/en/use/oss-upload) first.
+
+## Minimal request
+
+```bash
+curl --request GET 'https://aitoearn.ai/api/ai/models/video/generation' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+```bash
+curl --request POST 'https://aitoearn.ai/api/ai/video/generations' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "copy from data[n].name",
+    "prompt": "Generate an aerial video of a city at night",
+    "resolution": "720p",
+    "ratio": "16:9",
+    "duration": 5
+  }'
+```
