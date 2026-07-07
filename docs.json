@@ -461,8 +461,21 @@
               {
                 "group": "新手指南和常见问题",
                 "pages": [
+                  "zh/help/index",
                   "zh/help/guide",
                   "zh/help/faq"
+                ]
+              },
+              {
+                "group": "创作者指南",
+                "pages": [
+                  "zh/help/creator/index"
+                ]
+              },
+              {
+                "group": "广告主指南",
+                "pages": [
+                  "zh/help/advertiser/index"
                 ]
               },
               {
