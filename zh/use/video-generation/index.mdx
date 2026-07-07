@@ -1,0 +1,56 @@
+---
+title: "视频生成"
+---
+
+视频生成的接入顺序很简单：先请求模型列表，选择一个可用模型，再调用生成接口创建任务。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。
+</Info>
+
+<Info>
+  查看视频生成模型价格：[中文站](https://aitoearn.cn/zh-CN/pricing#pricing-table-video-gen) / [国际站](https://aitoearn.ai/zh-CN/pricing#pricing-table-video-gen)。
+</Info>
+
+## 接入顺序
+
+1. 调用 [视频生成模型](/api-reference/get-api-ai-models-video-generation)，读取当前站点可用的视频模型。
+2. 从模型列表的 `data[n].name` 复制模型名称，后续作为 `model` 传给生成接口。
+3. 根据同一个模型项里的 `resolutions`、`aspectRatios`、`durations`、`modes` 和 `inputConstraints` 选择分辨率、比例、时长和参考素材。
+4. 调用 [生成视频](/api-reference/post-api-ai-video-generations)，传入 `model`、`prompt` 和可选参数。
+5. 生成接口会返回 `data.id`，用它调用 [视频任务状态](/api-reference/get-api-ai-video-generations-task-id) 查询结果。
+
+如果需要上传参考图、参考视频或参考音频，请先用 [OSS 上传](../oss-upload) 获取公网可访问 URL，再写入生成接口对应的参考素材字段。
+
+## 最小请求
+
+先请求模型列表：
+
+```bash
+curl --request GET 'https://aitoearn.cn/api/ai/models/video/generation' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+再创建视频生成任务：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/video/generations' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "从 data[n].name 复制",
+    "prompt": "生成一段城市夜景航拍视频",
+    "resolution": "720p",
+    "ratio": "16:9",
+    "duration": 5
+  }'
+```
+
+## 查询结果
+
+```bash
+curl --request GET 'https://aitoearn.cn/api/ai/video/generations/{taskId}' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+其中 `{taskId}` 填生成接口返回的 `data.id`。任务完成后，结果里会返回 `data.videoUrl` 和 `data.coverUrl`。如果需要查看历史任务，可以调用 [视频任务列表](/api-reference/get-api-ai-video-generations)。

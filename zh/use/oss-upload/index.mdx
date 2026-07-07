@@ -1,0 +1,127 @@
+---
+title: "OSS 上传"
+---
+
+发布、图像编辑等接口需要能在公网环境访问的文件 URL。如果你的资源还在本地、内网或私有存储里，可以先请求上传签名，把文件直传到 AiToEarn 对象存储，再调用确认接口拿到可用于后续接口的公网资源 URL。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。
+</Info>
+
+## 接入顺序
+
+1. 调用 [生成上传签名](/api-reference/post-api-assets-upload-sign)，传入文件名、文件大小和资源类型。
+2. 使用返回的 `data.uploadUrl` 直传文件。上传到对象存储时不需要携带 `X-Api-Key`。
+3. 上传成功后，调用 [确认资源上传](/api-reference/post-api-assets-id-confirm)，路径里的 `{id}` 填第一步返回的 `data.id`。
+4. 使用确认接口返回的 `data.url` 作为后续业务接口里的文件 URL。
+
+## 第一步：生成上传签名
+
+请求体里 `filename` 必填，建议带上真实扩展名。`size` 是文件大小，单位是字节。发布素材建议把 `type` 填成 `publishMedia`；不传时接口会按默认类型处理。
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/assets/uploadSign' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "filename": "demo-video.mp4",
+    "type": "publishMedia",
+    "size": 10485760
+  }'
+```
+
+成功后重点读取这些字段：
+
+- `data.id`：资源 ID，确认上传时要放到路径里。
+- `data.uploadUrl`：对象存储直传地址，只用于上传文件本身。
+- `data.url`：资源访问地址。最终仍建议以确认接口返回的 `data.url` 为准。
+
+## 第二步：直传文件
+
+对 `uploadUrl` 发起 `PUT` 请求，并把文件二进制作为请求体。
+
+```ts
+async function uploadFileToStorage(file: File, uploadUrl: string) {
+  const response = await fetch(uploadUrl, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': file.type || 'application/octet-stream',
+    },
+  })
+
+  if (!response.ok)
+    throw new Error(`上传失败：${response.statusText}`)
+}
+```
+
+这一步是直传对象存储，不是调用 AiToEarn API，所以不要把 `X-Api-Key` 加到这个请求里。
+
+## 第三步：确认上传
+
+文件上传成功后，调用确认接口把资源状态更新为可用。
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/assets/{id}/confirm' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+其中 `{id}` 替换为第一步返回的 `data.id`。确认成功后，接口会返回资源对象，后续优先使用 `data.url`。
+
+## 完整示例
+
+```ts
+async function uploadToAitoearn(file: File, apiKey: string) {
+  const signResponse = await fetch('https://aitoearn.cn/api/assets/uploadSign', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Api-Key': apiKey,
+    },
+    body: JSON.stringify({
+      filename: file.name,
+      type: 'publishMedia',
+      size: file.size,
+    }),
+  })
+
+  const signResult = await signResponse.json()
+  if (signResult.code !== 0)
+    throw new Error(signResult.message || '生成上传签名失败')
+
+  const { id, uploadUrl, url } = signResult.data
+
+  const uploadResponse = await fetch(uploadUrl, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': file.type || 'application/octet-stream',
+    },
+  })
+
+  if (!uploadResponse.ok)
+    throw new Error(`上传失败：${uploadResponse.statusText}`)
+
+  const confirmResponse = await fetch(`https://aitoearn.cn/api/assets/${id}/confirm`, {
+    method: 'POST',
+    headers: {
+      'X-Api-Key': apiKey,
+    },
+  })
+
+  const confirmResult = await confirmResponse.json()
+  if (confirmResult.code !== 0)
+    throw new Error(confirmResult.message || '确认上传失败')
+
+  return confirmResult.data?.url || url
+}
+```
+
+## URL 使用规则
+
+发布接口要求传入公网可访问的资源 URL，不强制必须是 AiToEarn 资源域名。OSS 上传适用于你需要把本地、内网或私有文件转成公网 URL 的场景。
+
+- 使用本页上传流程时，不要手动拼接资源域名，也不要把 `uploadUrl` 当成业务素材 URL 使用。
+- 调用中国站 `https://aitoearn.cn` 上传后，确认接口返回的资源 URL 通常来自 `assets.aitoearn.cn`。
+- 调用国际站 `https://aitoearn.ai` 上传后，确认接口返回的资源 URL 通常来自 `assets.aitoearn.ai`。
+- 后续创建发布流程时，把确认后的 URL 写入 `content.media[n].url` 或 `content.cover.url`。

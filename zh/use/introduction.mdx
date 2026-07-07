@@ -5,7 +5,9 @@ description: 开放平台接入入口
 
 AiToEarn Open Platform 提供开放 API，帮助你在自己的系统中接入账号授权、素材上传和多平台发布能力。
 
-第一次接入建议先创建 API KEY，再按发布流程跑通一次完整发布。
+第一次接入建议先创建 API KEY，再按发布流程跑通一次完整发布。如果你只需要生成能力，也可以直接阅读对应模型教程。
+
+## 快速开始
 
 <CardGroup cols={2}>
   <Card title="获取API KEY" icon="key" href="./api-key">
@@ -13,5 +15,33 @@ AiToEarn Open Platform 提供开放 API，帮助你在自己的系统中接入�
   </Card>
   <Card title="发布流程" icon="send" href="./publish-flow">
     了解从账号授权、发布选项、素材上传到创建发布流程的完整步骤。
+  </Card>
+</CardGroup>
+
+## 常用教程
+
+<CardGroup cols={2}>
+  <Card title="OSS 上传" icon="upload" href="./oss-upload">
+    上传本地图片、视频或其它素材，获取可直接写入接口参数的资源 URL。
+  </Card>
+  <Card title="视频生成" icon="video" href="./video-generation">
+    查询可用视频模型，提交生成任务，并轮询任务状态获取结果。
+  </Card>
+  <Card title="图像生成" icon="image" href="./image-generation">
+    使用图像生成接口完成文生图、图生图和局部编辑。
+  </Card>
+  <Card title="大语言模型" icon="brain-circuit" href="./large-language-model">
+    通过兼容接口调用文本模型，接入对话、摘要和内容生成场景。
+  </Card>
+</CardGroup>
+
+## 接口参考
+
+<CardGroup cols={2}>
+  <Card title="API 文档" icon="code" href="/zh/api">
+    查看开放平台接口索引和请求鉴权说明。
+  </Card>
+  <Card title="对话模型列表" icon="braces" href="/api-reference/get-api-ai-models-chat">
+    查看当前可用的大语言模型名称和接口参数。
   </Card>
 </CardGroup>

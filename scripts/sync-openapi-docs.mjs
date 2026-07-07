@@ -6,8 +6,10 @@ const repoRoot = path.resolve(docsRoot, '..')
 const websiteRoot = path.join(repoRoot, 'aitoearn-website')
 const backendRoot = process.env.AITOEARN_BACKEND_ROOT || 'E:/project-dev/node/yika/aitoearn-monorepo'
 const sourceSpecPath = path.join(websiteRoot, 'docs/openPlatform/默认模块.openapi.json')
-const targetSpecPath = path.join(docsRoot, 'openapi/zh/aitoearn.openapi.json')
+const zhTargetSpecPath = path.join(docsRoot, 'openapi/zh/aitoearn.openapi.json')
+const enTargetSpecPath = path.join(docsRoot, 'openapi/en/aitoearn.openapi.json')
 const specOverridesPath = path.join(docsRoot, 'openapi/spec-overrides.json')
+const specTranslationsEnPath = path.join(docsRoot, 'openapi/spec-translations.en.json')
 const inventoryPath = path.join(docsRoot, 'openapi/endpoint-inventory.json')
 const matrixPath = path.join(docsRoot, 'openapi/backend-coverage-matrix.json')
 const docsJsonPath = path.join(docsRoot, 'docs.json')
@@ -20,14 +22,16 @@ const controllerRoots = [
 const commonRoot = path.join(backendRoot, 'libs/common/src')
 
 const httpMethods = new Set(['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'])
-const targetSpecRef = 'openapi/zh/aitoearn.openapi.json'
-const apiReferenceBasePath = '/api-reference'
+const zhTargetSpecRef = 'openapi/zh/aitoearn.openapi.json'
+const enTargetSpecRef = 'openapi/en/aitoearn.openapi.json'
+const zhApiReferenceBasePath = '/api-reference'
+const enApiReferenceBasePath = '/en/api-reference'
 const apiKeyTutorialHref = '/zh/use/api-key'
 const xApiKeyDescription = `需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](${apiKeyTutorialHref})。`
 const legacyOpenApiRedirects = [
   {
     source: '/api-reference/渠道管理授权/授权会话状态',
-    destination: `${apiReferenceBasePath}/get-api-v2-channels-accounts-auth-platform-status-session-id`,
+    destination: `${zhApiReferenceBasePath}/get-api-v2-channels-accounts-auth-platform-status-session-id`,
   },
 ]
 
@@ -74,8 +78,8 @@ function slugifyEndpointId(value) {
     .replace(/^-+|-+$/g, '')
 }
 
-function endpointHref(endpoint) {
-  return `${apiReferenceBasePath}/${slugifyEndpointId(`${endpoint.method} ${endpoint.path}`)}`
+function endpointHref(endpoint, basePath = zhApiReferenceBasePath) {
+  return `${basePath}/${slugifyEndpointId(`${endpoint.method} ${endpoint.path}`)}`
 }
 
 function defaultMintlifySlug(value) {
@@ -92,7 +96,7 @@ function defaultOpenApiHref(operation) {
   if (!tag || !summary) {
     return null
   }
-  return `${apiReferenceBasePath}/${defaultMintlifySlug(tag)}/${defaultMintlifySlug(summary)}`
+  return `${zhApiReferenceBasePath}/${defaultMintlifySlug(tag)}/${defaultMintlifySlug(summary)}`
 }
 
 function parseOperationId(operationId) {
@@ -525,43 +529,19 @@ function getSecurity(mapping) {
   return [{ 'apikey-header-X-Api-Key': [] }]
 }
 
-function syncXApiKeyHeaderParameter(operation, mapping) {
-  const shouldShowXApiKeyHeader = mapping.apiKeyHeader === 'X-Api-Key'
-    || (!mapping.requiresAuth && !mapping.apiKeyHeader)
-
-  if (!shouldShowXApiKeyHeader) {
+function syncXApiKeyHeaderParameter(operation) {
+  if (!Array.isArray(operation.parameters)) {
     return
   }
 
-  operation.parameters = operation.parameters || []
-  const existingParameter = operation.parameters.find(parameter => (
-    !parameter.$ref
-    && parameter.in === 'header'
-    && parameter.name?.toLowerCase() === 'x-api-key'
+  operation.parameters = operation.parameters.filter(parameter => (
+    parameter.$ref
+    || parameter.in !== 'header'
+    || parameter.name?.toLowerCase() !== 'x-api-key'
   ))
-  const apiKeyParameter = existingParameter || {
-    name: 'X-Api-Key',
-    in: 'header',
-    required: true,
-    schema: {
-      type: 'string',
-    },
-  }
-
-  apiKeyParameter.required = true
-  apiKeyParameter.description = xApiKeyDescription
-  apiKeyParameter.schema = {
-    ...(apiKeyParameter.schema || {}),
-    type: apiKeyParameter.schema?.type || 'string',
-    description: xApiKeyDescription,
-  }
-
-  if (!existingParameter) {
-    operation.parameters.unshift(apiKeyParameter)
-  }
 }
 
-function buildNavigationGroups(endpoints) {
+function buildNavigationGroups(endpoints, targetSpecRef) {
   const groups = []
   const byTag = new Map()
   for (const endpoint of endpoints) {
@@ -671,7 +651,190 @@ function sanitizeOpenApi30(value) {
   return value
 }
 
-function syncDocsJson(endpoints, targetSpec) {
+const englishTextOverrides = {
+  'AI 服务': 'AI Services',
+  'AI 服务/视频生成': 'AI Services/Video Generation',
+  'AI 服务/图像生成': 'AI Services/Image Generation',
+  'AI 服务/大语言模型': 'AI Services/Large Language Models',
+  '渠道管理': 'Channel Management',
+  '渠道管理/账号': 'Channel Management/Accounts',
+  '渠道管理/内容发布': 'Channel Management/Publishing',
+  '渠道管理/平台': 'Channel Management/Platforms',
+  '渠道管理/作品': 'Channel Management/Works',
+  '渠道管理/账号分组': 'Channel Management/Account Groups',
+  '渠道管理/授权': 'Channel Management/Authorization',
+  '资源管理': 'Asset Management',
+  'AiToEarn 开放平台 API': 'AiToEarn Open Platform API',
+  '视频生成模型': 'Video Generation Models',
+  '生成视频': 'Generate Video',
+  '视频任务列表': 'Video Task List',
+  '视频任务状态': 'Video Task Status',
+  '图像生成模型': 'Image Generation Models',
+  '图像编辑模型': 'Image Editing Models',
+  '生成图像': 'Generate Image',
+  '编辑图像': 'Edit Image',
+  '异步生成图像': 'Generate Image Async',
+  '异步编辑图像': 'Edit Image Async',
+  '图像任务状态': 'Image Task Status',
+  '对话模型列表': 'Chat Model List',
+  'OpenAI 对话': 'OpenAI Chat',
+  'Anthropic 对话': 'Anthropic Chat',
+  'Gemini 对话': 'Gemini Chat',
+  'Gemini 流式对话': 'Gemini Streaming Chat',
+  'OpenAI 图像生成': 'OpenAI Image Generation',
+  'OpenAI 图像编辑': 'OpenAI Image Editing',
+  '账号列表': 'Account List',
+  '批量删除账号': 'Batch Delete Accounts',
+  '账号详情': 'Account Details',
+  '删除账号': 'Delete Account',
+  '账号授权状态': 'Account Authorization Status',
+  '发布选项可选值': 'Publish Option Values',
+  '创建发布选项值': 'Create Publish Option Value',
+  '创建发布流程': 'Create Publish Flow',
+  '发布流程详情': 'Publish Flow Details',
+  '立即发布': 'Publish Now',
+  '重试发布任务': 'Retry Publish Task',
+  '取消发布任务': 'Cancel Publish Task',
+  '修改发布时间': 'Update Publish Time',
+  '发布记录列表': 'Publish Record List',
+  '待发布列表': 'Queued Publish List',
+  '已发布列表': 'Published List',
+  '删除发布记录': 'Delete Publish Record',
+  '发布记录详情': 'Publish Record Details',
+  'App 拉起链接': 'App Deep Link',
+  '平台列表': 'Platform List',
+  '平台发布选项': 'Platform Publish Options',
+  '解析作品链接': 'Parse Work Link',
+  '作品列表': 'Work List',
+  '作品详情': 'Work Details',
+  '作品数据统计': 'Work Analytics',
+  '验证作品归属': 'Verify Work Ownership',
+  '分组列表': 'Group List',
+  '创建分组': 'Create Group',
+  '批量删除分组': 'Batch Delete Groups',
+  '更新分组': 'Update Group',
+  '调整账号排序': 'Update Account Order',
+  '发起平台授权': 'Start Platform Authorization',
+  '获取授权状态': 'Get Authorization Status',
+  '生成上传签名': 'Generate Upload Signature',
+  '确认资源上传': 'Confirm Asset Upload',
+  '成功': 'Success',
+  '未认证或 API Key 无效': 'Unauthenticated or invalid API Key',
+  '第三方协议原生成功响应': 'Native third-party success response',
+  '请求成功': 'Request succeeded',
+  '请求已被服务处理。业务是否成功以响应体 code === 0 为准。': 'The request has been processed by the service. Business success is determined by whether the response body has code === 0.',
+  '业务状态码。0 表示成功，非 0 表示业务错误。': 'Business status code. 0 means success; non-zero means a business error.',
+  '响应消息。': 'Response message.',
+  '请求 ID。': 'Request ID.',
+  '错误响应时间戳，Unix 毫秒。': 'Error response timestamp in Unix milliseconds.',
+  '第三方协议原生响应，不使用 AiToEarn 通用响应包裹。': 'Native third-party protocol response, not wrapped in the AiToEarn common response envelope.',
+  '第三方协议原生响应或 SSE 数据。不使用 AiToEarn 通用响应包裹。': 'Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.',
+  'SSE 流式响应。': 'SSE streaming response.',
+  'OpenAI 兼容接口使用，示例：Bearer <token>。': 'Used by OpenAI-compatible endpoints. Example: Bearer <token>.',
+  'Gemini SDK 兼容接口使用的 API Key header。': 'API Key header used by Gemini SDK-compatible endpoints.',
+}
+
+function localizeEnglishLinks(value) {
+  return value
+    .replaceAll('文生图', 'text-to-image')
+    .replaceAll('图生图', 'image-to-image')
+    .replaceAll('推特', 'Twitter')
+    .replaceAll('抖音', 'Douyin')
+    .replaceAll('小红书', 'REDnote')
+    .replaceAll('快手', 'Kuaishou')
+    .replaceAll('微信视频号', 'WeChat Channels')
+    .replaceAll('微信公众号', 'WeChat Official Account')
+    .replaceAll('哔哩哔哩', 'Bilibili')
+    .replaceAll('B 站', 'Bilibili')
+    .replaceAll('/zh/use/', '/en/use/')
+    .replace(/(?<!\/en)\/api-reference\//g, '/en/api-reference/')
+    .replaceAll('「', '')
+    .replaceAll('」', '')
+}
+
+function translateOpenApiText(value, translations) {
+  if (!/\p{Script=Han}/u.test(value)) {
+    return localizeEnglishLinks(value)
+  }
+
+  const translated = englishTextOverrides[value] || translations[value]
+  return localizeEnglishLinks(translated || value)
+}
+
+function translateOpenApiValue(value, translations) {
+  if (typeof value === 'string') {
+    return translateOpenApiText(value, translations)
+  }
+  if (Array.isArray(value)) {
+    return value.map(item => translateOpenApiValue(item, translations))
+  }
+  if (!value || typeof value !== 'object') {
+    return value
+  }
+
+  const result = {}
+  for (const [key, child] of Object.entries(value)) {
+    result[key] = translateOpenApiValue(child, translations)
+  }
+  return result
+}
+
+function collectCjkStrings(value, pathSegments = [], result = []) {
+  if (typeof value === 'string') {
+    if (/\p{Script=Han}/u.test(value)) {
+      result.push({ path: pathSegments.join('.'), value })
+    }
+    return result
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectCjkStrings(item, [...pathSegments, `[${index}]`], result))
+    return result
+  }
+  if (value && typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) {
+      collectCjkStrings(child, [...pathSegments, key], result)
+    }
+  }
+  return result
+}
+
+function buildEnglishOpenApiSpec(zhSpec, endpoints, translations) {
+  const enSpec = translateOpenApiValue(structuredClone(zhSpec), translations)
+  enSpec.info = {
+    ...enSpec.info,
+    title: 'AiToEarn Open Platform API',
+    description: 'AiToEarn Open Platform API. You can switch between the China and international sites for testing. Business success is determined by whether the response body has code === 0.',
+  }
+  enSpec.servers = [
+    { url: 'https://aitoearn.cn', description: 'China site' },
+    { url: 'https://aitoearn.ai', description: 'International site' },
+  ]
+
+  for (const endpoint of endpoints) {
+    const operation = enSpec.paths?.[endpoint.path]?.[endpoint.method.toLowerCase()]
+    if (!operation?.['x-mint']) {
+      continue
+    }
+    operation['x-mint'].href = endpointHref(endpoint, enApiReferenceBasePath)
+  }
+
+  const cjkStrings = collectCjkStrings(enSpec)
+  if (cjkStrings.length > 0) {
+    const samples = cjkStrings.slice(0, 12).map(item => `${item.path}: ${item.value}`).join('\n')
+    throw new Error(`English OpenAPI spec still contains untranslated Chinese strings:\n${samples}`)
+  }
+
+  return enSpec
+}
+
+function buildEnglishNavigationEndpoints(endpoints, translations) {
+  return endpoints.map(endpoint => ({
+    ...endpoint,
+    tag: translateOpenApiText(endpoint.tag, translations),
+  }))
+}
+
+function syncDocsJson(endpoints, targetSpec, translations) {
   const docsJson = readJson(docsJsonPath)
   const zhLanguage = docsJson.navigation.languages.find(item => item.language === 'zh')
   const enLanguage = docsJson.navigation.languages.find(item => item.language === 'en')
@@ -683,13 +846,14 @@ function syncDocsJson(endpoints, targetSpec) {
       group: '概览',
       pages: ['zh/api/index'],
     },
-    ...buildNavigationGroups(endpoints),
+    ...buildNavigationGroups(endpoints, zhTargetSpecRef),
   ]
   enApiTab.groups = [
     {
       group: 'Overview',
       pages: ['en/api/index'],
     },
+    ...buildNavigationGroups(buildEnglishNavigationEndpoints(endpoints, translations), enTargetSpecRef),
   ]
   docsJson.redirects = mergeRedirects(
     docsJson.redirects,
@@ -1007,19 +1171,23 @@ function generate() {
     }
   }
   sanitizeOpenApi30(targetSpec)
-  writeJson(targetSpecPath, targetSpec)
+  const englishTranslations = readJson(specTranslationsEnPath)
+  const englishTargetSpec = buildEnglishOpenApiSpec(targetSpec, documentedEndpoints, englishTranslations)
+  writeJson(zhTargetSpecPath, targetSpec)
+  writeJson(enTargetSpecPath, englishTargetSpec)
   const navigationEndpoints = documentedEndpoints.map((endpoint) => {
     const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
     return override?.tag ? { ...endpoint, tag: override.tag } : endpoint
   })
-  syncDocsJson(navigationEndpoints, targetSpec)
+  syncDocsJson(navigationEndpoints, targetSpec, englishTranslations)
 
   const completed = matrix.filter(item => item.status === 'completed').length
   console.log(JSON.stringify({
     endpoints: endpoints.length,
     matrixRows: matrix.length,
     completed,
-    targetSpecPath: normalizePathForDocs(targetSpecPath),
+    zhTargetSpecPath: normalizePathForDocs(zhTargetSpecPath),
+    enTargetSpecPath: normalizePathForDocs(enTargetSpecPath),
     inventoryPath: normalizePathForDocs(inventoryPath),
     matrixPath: normalizePathForDocs(matrixPath),
   }, null, 2))

@@ -1,0 +1,54 @@
+---
+title: "大语言模型"
+---
+
+大语言模型的接入顺序是先请求模型列表，再把列表返回的模型名称传给 OpenAI、Anthropic 或 Gemini 兼容接口。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。
+</Info>
+
+<Info>
+  查看大语言模型价格：[中文站](https://aitoearn.cn/zh-CN/pricing#pricing-table-llm) / [国际站](https://aitoearn.ai/zh-CN/pricing#pricing-table-llm)。
+</Info>
+
+## 接入顺序
+
+1. 调用 [对话模型列表](/api-reference/get-api-ai-models-chat)，读取当前可用模型。
+2. 从模型列表的 `data[n].name` 复制模型名称，后续作为对话接口的 `model`。
+3. 根据你的 SDK 或请求格式选择接口：[OpenAI 对话](/api-reference/post-api-ai-chat-completions)、[Anthropic 对话](/api-reference/post-api-ai-v1-messages)、[Gemini 对话](/api-reference/post-api-ai-v1beta-models-model-generate-content) 或 [Gemini 流式对话](/api-reference/post-api-ai-v1beta-models-model-stream-generate-content)。
+
+## 最小请求
+
+先请求模型列表：
+
+```bash
+curl --request GET 'https://aitoearn.cn/api/ai/models/chat' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+如果你使用 OpenAI Chat Completions 格式，再调用：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/chat/completions' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <API_KEY>' \
+  --data '{
+    "model": "从 data[n].name 复制",
+    "messages": [
+      {
+        "role": "user",
+        "content": "写一个 30 字以内的短视频标题"
+      }
+    ],
+    "stream": false
+  }'
+```
+
+## 兼容接口区别
+
+- OpenAI 兼容接口使用 `Authorization: Bearer <API_KEY>`。
+- Anthropic 兼容接口使用 `x-api-key: <API_KEY>`。
+- Gemini 兼容接口使用 `x-goog-api-key: <API_KEY>`，并把模型名称放在路径参数 `{model}` 中。
+
+无论使用哪种兼容接口，模型名称都先从 [对话模型列表](/api-reference/get-api-ai-models-chat) 的 `data[n].name` 获取。

@@ -1,0 +1,32 @@
+---
+title: "Image generation"
+---
+
+Image generation starts with the model list. Synchronous APIs return images directly; asynchronous APIs return a task ID first.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first.
+</Info>
+
+<Info>
+  View image generation model pricing: [International site](https://aitoearn.ai/zh-CN/pricing#pricing-table-image-gen).
+</Info>
+
+## Generation vs editing
+
+- Image generation creates new images from a text prompt.
+- Image editing modifies an existing image. It requires an `image` input and may also use a `mask`.
+
+## Integration order
+
+1. Call [Image generation models](/api-reference/get-api-ai-models-image-generation).
+2. Copy `data[n].name` from the model list and pass it as `model`.
+3. Choose size, quality, and style from the same model item.
+4. Call [Generate image](/api-reference/post-api-ai-image-generate), or call [Async image generation](/api-reference/post-api-ai-image-generate-async).
+5. For async requests, use `data.logId` to call [Image task status](/api-reference/get-api-ai-image-task-log-id).
+
+## Image editing
+
+Image editing uses a separate model list. Call [Image editing models](/api-reference/get-api-ai-models-image-edit), then use [Edit image](/api-reference/post-api-ai-image-edit) or [Async image editing](/api-reference/post-api-ai-image-edit-async).
+
+If the source image or mask is local or private, use [OSS upload](/en/use/oss-upload) first.

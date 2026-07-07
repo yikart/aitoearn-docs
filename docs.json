@@ -319,8 +319,12 @@
                 "group": "使用",
                 "pages": [
                   "zh/use/introduction",
+                  "zh/use/publish-flow/index",
+                  "zh/use/oss-upload/index",
                   "zh/use/api-key/index",
-                  "zh/use/publish-flow/index"
+                  "zh/use/video-generation/index",
+                  "zh/use/image-generation/index",
+                  "zh/use/large-language-model/index"
                 ]
               }
             ]
@@ -532,7 +536,13 @@
               {
                 "group": "Use",
                 "pages": [
-                  "en/use/index"
+                  "en/use/index",
+                  "en/use/publish-flow/index",
+                  "en/use/oss-upload/index",
+                  "en/use/api-key/index",
+                  "en/use/video-generation/index",
+                  "en/use/image-generation/index",
+                  "en/use/large-language-model/index"
                 ]
               }
             ]
@@ -545,6 +555,119 @@
                 "group": "Overview",
                 "pages": [
                   "en/api/index"
+                ]
+              },
+              {
+                "group": "AI Services/Video Generation",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/ai/models/video/generation",
+                  "POST /api/ai/video/generations",
+                  "GET /api/ai/video/generations",
+                  "GET /api/ai/video/generations/{taskId}"
+                ]
+              },
+              {
+                "group": "AI Services/Image Generation",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/ai/models/image/generation",
+                  "GET /api/ai/models/image/edit",
+                  "POST /api/ai/image/generate",
+                  "POST /api/ai/image/edit",
+                  "POST /api/ai/image/generate/async",
+                  "POST /api/ai/image/edit/async",
+                  "GET /api/ai/image/task/{logId}",
+                  "POST /api/ai/images/generations",
+                  "POST /api/ai/images/edits"
+                ]
+              },
+              {
+                "group": "AI Services/Large Language Models",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/ai/models/chat",
+                  "POST /api/ai/chat/completions",
+                  "POST /api/ai/v1/messages",
+                  "POST /api/ai/v1beta/models/{model}:generateContent",
+                  "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
+                ]
+              },
+              {
+                "group": "Channel Management/Accounts",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/v2/channels/accounts",
+                  "DELETE /api/v2/channels/accounts",
+                  "GET /api/v2/channels/accounts/{accountId}",
+                  "DELETE /api/v2/channels/accounts/{accountId}",
+                  "GET /api/v2/channels/accounts/{accountId}/auth-status",
+                  "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+                  "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values"
+                ]
+              },
+              {
+                "group": "Channel Management/Publishing",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "POST /api/v2/channels/publish/flows",
+                  "GET /api/v2/channels/publish/flows/{flowId}",
+                  "POST /api/v2/channels/publish/tasks/{taskId}/publish-now",
+                  "POST /api/v2/channels/publish/tasks/{taskId}/retry",
+                  "DELETE /api/v2/channels/publish/tasks/{taskId}",
+                  "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at",
+                  "GET /api/v2/channels/publish/records",
+                  "GET /api/v2/channels/publish/records/queued",
+                  "GET /api/v2/channels/publish/records/published",
+                  "DELETE /api/v2/channels/publish/records/{recordId}",
+                  "GET /api/v2/channels/publish/records/{recordId}",
+                  "GET /api/v2/channels/publish/records/{recordId}/user-action"
+                ]
+              },
+              {
+                "group": "Channel Management/Platforms",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/v2/channels/platforms",
+                  "GET /api/v2/channels/platforms/{platform}/publish-options"
+                ]
+              },
+              {
+                "group": "Channel Management/Works",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/v2/channels/works/link-info",
+                  "GET /api/v2/channels/works/{platform}",
+                  "GET /api/v2/channels/works/{platform}/{platformWorkId}",
+                  "GET /api/v2/channels/works/{platform}/{platformWorkId}/analytics",
+                  "POST /api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify"
+                ]
+              },
+              {
+                "group": "Channel Management/Account Groups",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/v2/channels/account-groups",
+                  "POST /api/v2/channels/account-groups",
+                  "DELETE /api/v2/channels/account-groups",
+                  "PATCH /api/v2/channels/account-groups/{groupId}",
+                  "PATCH /api/v2/channels/account-groups/{groupId}/accounts/rank"
+                ]
+              },
+              {
+                "group": "Channel Management/Authorization",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "GET /api/v2/channels/accounts/auth/{platform}",
+                  "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}"
+                ]
+              },
+              {
+                "group": "Asset Management",
+                "openapi": "openapi/en/aitoearn.openapi.json",
+                "pages": [
+                  "POST /api/assets/uploadSign",
+                  "POST /api/assets/{id}/confirm"
                 ]
               }
             ]

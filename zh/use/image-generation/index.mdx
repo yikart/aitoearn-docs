@@ -1,0 +1,88 @@
+---
+title: "图像生成"
+---
+
+图像生成需要先请求模型列表，再用列表里返回的模型名称调用生成接口。同步接口会直接返回图片列表；异步接口会先返回任务 ID，再查询任务结果。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。
+</Info>
+
+<Info>
+  查看图像生成模型价格：[中文站](https://aitoearn.cn/zh-CN/pricing#pricing-table-image-gen) / [国际站](https://aitoearn.ai/zh-CN/pricing#pricing-table-image-gen)。
+</Info>
+
+## 图像生成和图像编辑的区别
+
+- 图像生成用于“从无到有”创建图片。你只需要提供 `prompt`，再按模型能力选择 `size`、`quality`、`style` 等参数。
+- 图像编辑用于“基于已有图片”改图。你必须提供原始图片 `image` 和编辑要求 `prompt`，需要局部重绘时再提供 `mask`。
+
+如果你的用户只是输入一段描述并生成新图，使用图像生成接口；如果用户上传了一张图，想替换背景、修改局部、延展风格或按提示词重绘，就使用图像编辑接口。
+
+## 接入顺序
+
+1. 调用 [图像生成模型](/api-reference/get-api-ai-models-image-generation)，读取可用模型。
+2. 从模型列表的 `data[n].name` 复制模型名称，作为生成接口的 `model`。
+3. 根据同一个模型项里的 `sizes`、`qualities`、`styles` 和 `pricing` 选择尺寸、质量和风格。
+4. 调用 [生成图像](/api-reference/post-api-ai-image-generate) 获取同步结果，或调用 [异步生成图像](/api-reference/post-api-ai-image-generate-async) 创建异步任务。
+5. 如果使用异步接口，用返回的 `data.logId` 调用 [图像任务状态](/api-reference/get-api-ai-image-task-log-id) 查询结果。
+
+## 最小请求
+
+先请求模型列表：
+
+```bash
+curl --request GET 'https://aitoearn.cn/api/ai/models/image/generation' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+再调用同步图像生成：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/image/generate' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "从 data[n].name 复制",
+    "prompt": "一张适合社交媒体封面的科技感产品图",
+    "n": 1,
+    "size": "1024x1024",
+    "response_format": "url"
+  }'
+```
+
+同步接口成功后，从 `data.list[n].url` 读取图片地址。
+
+## 异步任务
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/image/generate/async' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "从 data[n].name 复制",
+    "prompt": "一张适合社交媒体封面的科技感产品图",
+    "n": 1,
+    "size": "1024x1024",
+    "response_format": "url"
+  }'
+```
+
+异步接口返回 `data.logId` 后，用它查询任务：
+
+```bash
+curl --request GET 'https://aitoearn.cn/api/ai/image/task/{logId}' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+任务完成后，从 `data.images[n].url` 读取图片地址。
+
+## 图像编辑
+
+图像编辑不要复用图像生成模型列表。编辑前先请求 [图像编辑模型](/api-reference/get-api-ai-models-image-edit)，从 `data[n].name` 复制可用的编辑模型名称，再调用 [编辑图像](/api-reference/post-api-ai-image-edit) 或 [异步编辑图像](/api-reference/post-api-ai-image-edit-async)。
+
+编辑接口和生成接口的主要差异是请求体：编辑接口多了必填的 `image`，用于传入原始图片；可选的 `mask` 用于控制局部重绘区域。不传 `mask` 时，通常按整张图片和提示词进行编辑。
+
+如果原始图片或遮罩图片在本地、内网或私有存储里，请先用 [OSS 上传](../oss-upload) 获取公网可访问 URL，再写入 `image` 或 `mask`。
+
+如果你使用 OpenAI Images API 生态，也可以查看 [OpenAI 图像生成](/api-reference/post-api-ai-images-generations) 和 [OpenAI 图像编辑](/api-reference/post-api-ai-images-edits)。

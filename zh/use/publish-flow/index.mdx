@@ -2,6 +2,10 @@
 title: "发布流程"
 ---
 
+<Info>
+  调用创建发布流程接口前，请先阅读本页完整流程，确认平台能力、账号授权、平台额外参数和素材上传都已完成。除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请查看 [定价页「社交平台」](https://aitoearn.ai/pricing#pricing-table-social-publishing)。
+</Info>
+
 发布不是一个单独接口能完成的动作。你需要先确认平台能力、授权账号、准备平台额外参数、上传素材，最后创建发布流程。
 
 最简单的理解方式是：
@@ -84,17 +88,13 @@ POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values
 
 只有 [平台发布选项](/api-reference/get-api-v2-channels-platforms-platform-publish-options) 返回 `createSchema` 的字段才支持创建；请求体按 `createSchema` 填。接口返回空数组时，说明当前平台没有需要动态查询或创建的选项，按 `optionSchema` 填 `items[n].option` 即可。
 
-## 第四步：上传素材并确认资源
+## 第四步：准备可访问媒体资源
 
-发布接口只接受 AiToEarn 资源域名下的素材 URL。不要直接传本地文件路径，也不要直接传任意第三方临时链接。
+发布接口需要公网可访问的媒体 URL。不要传本地文件路径、内网地址、需要登录或已过期的临时链接。
 
-标准流程是：
+如果你已经有符合目标发布环境访问要求的 CDN 或对象存储 URL，可以直接写入 `content.media` 或 `content.cover`。
 
-1. 调用 [生成上传签名](/api-reference/post-api-assets-upload-sign)，获取直传地址。
-2. 使用返回的上传地址把视频、图片或封面上传到对象存储。
-3. 调用 [确认资源上传](/api-reference/post-api-assets-id-confirm)，拿到后续可写入 `content.media` 或 `content.cover` 的资源 URL。
-
-中国站接口应使用 `assets.aitoearn.cn` 资源；国际站接口应使用 `assets.aitoearn.ai` 资源。站点和资源域名要对应。
+如果你没有自己的 OSS 或 CDN，需要上传自定义资源，可以使用我们提供的 [OSS 上传](../oss-upload)。
 
 ## 第五步：组织发布内容
 
