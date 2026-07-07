@@ -455,6 +455,13 @@
             "icon": "book-open",
             "groups": [
               {
+                "group": "新手指南和常见问题",
+                "pages": [
+                  "zh/help/guide",
+                  "zh/help/faq"
+                ]
+              },
+              {
                 "group": "概览",
                 "pages": [
                   "zh/help/about",
