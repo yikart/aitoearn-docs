@@ -376,6 +376,6 @@
   },
   "POST /api/assets/uploadSign": {
     "summary": "生成上传签名",
-    "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [OSS 上传使用教程](/zh/use/oss-upload)。"
+    "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [资源上传教程](/zh/use/asset-upload)。"
   }
 }

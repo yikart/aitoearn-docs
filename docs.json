@@ -28,6 +28,30 @@
       "destination": "/zh/use/api-key"
     },
     {
+      "source": "/use/oss-upload",
+      "destination": "/zh/use/asset-upload"
+    },
+    {
+      "source": "/use/oss-upload/",
+      "destination": "/zh/use/asset-upload"
+    },
+    {
+      "source": "/zh/use/oss-upload",
+      "destination": "/zh/use/asset-upload"
+    },
+    {
+      "source": "/zh/use/oss-upload/",
+      "destination": "/zh/use/asset-upload"
+    },
+    {
+      "source": "/en/use/oss-upload",
+      "destination": "/en/use/asset-upload"
+    },
+    {
+      "source": "/en/use/oss-upload/",
+      "destination": "/en/use/asset-upload"
+    },
+    {
       "source": "/api-reference/ai-服务视频生成/视频生成模型",
       "destination": "/api-reference/get-api-ai-models-video-generation"
     },
@@ -320,7 +344,7 @@
                 "pages": [
                   "zh/use/introduction",
                   "zh/use/publish-flow/index",
-                  "zh/use/oss-upload/index",
+                  "zh/use/asset-upload/index",
                   "zh/use/api-key/index",
                   "zh/use/video-generation/index",
                   "zh/use/image-generation/index",
@@ -551,7 +575,7 @@
                 "pages": [
                   "en/use/index",
                   "en/use/publish-flow/index",
-                  "en/use/oss-upload/index",
+                  "en/use/asset-upload/index",
                   "en/use/api-key/index",
                   "en/use/video-generation/index",
                   "en/use/image-generation/index",

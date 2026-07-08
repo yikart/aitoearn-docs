@@ -83,6 +83,6 @@ curl --request GET 'https://aitoearn.cn/api/ai/image/task/{logId}' \
 
 编辑接口和生成接口的主要差异是请求体：编辑接口多了必填的 `image`，用于传入原始图片；可选的 `mask` 用于控制局部重绘区域。不传 `mask` 时，通常按整张图片和提示词进行编辑。
 
-如果原始图片或遮罩图片在本地、内网或私有存储里，请先用 [OSS 上传](../oss-upload) 获取公网可访问 URL，再写入 `image` 或 `mask`。
+如果原始图片或遮罩图片在本地、内网或私有存储里，请先用 [资源上传](../asset-upload) 获取公网可访问 URL，再写入 `image` 或 `mask`。
 
 如果你使用 OpenAI Images API 生态，也可以查看 [OpenAI 图像生成](/api-reference/post-api-ai-images-generations) 和 [OpenAI 图像编辑](/api-reference/post-api-ai-images-edits)。

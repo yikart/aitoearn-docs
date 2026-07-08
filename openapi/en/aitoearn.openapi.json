@@ -6732,7 +6732,7 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "Channel account not found",
+                      "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again.",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -6856,7 +6856,7 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "Channel account not found"
+              "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again."
             },
             {
               "name": "ChannelPublishDuplicateItem",
@@ -7484,7 +7484,16 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "Channel account not found",
+                      "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again.",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "channelAccountUnbound15096": {
+                    "summary": "ChannelAccountUnbound (15096)",
+                    "value": {
+                      "code": 15096,
+                      "message": "The bound channel account has been unbound, and the related publishing task has been terminated.",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -7568,7 +7577,12 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "Channel account not found"
+              "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again."
+            },
+            {
+              "name": "ChannelAccountUnbound",
+              "code": 15096,
+              "message": "The bound channel account has been unbound, and the related publishing task has been terminated."
             },
             {
               "name": "ChannelPublishCancelNotSupported",
@@ -11289,7 +11303,7 @@
       "post": {
         "summary": "Generate Upload Signature",
         "deprecated": false,
-        "description": "Interface description: Generate a signed URL for direct transfer to object storage, and the upload path is automatically generated based on user and resource type. View [OSS upload usage tutorial](/en/use/oss-upload).",
+        "description": "Interface description: Generate a signed URL for direct transfer to object storage, and the upload path is automatically generated based on user and resource type. View the [asset upload guide](/en/use/asset-upload).",
         "operationId": "AssetsHttpController_createUploadSign",
         "tags": [
           "Asset Management"

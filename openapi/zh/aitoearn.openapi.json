@@ -6732,7 +6732,7 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "渠道账号未找到",
+                      "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -6856,7 +6856,7 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "渠道账号未找到"
+              "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试"
             },
             {
               "name": "ChannelPublishDuplicateItem",
@@ -7484,7 +7484,16 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "渠道账号未找到",
+                      "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "channelAccountUnbound15096": {
+                    "summary": "ChannelAccountUnbound (15096)",
+                    "value": {
+                      "code": 15096,
+                      "message": "绑定的渠道账号已解绑，关联的发布任务已终止",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -7568,7 +7577,12 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "渠道账号未找到"
+              "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试"
+            },
+            {
+              "name": "ChannelAccountUnbound",
+              "code": 15096,
+              "message": "绑定的渠道账号已解绑，关联的发布任务已终止"
             },
             {
               "name": "ChannelPublishCancelNotSupported",
@@ -11289,7 +11303,7 @@
       "post": {
         "summary": "生成上传签名",
         "deprecated": false,
-        "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [OSS 上传使用教程](/zh/use/oss-upload)。",
+        "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [资源上传教程](/zh/use/asset-upload)。",
         "operationId": "AssetsHttpController_createUploadSign",
         "tags": [
           "资源管理"
