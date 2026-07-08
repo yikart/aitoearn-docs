@@ -6732,7 +6732,7 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "Channel account not found",
+                      "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again.",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -6856,7 +6856,7 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "Channel account not found"
+              "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again."
             },
             {
               "name": "ChannelPublishDuplicateItem",
@@ -7484,7 +7484,16 @@
                     "summary": "ChannelAccountNotFound (15021)",
                     "value": {
                       "code": 15021,
-                      "message": "Channel account not found",
+                      "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again.",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "channelAccountUnbound15096": {
+                    "summary": "ChannelAccountUnbound (15096)",
+                    "value": {
+                      "code": 15096,
+                      "message": "The bound channel account has been unbound, and the related publishing task has been terminated.",
                       "data": {},
                       "timestamp": 1772099056662
                     }
@@ -7568,7 +7577,12 @@
             {
               "name": "ChannelAccountNotFound",
               "code": 15021,
-              "message": "Channel account not found"
+              "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again."
+            },
+            {
+              "name": "ChannelAccountUnbound",
+              "code": 15096,
+              "message": "The bound channel account has been unbound, and the related publishing task has been terminated."
             },
             {
               "name": "ChannelPublishCancelNotSupported",
@@ -11289,7 +11303,7 @@
       "post": {
         "summary": "Generate Upload Signature",
         "deprecated": false,
-        "description": "Interface description: Generate a signed URL for direct transfer to object storage, and the upload path is automatically generated based on user and resource type. View [OSS upload usage tutorial](/en/use/oss-upload).",
+        "description": "Interface description: Generate a signed URL for direct transfer to object storage, and the upload path is automatically generated based on user and resource type. View the [asset upload guide](/en/use/asset-upload).",
         "operationId": "AssetsHttpController_createUploadSign",
         "tags": [
           "Asset Management"
@@ -11626,6 +11640,426 @@
             }
           ],
           "rawResponse": false
+        }
+      }
+    },
+    "/api/ai/volcengine/video": {
+      "post": {
+        "tags": [
+          "AI Services/Video Generation"
+        ],
+        "summary": "Create Volcengine-format video generation task",
+        "description": "Interface description: Volcengine Ark video generation compatible endpoint for customers who have already integrated the Volcengine video generation API and want to migrate to AiToEarn without significantly changing their request structure. The request body keeps the Volcengine format; replace the request URL with the AiToEarn URL and change authentication to `X-Api-Key`. See the official Volcengine documentation: [Create video generation task](https://www.volcengine.com/docs/82379/1520757?lang=zh).",
+        "operationId": "VolcengineVideoController_videoGeneration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "Model ID or Endpoint ID."
+                  },
+                  "content": {
+                    "type": "array",
+                    "description": "Content passed to the model to generate video, keeping the Volcengine Ark video generation format.",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "text"
+                              ],
+                              "description": "Content type. Text content is fixed to text."
+                            },
+                            "text": {
+                              "type": "string",
+                              "description": "Text prompt used to describe the expected generated video."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "text"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "image_url"
+                              ],
+                              "description": "Content type. Image content is fixed to image_url."
+                            },
+                            "image_url": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string",
+                                  "description": "Image URL or base64 image data."
+                                }
+                              },
+                              "required": [
+                                "url"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "role": {
+                              "type": "string",
+                              "enum": [
+                                "first_frame",
+                                "last_frame",
+                                "reference_image"
+                              ],
+                              "description": "Image role: first frame, last frame, or reference image."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "image_url"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "video_url"
+                              ],
+                              "description": "Content type. Video content is fixed to video_url."
+                            },
+                            "video_url": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string",
+                                  "description": "Reference video URL or asset ID."
+                                }
+                              },
+                              "required": [
+                                "url"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "role": {
+                              "type": "string",
+                              "enum": [
+                                "reference_video"
+                              ],
+                              "description": "Video role. Currently fixed to reference_video."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "video_url",
+                            "role"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "audio_url"
+                              ],
+                              "description": "Content type. Audio content is fixed to audio_url."
+                            },
+                            "audio_url": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string",
+                                  "description": "Reference audio URL, base64 audio data, or asset ID."
+                                }
+                              },
+                              "required": [
+                                "url"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "role": {
+                              "type": "string",
+                              "enum": [
+                                "reference_audio"
+                              ],
+                              "description": "Audio role. Currently fixed to reference_audio."
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "audio_url",
+                            "role"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "return_last_frame": {
+                    "type": "boolean",
+                    "description": "Whether to return the last frame image."
+                  },
+                  "tools": {
+                    "type": "array",
+                    "description": "Model tool configuration.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "web_search"
+                          ],
+                          "description": "Tool type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "description": "Resolution."
+                  },
+                  "ratio": {
+                    "type": "string",
+                    "description": "Aspect ratio."
+                  },
+                  "duration": {
+                    "type": "integer",
+                    "description": "Duration in seconds."
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "description": "Random seed."
+                  },
+                  "watermark": {
+                    "type": "boolean",
+                    "description": "Whether to include a watermark."
+                  },
+                  "generate_audio": {
+                    "type": "boolean",
+                    "description": "Whether to generate audio synchronized with the visuals. Supported by the Seedance 2.0 series."
+                  },
+                  "execution_expires_after": {
+                    "type": "integer",
+                    "minimum": 3600,
+                    "maximum": 259200,
+                    "description": "Task timeout threshold in seconds. Value range: [3600, 259200]."
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9,
+                    "description": "Task execution priority from 0 to 9. A larger value means higher priority. Supported by the Seedance 2.0 series."
+                  },
+                  "safety_identifier": {
+                    "type": "string",
+                    "description": "Unique end-user identifier passed through to Ark for compliance checks."
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": [
+                      "ai_video",
+                      "ai_draft_generation",
+                      "plugin"
+                    ],
+                    "description": "Consumption source."
+                  }
+                },
+                "required": [
+                  "model",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "textToVideo": {
+                  "summary": "Text generation video",
+                  "value": {
+                    "model": "doubao-seedance-2-0-260128",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Create a cinematic product video with close-up shots, soft studio lighting, and smooth camera movement."
+                      }
+                    ],
+                    "generate_audio": true,
+                    "ratio": "16:9",
+                    "duration": 8,
+                    "watermark": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Native Volcengine-format response, not wrapped in the AiToEarn common response envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VolcengineVideoGenerationResponseVo"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "id": "6a461da66fe8a12d33daabdd"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/post-api-ai-volcengine-video",
+          "metadata": {
+            "title": "Create Volcengine-format video generation task",
+            "sidebarTitle": "Create Volcengine-format video generation task"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
+          "controllerMethod": "videoGeneration",
+          "services": [
+            {
+              "property": "volcengineVideoService",
+              "type": "VolcengineVideoService",
+              "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
+              "method": "create"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AiVideoGenerationUnsupportedInput",
+              "code": 12311,
+              "message": "Unsupported video generation input"
+            },
+            {
+              "name": "InvalidModel",
+              "code": 12300,
+              "message": "Invalid AI model"
+            },
+            {
+              "name": "UserCreditsInsufficient",
+              "code": 12001,
+              "message": "Insufficient User Credits"
+            }
+          ],
+          "rawResponse": true
+        }
+      }
+    },
+    "/api/ai/volcengine/video/{taskId}": {
+      "get": {
+        "tags": [
+          "AI Services/Video Generation"
+        ],
+        "summary": "Query Volcengine-format video task",
+        "description": "Interface description: Query the status of a Volcengine-format video generation task. The response keeps the Volcengine task query format. It is intended for customers who have already integrated the Volcengine video generation API; replace the request URL with the AiToEarn URL and change authentication to `X-Api-Key`. See the official Volcengine documentation: [Query video generation task](https://www.volcengine.com/docs/82379/1521309?lang=zh).",
+        "operationId": "VolcengineVideoController_videoTaskStatus",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Task ID returned by the Volcengine-format create video generation task endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Native Volcengine-format response, not wrapped in the AiToEarn common response envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VolcengineTaskStatusResponseVo"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "id": "6a461da66fe8a12d33daabdd",
+                      "model": "doubao-seedance-2-0-260128",
+                      "status": "succeeded",
+                      "created_at": 1782980006,
+                      "updated_at": 1782980484,
+                      "content": {
+                        "video_url": "https://assets.aitoearn.ai/example/video.mp4"
+                      },
+                      "seed": 9190,
+                      "resolution": "720p",
+                      "ratio": "16:9",
+                      "duration": 8,
+                      "framespersecond": 24,
+                      "generate_audio": true,
+                      "priority": 0,
+                      "execution_expires_after": 172800,
+                      "usage": {
+                        "completion_tokens": 411300,
+                        "total_tokens": 411300
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-ai-volcengine-video-task-id",
+          "metadata": {
+            "title": "Query Volcengine-format video task",
+            "sidebarTitle": "Query Volcengine-format video task"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
+          "controllerMethod": "videoTaskStatus",
+          "services": [
+            {
+              "property": "volcengineVideoService",
+              "type": "VolcengineVideoService",
+              "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
+              "method": "getTask"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "InvalidAiTaskId",
+              "code": 12302,
+              "message": "Invalid AI task ID"
+            }
+          ],
+          "rawResponse": true
         }
       }
     }

@@ -20,7 +20,7 @@ title: "视频生成"
 4. 调用 [生成视频](/api-reference/post-api-ai-video-generations)，传入 `model`、`prompt` 和可选参数。
 5. 生成接口会返回 `data.id`，用它调用 [视频任务状态](/api-reference/get-api-ai-video-generations-task-id) 查询结果。
 
-如果需要上传参考图、参考视频或参考音频，请先用 [OSS 上传](../oss-upload) 获取公网可访问 URL，再写入生成接口对应的参考素材字段。
+如果需要上传参考图、参考视频或参考音频，请先用 [资源上传](../asset-upload) 获取公网可访问 URL，再写入生成接口对应的参考素材字段。
 
 ## 最小请求
 

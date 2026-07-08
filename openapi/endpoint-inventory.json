@@ -687,5 +687,31 @@
     "originalResponseKeys": [
       "default"
     ]
+  },
+  {
+    "index": 54,
+    "method": "POST",
+    "path": "/api/ai/volcengine/video",
+    "operationId": "VolcengineVideoController_videoGeneration",
+    "tag": "AI 服务/视频生成",
+    "summary": "火山格式创建视频生成任务",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "200"
+    ]
+  },
+  {
+    "index": 55,
+    "method": "GET",
+    "path": "/api/ai/volcengine/video/{taskId}",
+    "operationId": "VolcengineVideoController_videoTaskStatus",
+    "tag": "AI 服务/视频生成",
+    "summary": "火山格式查询视频任务",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "200"
+    ]
   }
 ]

@@ -1,5 +1,5 @@
 ---
-title: "OSS 上传"
+title: "资源上传"
 ---
 
 发布、图像编辑等接口需要能在公网环境访问的文件 URL。如果你的资源还在本地、内网或私有存储里，可以先请求上传签名，把文件直传到 AiToEarn 对象存储，再调用确认接口拿到可用于后续接口的公网资源 URL。
@@ -119,7 +119,7 @@ async function uploadToAitoearn(file: File, apiKey: string) {
 
 ## URL 使用规则
 
-发布接口要求传入公网可访问的资源 URL，不强制必须是 AiToEarn 资源域名。OSS 上传适用于你需要把本地、内网或私有文件转成公网 URL 的场景。
+发布接口要求传入公网可访问的资源 URL，不强制必须是 AiToEarn 资源域名。资源上传适用于你需要把本地、内网或私有文件转成公网 URL 的场景。
 
 - 使用本页上传流程时，不要手动拼接资源域名，也不要把 `uploadUrl` 当成业务素材 URL 使用。
 - 调用中国站 `https://aitoearn.cn` 上传后，确认接口返回的资源 URL 通常来自 `assets.aitoearn.cn`。
