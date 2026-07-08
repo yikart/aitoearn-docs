@@ -2649,5 +2649,124 @@
     "notes": [
       "Controller is provided by libs/assets and mounted by aitoearn-server."
     ]
+  },
+  {
+    "index": 54,
+    "method": "POST",
+    "path": "/api/ai/volcengine/video",
+    "operationId": "VolcengineVideoController_videoGeneration",
+    "tag": "AI 服务/视频生成",
+    "summary": "火山格式创建视频生成任务",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "200"
+    ],
+    "controllerClass": "VolcengineVideoController",
+    "controllerMethod": "videoGeneration",
+    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "volcengineVideoService",
+        "type": "VolcengineVideoService",
+        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
+        "method": "create"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "create",
+      "normalizeRequest",
+      "extractInlineParams",
+      "validateContent",
+      "buildSafetyIdentifier",
+      "getModelConfig",
+      "calculatePrice",
+      "getBillingMode"
+    ],
+    "responseCodes": [
+      "AiVideoGenerationUnsupportedInput",
+      "InvalidModel",
+      "UserCreditsInsufficient"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AiVideoGenerationUnsupportedInput",
+        "code": 12311,
+        "message": "不支持的视频生成输入"
+      },
+      {
+        "name": "InvalidModel",
+        "code": 12300,
+        "message": "无效的 AI 模型"
+      },
+      {
+        "name": "UserCreditsInsufficient",
+        "code": 12001,
+        "message": "用户Credits不足"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
+  },
+  {
+    "index": 55,
+    "method": "GET",
+    "path": "/api/ai/volcengine/video/{taskId}",
+    "operationId": "VolcengineVideoController_videoTaskStatus",
+    "tag": "AI 服务/视频生成",
+    "summary": "火山格式查询视频任务",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "200"
+    ],
+    "controllerClass": "VolcengineVideoController",
+    "controllerMethod": "videoTaskStatus",
+    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "volcengineVideoService",
+        "type": "VolcengineVideoService",
+        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
+        "method": "getTask"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getTask",
+      "callback",
+      "calculateActualPoints",
+      "getFailureMessage",
+      "enqueueTaskRefund"
+    ],
+    "responseCodes": [
+      "InvalidAiTaskId"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "InvalidAiTaskId",
+        "code": 12302,
+        "message": "无效的 AI 任务 ID"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
   }
 ]

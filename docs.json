@@ -28,30 +28,6 @@
       "destination": "/zh/use/api-key"
     },
     {
-      "source": "/use/oss-upload",
-      "destination": "/zh/use/asset-upload"
-    },
-    {
-      "source": "/use/oss-upload/",
-      "destination": "/zh/use/asset-upload"
-    },
-    {
-      "source": "/zh/use/oss-upload",
-      "destination": "/zh/use/asset-upload"
-    },
-    {
-      "source": "/zh/use/oss-upload/",
-      "destination": "/zh/use/asset-upload"
-    },
-    {
-      "source": "/en/use/oss-upload",
-      "destination": "/en/use/asset-upload"
-    },
-    {
-      "source": "/en/use/oss-upload/",
-      "destination": "/en/use/asset-upload"
-    },
-    {
       "source": "/api-reference/ai-服务视频生成/视频生成模型",
       "destination": "/api-reference/get-api-ai-models-video-generation"
     },
@@ -266,6 +242,14 @@
     {
       "source": "/api-reference/渠道管理授权/授权会话状态",
       "destination": "/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id"
+    },
+    {
+      "source": "/api-reference/ai-服务视频生成/火山格式创建视频生成任务",
+      "destination": "/api-reference/post-api-ai-volcengine-video"
+    },
+    {
+      "source": "/api-reference/ai-服务视频生成/火山格式查询视频任务",
+      "destination": "/api-reference/get-api-ai-volcengine-video-task-id"
     }
   ],
   "errors": {
@@ -370,7 +354,9 @@
                   "GET /api/ai/models/video/generation",
                   "POST /api/ai/video/generations",
                   "GET /api/ai/video/generations",
-                  "GET /api/ai/video/generations/{taskId}"
+                  "GET /api/ai/video/generations/{taskId}",
+                  "POST /api/ai/volcengine/video",
+                  "GET /api/ai/volcengine/video/{taskId}"
                 ]
               },
               {
@@ -601,7 +587,9 @@
                   "GET /api/ai/models/video/generation",
                   "POST /api/ai/video/generations",
                   "GET /api/ai/video/generations",
-                  "GET /api/ai/video/generations/{taskId}"
+                  "GET /api/ai/video/generations/{taskId}",
+                  "POST /api/ai/volcengine/video",
+                  "GET /api/ai/volcengine/video/{taskId}"
                 ]
               },
               {
