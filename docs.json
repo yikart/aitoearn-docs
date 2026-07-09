@@ -333,7 +333,9 @@
                   "zh/use/video-generation/index",
                   "zh/use/image-generation/index",
                   "zh/use/large-language-model/index",
-                  "zh/use/codex/index"
+                  "zh/use/codex/index",
+                  "zh/use/claude-code/index",
+                  "zh/use/claude-desktop/index"
                 ]
               }
             ]
@@ -561,7 +563,10 @@
                   "en/use/api-key/index",
                   "en/use/video-generation/index",
                   "en/use/image-generation/index",
-                  "en/use/large-language-model/index"
+                  "en/use/large-language-model/index",
+                  "en/use/codex/index",
+                  "en/use/claude-code/index",
+                  "en/use/claude-desktop/index"
                 ]
               }
             ]

@@ -1,0 +1,272 @@
+---
+title: "Claude Code CLI 设置"
+description: "配置 Claude Code CLI 使用 AiToEarn Anthropic 兼容接口"
+---
+
+本文介绍如何配置 Claude Code CLI 使用 AiToEarn 的 Anthropic 兼容接口。配置完成后，你可以在终端中通过 Claude Code 调用 AiToEarn 上可用的大语言模型。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API Key 教程](/zh/use/api-key)。如需确认可用模型名称，请查看 [对话模型列表](/api-reference/get-api-ai-models-chat)。
+</Info>
+
+<Warning>
+  AiToEarn 使用的是 `ANTHROPIC_API_KEY`，不是 `ANTHROPIC_AUTH_TOKEN`。如果你参考了其它第三方教程，请务必把认证变量改成 `ANTHROPIC_API_KEY`。
+</Warning>
+
+## 什么是 Claude Code？
+
+Claude Code 是 Anthropic 的官方命令行界面工具，可以把 AI 助手带到终端和代码工作流中。通过配置 AiToEarn 的 Anthropic 兼容接口，你可以复用 Claude Code 的交互方式，并通过 AiToEarn API Key 发起请求。
+
+## 前置条件
+
+开始之前，请确认你已经准备好：
+
+1. AiToEarn 账户。
+2. [AiToEarn API Key](/zh/use/api-key)。
+3. 终端、PowerShell 或命令提示符访问权限。
+
+## 选择 Base URL
+
+AiToEarn 的 API Key 与站点绑定。`ANTHROPIC_BASE_URL` 必须和 API Key 所属站点一致。
+
+| 站点 | ANTHROPIC_BASE_URL |
+| --- | --- |
+| 国内版 | `https://aitoearn.cn/api/ai` |
+| 国际版 | `https://aitoearn.ai/api/ai` |
+
+不要把 `/v1/messages` 追加到 `ANTHROPIC_BASE_URL` 后面。Claude Code 会按 Anthropic Messages 格式发起请求，最终命中 AiToEarn 的 [Anthropic 对话接口](/api-reference/post-api-ai-v1-messages)。
+
+## 安装
+
+选择你的操作系统安装 Claude Code。
+
+### macOS 和 Linux
+
+打开终端并运行：
+
+```bash
+curl -fsSL https://claude.ai/install.sh | sh
+```
+
+验证安装：
+
+```bash
+claude --version
+```
+
+### Windows
+
+以管理员身份打开 PowerShell，然后运行：
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+安装后，如果系统找不到 `claude` 命令，请把 Claude Code 添加到 PATH：
+
+1. 按 `Win + X`，选择“系统”。
+2. 点击“高级系统设置”。
+3. 点击“环境变量”。
+4. 在“系统变量”下选择 `Path`，点击“编辑”。
+5. 点击“新建”，添加 `C:\Users\YourUsername\.claude\bin`。
+6. 点击“确定”保存。
+
+重启终端并验证安装：
+
+```powershell
+claude --version
+```
+
+## 配置环境变量
+
+Claude Code 需要读取两个环境变量：
+
+- `ANTHROPIC_API_KEY`：你的 AiToEarn API Key。
+- `ANTHROPIC_BASE_URL`：AiToEarn 的 Anthropic 兼容接口地址，按国内版或国际版选择。
+
+### 方法 1：永久配置（推荐）
+
+#### macOS 和 Linux
+
+如果你使用 Zsh，把下面内容加入 `~/.zshrc`：
+
+```bash
+export ANTHROPIC_API_KEY="你的 AiToEarn API Key"
+export ANTHROPIC_BASE_URL="https://aitoearn.cn/api/ai"
+```
+
+如果你使用国际版 API Key，把第二行改为：
+
+```bash
+export ANTHROPIC_BASE_URL="https://aitoearn.ai/api/ai"
+```
+
+应用配置：
+
+```bash
+source ~/.zshrc
+```
+
+如果你使用 Bash，请把同样内容加入 `~/.bashrc` 或 `~/.bash_profile`，然后执行对应的 `source` 命令。
+
+#### Windows PowerShell
+
+国内版：
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY', '你的 AiToEarn API Key', 'User')
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_BASE_URL', 'https://aitoearn.cn/api/ai', 'User')
+```
+
+国际版：
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY', '你的 AiToEarn API Key', 'User')
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_BASE_URL', 'https://aitoearn.ai/api/ai', 'User')
+```
+
+配置后重启终端。
+
+#### Windows 命令提示符
+
+国内版：
+
+```cmd
+setx ANTHROPIC_API_KEY "你的 AiToEarn API Key"
+setx ANTHROPIC_BASE_URL "https://aitoearn.cn/api/ai"
+```
+
+国际版：
+
+```cmd
+setx ANTHROPIC_API_KEY "你的 AiToEarn API Key"
+setx ANTHROPIC_BASE_URL "https://aitoearn.ai/api/ai"
+```
+
+配置后重启终端。
+
+### 方法 2：临时配置
+
+临时配置只在当前终端会话中生效，适合快速测试。
+
+macOS 和 Linux：
+
+```bash
+export ANTHROPIC_API_KEY="你的 AiToEarn API Key"
+export ANTHROPIC_BASE_URL="https://aitoearn.cn/api/ai"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:ANTHROPIC_API_KEY="你的 AiToEarn API Key"
+$env:ANTHROPIC_BASE_URL="https://aitoearn.cn/api/ai"
+```
+
+Windows 命令提示符：
+
+```cmd
+set ANTHROPIC_API_KEY=你的 AiToEarn API Key
+set ANTHROPIC_BASE_URL=https://aitoearn.cn/api/ai
+```
+
+国际版用户把 `ANTHROPIC_BASE_URL` 改为 `https://aitoearn.ai/api/ai`。
+
+### 方法 3：使用 Claude Code 设置文件
+
+创建或编辑 `~/.claude/settings.json`：
+
+```json
+{
+  "env": {
+    "ANTHROPIC_API_KEY": "你的 AiToEarn API Key",
+    "ANTHROPIC_BASE_URL": "https://aitoearn.cn/api/ai"
+  }
+}
+```
+
+国际版用户把 `ANTHROPIC_BASE_URL` 改为 `https://aitoearn.ai/api/ai`。
+
+### 方法 4：使用 CC Switch
+
+如果你使用 CC Switch 管理多个 Claude Code 供应商，可以新增一个 AiToEarn 供应商配置：
+
+| 字段 | 填写内容 |
+| --- | --- |
+| 供应商名称 | `AiToEarn` |
+| 备注 | `AiToEarn` |
+| 官网链接 | `https://aitoearn.cn` 或 `https://aitoearn.ai` |
+| API Key | 你的 AiToEarn API Key |
+| 请求地址 | 国内版填 `https://aitoearn.cn/api/ai`，国际版填 `https://aitoearn.ai/api/ai` |
+| API 格式 | Anthropic Messages 或 Anthropic-compatible |
+| 模型名称 | 从 [对话模型列表](/api-reference/get-api-ai-models-chat) 复制当前可用模型名称 |
+
+保存后启用该供应商，再启动 Claude Code 测试。
+
+## 验证配置
+
+启动 Claude Code 后，输入：
+
+```text
+/status
+```
+
+如果看到 `Anthropic base URL` 指向你配置的 AiToEarn 地址，说明基础配置已生效。
+
+也可以直接发送一条测试消息：
+
+```bash
+claude "Hi"
+```
+
+检查环境变量：
+
+macOS 和 Linux：
+
+```bash
+echo $ANTHROPIC_BASE_URL
+echo $ANTHROPIC_API_KEY
+```
+
+Windows PowerShell：
+
+```powershell
+echo $env:ANTHROPIC_BASE_URL
+echo $env:ANTHROPIC_API_KEY
+```
+
+## 常见问题
+
+### API Key 无效
+
+- 确认 API Key 来自 [AiToEarn API Key 页面](/zh/use/api-key)。
+- 确认没有把 `ANTHROPIC_AUTH_TOKEN` 当作认证变量使用。
+- 检查 API Key 前后是否有多余空格。
+- 确认 API Key 所属站点和 `ANTHROPIC_BASE_URL` 一致。
+
+### 连接失败
+
+- 确认当前网络可以访问你选择的站点。
+- 国内版使用 `https://aitoearn.cn/api/ai`。
+- 国际版使用 `https://aitoearn.ai/api/ai`。
+- 不要把 `ANTHROPIC_BASE_URL` 写成 `/api/ai/v1/messages`。
+
+### 找不到 Claude Code
+
+macOS 和 Linux：
+
+```bash
+which claude
+```
+
+如果没有找到，请确认 `~/.claude/bin` 已加入 PATH。
+
+Windows：
+
+确认 PATH 环境变量包含：
+
+```text
+C:\Users\YourUsername\.claude\bin
+```
+
+添加后重启终端再执行 `claude --version`。

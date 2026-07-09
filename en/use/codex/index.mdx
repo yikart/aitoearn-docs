@@ -1,0 +1,83 @@
+---
+title: "Codex Integration"
+description: "Connect Codex to AiToEarn through cc-switch"
+---
+
+This guide shows how to use cc-switch to connect Codex to AiToEarn's OpenAI Chat Completions compatible endpoint. It is useful when Codex expects a Responses API style flow, while you want to use AiToEarn language model access.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first.
+</Info>
+
+<Warning>
+  Your API Key is a private credential. Do not expose the full key in configuration screenshots, support messages, or shared logs.
+</Warning>
+
+## Before You Start
+
+Prepare the following:
+
+1. [AiToEarn API Key](/en/use/api-key).
+2. A working Codex installation.
+3. cc-switch. Download the version for your operating system from [cc-switch releases](https://github.com/farion1231/cc-switch/releases).
+
+AiToEarn API Keys are bound to the site where they were created. Use the matching endpoint:
+
+| Site | OpenAI Chat Completions endpoint |
+| --- | --- |
+| China site | `https://aitoearn.cn/api/ai/chat/completions` |
+| International site | `https://aitoearn.ai/api/ai/chat/completions` |
+
+To confirm available model names, check [Chat models](/api-reference/get-api-ai-models-chat).
+
+## Configure cc-switch
+
+Open cc-switch and switch the top mode to `codex`.
+
+![Switch cc-switch to codex](/assets/use/codex/01.png)
+
+Click the create button to add a new provider.
+
+![Create a provider configuration](/assets/use/codex/02.png)
+
+Keep the default custom configuration type. Scroll down and fill in:
+
+- Provider name: use `aitoearn` so it is easy to recognize.
+- API Key: paste the API Key created in AiToEarn.
+- API request URL: enter the OpenAI Chat Completions endpoint that matches your API Key site.
+
+Then open the advanced options and enable local route mapping.
+
+![Fill AiToEarn provider settings and enable local routing](/assets/use/codex/03.png)
+
+Save the configuration.
+
+## Enable the Provider
+
+Return to the provider list and enable the AiToEarn configuration you just created.
+
+![Enable the AiToEarn provider](/assets/use/codex/04.png)
+
+Open settings.
+
+![Open cc-switch settings](/assets/use/codex/05.png)
+
+Go to routing settings.
+
+![Open routing settings](/assets/use/codex/06.png)
+
+Enable routing. After this, cc-switch handles Codex requests locally and forwards them to the AiToEarn endpoint you configured.
+
+![Enable Codex routing](/assets/use/codex/07.png)
+
+## Verify the Setup
+
+Keep cc-switch running, then open Codex and send a simple message. If Codex returns a normal response, it is using AiToEarn through cc-switch.
+
+If the request fails, check:
+
+- Whether the API Key belongs to the site used in the request URL.
+- Whether the API request URL matches the API Key site.
+- Whether the AiToEarn provider is enabled.
+- Whether cc-switch Codex routing is enabled.
+- Whether the Codex model name comes from [Chat models](/api-reference/get-api-ai-models-chat).

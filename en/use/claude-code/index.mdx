@@ -1,0 +1,272 @@
+---
+title: "Claude Code CLI Setup"
+description: "Configure Claude Code CLI to use AiToEarn's Anthropic compatible endpoint"
+---
+
+This guide shows how to configure Claude Code CLI to use AiToEarn's Anthropic compatible endpoint. After setup, you can call language models available on AiToEarn from your terminal through Claude Code.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key). To confirm available model names, check [Chat models](/api-reference/get-api-ai-models-chat).
+</Info>
+
+<Warning>
+  AiToEarn uses `ANTHROPIC_API_KEY`, not `ANTHROPIC_AUTH_TOKEN`. If you are adapting another third-party guide, make sure the authentication variable is `ANTHROPIC_API_KEY`.
+</Warning>
+
+## What Is Claude Code?
+
+Claude Code is Anthropic's official command-line interface tool. It brings an AI assistant into your terminal and coding workflow. By configuring AiToEarn's Anthropic compatible endpoint, you can keep the Claude Code workflow while sending requests through your AiToEarn API Key.
+
+## Prerequisites
+
+Before you start, make sure you have:
+
+1. An AiToEarn account.
+2. [AiToEarn API Key](/en/use/api-key).
+3. Access to Terminal, PowerShell, or Command Prompt.
+
+## Choose a Base URL
+
+AiToEarn API Keys are bound to the site where they were created. `ANTHROPIC_BASE_URL` must match the site of your API Key.
+
+| Site | ANTHROPIC_BASE_URL |
+| --- | --- |
+| China site | `https://aitoearn.cn/api/ai` |
+| International site | `https://aitoearn.ai/api/ai` |
+
+Do not append `/v1/messages` to `ANTHROPIC_BASE_URL`. Claude Code sends Anthropic Messages style requests, which will be routed to AiToEarn's [Anthropic messages endpoint](/api-reference/post-api-ai-v1-messages).
+
+## Install
+
+Choose the instructions for your operating system.
+
+### macOS and Linux
+
+Open Terminal and run:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | sh
+```
+
+Verify the installation:
+
+```bash
+claude --version
+```
+
+### Windows
+
+Open PowerShell as administrator, then run:
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+If the `claude` command is not found after installation, add Claude Code to your PATH:
+
+1. Press `Win + X` and choose System.
+2. Click Advanced system settings.
+3. Click Environment Variables.
+4. Under System variables, select `Path` and click Edit.
+5. Click New and add `C:\Users\YourUsername\.claude\bin`.
+6. Click OK to save.
+
+Restart your terminal and verify:
+
+```powershell
+claude --version
+```
+
+## Configure Environment Variables
+
+Claude Code reads two environment variables:
+
+- `ANTHROPIC_API_KEY`: your AiToEarn API Key.
+- `ANTHROPIC_BASE_URL`: AiToEarn's Anthropic compatible base URL, selected by site.
+
+### Method 1: Permanent Configuration (Recommended)
+
+#### macOS and Linux
+
+If you use Zsh, add these lines to `~/.zshrc`:
+
+```bash
+export ANTHROPIC_API_KEY="your AiToEarn API Key"
+export ANTHROPIC_BASE_URL="https://aitoearn.cn/api/ai"
+```
+
+If you use an international API Key, change the second line to:
+
+```bash
+export ANTHROPIC_BASE_URL="https://aitoearn.ai/api/ai"
+```
+
+Apply the changes:
+
+```bash
+source ~/.zshrc
+```
+
+If you use Bash, add the same lines to `~/.bashrc` or `~/.bash_profile`, then run the matching `source` command.
+
+#### Windows PowerShell
+
+China site:
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY', 'your AiToEarn API Key', 'User')
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_BASE_URL', 'https://aitoearn.cn/api/ai', 'User')
+```
+
+International site:
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY', 'your AiToEarn API Key', 'User')
+[System.Environment]::SetEnvironmentVariable('ANTHROPIC_BASE_URL', 'https://aitoearn.ai/api/ai', 'User')
+```
+
+Restart your terminal after setting the variables.
+
+#### Windows Command Prompt
+
+China site:
+
+```cmd
+setx ANTHROPIC_API_KEY "your AiToEarn API Key"
+setx ANTHROPIC_BASE_URL "https://aitoearn.cn/api/ai"
+```
+
+International site:
+
+```cmd
+setx ANTHROPIC_API_KEY "your AiToEarn API Key"
+setx ANTHROPIC_BASE_URL "https://aitoearn.ai/api/ai"
+```
+
+Restart your terminal after setting the variables.
+
+### Method 2: Temporary Configuration
+
+Temporary configuration only applies to the current terminal session. It is useful for quick testing.
+
+macOS and Linux:
+
+```bash
+export ANTHROPIC_API_KEY="your AiToEarn API Key"
+export ANTHROPIC_BASE_URL="https://aitoearn.cn/api/ai"
+```
+
+Windows PowerShell:
+
+```powershell
+$env:ANTHROPIC_API_KEY="your AiToEarn API Key"
+$env:ANTHROPIC_BASE_URL="https://aitoearn.cn/api/ai"
+```
+
+Windows Command Prompt:
+
+```cmd
+set ANTHROPIC_API_KEY=your AiToEarn API Key
+set ANTHROPIC_BASE_URL=https://aitoearn.cn/api/ai
+```
+
+International site users should change `ANTHROPIC_BASE_URL` to `https://aitoearn.ai/api/ai`.
+
+### Method 3: Claude Code Settings File
+
+Create or edit `~/.claude/settings.json`:
+
+```json
+{
+  "env": {
+    "ANTHROPIC_API_KEY": "your AiToEarn API Key",
+    "ANTHROPIC_BASE_URL": "https://aitoearn.cn/api/ai"
+  }
+}
+```
+
+International site users should change `ANTHROPIC_BASE_URL` to `https://aitoearn.ai/api/ai`.
+
+### Method 4: CC Switch
+
+If you use CC Switch to manage multiple Claude Code providers, add an AiToEarn provider:
+
+| Field | Value |
+| --- | --- |
+| Provider name | `AiToEarn` |
+| Notes | `AiToEarn` |
+| Website | `https://aitoearn.cn` or `https://aitoearn.ai` |
+| API Key | Your AiToEarn API Key |
+| Request URL | China site: `https://aitoearn.cn/api/ai`; international site: `https://aitoearn.ai/api/ai` |
+| API format | Anthropic Messages or Anthropic-compatible |
+| Model name | Copy an available model name from [Chat models](/api-reference/get-api-ai-models-chat) |
+
+Save and enable the provider, then start Claude Code to test.
+
+## Verify the Setup
+
+After starting Claude Code, enter:
+
+```text
+/status
+```
+
+If `Anthropic base URL` points to your AiToEarn URL, the base configuration is active.
+
+You can also send a test message:
+
+```bash
+claude "Hi"
+```
+
+Check environment variables:
+
+macOS and Linux:
+
+```bash
+echo $ANTHROPIC_BASE_URL
+echo $ANTHROPIC_API_KEY
+```
+
+Windows PowerShell:
+
+```powershell
+echo $env:ANTHROPIC_BASE_URL
+echo $env:ANTHROPIC_API_KEY
+```
+
+## Troubleshooting
+
+### Invalid API Key
+
+- Confirm the key comes from [AiToEarn API Key](/en/use/api-key).
+- Make sure you are not using `ANTHROPIC_AUTH_TOKEN` as the authentication variable.
+- Check for leading or trailing spaces in the API Key.
+- Confirm the API Key site matches `ANTHROPIC_BASE_URL`.
+
+### Connection Failed
+
+- Confirm your network can access the site you selected.
+- China site uses `https://aitoearn.cn/api/ai`.
+- International site uses `https://aitoearn.ai/api/ai`.
+- Do not set `ANTHROPIC_BASE_URL` to `/api/ai/v1/messages`.
+
+### Claude Code Not Found
+
+macOS and Linux:
+
+```bash
+which claude
+```
+
+If it is not found, make sure `~/.claude/bin` is in PATH.
+
+Windows:
+
+Confirm PATH includes:
+
+```text
+C:\Users\YourUsername\.claude\bin
+```
+
+Restart your terminal and run `claude --version` again.
