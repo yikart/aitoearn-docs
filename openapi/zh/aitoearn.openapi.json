@@ -1419,12 +1419,6 @@
                     "type": "string",
                     "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
                   },
-                  "n": {
-                    "description": "生成图片数量",
-                    "type": "integer",
-                    "minimum": 1,
-                    "maximum": 10
-                  },
                   "quality": {
                     "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
                     "type": "string"
@@ -1807,12 +1801,6 @@
                   "model": {
                     "type": "string",
                     "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
-                  },
-                  "n": {
-                    "description": "生成图片数量",
-                    "type": "integer",
-                    "minimum": 1,
-                    "maximum": 10
                   },
                   "quality": {
                     "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
@@ -13854,12 +13842,6 @@
           "model": {
             "type": "string",
             "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
-          },
-          "n": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 9007199254740991,
-            "description": "生成数量"
           },
           "quality": {
             "type": "string",

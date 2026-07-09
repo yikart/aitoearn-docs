@@ -1419,12 +1419,6 @@
                     "type": "string",
                     "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface."
                   },
-                  "n": {
-                    "description": "Number of images generated",
-                    "type": "integer",
-                    "minimum": 1,
-                    "maximum": 10
-                  },
                   "quality": {
                     "description": "Image quality. The optional values ​​vary from model to model, and are subject to the `data[n].qualities` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface.",
                     "type": "string"
@@ -1807,12 +1801,6 @@
                   "model": {
                     "type": "string",
                     "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface."
-                  },
-                  "n": {
-                    "description": "Number of images generated",
-                    "type": "integer",
-                    "minimum": 1,
-                    "maximum": 10
                   },
                   "quality": {
                     "description": "Image quality. The optional values ​​vary from model to model, and are subject to the `data[n].qualities` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface.",
@@ -13854,12 +13842,6 @@
           "model": {
             "type": "string",
             "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface."
-          },
-          "n": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 9007199254740991,
-            "description": "Generate quantity"
           },
           "quality": {
             "type": "string",
