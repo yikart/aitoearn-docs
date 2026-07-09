@@ -469,23 +469,18 @@
             "icon": "book-open",
             "groups": [
               {
-                "group": "新手指南和常见问题",
+                "group": "快速开始",
                 "pages": [
                   "zh/help/index",
+                  "zh/help/creator/index",
+                  "zh/help/advertiser/index"
+                ]
+              },
+              {
+                "group": "常见问题",
+                "pages": [
                   "zh/help/guide",
                   "zh/help/faq"
-                ]
-              },
-              {
-                "group": "创作者指南",
-                "pages": [
-                  "zh/help/creator/index"
-                ]
-              },
-              {
-                "group": "广告主指南",
-                "pages": [
-                  "zh/help/advertiser/index"
                 ]
               },
               {
