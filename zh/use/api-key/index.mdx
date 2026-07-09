@@ -1,5 +1,6 @@
 ---
-title: "获取API KEY"
+title: "获取 API Key"
+description: "创建开放平台接口调用凭证"
 ---
 
 API Key 用来调用 AiToEarn 开放平台接口。后续所有 API 请求都需要在请求头中携带：
@@ -23,34 +24,20 @@ X-Api-Key: 你的 API Key
 
 ## 创建 API Key
 
-<video
-  controls
-  poster="/assets/use/img/screenshot_getapikey.png"
-  style={{
-    width: "100%",
-    aspectRatio: "648 / 364.5",
-    objectFit: "cover",
-  }}
->
-  <source src="/assets/use/videos/get_apikey.mp4" type="video/mp4" />
-</video>
-
 1. 打开对应站点并登录 AiToEarn。
-2. 点击右上角入口进入设置。
-3. 在设置中打开 `API Key` 页面。
-4. 点击 `Create` 创建新的 API Key。
-5. 输入一个便于识别的名称，例如 `publish-demo`。
-6. 创建成功后立即复制并保存 API Key。
+2. 在左侧边栏点击 `API Keys`，进入 API Key 管理页面。
 
-![进入 AiToEarn 设置入口](/assets/use/api-key/01.png)
+![从侧边栏进入 API Keys](/assets/use/api-key/01.png)
 
-![打开设置页面](/assets/use/api-key/02.png)
+3. 点击 `Create API Key` 创建新的 API Key。
 
-![进入 API Key 页面](/assets/use/api-key/03.png)
+![点击 Create API Key](/assets/use/api-key/02.png)
 
-![点击创建 API Key](/assets/use/api-key/04.png)
+4. 输入一个便于识别的名称，例如 `publish-demo`，然后点击 `Create API Key`。
 
-![填写名称并创建 API Key](/assets/use/api-key/05.png)
+![输入名称并创建 API Key](/assets/use/api-key/03.png)
+
+创建成功后，密钥只会完整展示一次。请立即复制并保存到安全位置，后续接口请求会使用它完成鉴权。
 
 ## 下一步
 

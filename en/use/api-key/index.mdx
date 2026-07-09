@@ -1,19 +1,44 @@
 ---
 title: "Get API Key"
+description: "Create an API credential for Open Platform requests"
 ---
 
-Create an API Key before calling AiToEarn Open Platform APIs.
+An API Key is required when calling AiToEarn Open Platform APIs. Most Open Platform APIs use the following request header:
 
-## Steps
+```http
+X-Api-Key: your API Key
+```
+
+<Warning>
+  Treat your API Key as a private credential. Do not commit it to public repositories, frontend source code, screenshots, chat logs, or client packages. In production, store it on your server and call AiToEarn APIs from your backend.
+</Warning>
+
+## Choose a Site
+
+API Keys are bound to the site where they were created. Choose the site that matches your publishing target.
+
+| Scenario | Site | Best for |
+| --- | --- | --- |
+| China social platforms | [https://aitoearn.cn](https://aitoearn.cn) | Douyin, Kwai, Bilibili, RedNote, WeChat Channels, WeChat Official Account |
+| International social platforms | [https://aitoearn.ai](https://aitoearn.ai) | YouTube, TikTok, X/Twitter, Instagram, Threads, Pinterest, LinkedIn |
+
+## Create an API Key
 
 1. Sign in to AiToEarn.
-2. Open the settings page.
-3. Go to the API Key page.
-4. Create a new API Key.
-5. Copy and store the key securely.
+2. Click `API Keys` in the left sidebar to open the API Key management page.
 
-Use this key in API requests. Most Open Platform APIs use the `X-Api-Key` header.
+![Open API Keys from the sidebar](/assets/use/api-key/01.png)
 
-## Next step
+3. Click `Create API Key`.
+
+![Click Create API Key](/assets/use/api-key/02.png)
+
+4. Enter a recognizable name, for example `publish-demo`, then click `Create API Key`.
+
+![Enter a name and create the API Key](/assets/use/api-key/03.png)
+
+The secret key is shown only once after creation. Copy it immediately and store it somewhere secure.
+
+## Next Step
 
 After creating an API Key, continue with [Publishing flow](/en/use/publish-flow) or one of the AI generation tutorials.

@@ -332,7 +332,8 @@
                   "zh/use/api-key/index",
                   "zh/use/video-generation/index",
                   "zh/use/image-generation/index",
-                  "zh/use/large-language-model/index"
+                  "zh/use/large-language-model/index",
+                  "zh/use/codex/index"
                 ]
               }
             ]
