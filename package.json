@@ -5,7 +5,8 @@
   "scripts": {
     "build:overrides": "tsc -p tsconfig.overrides.json",
     "check": "npm run build:overrides && mint validate && mint broken-links",
-    "dev": "npm run build:overrides && mint dev"
+    "dev": "npm run build:overrides && mint dev",
+    "sync:video-models": "node scripts/sync-video-generation-models.mjs"
   },
   "devDependencies": {
     "mint": "^4.2.659",

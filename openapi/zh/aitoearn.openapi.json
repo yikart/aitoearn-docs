@@ -49,7 +49,7 @@
       "get": {
         "summary": "视频生成模型",
         "deprecated": false,
-        "description": "接口说明：获取当前账号可用的视频生成模型及参数范围，包括模型名称、分辨率、画面比例、时长和价格信息，以用于生成视频接口完成参数选择和请求参数校验。",
+        "description": "接口说明：获取当前账号可用的视频生成模型及参数范围，包括模型名称、分辨率、画面比例、时长和价格信息，以用于生成视频接口完成参数选择和请求参数校验。\n\n`modes` 字段的常量含义与典型输入参数，请参阅[「视频生成 modes 常量说明」](/zh/use/video-generation#modes-常量说明)。",
         "operationId": "VideoController_getVideoGenerationModels",
         "tags": [
           "AI 服务/视频生成"

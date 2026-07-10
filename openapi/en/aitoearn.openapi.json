@@ -49,7 +49,7 @@
       "get": {
         "summary": "Video Generation Models",
         "deprecated": false,
-        "description": "Interface description: Obtain the video generation model and parameter range available for the current account, including model name, resolution, screen ratio, duration and price information, to be used to generate the video interface to complete parameter selection and request parameter verification.",
+        "description": "Returns the video generation models and parameter ranges available to the current account, including model names, resolutions, aspect ratios, durations, and pricing. Use this response to select and validate parameters before creating a video generation task.\n\nFor the meaning of each `modes` value and its typical inputs, see [Video generation mode constants](/en/use/video-generation#modes-constants).",
         "operationId": "VideoController_getVideoGenerationModels",
         "tags": [
           "AI Services/Video Generation"

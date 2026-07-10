@@ -2,7 +2,7 @@
 title: "Video generation"
 ---
 
-Video generation starts with the model list. Pick an available model, then create a generation task.
+The video generation flow is straightforward: request the model list, select an available model, and then call the generation endpoint to create a task.
 
 <Info>
   If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first.
@@ -14,20 +14,44 @@ Video generation starts with the model list. Pick an available model, then creat
 
 ## Integration order
 
-1. Call [Video generation models](/api-reference/get-api-ai-models-video-generation) to list available video models.
-2. Copy `data[n].name` from the model list and pass it as `model`.
-3. Choose resolution, aspect ratio, duration, and reference assets from the same model item.
-4. Call [Generate video](/api-reference/post-api-ai-video-generations).
-5. Use the returned `data.id` to call [Video task status](/api-reference/get-api-ai-video-generations-task-id).
+1. Call [Video generation models](/api-reference/get-api-ai-models-video-generation) to retrieve the video models available on the current site.
+2. Copy the model name from `data[n].name` and pass it as `model` to the generation endpoint.
+3. Select the resolution, aspect ratio, duration, and reference assets from the same model item's `resolutions`, `aspectRatios`, `durations`, `modes`, and `inputConstraints` fields.
+4. Call [Generate video](/api-reference/post-api-ai-video-generations) with `model`, `prompt`, and any optional parameters.
+5. The generation endpoint returns `data.id`. Use it to call [Video task status](/api-reference/get-api-ai-video-generations-task-id) and retrieve the result.
 
-If you need reference images, videos, or audio, use [asset upload](/en/use/asset-upload) first.
+If you need to upload a reference image, video, or audio file, use [Asset upload](/en/use/asset-upload) first to obtain a publicly accessible URL, and then pass that URL in the corresponding reference asset field.
+
+## Model list and modes
+
+`GET /api/ai/models/video/generation` returns the currently available video models. Do not hard-code model parameters when creating a generation task. Use the model item's `name` as `model`, and select `mode`, `resolution`, `ratio`, and `duration` from the values supported by that same model item.
+
+## modes constants
+
+A model may support only some of the modes below. When calling the generation endpoint, `mode` must be one of the values in the selected model's `modes` array.
+
+| mode | Meaning | Typical input parameters |
+| --- | --- | --- |
+| `text2video` | Text to video | `prompt` |
+| `image2video` | Single image to video | `prompt` + `image`, or an `images` array containing one item |
+| `flf2video` | First-and-last-frame to video | `prompt` + first-frame image + `image_tail` |
+| `lf2video` | Reserved constant | This mode is not currently returned by the live model list. Avoid passing it explicitly. |
+| `multi-image2video` | Multiple reference images to video | `prompt` + multiple items in `images` |
+| `multi-ref` | Multimodal references to video | `prompt` + `images` / `videos` / `audios` |
+| `video2video` | Video to video or video editing | `prompt` + `video_url`, or `videos` |
+
+If `mode` is omitted, the backend infers it from the supplied reference assets. For API integrations, explicitly passing `mode` is recommended so you can validate that the model supports the requested input type before sending the request. Pricing is determined by the pricing page, the model list endpoint's `pricing` field, and the generation endpoint's `data.points` value.
 
 ## Minimal request
+
+First, request the model list:
 
 ```bash
 curl --request GET 'https://aitoearn.ai/api/ai/models/video/generation' \
   --header 'X-Api-Key: <API_KEY>'
 ```
+
+Then create a video generation task:
 
 ```bash
 curl --request POST 'https://aitoearn.ai/api/ai/video/generations' \
@@ -41,3 +65,35 @@ curl --request POST 'https://aitoearn.ai/api/ai/video/generations' \
     "duration": 5
   }'
 ```
+
+## Query the result
+
+```bash
+curl --request GET 'https://aitoearn.ai/api/ai/video/generations/{taskId}' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+Replace `{taskId}` with the `data.id` returned by the generation endpoint. When the task is complete, the response includes `data.videoUrl` and `data.coverUrl`. To view previous tasks, call [Video task list](/api-reference/get-api-ai-video-generations).
+
+{/* AUTO-GENERATED:VIDEO_MODELS_START */}
+
+## Current model support
+
+<Info>Updated at 07/10/2026, 16:21:07 (Beijing Time).</Info>
+
+| Model | Supported modes | Supported resolutions | Supported durations | Image inputs | Audio inputs | Video inputs | Supported aspect ratios |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Seedance 2.0 Fast Beta<br />`seedance-2-fast-beta` | text2video, image2video, multi-image2video, multi-ref | 480p, 720p | 4-15 seconds | 9 | 3 | 3 | 21:9, 16:9, 4:3, 1:1, 3:4, 9:16 |
+| Seedance 2.0 Beta<br />`seedance-2-beta` | text2video, image2video, multi-image2video, multi-ref | 720p | 4-15 seconds | 9 | 3 | 3 | 21:9, 16:9, 4:3, 1:1, 3:4, 9:16 |
+| Seedance 2.0 Beta 1080p<br />`seedance-2-beta-1080p` | text2video, image2video, multi-image2video, multi-ref | 1080p | 4-15 seconds | 9 | 3 | 3 | 16:9, 9:16, 1:1 |
+| Seedance 2.0 Beta Mini<br />`seedance-2.0-beta-mini` | text2video, image2video, multi-image2video, multi-ref | 720p | 4-15 seconds | 9 | 3 | 3 | 16:9, 9:16, 1:1, 4:3, 3:4, 21:9 |
+| HappyHorse 1.1<br />`happyhorse-1.1` | text2video, image2video, multi-image2video, video2video | 720P, 1080P | 3-15 seconds | 9 | 0 | 1 | 16:9, 9:16, 1:1, 4:3, 3:4 |
+| Seedance 2.0<br />`doubao-seedance-2-0-260128` | text2video, image2video, flf2video, multi-image2video, multi-ref | 720p, 1080p | 4-15 seconds | 9 | 3 | 3 | 16:9, 4:3, 1:1, 3:4, 9:16, 21:9, adaptive |
+| Seedance 2.0 Fast<br />`doubao-seedance-2-0-fast-260128` | text2video, image2video, flf2video, multi-image2video, multi-ref | 480p, 720p | 4-15 seconds | 9 | 3 | 3 | 16:9, 4:3, 1:1, 3:4, 9:16, 21:9, adaptive |
+| Seedance 2.0 Mini<br />`doubao-seedance-2-0-mini-260615` | text2video, image2video, flf2video, multi-image2video, multi-ref | 720p | 4-15 seconds | 9 | 3 | 3 | 16:9, 4:3, 1:1, 3:4, 9:16, 21:9, adaptive |
+| Grok Image Video<br />`grok-image-video` | text2video, image2video, multi-image2video | 720p | 1-15 seconds | 5 | 0 | 0 | 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 |
+| Grok Video 1.5 Preview<br />`grok-video-1.5` | image2video | 480p, 720p | 4-15 seconds | 1 | 0 | 0 | 16:9, 9:16 |
+| Grok Video<br />`grok-imagine-video` | text2video, image2video, multi-image2video, video2video | 720p | 1-15 seconds | 7 | 0 | 1 | 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 |
+| Grok Video 1.5<br />`grok-imagine-video-1.5` | image2video | 720p | 1-15 seconds | 1 | 0 | 0 | 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 |
+
+{/* AUTO-GENERATED:VIDEO_MODELS_END */}
