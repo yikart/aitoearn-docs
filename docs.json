@@ -703,6 +703,21 @@
             "icon": "book-open",
             "groups": [
               {
+                "group": "Quick Start",
+                "pages": [
+                  "en/help/index",
+                  "en/help/creator/index",
+                  "en/help/advertiser/index"
+                ]
+              },
+              {
+                "group": "FAQ",
+                "pages": [
+                  "en/help/guide",
+                  "en/help/faq"
+                ]
+              },
+              {
                 "group": "Overview",
                 "pages": [
                   "en/help/about",
