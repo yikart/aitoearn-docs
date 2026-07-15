@@ -483,7 +483,9 @@
                 "group": "常见问题",
                 "pages": [
                   "zh/help/guide",
-                  "zh/help/faq"
+                  "zh/help/faq",
+                  "zh/help/account-reporting/index",
+                  "zh/help/facebook-account-operations/index"
                 ]
               },
               {
