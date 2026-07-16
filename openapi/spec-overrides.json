@@ -5,6 +5,21 @@
   },
   "POST /api/ai/video/generations": {
     "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "1": {
+              "value": {
+                "images": null,
+                "videos": null,
+                "audios": null
+              }
+            }
+          }
+        }
+      }
+    },
     "bodyProperties": {
       "model": {
         "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",

@@ -586,15 +586,6 @@
                   "value": {
                     "model": "seedance-2-beta-1080p",
                     "prompt": "生成一条旅行 vlog 风格视频，图片作为主体参考，视频作为运动参考，音频作为节奏参考，画面自然真实",
-                    "images": [
-                      "https://example.com/input/character.png"
-                    ],
-                    "videos": [
-                      "https://example.com/input/motion-reference.mp4"
-                    ],
-                    "audios": [
-                      "https://example.com/input/music-reference.mp3"
-                    ],
                     "resolution": "1080p",
                     "ratio": "9:16",
                     "duration": 12
