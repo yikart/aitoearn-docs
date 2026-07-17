@@ -564,11 +564,47 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
     }
   }
 
-  spec.paths['/api/ai/volcengine/video'] = spec.paths['/api/ai/volcengine/video'] || {}
-  spec.paths['/api/ai/volcengine/video'].post = spec.paths['/api/ai/volcengine/video'].post || {
+  const taskStatusSchema = spec.components.schemas.VolcengineTaskStatusResponseVo
+  taskStatusSchema.properties = taskStatusSchema.properties || {}
+  Object.assign(taskStatusSchema.properties, {
+    generate_audio: {
+      type: 'boolean',
+      description: '是否包含同步音频',
+    },
+    tools: {
+      type: 'array',
+      description: '本次请求模型实际使用的工具',
+      items: {
+        type: 'object',
+        properties: {
+          type: {
+            type: 'string',
+            description: '实际使用的工具类型',
+          },
+        },
+        required: ['type'],
+        additionalProperties: false,
+      },
+    },
+    safety_identifier: {
+      type: 'string',
+      description: '终端用户标识（原样回显）',
+    },
+    priority: {
+      type: 'number',
+      description: '任务执行优先级',
+    },
+    execution_expires_after: {
+      type: 'number',
+      description: '任务超时阈值（秒）',
+    },
+  })
+
+  spec.paths['/v3/contents/generations/tasks'] = spec.paths['/v3/contents/generations/tasks'] || {}
+  spec.paths['/v3/contents/generations/tasks'].post = spec.paths['/v3/contents/generations/tasks'].post || {
     tags: ['AI 服务/视频生成'],
     summary: '火山格式创建视频生成任务',
-    description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。请求体保持火山格式，只需要将请求地址替换为 AiToEarn 地址，并将鉴权改为 `X-Api-Key`。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。',
+    description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。',
     operationId: 'VolcengineVideoController_videoGeneration',
     requestBody: {
       required: true,
@@ -618,11 +654,11 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/ai/volcengine/video/{taskId}'] = spec.paths['/api/ai/volcengine/video/{taskId}'] || {}
-  spec.paths['/api/ai/volcengine/video/{taskId}'].get = spec.paths['/api/ai/volcengine/video/{taskId}'].get || {
+  spec.paths['/v3/contents/generations/tasks/{taskId}'] = spec.paths['/v3/contents/generations/tasks/{taskId}'] || {}
+  spec.paths['/v3/contents/generations/tasks/{taskId}'].get = spec.paths['/v3/contents/generations/tasks/{taskId}'].get || {
     tags: ['AI 服务/视频生成'],
     summary: '火山格式查询视频任务',
-    description: '接口说明：查询火山格式视频生成任务状态，返回结构保持火山任务查询格式。适用于已经接入火山视频生成 API 的客户，将请求地址替换为 AiToEarn 地址并将鉴权改为 `X-Api-Key` 后使用。参考火山官方文档：[查询视频生成任务](https://www.volcengine.com/docs/82379/1521309?lang=zh)。',
+    description: '接口说明：查询火山格式视频生成任务状态，返回结构保持火山任务查询格式。参考火山官方文档：[查询视频生成任务](https://www.volcengine.com/docs/82379/1521309?lang=zh)。',
     operationId: 'VolcengineVideoController_videoTaskStatus',
     parameters: [
       {
@@ -650,10 +686,12 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
                   id: '6a461da66fe8a12d33daabdd',
                   model: 'doubao-seedance-2-0-260128',
                   status: 'succeeded',
+                  error: null,
                   created_at: 1782980006,
                   updated_at: 1782980484,
                   content: {
-                    video_url: 'https://assets.aitoearn.ai/example/video.mp4',
+                    video_url: 'https://ark-content-generation-cn-beijing.tos-cn-beijing.volces.com/example/video.mp4',
+                    last_frame_url: 'https://assets.aitoearn.ai/example/last-frame.png',
                   },
                   seed: 9190,
                   resolution: '720p',
@@ -661,11 +699,20 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
                   duration: 8,
                   framespersecond: 24,
                   generate_audio: true,
+                  tools: [
+                    {
+                      type: 'web_search',
+                    },
+                  ],
+                  safety_identifier: 'user:01JQ8W2M4Y6N7P8R9S0T1U2V3W',
                   priority: 0,
                   execution_expires_after: 172800,
                   usage: {
                     completion_tokens: 411300,
                     total_tokens: 411300,
+                    tool_usage: {
+                      web_search: 1,
+                    },
                   },
                 },
               },
@@ -678,8 +725,8 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
 }
 
 function isVolcengineVideoCompatibilityEndpoint(endpoint) {
-  return endpoint.path === '/api/ai/volcengine/video'
-    || endpoint.path === '/api/ai/volcengine/video/{taskId}'
+  return endpoint.path === '/v3/contents/generations/tasks'
+    || endpoint.path === '/v3/contents/generations/tasks/{taskId}'
 }
 
 function rawJsonResponseContent(endpoint, operation) {
@@ -1049,7 +1096,7 @@ const englishTextOverrides = {
   '第三方协议原生响应，不使用 AiToEarn 通用响应包裹。': 'Native third-party protocol response, not wrapped in the AiToEarn common response envelope.',
   '第三方协议原生响应或 SSE 数据。不使用 AiToEarn 通用响应包裹。': 'Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.',
   'SSE 流式响应。': 'SSE streaming response.',
-  'OpenAI 兼容接口使用，示例：Bearer <token>。': 'Used by OpenAI-compatible endpoints. Example: Bearer <token>.',
+  '传入从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。示例：Bearer xxx。': 'Pass the API Key obtained from AiToEarn. Go to the ["API Key Tutorial"](/en/use/api-key). Example: Bearer xxx.',
   'Gemini SDK 兼容接口使用的 API Key header。': 'API Key header used by Gemini SDK-compatible endpoints.',
 }
 
@@ -1317,7 +1364,7 @@ function generate() {
       type: 'apiKey',
       in: 'header',
       name: 'Authorization',
-      description: 'OpenAI 兼容接口使用，示例：Bearer <token>。',
+      description: '传入从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。示例：Bearer xxx。',
     },
     'apikey-header-x-goog-api-key': {
       type: 'apiKey',

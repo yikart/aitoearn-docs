@@ -586,6 +586,15 @@
                   "value": {
                     "model": "seedance-2-beta-1080p",
                     "prompt": "Generate a travel vlog style video, the picture is used as the subject reference, the video is used as the movement reference, the audio is used as the rhythm reference, the picture is natural and real",
+                    "images": [
+                      "https://example.com/input/character.png"
+                    ],
+                    "videos": [
+                      "https://example.com/input/motion-reference.mp4"
+                    ],
+                    "audios": [
+                      "https://example.com/input/music-reference.mp3"
+                    ],
                     "resolution": "1080p",
                     "ratio": "9:16",
                     "duration": 12
@@ -11622,13 +11631,13 @@
         }
       }
     },
-    "/api/ai/volcengine/video": {
+    "/v3/contents/generations/tasks": {
       "post": {
         "tags": [
           "AI Services/Video Generation"
         ],
         "summary": "Create Volcengine-format video generation task",
-        "description": "Interface description: Volcengine Ark video generation compatible endpoint for customers who have already integrated the Volcengine video generation API and want to migrate to AiToEarn without significantly changing their request structure. The request body keeps the Volcengine format; replace the request URL with the AiToEarn URL and change authentication to `X-Api-Key`. See the official Volcengine documentation: [Create video generation task](https://www.volcengine.com/docs/82379/1520757?lang=zh).",
+        "description": "Interface description: Volcengine Ark video generation compatible endpoint for customers who have already integrated the Volcengine video generation API and want to migrate to AiToEarn without significantly changing their request structure. See the official Volcengine documentation: [Create video generation task](https://www.volcengine.com/docs/82379/1520757?lang=zh).",
         "operationId": "VolcengineVideoController_videoGeneration",
         "requestBody": {
           "required": true,
@@ -11907,7 +11916,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/post-api-ai-volcengine-video",
+          "href": "/en/api-reference/post-v3-contents-generations-tasks",
           "metadata": {
             "title": "Create Volcengine-format video generation task",
             "sidebarTitle": "Create Volcengine-format video generation task"
@@ -11915,7 +11924,7 @@
         },
         "security": [
           {
-            "apikey-header-X-Api-Key": []
+            "apikey-header-Authorization": []
           }
         ],
         "x-aitoearn-backend": {
@@ -11950,13 +11959,13 @@
         }
       }
     },
-    "/api/ai/volcengine/video/{taskId}": {
+    "/v3/contents/generations/tasks/{taskId}": {
       "get": {
         "tags": [
           "AI Services/Video Generation"
         ],
         "summary": "Query Volcengine-format video task",
-        "description": "Interface description: Query the status of a Volcengine-format video generation task. The response keeps the Volcengine task query format. It is intended for customers who have already integrated the Volcengine video generation API; replace the request URL with the AiToEarn URL and change authentication to `X-Api-Key`. See the official Volcengine documentation: [Query video generation task](https://www.volcengine.com/docs/82379/1521309?lang=zh).",
+        "description": "Interface description: Query the status of a Volcengine-format video generation task. The response keeps the Volcengine task query format. See the official Volcengine documentation: [Query video generation task](https://www.volcengine.com/docs/82379/1521309?lang=zh).",
         "operationId": "VolcengineVideoController_videoTaskStatus",
         "parameters": [
           {
@@ -11984,10 +11993,12 @@
                       "id": "6a461da66fe8a12d33daabdd",
                       "model": "doubao-seedance-2-0-260128",
                       "status": "succeeded",
+                      "error": null,
                       "created_at": 1782980006,
                       "updated_at": 1782980484,
                       "content": {
-                        "video_url": "https://assets.aitoearn.ai/example/video.mp4"
+                        "video_url": "https://ark-content-generation-cn-beijing.tos-cn-beijing.volces.com/example/video.mp4",
+                        "last_frame_url": "https://assets.aitoearn.ai/example/last-frame.png"
                       },
                       "seed": 9190,
                       "resolution": "720p",
@@ -11995,11 +12006,20 @@
                       "duration": 8,
                       "framespersecond": 24,
                       "generate_audio": true,
+                      "tools": [
+                        {
+                          "type": "web_search"
+                        }
+                      ],
+                      "safety_identifier": "user:01JQ8W2M4Y6N7P8R9S0T1U2V3W",
                       "priority": 0,
                       "execution_expires_after": 172800,
                       "usage": {
                         "completion_tokens": 411300,
-                        "total_tokens": 411300
+                        "total_tokens": 411300,
+                        "tool_usage": {
+                          "web_search": 1
+                        }
                       }
                     }
                   }
@@ -12009,7 +12029,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-ai-volcengine-video-task-id",
+          "href": "/en/api-reference/get-v3-contents-generations-tasks-task-id",
           "metadata": {
             "title": "Query Volcengine-format video task",
             "sidebarTitle": "Query Volcengine-format video task"
@@ -12017,7 +12037,7 @@
         },
         "security": [
           {
-            "apikey-header-X-Api-Key": []
+            "apikey-header-Authorization": []
           }
         ],
         "x-aitoearn-backend": {
@@ -15460,6 +15480,39 @@
               }
             },
             "additionalProperties": false
+          },
+          "generate_audio": {
+            "type": "boolean",
+            "description": "Whether synchronized audio is included."
+          },
+          "tools": {
+            "type": "array",
+            "description": "Tools actually used by the model for this request.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Actual tool type used."
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "safety_identifier": {
+            "type": "string",
+            "description": "End-user identifier, echoed as provided."
+          },
+          "priority": {
+            "type": "number",
+            "description": "Task execution priority."
+          },
+          "execution_expires_after": {
+            "type": "number",
+            "description": "Task timeout threshold in seconds."
           }
         },
         "required": [
@@ -18136,7 +18189,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "Authorization",
-        "description": "Used by OpenAI-compatible endpoints. Example: Bearer <token>."
+        "description": "Pass the API Key obtained from AiToEarn. Go to the [\"API Key Tutorial\"](/en/use/api-key). Example: Bearer xxx."
       },
       "apikey-header-x-goog-api-key": {
         "type": "apiKey",

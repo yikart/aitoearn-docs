@@ -245,11 +245,19 @@
     },
     {
       "source": "/api-reference/ai-服务视频生成/火山格式创建视频生成任务",
-      "destination": "/api-reference/post-api-ai-volcengine-video"
+      "destination": "/api-reference/post-v3-contents-generations-tasks"
+    },
+    {
+      "source": "/api-reference/post-api-ai-volcengine-video",
+      "destination": "/api-reference/post-v3-contents-generations-tasks"
     },
     {
       "source": "/api-reference/ai-服务视频生成/火山格式查询视频任务",
-      "destination": "/api-reference/get-api-ai-volcengine-video-task-id"
+      "destination": "/api-reference/get-v3-contents-generations-tasks-task-id"
+    },
+    {
+      "source": "/api-reference/get-api-ai-volcengine-video-task-id",
+      "destination": "/api-reference/get-v3-contents-generations-tasks-task-id"
     }
   ],
   "errors": {
@@ -358,8 +366,8 @@
                   "POST /api/ai/video/generations",
                   "GET /api/ai/video/generations",
                   "GET /api/ai/video/generations/{taskId}",
-                  "POST /api/ai/volcengine/video",
-                  "GET /api/ai/volcengine/video/{taskId}"
+                  "POST /v3/contents/generations/tasks",
+                  "GET /v3/contents/generations/tasks/{taskId}"
                 ]
               },
               {
@@ -591,8 +599,8 @@
                   "POST /api/ai/video/generations",
                   "GET /api/ai/video/generations",
                   "GET /api/ai/video/generations/{taskId}",
-                  "POST /api/ai/volcengine/video",
-                  "GET /api/ai/volcengine/video/{taskId}"
+                  "POST /v3/contents/generations/tasks",
+                  "GET /v3/contents/generations/tasks/{taskId}"
                 ]
               },
               {
