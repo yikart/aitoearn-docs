@@ -3,6 +3,9 @@
   "theme": "luma",
   "name": "AiToEarn Open Platform",
   "description": "AiToEarn 开放平台文档",
+  "metadata": {
+    "timestamp": true
+  },
   "colors": {
     "primary": "#A989FF",
     "light": "#B8A1FF",
