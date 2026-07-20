@@ -1,8 +1,8 @@
 ---
 title: "Using Facebook with Aitoearn"
-description: "Aitoearn helps you share posts and Reels with Facebook Page followers, analyze performance, and respond to comments from one place."
+description: "With Aitoearn, you can engage with your community online, share posts and Reels with Facebook Page followers, analyze post performance, and manage comments in one tool."
 ---
-Due to API limitations, Facebook profiles cannot currently be connected. Facebook Pages and profiles are separate account types.
+Due to API limitations, Facebook personal profiles cannot currently be connected. Learn more about the difference between Facebook Pages and profiles.
 
 ## Features Available for Facebook Pages
 
@@ -10,40 +10,44 @@ Due to API limitations, Facebook profiles cannot currently be connected. Faceboo
 | :--: | :--: | :--: |
 | ✓ | ✓ | ✓ |
 
-## Facebook Features Available through Aitoearn
+## Features and Good-to-Knows
 
-Available features differ between Facebook Pages and Groups due to API limitations. Refer to the table below when scheduling content.
-
-| **Feature and notes** | **Details** |
+| Item | Details |
 | --- | --- |
-| Publishing | User mentions are not supported; polls are not supported; Stories support only 1 image or 1 video |
-| User mentions | Coming soon |
-| Daily posting limit | 25 posts every 24 hours |
-| Character limit | 5,000 characters per post or Reel |
-| Hashtags | Enter hashtags for posts or Reels in the editor. Stories do not currently support hashtags. Hashtags become clickable after publishing. |
+| Schedule posts | Supports scheduling Facebook posts, Reels, and Stories. Facebook Groups require notification publishing. |
+| Tags / mentions | To tag or mention another Facebook Page, enter the exact username in the post or Reel caption. It becomes a clickable link after publishing. |
+| Daily posting limit | Up to 35 posts every 24 hours. |
+| Character limit | Up to 5,000 characters per post or Reel. |
+| Hashtags | You can enter hashtags for posts or Reels in the editor. Stories do not support hashtags. Hashtags become clickable links after publishing. |
 
-> Note: The **Best time to post** analytics feature does not currently support Facebook.
+> Note: The "best time to post" feature in analytics does not currently support Facebook.
 
 # Facebook Image, Video, and GIF Specifications
 
-Facebook supports images, videos, and GIFs. Reel scheduling is available only for Facebook Pages.
+Facebook supports images, videos, and GIFs. Reels scheduling is available only for Facebook Pages.
 
 | Category | Video | Image | GIF |
 | --- | --- | --- | --- |
-| **Allowed per post** | Up to 1 video | Up to 10 images | Up to 10 GIFs, counted toward the image limit |
-| **Video length** | Up to 90 seconds (1 minute 30 seconds) per video | Not applicable | Not applicable |
-| **File size** | Up to 1GB per video | Up to 10MB per image | Up to 10MB per GIF |
-| **Supported formats** | MP4, MOV, AVI | JPG, JPEG, PNG, BMP, TIFF | GIF |
+| **Allowed per post** | 1 (upload or link) | Up to 10 images | Up to 1 GIF |
+| **Video length** | Reels: 3-90 seconds; video posts: up to 4 hours; Stories: 3-60 seconds | Not applicable | Not applicable |
+| **File size** | Posts up to 1GB; Stories up to 1GB | Posts up to 10MB; Stories recommended &lt;=1MB, technical limit 4MB | Up to 3MB |
+| **Dimensions / aspect ratio** | Video posts: 16:9 to 9:16; Reels / Stories: 9:16 | Recommended 8192 x 8192 px | Not available |
+| **Supported formats** | Reels / Stories: MP4; video posts: MP4, MOV, AVI, M4V | Posts: JPG, PNG, WebP; Stories: JPEG, BMP, PNG, TIFF | GIF |
+| **Custom thumbnail** | Not currently supported for video posts; not applicable for Reels | Not applicable | Not applicable |
+| **Best frame rate** | 24-60 FPS | Not applicable | Not applicable |
+| **Audio bitrate** | 128kbps or higher | Not applicable | Not applicable |
+| **Autoplay** | Supported | Not applicable | Supported |
+| **Alt text** | Not applicable | Supported | Not applicable |
 
-- Up to 63,206 characters per post.
+- Actual publishing depends on Aitoearn page validation.
 
-## Important Considerations
+## Notes
 
-To protect your Facebook account and avoid spam flags, follow these recommendations:
+Best practices to protect Facebook accounts and avoid being marked as spam:
 
-When identical content is shared to multiple Facebook Pages at the same time, Facebook may identify the posts as spam or automated behavior. Posts may fail, the access token may be revoked, and the account may need to be refreshed in Aitoearn. In some cases, Facebook may temporarily restrict the account.
+When you share the same content to multiple Facebook Pages, posts sent at the same time may be flagged by Facebook as spam or bot behavior. This can cause posts to fail and access tokens to be revoked, requiring a channel refresh in Aitoearn. In some cases, Facebook may temporarily restrict the account.
 
-Stagger the publishing time for each Page, for example:
+Stagger publishing times across Pages, for example:
 - Page 1: 09:30
 - Page 2: 09:34
 - Page 3: 09:39
@@ -52,21 +56,21 @@ Stagger the publishing time for each Page, for example:
 
 # Facebook Error Library
 
-Facebook may occasionally reject a post sent through a scheduling tool such as Aitoearn and return an error. Find the matching error below and follow the suggested solution.
+When using a scheduling tool like Aitoearn, social networks may reject posts and return errors. Find the error below and follow the solution.
 
 | Error | Cause | Solution |
 | --- | --- | --- |
-| "The daily posting limit for this channel has been reached" | The daily publishing limit has been reached | Reduce the number of posts scheduled for the day and try again later. |
-| "Aitoearn lost authorization to post on your behalf" | The Facebook password was recently changed, the token expired, or permissions are incomplete | Reauthorize the connection. In Facebook **Edit settings**, select every required Page and permission, return to **Manage channels** in Aitoearn, refresh the connection, and try again. |
-| "Please ensure you're an Admin for the FB Group and Aitoearn has been added as an app" | The authorized profile is not a Group administrator or does not have sufficient permissions | Confirm that the profile is still a Group administrator, add the Aitoearn app in the Group settings, refresh the connection in **Manage channels**, and try again. |
-| "Please ensure you're a Page administrator and Two-Factor Authentication is enabled" | The authorized account lacks administrator access or has not enabled 2FA | Confirm Page administrator access and enable 2FA in Facebook, then refresh the connection and try again. |
-| "Trouble uploading media/image" | An unknown upload error occurred, or the image does not meet format or size requirements | Retry the post and confirm that the image is JPG, PNG, or HEIC and no larger than 4MB. |
-| "We're investigating a potential Facebook bug; the post may already be published" | A Facebook publishing issue occurred, but the post may be live | Check Facebook.com first. If the post is live, remove the failed item from the queue. Use native publishing temporarily if needed. |
-| "Publishing Authorization is required" | Facebook requires publishing authorization for a high-reach Page | Complete Facebook Publishing Authorization, enable 2FA, and confirm that location services are enabled. Then refresh the channel. |
-| "Your content couldn't be shared because it goes against our Community Standards" | The link was reported or identified as violating Facebook rules | Try publishing the same content directly on Facebook. If it still fails, follow Facebook's instructions to appeal. |
-| "Please log in to facebook.com and follow the prompts" | The account requires a temporary security check | Sign in to Facebook and complete the prompts, then refresh the channel and try again. |
-| "We're bumping into a few Facebook Page limits" | The Page has low overall engagement or triggered a rate limit within 24 hours | Temporarily reduce publishing frequency, such as one post every 24 hours, and resume scheduling after engagement improves. |
-| "An unknown error has occurred" | A temporary unknown error occurred | Try again later. Contact support if the error continues. |
-| "Aitoearn doesn't have permission to post on your behalf" | Required permissions were not fully selected during connection | Reauthorize the account, select every required Page and permission, refresh the connection, and try again. |
+| "This channel has reached the daily posting limit." | The daily posting limit has been reached. | Reduce scheduled posts for the day and try again later. See the daily posting limit. |
+| "Aitoearn lost authorization to post." | Facebook password changed recently, token expired, or permissions are insufficient. | Reauthorize. In Facebook Edit settings, select all required Pages and permissions, then refresh the connection in Aitoearn and retry. |
+| "Please ensure you're an Admin for the FB Group and Aitoearn has been added as an app." | The authorized account is not a group admin or permissions are insufficient. | Confirm the authorized profile is still a group admin, add the Aitoearn app in Facebook group settings, then refresh the channel in the dashboard. |
+| "Please ensure you are a Page admin and have two-factor authentication enabled." | The authorized account lacks permissions or 2FA is not enabled. | Confirm you have admin access to the Page and enable 2FA, then refresh the connection and retry. |
+| "Trouble uploading media/image." | Unknown upload issue or image format/size does not meet requirements. | Retry publishing. Confirm the image is JPG/PNG/HEIC and &lt;=4MB. |
+| "We're investigating a potential FB bug; the post may have been published." | Facebook publishing error, but the post may already be live. | Check Facebook.com first. If published, remove the failed item from the queue. Use native publishing temporarily if needed. |
+| "Publishing Authorization is required." | Facebook requires publishing authorization for high-impact Pages. | Complete Facebook's publishing authorization, enable 2FA, confirm location services are enabled, and refresh the channel. |
+| "Your content couldn't be shared because it goes against Community Standards." | The link was reported or considered non-compliant. | Try the same post directly on Facebook. If it still fails, appeal to Facebook. |
+| "Log in to facebook.com and follow the prompts." | The account triggered a temporary security check. | Log in to Facebook and complete the prompt, then refresh the channel and retry. |
+| "We're bumping into a few Facebook Page limits." | The Page triggered rate limits or had low engagement in the past 24 hours. | Temporarily reduce posting frequency, such as one post every 24 hours, and increase engagement before resuming scheduling. |
+| "An unknown error has occurred." | Temporary unknown error. | Try again later. Contact support if it continues. |
+| "Aitoearn doesn't have permission to post on your behalf." | Required permissions were not selected during connection. | Reauthorize and make sure all required Pages and permissions are selected, then refresh and retry. |
 
-> Tip: When reauthorizing, sign in with a Facebook profile that has administrator access and select every required Page, Group, and permission during authorization.
+> Tip: When reauthorizing, make sure you are signed in with a Facebook profile that has admin access, and select all required Pages, groups, and permissions during authorization.

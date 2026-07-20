@@ -1,6 +1,6 @@
 ---
 title: "Using Threads with Aitoearn"
-description: "Meta Threads can be connected to Aitoearn, allowing you to create and schedule Threads posts from the desktop."
+description: "Meta Threads can now be connected to Aitoearn. After connecting, you can write and schedule Threads posts on desktop."
 ---
 ## Available Features
 
@@ -10,7 +10,20 @@ description: "Meta Threads can be connected to Aitoearn, allowing you to create 
 
 ## Connection Requirements
 
-A Threads account must be linked to Instagram before it can connect to Aitoearn.
+Your Threads account must be linked to Instagram before it can connect to Aitoearn.
+
+## Features and Good-to-Knows
+
+| Item | Details |
+| --- | --- |
+| Schedule posts | Supports scheduling Threads posts. |
+| Tags / mentions | To tag or mention another Threads or Instagram account, enter the full username. It becomes clickable after publishing. |
+| Topics | Threads supports only 1 topic per post. Use `#` to create a topic. After publishing, the first word becomes the topic. Remove spaces for multi-word topics. Topics can include letters, numbers, and underscores, but cannot contain only numbers. |
+| Character limit | Each message in the same thread can contain up to 500 characters. |
+| Link limit | Each Threads post supports up to 5 links. Repeated links also count toward the total. |
+| Emojis | Emojis are supported. |
+| Link previews | The first link in the body generates a preview card when available. |
+| Daily posting limit | Up to 250 posts every 24 hours. Each post in a multi-post thread counts toward the limit. |
 
 ## Publishing Requirements
 
@@ -18,24 +31,30 @@ A Threads account must be linked to Instagram before it can connect to Aitoearn.
 | --- | --- | --- | --- |
 | Supported | ✓ | ✓ | ✓ |
 
-- Character limit: up to 500 characters per post and 500 characters in total.
-- Topic: only 1 topic, similar to a single hashtag, is supported per post.
-- Links: the first link in the post generates a preview card when available.
-- Emoji: supported.
-- Multi-post Threads: up to 25 posts are supported on the web. Mobile is not currently supported.
+- Multi-post Threads: web supports multi-post threads with up to 25 posts. Mobile is not currently supported.
 
 | Category | Video | Image |
 | --- | --- | --- |
-| **Allowed per post** | Up to 1 video | Up to 10 images |
-| **Video length** | Up to 300 seconds (5 minutes) per video | Not applicable |
+| **Allowed per post** | Up to 1 video | Up to 20 images; carousel: 2-10 images |
+| **Video length** | Up to 5 minutes and must be longer than 0 seconds | Not applicable |
 | **File size** | Up to 1GB per video | Up to 8MB per image |
 | **Supported formats** | MP4, MOV | JPG, JPEG, PNG |
+| **Custom thumbnail** | Not supported | Not applicable |
+| **Autoplay** | Not supported | Not applicable |
+| **Canva** | Not supported | Supported |
+| **Alt text** | Not applicable | Not supported |
+| **Aspect ratio** | 9:16 | 1:10 to 10:1. Meta rejects images outside this range. |
+| **Carousel aspect ratio** | Not applicable | 1:1 to 4:5 |
+| **Frame rate** | 23-60 FPS | Not applicable |
+| **Video bitrate** | Up to 25Mbps | Not applicable |
+| **Audio bitrate** | 128kbps | Not applicable |
 
-> Threads does not currently support GIFs.
+> Threads does not currently support GIFs. Actual publishing depends on Aitoearn page validation.
 
-## Other Questions
+## What if an Image Aspect Ratio Exceeds the Threads Range?
 
-### Valid Hashtag Rules
+Meta Threads only accepts images with an aspect ratio between 1:10 and 10:1. That means the width cannot be more than 10 times the height, and the height cannot be more than 10 times the width.
 
-- A hashtag must begin with `#` and cannot contain only numbers, such as `#1`.
-- A hashtag ends at a space, line break, `.`, `!`, `?`, `,`, `;`, `:`, `@`, or `&`.
+If an image exceeds this range, Aitoearn flags it before publishing and prompts you to crop or replace it, helping prevent the post from getting stuck in "sending".
+
+To calculate an image aspect ratio, divide width in pixels by height. For example, a 741 x 62 banner has an aspect ratio of 741/62 ≈ 11.95, which exceeds the accepted range. You can crop, compress, or re-export the image from the source tool.

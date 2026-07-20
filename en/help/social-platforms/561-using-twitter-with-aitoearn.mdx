@@ -8,18 +8,39 @@ description: ""
 | --- | --- | --- |
 | ✓ | ✓ | ✓ |
 
+## Features and Good-to-Knows
+
+| Item | Details |
+| --- | --- |
+| Schedule posts | Due to X/Twitter rules, each scheduled post can be sent to only 1 X/Twitter account. Duplicate content is not allowed. |
+| Threads | Supports creating X/Twitter threads. Each thread can include up to 25 child posts. Creating threads on web is recommended. |
+| Reposting | Supports scheduling reposts from the X/Twitter feed. |
+| Tags / mentions | To mention another X/Twitter account, enter the exact @handle. Due to API limitations, third-party tools cannot autocomplete accounts. |
+| Image alt text | Supports adding alt text to images. |
+| Daily posting limit | Unverified accounts can publish up to 50 posts every 24 hours. Verified accounts can publish up to 100 posts every 24 hours. |
+| Character limit | Free accounts can post up to 280 characters. Basic, Premium, and Premium+ accounts can post up to 25,000 characters. |
+| Link previews | The timeline shows only the first 280 characters. To show a link preview, place the URL within the first 280 characters. |
+| Hashtags | Enter hashtags in the editor. They become clickable after publishing. |
+| Not supported | Creating X/Twitter polls is not currently supported. |
+
 ## X/Twitter Publishing Requirements
 
 | Content | Text only | Image | Video |
 | --- | --- | --- | --- |
 | Supported | ✓ | ✓ | ✓ |
 
+## X/Twitter Image, Video, and GIF Specifications
+
 | Category | Video | Image | GIF |
 | --- | --- | --- | --- |
-| **Allowed per post** | Up to 1 video | Up to 4 images | Up to 4 GIFs, counted toward the image limit |
-| **Video length** | Up to 140 seconds (2 minutes 20 seconds) per video | Not applicable | Not applicable |
-| **File size** | Up to 512MB per video | Up to 5MB per image | Up to 5MB per GIF |
-| **Supported formats** | MP4, MOV | JPG, JPEG, PNG, WebP | GIF |
+| **Allowed per post** | Up to 1 video | Up to 4 images | Up to 1 GIF |
+| **Video length** | 0.5 seconds to 140 seconds. Videos over 140 seconds must be published natively on X/Twitter and require a Premium subscription. | Not applicable | Not applicable |
+| **File size** | Up to 512MB | Up to 5MB | Up to 15MB |
+| **Dimensions** | Not available | Up to 8192 x 8192 px | Up to 1280 x 1080 px; total pixels must not exceed 300 million |
+| **Supported formats** | MP4, MOV, AVI, M4V. Audio-only MP4 is not supported. MP4 files must include a video track. | JPG, PNG, HEIC, WebP | GIF |
+| **Custom thumbnail** | Not supported | Not applicable | Not applicable |
+| **Autoplay** | Not supported, except for promoted ads | Not applicable | Not applicable |
+| **Best frame rate / frames** | 60 FPS or lower | Not applicable | Up to 350 frames |
 
-- Separate titles are not supported.
-- Body and total text length are limited to 280 characters per post.
+- For GIFs, keep the file within 1280 x 1080, up to 350 frames, and no more than 300 million total pixels to avoid quality loss or publishing failure.
+- Actual publishing depends on Aitoearn page validation.
