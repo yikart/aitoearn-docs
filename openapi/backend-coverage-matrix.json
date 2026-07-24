@@ -2653,7 +2653,7 @@
   {
     "index": 54,
     "method": "POST",
-    "path": "/v3/contents/generations/tasks",
+    "path": "/api/ai/v3/contents/generations/tasks",
     "operationId": "VolcengineVideoController_videoGeneration",
     "tag": "AI 服务/视频生成",
     "summary": "火山格式创建视频生成任务",
@@ -2720,7 +2720,7 @@
   {
     "index": 55,
     "method": "GET",
-    "path": "/v3/contents/generations/tasks/{taskId}",
+    "path": "/api/ai/v3/contents/generations/tasks/{taskId}",
     "operationId": "VolcengineVideoController_videoTaskStatus",
     "tag": "AI 服务/视频生成",
     "summary": "火山格式查询视频任务",

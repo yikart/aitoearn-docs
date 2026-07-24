@@ -402,10 +402,11 @@ function volcengineVideoGenerationRequestSchema() {
       },
       content: {
         type: 'array',
-        description: '输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。',
+        description: '输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**',
         items: {
           oneOf: [
             {
+              title: '纯文本',
               type: 'object',
               properties: {
                 type: {
@@ -422,6 +423,7 @@ function volcengineVideoGenerationRequestSchema() {
               additionalProperties: false,
             },
             {
+              title: '图片',
               type: 'object',
               properties: {
                 type: {
@@ -440,6 +442,7 @@ function volcengineVideoGenerationRequestSchema() {
               additionalProperties: false,
             },
             {
+              title: '视频',
               type: 'object',
               properties: {
                 type: {
@@ -458,6 +461,7 @@ function volcengineVideoGenerationRequestSchema() {
               additionalProperties: false,
             },
             {
+              title: '音频',
               type: 'object',
               properties: {
                 type: {
@@ -600,8 +604,8 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
     },
   })
 
-  spec.paths['/v3/contents/generations/tasks'] = spec.paths['/v3/contents/generations/tasks'] || {}
-  spec.paths['/v3/contents/generations/tasks'].post = spec.paths['/v3/contents/generations/tasks'].post || {
+  spec.paths['/api/ai/v3/contents/generations/tasks'] = spec.paths['/api/ai/v3/contents/generations/tasks'] || {}
+  spec.paths['/api/ai/v3/contents/generations/tasks'].post = spec.paths['/api/ai/v3/contents/generations/tasks'].post || {
     tags: ['AI 服务/视频生成'],
     summary: '火山格式创建视频生成任务',
     description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。',
@@ -654,8 +658,8 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
     },
   }
 
-  spec.paths['/v3/contents/generations/tasks/{taskId}'] = spec.paths['/v3/contents/generations/tasks/{taskId}'] || {}
-  spec.paths['/v3/contents/generations/tasks/{taskId}'].get = spec.paths['/v3/contents/generations/tasks/{taskId}'].get || {
+  spec.paths['/api/ai/v3/contents/generations/tasks/{taskId}'] = spec.paths['/api/ai/v3/contents/generations/tasks/{taskId}'] || {}
+  spec.paths['/api/ai/v3/contents/generations/tasks/{taskId}'].get = spec.paths['/api/ai/v3/contents/generations/tasks/{taskId}'].get || {
     tags: ['AI 服务/视频生成'],
     summary: '火山格式查询视频任务',
     description: '接口说明：查询火山格式视频生成任务状态，返回结构保持火山任务查询格式。参考火山官方文档：[查询视频生成任务](https://www.volcengine.com/docs/82379/1521309?lang=zh)。',
@@ -725,8 +729,8 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
 }
 
 function isVolcengineVideoCompatibilityEndpoint(endpoint) {
-  return endpoint.path === '/v3/contents/generations/tasks'
-    || endpoint.path === '/v3/contents/generations/tasks/{taskId}'
+  return endpoint.path === '/api/ai/v3/contents/generations/tasks'
+    || endpoint.path === '/api/ai/v3/contents/generations/tasks/{taskId}'
 }
 
 function rawJsonResponseContent(endpoint, operation) {

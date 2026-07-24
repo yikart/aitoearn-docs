@@ -11636,7 +11636,7 @@
         }
       }
     },
-    "/v3/contents/generations/tasks": {
+    "/api/ai/v3/contents/generations/tasks": {
       "post": {
         "tags": [
           "AI 服务/视频生成"
@@ -11657,10 +11657,11 @@
                   },
                   "content": {
                     "type": "array",
-                    "description": "输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。",
+                    "description": "输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**",
                     "items": {
                       "oneOf": [
                         {
+                          "title": "纯文本",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11682,6 +11683,7 @@
                           "additionalProperties": false
                         },
                         {
+                          "title": "图片",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11721,6 +11723,7 @@
                           "additionalProperties": false
                         },
                         {
+                          "title": "视频",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11759,6 +11762,7 @@
                           "additionalProperties": false
                         },
                         {
+                          "title": "音频",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11921,7 +11925,7 @@
           }
         },
         "x-mint": {
-          "href": "/api-reference/post-v3-contents-generations-tasks",
+          "href": "/api-reference/post-api-ai-v3-contents-generations-tasks",
           "metadata": {
             "title": "火山格式创建视频生成任务",
             "sidebarTitle": "火山格式创建视频生成任务"
@@ -11964,7 +11968,7 @@
         }
       }
     },
-    "/v3/contents/generations/tasks/{taskId}": {
+    "/api/ai/v3/contents/generations/tasks/{taskId}": {
       "get": {
         "tags": [
           "AI 服务/视频生成"
@@ -12034,7 +12038,7 @@
           }
         },
         "x-mint": {
-          "href": "/api-reference/get-v3-contents-generations-tasks-task-id",
+          "href": "/api-reference/get-api-ai-v3-contents-generations-tasks-task-id",
           "metadata": {
             "title": "火山格式查询视频任务",
             "sidebarTitle": "火山格式查询视频任务"

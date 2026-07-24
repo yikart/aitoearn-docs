@@ -11649,7 +11649,7 @@
         }
       }
     },
-    "/v3/contents/generations/tasks": {
+    "/api/ai/v3/contents/generations/tasks": {
       "post": {
         "tags": [
           "AI Services/Video Generation"
@@ -11670,10 +11670,11 @@
                   },
                   "content": {
                     "type": "array",
-                    "description": "Content passed to the model to generate video, keeping the Volcengine Ark video generation format.",
+                    "description": "Content passed to the model to generate video, keeping the Volcengine Ark video generation format.\n\nSeedance 2.0 models support the following input combinations:\n\n- **Text**\n- **Text + image**\n- **Text + video**\n- **Text + image + audio**\n- **Text + image + video**\n- **Text + video + audio**\n- **Text + image + video + audio**",
                     "items": {
                       "oneOf": [
                         {
+                          "title": "Text",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11695,6 +11696,7 @@
                           "additionalProperties": false
                         },
                         {
+                          "title": "Image",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11734,6 +11736,7 @@
                           "additionalProperties": false
                         },
                         {
+                          "title": "Video",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11772,6 +11775,7 @@
                           "additionalProperties": false
                         },
                         {
+                          "title": "Audio",
                           "type": "object",
                           "properties": {
                             "type": {
@@ -11934,7 +11938,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/post-v3-contents-generations-tasks",
+          "href": "/en/api-reference/post-api-ai-v3-contents-generations-tasks",
           "metadata": {
             "title": "Create Volcengine-format video generation task",
             "sidebarTitle": "Create Volcengine-format video generation task"
@@ -11977,7 +11981,7 @@
         }
       }
     },
-    "/v3/contents/generations/tasks/{taskId}": {
+    "/api/ai/v3/contents/generations/tasks/{taskId}": {
       "get": {
         "tags": [
           "AI Services/Video Generation"
@@ -12047,7 +12051,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-v3-contents-generations-tasks-task-id",
+          "href": "/en/api-reference/get-api-ai-v3-contents-generations-tasks-task-id",
           "metadata": {
             "title": "Query Volcengine-format video task",
             "sidebarTitle": "Query Volcengine-format video task"
