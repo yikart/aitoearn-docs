@@ -2418,7 +2418,34 @@
               "schema": {
                 "$ref": "#/components/schemas/RelayChatCompletionsDto"
               },
-              "examples": {}
+              "examples": {
+                "1": {
+                  "value": {
+                    "model": "gpt-5.6-terra",
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "Introduce AiToEarn in one sentence."
+                      }
+                    ],
+                    "stream": false
+                  },
+                  "summary": "Basic chat"
+                },
+                "2": {
+                  "value": {
+                    "model": "gpt-5.6-terra",
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "Introduce AiToEarn in one sentence."
+                      }
+                    ],
+                    "stream": true
+                  },
+                  "summary": "Streaming chat"
+                }
+              }
             }
           },
           "required": true
@@ -13432,10 +13459,13 @@
               "properties": {
                 "role": {
                   "type": "string",
-                  "description": "Message role, used to distinguish different message sources"
+                  "description": "Message role, used to distinguish different message sources",
+                  "example": "user"
                 },
                 "content": {
-                  "description": "Content text"
+                  "type": "string",
+                  "description": "Content text",
+                  "example": "Introduce AiToEarn in one sentence."
                 }
               },
               "required": [
@@ -13444,15 +13474,24 @@
               ],
               "additionalProperties": true
             },
-            "description": "Message list"
+            "description": "Message list",
+            "example": [
+              {
+                "role": "user",
+                "content": "Introduce AiToEarn in one sentence."
+              }
+            ]
           },
           "model": {
             "type": "string",
-            "description": "Model ID. First call the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface (`GET /api/ai/models/chat`) and pass in the `data[n].name` returned by it."
+            "description": "Model ID. First call the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface (`GET /api/ai/models/chat`) and pass in the `data[n].name` returned by it.",
+            "example": "gpt-5.6-terra"
           },
           "stream": {
             "description": "Whether to stream the return",
-            "type": "boolean"
+            "type": "boolean",
+            "default": false,
+            "example": false
           }
         },
         "required": [

@@ -2418,7 +2418,21 @@
               "schema": {
                 "$ref": "#/components/schemas/RelayChatCompletionsDto"
               },
-              "examples": {}
+              "examples": {
+                "1": {
+                  "value": {
+                    "model": "gpt-5.6-terra",
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "请用一句话介绍 AiToEarn。"
+                      }
+                    ],
+                    "stream": false
+                  },
+                  "summary": "基础对话"
+                }
+              }
             }
           },
           "required": true
@@ -13432,10 +13446,13 @@
               "properties": {
                 "role": {
                   "type": "string",
-                  "description": "消息角色，用于区分不同消息来源"
+                  "description": "消息角色，用于区分不同消息来源",
+                  "example": "user"
                 },
                 "content": {
-                  "description": "内容正文"
+                  "type": "string",
+                  "description": "内容正文",
+                  "example": "请用一句话介绍 AiToEarn。"
                 }
               },
               "required": [
@@ -13444,15 +13461,24 @@
               ],
               "additionalProperties": true
             },
-            "description": "消息列表"
+            "description": "消息列表",
+            "example": [
+              {
+                "role": "user",
+                "content": "请用一句话介绍 AiToEarn。"
+              }
+            ]
           },
           "model": {
             "type": "string",
-            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+            "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
+            "example": "gpt-5.6-terra"
           },
           "stream": {
             "description": "是否流式返回",
-            "type": "boolean"
+            "type": "boolean",
+            "default": false,
+            "example": false
           }
         },
         "required": [
