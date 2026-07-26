@@ -1,0 +1,503 @@
+{
+  "generatedAt": "2026-07-24T12:00:07.995Z",
+  "baseUrl": "http://localhost:3000",
+  "total": 20,
+  "summary": {
+    "unresolvedPath": 7,
+    "placeholderBody": 14,
+    "emptyBody": 1,
+    "authorizationWithoutBearer": 4,
+    "missingExplicitValues": 4
+  },
+  "endpoints": [
+    {
+      "index": 1,
+      "method": "POST",
+      "path": "/api/ai/video/generations",
+      "heading": "生成视频",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "prompt"
+      ],
+      "required": [
+        "model",
+        "prompt"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [
+        "model",
+        "prompt",
+        "resolution",
+        "ratio",
+        "duration"
+      ],
+      "missingExplicitKeys": [
+        "resolution",
+        "ratio",
+        "duration"
+      ],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/video/generations \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"model\": \"seedance-2-beta-1080p\",\n  \"prompt\": \"生成一条旅行 vlog 风格视频，图片作为主体参考，视频作为运动参考，音频作为节奏参考，画面自然真实\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": false,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 2,
+      "method": "POST",
+      "path": "/api/ai/image/generate",
+      "heading": "生成图像",
+      "hasCurl": true,
+      "renderedKeys": [
+        "prompt",
+        "model"
+      ],
+      "required": [
+        "prompt",
+        "model"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/image/generate \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 3,
+      "method": "POST",
+      "path": "/api/ai/image/edit",
+      "heading": "编辑图像",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "image",
+        "prompt"
+      ],
+      "required": [
+        "model",
+        "image",
+        "prompt"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/image/edit \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"image\": \"<string>\",\n  \"prompt\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 4,
+      "method": "POST",
+      "path": "/api/ai/image/generate/async",
+      "heading": "异步生成图像",
+      "hasCurl": true,
+      "renderedKeys": [
+        "prompt",
+        "model"
+      ],
+      "required": [
+        "prompt",
+        "model"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/image/generate/async \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 5,
+      "method": "POST",
+      "path": "/api/ai/image/edit/async",
+      "heading": "异步编辑图像",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "image",
+        "prompt"
+      ],
+      "required": [
+        "model",
+        "image",
+        "prompt"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/image/edit/async \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"image\": \"<string>\",\n  \"prompt\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 6,
+      "method": "POST",
+      "path": "/api/ai/chat/completions",
+      "heading": "OpenAI 对话",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "messages"
+      ],
+      "required": [
+        "messages",
+        "model"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [
+        "model",
+        "messages",
+        "stream"
+      ],
+      "missingExplicitKeys": [
+        "stream"
+      ],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/chat/completions \\\n  --header 'Authorization: <api-key>' \\\n  --header 'Content-Type: application/json' \\\n  --data '\n{\n  \"model\": \"gpt-5.6-terra\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"请用一句话介绍 AiToEarn。\"\n    }\n  ]\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": false,
+      "emptyBody": false,
+      "authorizationWithoutBearer": true
+    },
+    {
+      "index": 7,
+      "method": "POST",
+      "path": "/api/ai/v1/messages",
+      "heading": "Anthropic 对话",
+      "hasCurl": true,
+      "renderedKeys": [
+        "messages",
+        "model"
+      ],
+      "required": [
+        "messages",
+        "model"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/v1/messages \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"messages\": [\n    {\n      \"content\": \"<unknown>\"\n    }\n  ],\n  \"model\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 8,
+      "method": "POST",
+      "path": "/api/ai/v1beta/models/{model}:generateContent",
+      "heading": "Gemini 对话",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "contents"
+      ],
+      "required": [
+        "model",
+        "contents"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/v1beta/models/{model}:generateContent \\\n  --header 'Content-Type: application/json' \\\n  --header 'x-goog-api-key: <api-key>' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}\n'",
+      "unresolvedPath": true,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 9,
+      "method": "POST",
+      "path": "/api/ai/v1beta/models/{model}:streamGenerateContent",
+      "heading": "Gemini 流式对话",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "contents"
+      ],
+      "required": [
+        "model",
+        "contents"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/v1beta/models/{model}:streamGenerateContent \\\n  --header 'Content-Type: application/json' \\\n  --header 'x-goog-api-key: <api-key>' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}\n'",
+      "unresolvedPath": true,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 10,
+      "method": "POST",
+      "path": "/api/ai/images/generations",
+      "heading": "OpenAI 图像生成",
+      "hasCurl": true,
+      "renderedKeys": [
+        "prompt",
+        "model"
+      ],
+      "required": [
+        "prompt",
+        "model"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/images/generations \\\n  --header 'Authorization: <api-key>' \\\n  --header 'Content-Type: application/json' \\\n  --data '\n{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": true
+    },
+    {
+      "index": 11,
+      "method": "POST",
+      "path": "/api/ai/images/edits",
+      "heading": "OpenAI 图像编辑",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "image",
+        "prompt"
+      ],
+      "required": [
+        "model",
+        "image",
+        "prompt"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/images/edits \\\n  --header 'Authorization: <api-key>' \\\n  --header 'Content-Type: application/json' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"image\": \"<string>\",\n  \"prompt\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": true
+    },
+    {
+      "index": 12,
+      "method": "POST",
+      "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+      "heading": "创建发布选项值",
+      "hasCurl": true,
+      "renderedKeys": [],
+      "required": [],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/{accountId}/publish-options/{field}/values \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '{}'",
+      "unresolvedPath": true,
+      "placeholderBody": false,
+      "emptyBody": true,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 13,
+      "method": "POST",
+      "path": "/api/v2/channels/publish/flows",
+      "heading": "创建发布流程",
+      "hasCurl": true,
+      "renderedKeys": [
+        "content",
+        "publishAt",
+        "items"
+      ],
+      "required": [
+        "content",
+        "publishAt",
+        "items"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [
+        "content",
+        "publishAt",
+        "context",
+        "items"
+      ],
+      "missingExplicitKeys": [
+        "context"
+      ],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/publish/flows \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"content\": {\n    \"body\": \"test\",\n    \"media\": [\n      {\n        \"url\": \"https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4\",\n        \"metadata\": {\n          \"type\": \"video\"\n        }\n      }\n    ],\n    \"cover\": {\n      \"url\": \"https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/dS2sNtXUgrLfosukfpXwd.jpg\",\n      \"metadata\": {\n        \"type\": \"image\"\n      }\n    },\n    \"title\": \"test title\"\n  },\n  \"publishAt\": \"2026-06-29T09:43:42Z\",\n  \"items\": {\n    \"accountId\": \"KWAI_f1b6d99b9252a17314bf5724e666123f\",\n    \"platform\": \"KWAI\",\n    \"overrides\": {\n      \"body\": \"test\",\n      \"media\": [\n        {\n          \"url\": \"https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4\",\n          \"metadata\": {\n            \"type\": \"video\"\n          }\n        }\n      ],\n      \"cover\": {\n        \"url\": \"https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/dS2sNtXUgrLfosukfpXwd.jpg\",\n        \"metadata\": {\n          \"type\": \"image\"\n        }\n      },\n      \"title\": \"test title\"\n    }\n  }\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": false,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 14,
+      "method": "PATCH",
+      "path": "/api/v2/channels/publish/tasks/{taskId}/publish-at",
+      "heading": "修改发布时间",
+      "hasCurl": true,
+      "renderedKeys": [
+        "publishAt"
+      ],
+      "required": [
+        "publishAt"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request PATCH \\\n  --url https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/publish-at \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"publishAt\": \"2023-11-07T05:31:56Z\"\n}\n'",
+      "unresolvedPath": true,
+      "placeholderBody": false,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 15,
+      "method": "POST",
+      "path": "/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify",
+      "heading": "验证作品归属",
+      "hasCurl": true,
+      "renderedKeys": [
+        "candidateAccountId"
+      ],
+      "required": [
+        "candidateAccountId"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"candidateAccountId\": \"<string>\"\n}\n'",
+      "unresolvedPath": true,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 16,
+      "method": "POST",
+      "path": "/api/v2/channels/account-groups",
+      "heading": "创建分组",
+      "hasCurl": true,
+      "renderedKeys": [
+        "name"
+      ],
+      "required": [
+        "name"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/account-groups \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"name\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 17,
+      "method": "PATCH",
+      "path": "/api/v2/channels/account-groups/{groupId}",
+      "heading": "更新分组",
+      "hasCurl": true,
+      "renderedKeys": [
+        "name",
+        "rank",
+        "ip",
+        "location",
+        "countryCode",
+        "proxyIp",
+        "browserConfig"
+      ],
+      "required": [],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request PATCH \\\n  --url https://aitoearn.cn/api/v2/channels/account-groups/{groupId} \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"name\": \"<string>\",\n  \"rank\": 123,\n  \"ip\": \"<string>\",\n  \"location\": \"<string>\",\n  \"countryCode\": \"<string>\",\n  \"proxyIp\": \"<string>\",\n  \"browserConfig\": {}\n}\n'",
+      "unresolvedPath": true,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 18,
+      "method": "PATCH",
+      "path": "/api/v2/channels/account-groups/{groupId}/accounts/rank",
+      "heading": "调整账号排序",
+      "hasCurl": true,
+      "renderedKeys": [
+        "list"
+      ],
+      "required": [
+        "list"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request PATCH \\\n  --url https://aitoearn.cn/api/v2/channels/account-groups/{groupId}/accounts/rank \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"rank\": 123\n    }\n  ]\n}\n'",
+      "unresolvedPath": true,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 19,
+      "method": "POST",
+      "path": "/api/assets/uploadSign",
+      "heading": "生成上传签名",
+      "hasCurl": true,
+      "renderedKeys": [
+        "filename"
+      ],
+      "required": [
+        "filename"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [],
+      "missingExplicitKeys": [],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/assets/uploadSign \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"filename\": \"<string>\"\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": true,
+      "emptyBody": false,
+      "authorizationWithoutBearer": false
+    },
+    {
+      "index": 20,
+      "method": "POST",
+      "path": "/api/ai/v3/contents/generations/tasks",
+      "heading": "火山格式创建视频生成任务",
+      "hasCurl": true,
+      "renderedKeys": [
+        "model",
+        "content"
+      ],
+      "required": [
+        "model",
+        "content"
+      ],
+      "missingRequired": [],
+      "explicitKeys": [
+        "model",
+        "content",
+        "generate_audio",
+        "ratio",
+        "duration",
+        "watermark"
+      ],
+      "missingExplicitKeys": [
+        "generate_audio",
+        "ratio",
+        "duration",
+        "watermark"
+      ],
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/v3/contents/generations/tasks \\\n  --header 'Authorization: <api-key>' \\\n  --header 'Content-Type: application/json' \\\n  --data '\n{\n  \"model\": \"doubao-seedance-2-0-260128\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"Create a cinematic product video with close-up shots, soft studio lighting, and smooth camera movement.\"\n    }\n  ]\n}\n'",
+      "unresolvedPath": false,
+      "placeholderBody": false,
+      "emptyBody": false,
+      "authorizationWithoutBearer": true
+    }
+  ]
+}

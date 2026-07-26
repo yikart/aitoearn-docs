@@ -1,0 +1,411 @@
+{
+  "generatedAt": "2026-07-24T12:04:52.187Z",
+  "baseUrl": "http://localhost:3000",
+  "total": 28,
+  "summary": {
+    "unresolved": 28,
+    "needsFixture": 23,
+    "fixedExamplePossible": 5,
+    "authorizationWithoutBearer": 1
+  },
+  "endpoints": [
+    {
+      "index": 1,
+      "method": "GET",
+      "path": "/api/ai/video/generations/{taskId}",
+      "heading": "视频任务状态",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/ai/video/generations/{taskId}",
+      "unresolvedParameters": [
+        "taskId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/ai/video/generations/{taskId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 2,
+      "method": "GET",
+      "path": "/api/ai/image/task/{logId}",
+      "heading": "图像任务状态",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/ai/image/task/{logId}",
+      "unresolvedParameters": [
+        "logId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/ai/image/task/{logId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 3,
+      "method": "POST",
+      "path": "/api/ai/v1beta/models/{model}:generateContent",
+      "heading": "Gemini 对话",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/ai/v1beta/models/{model}:generateContent",
+      "unresolvedParameters": [
+        "model"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/v1beta/models/{model}:generateContent \\\n  --header 'Content-Type: application/json' \\\n  --header 'x-goog-api-key: <api-key>' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}\n'",
+      "fixtureClass": "可提供固定示例"
+    },
+    {
+      "index": 4,
+      "method": "POST",
+      "path": "/api/ai/v1beta/models/{model}:streamGenerateContent",
+      "heading": "Gemini 流式对话",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/ai/v1beta/models/{model}:streamGenerateContent",
+      "unresolvedParameters": [
+        "model"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/ai/v1beta/models/{model}:streamGenerateContent \\\n  --header 'Content-Type: application/json' \\\n  --header 'x-goog-api-key: <api-key>' \\\n  --data '\n{\n  \"model\": \"<string>\",\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}\n'",
+      "fixtureClass": "可提供固定示例"
+    },
+    {
+      "index": 5,
+      "method": "GET",
+      "path": "/api/v2/channels/accounts/{accountId}",
+      "heading": "账号详情",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/{accountId}",
+      "unresolvedParameters": [
+        "accountId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/{accountId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 6,
+      "method": "DELETE",
+      "path": "/api/v2/channels/accounts/{accountId}",
+      "heading": "删除账号",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/{accountId}",
+      "unresolvedParameters": [
+        "accountId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request DELETE \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/{accountId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 7,
+      "method": "GET",
+      "path": "/api/v2/channels/accounts/{accountId}/auth-status",
+      "heading": "账号授权状态",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/{accountId}/auth-status",
+      "unresolvedParameters": [
+        "accountId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/{accountId}/auth-status \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 8,
+      "method": "GET",
+      "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+      "heading": "发布选项可选值",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+      "unresolvedParameters": [
+        "accountId",
+        "field"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/{accountId}/publish-options/{field}/values \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 9,
+      "method": "POST",
+      "path": "/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+      "heading": "创建发布选项值",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+      "unresolvedParameters": [
+        "accountId",
+        "field"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/{accountId}/publish-options/{field}/values \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '{}'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 10,
+      "method": "GET",
+      "path": "/api/v2/channels/publish/flows/{flowId}",
+      "heading": "发布流程详情",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/flows/{flowId}",
+      "unresolvedParameters": [
+        "flowId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/publish/flows/{flowId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 11,
+      "method": "POST",
+      "path": "/api/v2/channels/publish/tasks/{taskId}/publish-now",
+      "heading": "立即发布",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/publish-now",
+      "unresolvedParameters": [
+        "taskId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/publish-now \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 12,
+      "method": "POST",
+      "path": "/api/v2/channels/publish/tasks/{taskId}/retry",
+      "heading": "重试发布任务",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/retry",
+      "unresolvedParameters": [
+        "taskId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/retry \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 13,
+      "method": "DELETE",
+      "path": "/api/v2/channels/publish/tasks/{taskId}",
+      "heading": "取消发布任务",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}",
+      "unresolvedParameters": [
+        "taskId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request DELETE \\\n  --url https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 14,
+      "method": "PATCH",
+      "path": "/api/v2/channels/publish/tasks/{taskId}/publish-at",
+      "heading": "修改发布时间",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/publish-at",
+      "unresolvedParameters": [
+        "taskId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request PATCH \\\n  --url https://aitoearn.cn/api/v2/channels/publish/tasks/{taskId}/publish-at \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"publishAt\": \"2023-11-07T05:31:56Z\"\n}\n'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 15,
+      "method": "GET",
+      "path": "/api/v2/channels/publish/records/{recordId}",
+      "heading": "发布记录详情",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/records/{recordId}",
+      "unresolvedParameters": [
+        "recordId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/publish/records/{recordId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 16,
+      "method": "DELETE",
+      "path": "/api/v2/channels/publish/records/{recordId}",
+      "heading": "删除发布记录",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/records/{recordId}",
+      "unresolvedParameters": [
+        "recordId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request DELETE \\\n  --url https://aitoearn.cn/api/v2/channels/publish/records/{recordId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 17,
+      "method": "GET",
+      "path": "/api/v2/channels/publish/records/{recordId}/user-action",
+      "heading": "App 拉起链接",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/publish/records/{recordId}/user-action",
+      "unresolvedParameters": [
+        "recordId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/publish/records/{recordId}/user-action \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 18,
+      "method": "GET",
+      "path": "/api/v2/channels/platforms/{platform}/publish-options",
+      "heading": "平台发布选项",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/platforms/{platform}/publish-options",
+      "unresolvedParameters": [
+        "platform"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/platforms/{platform}/publish-options \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "可提供固定示例"
+    },
+    {
+      "index": 19,
+      "method": "GET",
+      "path": "/api/v2/channels/works/{platform}",
+      "heading": "作品列表",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/works/{platform}",
+      "unresolvedParameters": [
+        "platform"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/works/{platform} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "可提供固定示例"
+    },
+    {
+      "index": 20,
+      "method": "GET",
+      "path": "/api/v2/channels/works/{platform}/{platformWorkId}",
+      "heading": "作品详情",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId}",
+      "unresolvedParameters": [
+        "platform",
+        "platformWorkId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 21,
+      "method": "GET",
+      "path": "/api/v2/channels/works/{platform}/{platformWorkId}/analytics",
+      "heading": "作品数据统计",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId}/analytics",
+      "unresolvedParameters": [
+        "platform",
+        "platformWorkId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId}/analytics \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 22,
+      "method": "POST",
+      "path": "/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify",
+      "heading": "验证作品归属",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify",
+      "unresolvedParameters": [
+        "platform",
+        "platformWorkId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"candidateAccountId\": \"<string>\"\n}\n'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 23,
+      "method": "PATCH",
+      "path": "/api/v2/channels/account-groups/{groupId}",
+      "heading": "更新分组",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/account-groups/{groupId}",
+      "unresolvedParameters": [
+        "groupId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request PATCH \\\n  --url https://aitoearn.cn/api/v2/channels/account-groups/{groupId} \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"name\": \"<string>\",\n  \"rank\": 123,\n  \"ip\": \"<string>\",\n  \"location\": \"<string>\",\n  \"countryCode\": \"<string>\",\n  \"proxyIp\": \"<string>\",\n  \"browserConfig\": {}\n}\n'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 24,
+      "method": "PATCH",
+      "path": "/api/v2/channels/account-groups/{groupId}/accounts/rank",
+      "heading": "调整账号排序",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/account-groups/{groupId}/accounts/rank",
+      "unresolvedParameters": [
+        "groupId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request PATCH \\\n  --url https://aitoearn.cn/api/v2/channels/account-groups/{groupId}/accounts/rank \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Api-Key: <api-key>' \\\n  --data '\n{\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"rank\": 123\n    }\n  ]\n}\n'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 25,
+      "method": "GET",
+      "path": "/api/v2/channels/accounts/auth/{platform}",
+      "heading": "发起平台授权",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/auth/{platform}",
+      "unresolvedParameters": [
+        "platform"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/auth/{platform} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "可提供固定示例"
+    },
+    {
+      "index": 26,
+      "method": "GET",
+      "path": "/api/v2/channels/accounts/auth/{platform}/status/{sessionId}",
+      "heading": "获取授权状态",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts/auth/{platform}/status/{sessionId}",
+      "unresolvedParameters": [
+        "platform",
+        "sessionId"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/accounts/auth/{platform}/status/{sessionId} \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 27,
+      "method": "POST",
+      "path": "/api/assets/{id}/confirm",
+      "heading": "确认资源上传",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/assets/{id}/confirm",
+      "unresolvedParameters": [
+        "id"
+      ],
+      "authorizationWithoutBearer": false,
+      "curl": "curl --request POST \\\n  --url https://aitoearn.cn/api/assets/{id}/confirm \\\n  --header 'X-Api-Key: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    },
+    {
+      "index": 28,
+      "method": "GET",
+      "path": "/api/ai/v3/contents/generations/tasks/{taskId}",
+      "heading": "火山格式查询视频任务",
+      "hasCurl": true,
+      "requestUrl": "https://aitoearn.cn/api/ai/v3/contents/generations/tasks/{taskId}",
+      "unresolvedParameters": [
+        "taskId"
+      ],
+      "authorizationWithoutBearer": true,
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/ai/v3/contents/generations/tasks/{taskId} \\\n  --header 'Authorization: <api-key>'",
+      "fixtureClass": "需要真实业务 ID"
+    }
+  ]
+}

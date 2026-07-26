@@ -1312,6 +1312,46 @@ function applySpecOverride(targetSpec, endpoint, operation, override) {
   }
 }
 
+function hasResponseOverride(override) {
+  return override?.responseDescription !== undefined
+    || override?.responseDataSchema !== undefined
+    || override?.responseExamples !== undefined
+}
+
+function applyResponseOverrides(endpoint, operation, override) {
+  if (!hasResponseOverride(override)) {
+    return
+  }
+
+  const response = operation.responses?.[200] || operation.responses?.['200']
+  if (!response) {
+    throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} has no 200 response`)
+  }
+  if (override.responseDescription !== undefined) {
+    response.description = override.responseDescription
+  }
+
+  const jsonContent = response.content?.['application/json']
+  if ((override.responseDataSchema !== undefined || override.responseExamples !== undefined) && !jsonContent) {
+    throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} has no application/json response`)
+  }
+  if (override.responseDataSchema !== undefined) {
+    const responseSchema = jsonContent.schema
+    if (!responseSchema?.properties?.data) {
+      throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} response has no data schema`)
+    }
+    responseSchema.properties.data = structuredClone(override.responseDataSchema)
+  }
+  if (override.responseExamples !== undefined) {
+    if (override.responseExamples === null) {
+      delete jsonContent.examples
+    }
+    else {
+      jsonContent.examples = structuredClone(override.responseExamples)
+    }
+  }
+}
+
 function generate() {
   const sourceSpec = readJson(sourceSpecPath)
   addVolcengineVideoCompatibilityEndpoints(sourceSpec)
@@ -1519,6 +1559,8 @@ function generate() {
       }
     }
 
+    applyResponseOverrides(endpoint, operation, specOverrides[`${endpoint.method} ${endpoint.path}`])
+
     matrix.push(mapping)
   }
 
@@ -1568,4 +1610,67 @@ function generate() {
   }, null, 2))
 }
 
-generate()
+function applyTargetOverridesOnly() {
+  const targetSpec = readJson(zhTargetSpecPath)
+  const englishTargetSpec = readJson(enTargetSpecPath)
+  const specOverrides = readJson(specOverridesPath)
+  const documentedEndpoints = readJson(inventoryPath)
+  const appliedEndpoints = []
+
+  for (const endpoint of documentedEndpoints) {
+    const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
+    if (!hasResponseOverride(override)) {
+      continue
+    }
+    const operation = targetSpec.paths?.[endpoint.path]?.[endpoint.method.toLowerCase()]
+    if (!operation) {
+      throw new Error(`Generated OpenAPI is missing ${endpoint.method} ${endpoint.path}`)
+    }
+    applySpecOverride(targetSpec, endpoint, operation, override)
+    applyResponseOverrides(endpoint, operation, override)
+    if (operation['x-mint']?.metadata) {
+      operation['x-mint'].metadata.title = operation.summary
+      operation['x-mint'].metadata.sidebarTitle = operation.summary
+    }
+    appliedEndpoints.push(endpoint)
+  }
+
+  if (appliedEndpoints.length === 0) {
+    throw new Error('No response overrides found in spec-overrides.json')
+  }
+
+  sanitizeOpenApi30(targetSpec)
+  const englishTranslations = readJson(specTranslationsEnPath)
+  for (const endpoint of appliedEndpoints) {
+    const method = endpoint.method.toLowerCase()
+    const translatedOperation = translateOpenApiValue(
+      structuredClone(targetSpec.paths[endpoint.path][method]),
+      englishTranslations,
+    )
+    if (translatedOperation['x-mint']) {
+      translatedOperation['x-mint'].href = endpointHref(endpoint, enApiReferenceBasePath)
+    }
+    const cjkStrings = collectCjkStrings(translatedOperation)
+    if (cjkStrings.length > 0) {
+      const samples = cjkStrings.slice(0, 12).map(item => `${item.path}: ${item.value}`).join('\n')
+      throw new Error(`English OpenAPI operation ${endpoint.method} ${endpoint.path} still contains untranslated Chinese strings:\n${samples}`)
+    }
+    englishTargetSpec.paths[endpoint.path][method] = translatedOperation
+  }
+  writeJson(zhTargetSpecPath, targetSpec)
+  writeJson(enTargetSpecPath, englishTargetSpec)
+
+  console.log(JSON.stringify({
+    mode: 'target-overrides-only',
+    applied: appliedEndpoints.length,
+    zhTargetSpecPath: normalizePathForDocs(zhTargetSpecPath),
+    enTargetSpecPath: normalizePathForDocs(enTargetSpecPath),
+  }, null, 2))
+}
+
+if (process.argv.includes('--target-overrides-only')) {
+  applyTargetOverridesOnly()
+}
+else {
+  generate()
+}

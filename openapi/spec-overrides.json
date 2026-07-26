@@ -1,7 +1,347 @@
 {
   "GET /api/ai/models/video/generation": {
     "summary": "视频生成模型",
-    "description": "接口说明：获取当前账号可用的视频生成模型及参数范围，包括模型名称、分辨率、画面比例、时长和价格信息，以用于生成视频接口完成参数选择和请求参数校验。\n\n`modes` 字段的常量含义与典型输入参数，请参阅[「视频生成 modes 常量说明」](/zh/use/video-generation#modes-常量说明)。"
+    "description": "接口说明：获取当前可用的视频生成模型目录，以及每个模型支持的模式、分辨率、画面比例、时长、参考媒体限制、默认参数和价格。模型与参数范围可能随服务更新，调用视频生成接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会创建视频生成任务；需要生成视频时，请调用[「生成视频」](/api-reference/post-api-ai-video-generations)接口。\n\n`modes` 字段的常量含义与典型输入参数，请参阅[「视频生成 modes 常量说明」](/zh/use/video-generation#modes-常量说明)。",
+    "responseDataSchema": {
+      "type": "array",
+      "description": "当前可用的视频生成模型列表。模型、能力、参数范围和价格可能随服务更新，请以每次接口返回为准。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "模型名称"
+          },
+          "label": {
+            "type": "string",
+            "description": "模型展示名称"
+          },
+          "description": {
+            "type": "string",
+            "description": "模型描述"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签列表"
+          },
+          "creditsScope": {
+            "type": "string",
+            "enum": [
+              "general",
+              "seedance"
+            ],
+            "description": "模型使用的积分范围。`general` 表示普通积分，`seedance` 表示 Seedance 专用积分。"
+          },
+          "modes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "text2video",
+                "image2video",
+                "flf2video",
+                "multi-image2video",
+                "multi-ref",
+                "video2video"
+              ]
+            },
+            "description": "支持的模式"
+          },
+          "resolutions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "支持的视频分辨率列表"
+          },
+          "durations": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "支持的视频时长列表，单位为秒"
+          },
+          "maxInputImages": {
+            "type": "integer",
+            "description": "模型允许的最大输入图片数量"
+          },
+          "inputConstraints": {
+            "type": "object",
+            "properties": {
+              "images": {
+                "type": "object",
+                "properties": {
+                  "maxCount": {
+                    "type": "integer",
+                    "description": "最大输入数量"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "图片输入约束"
+              },
+              "videos": {
+                "type": "object",
+                "properties": {
+                  "maxCount": {
+                    "type": "integer",
+                    "description": "最大输入数量"
+                  },
+                  "formats": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "支持的文件格式"
+                  },
+                  "minDuration": {
+                    "type": "number",
+                    "description": "最小时长（秒）"
+                  },
+                  "maxDuration": {
+                    "type": "number",
+                    "description": "单个文件最大时长（秒）"
+                  },
+                  "maxTotalDuration": {
+                    "type": "number",
+                    "description": "总最大时长（秒）"
+                  },
+                  "maxSizeMb": {
+                    "type": "number",
+                    "description": "单个文件最大大小（MB）"
+                  },
+                  "minAspectRatio": {
+                    "type": "number",
+                    "description": "最小宽高比"
+                  },
+                  "maxAspectRatio": {
+                    "type": "number",
+                    "description": "最大宽高比"
+                  },
+                  "minWidth": {
+                    "type": "integer",
+                    "description": "最小宽度"
+                  },
+                  "maxWidth": {
+                    "type": "integer",
+                    "description": "最大宽度"
+                  },
+                  "minPixels": {
+                    "type": "integer",
+                    "description": "最小像素数"
+                  },
+                  "maxPixels": {
+                    "type": "integer",
+                    "description": "最大像素数"
+                  },
+                  "minFps": {
+                    "type": "number",
+                    "description": "最小帧率"
+                  },
+                  "maxFps": {
+                    "type": "number",
+                    "description": "最大帧率"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "视频输入约束"
+              },
+              "audios": {
+                "type": "object",
+                "properties": {
+                  "maxCount": {
+                    "type": "integer",
+                    "description": "最大输入数量"
+                  },
+                  "formats": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "支持的文件格式"
+                  },
+                  "minDuration": {
+                    "type": "number",
+                    "description": "最小时长（秒）"
+                  },
+                  "maxDuration": {
+                    "type": "number",
+                    "description": "单个文件最大时长（秒）"
+                  },
+                  "maxTotalDuration": {
+                    "type": "number",
+                    "description": "总最大时长（秒）"
+                  },
+                  "maxSizeMb": {
+                    "type": "number",
+                    "description": "单个文件最大大小（MB）"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "音频输入约束"
+              }
+            },
+            "additionalProperties": false,
+            "description": "多模态输入约束"
+          },
+          "aspectRatios": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "支持的宽高比列表"
+          },
+          "defaults": {
+            "type": "object",
+            "properties": {
+              "resolution": {
+                "type": "string",
+                "description": "默认视频分辨率"
+              },
+              "aspectRatio": {
+                "type": "string",
+                "description": "默认视频宽高比"
+              },
+              "duration": {
+                "type": "integer",
+                "description": "默认视频时长，单位为秒"
+              }
+            },
+            "additionalProperties": false,
+            "description": "默认值"
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resolution": {
+                  "type": "string",
+                  "description": "该价格项适用的视频分辨率"
+                },
+                "mode": {
+                  "type": "string",
+                  "description": "该价格项适用的生成模式"
+                },
+                "duration": {
+                  "type": "integer",
+                  "description": "该价格项适用的视频时长，单位为秒"
+                },
+                "price": {
+                  "type": "number",
+                  "description": "当前价格值"
+                },
+                "originPrice": {
+                  "type": "number",
+                  "description": "原价值"
+                }
+              },
+              "required": [
+                "price"
+              ],
+              "additionalProperties": false
+            },
+            "description": "价格表"
+          }
+        },
+        "required": [
+          "name",
+          "label",
+          "description",
+          "tags",
+          "creditsScope",
+          "modes",
+          "resolutions",
+          "durations",
+          "maxInputImages",
+          "aspectRatios",
+          "defaults",
+          "pricing"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "types": {
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "name": "string",
+              "label": "string",
+              "description": "string",
+              "tags": [
+                "string"
+              ],
+              "creditsScope": "string",
+              "modes": [
+                "string"
+              ],
+              "resolutions": [
+                "string"
+              ],
+              "durations": [
+                "number"
+              ],
+              "maxInputImages": "number",
+              "inputConstraints": {
+                "images": {
+                  "maxCount": "number"
+                },
+                "videos": {
+                  "maxCount": "number",
+                  "formats": [
+                    "string"
+                  ],
+                  "minDuration": "number",
+                  "maxDuration": "number",
+                  "maxTotalDuration": "number",
+                  "maxSizeMb": "number",
+                  "minAspectRatio": "number",
+                  "maxAspectRatio": "number",
+                  "minWidth": "number",
+                  "maxWidth": "number",
+                  "minPixels": "number",
+                  "maxPixels": "number",
+                  "minFps": "number",
+                  "maxFps": "number"
+                },
+                "audios": {
+                  "maxCount": "number",
+                  "formats": [
+                    "string"
+                  ],
+                  "minDuration": "number",
+                  "maxDuration": "number",
+                  "maxTotalDuration": "number",
+                  "maxSizeMb": "number"
+                }
+              },
+              "aspectRatios": [
+                "string"
+              ],
+              "defaults": {
+                "resolution": "string",
+                "aspectRatio": "string",
+                "duration": "number"
+              },
+              "pricing": [
+                {
+                  "resolution": "string",
+                  "mode": "string",
+                  "duration": "number",
+                  "price": "number",
+                  "originPrice": "number"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
   },
   "POST /api/ai/video/generations": {
     "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",

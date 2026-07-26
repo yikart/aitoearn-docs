@@ -49,7 +49,7 @@
       "get": {
         "summary": "Video Generation Models",
         "deprecated": false,
-        "description": "Returns the video generation models and parameter ranges available to the current account, including model names, resolutions, aspect ratios, durations, and pricing. Use this response to select and validate parameters before creating a video generation task.\n\nFor the meaning of each `modes` value and its typical inputs, see [Video generation mode constants](/en/use/video-generation#modes-constants).",
+        "description": "Returns the currently available video generation model catalog, including each model's supported modes, resolutions, aspect ratios, durations, reference media constraints, defaults, and pricing. Models and parameter ranges may change as the service is updated, so use the real-time response from this endpoint when calling the video generation API.\n\nThis endpoint only queries the model catalog and does not create a video generation task. To generate a video, call the [Generate Video](/en/api-reference/post-api-ai-video-generations) endpoint.\n\nFor the meaning of each `modes` value and its typical inputs, see [Video generation mode constants](/en/use/video-generation#modes-constants).",
         "operationId": "VideoController_getVideoGenerationModels",
         "tags": [
           "AI Services/Video Generation"
@@ -65,6 +65,7 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "The currently available video generation models. Models, capabilities, parameter ranges, and pricing may change as the service is updated; always use the latest response from this endpoint.",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -72,34 +73,28 @@
                             "type": "string",
                             "description": "Model name"
                           },
+                          "label": {
+                            "type": "string",
+                            "description": "Model display name"
+                          },
                           "description": {
                             "type": "string",
                             "description": "Model description"
                           },
-                          "summary": {
-                            "type": "string",
-                            "description": "Model summary"
-                          },
                           "tags": {
-                            "default": [],
                             "type": "array",
                             "items": {
                               "type": "string"
                             },
-                            "description": "list"
-                          },
-                          "mainTag": {
-                            "type": "string",
-                            "description": "main tags"
+                            "description": "tag list"
                           },
                           "creditsScope": {
-                            "default": "general",
                             "type": "string",
                             "enum": [
                               "general",
-                              "sale"
+                              "seedance"
                             ],
-                            "description": "Points range"
+                            "description": "Credit scope used by the model. `general` means general credits, and `seedance` means Seedance-specific credits."
                           },
                           "modes": {
                             "type": "array",
@@ -109,232 +104,144 @@
                                 "text2video",
                                 "image2video",
                                 "flf2video",
-                                "lf2video",
                                 "multi-image2video",
                                 "multi-ref",
                                 "video2video"
                               ]
                             },
-                            "description": "Supported mode list"
+                            "description": "Supported modes"
                           },
                           "resolutions": {
                             "type": "array",
                             "items": {
                               "type": "string"
                             },
-                            "description": "Supported sizes"
+                            "description": "Supported video resolution list"
                           },
                           "durations": {
                             "type": "array",
                             "items": {
-                              "type": "number"
+                              "type": "integer"
                             },
-                            "description": "Support duration"
+                            "description": "Supported video duration list, in seconds"
                           },
                           "maxInputImages": {
-                            "type": "number",
-                            "description": "Maximum number of input images"
+                            "type": "integer",
+                            "description": "Maximum number of input images allowed by the model"
                           },
                           "inputConstraints": {
                             "type": "object",
                             "properties": {
                               "images": {
-                                "description": "Image input constraints",
                                 "type": "object",
                                 "properties": {
                                   "maxCount": {
-                                    "description": "Maximum number of inputs",
-                                    "type": "number"
-                                  },
-                                  "formats": {
-                                    "description": "Supported file formats",
-                                    "type": "array",
-                                    "items": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "minDuration": {
-                                    "description": "Minimum duration (seconds)",
-                                    "type": "number"
-                                  },
-                                  "maxDuration": {
-                                    "description": "Maximum duration of a single file (seconds)",
-                                    "type": "number"
-                                  },
-                                  "maxTotalDuration": {
-                                    "description": "Total maximum duration (seconds)",
-                                    "type": "number"
-                                  },
-                                  "maxSizeMb": {
-                                    "description": "Maximum size of a single file (MB)",
-                                    "type": "number"
-                                  },
-                                  "minAspectRatio": {
-                                    "description": "minimum aspect ratio",
-                                    "type": "number"
-                                  },
-                                  "maxAspectRatio": {
-                                    "description": "Maximum aspect ratio",
-                                    "type": "number"
-                                  },
-                                  "minWidth": {
-                                    "description": "minimum width",
-                                    "type": "number"
-                                  },
-                                  "maxWidth": {
-                                    "description": "maximum width",
-                                    "type": "number"
-                                  },
-                                  "minPixels": {
-                                    "description": "Minimum number of pixels",
-                                    "type": "number"
-                                  },
-                                  "maxPixels": {
-                                    "description": "Maximum number of pixels",
-                                    "type": "number"
-                                  },
-                                  "minFps": {
-                                    "description": "Minimum frame rate",
-                                    "type": "number"
-                                  },
-                                  "maxFps": {
-                                    "description": "Max frame rate",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "Maximum number of inputs"
                                   }
                                 },
-                                "additionalProperties": false
+                                "additionalProperties": false,
+                                "description": "Image input constraints"
                               },
                               "videos": {
-                                "description": "Video input constraints",
                                 "type": "object",
                                 "properties": {
                                   "maxCount": {
-                                    "description": "Maximum number of inputs",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "Maximum number of inputs"
                                   },
                                   "formats": {
-                                    "description": "Supported file formats",
                                     "type": "array",
                                     "items": {
                                       "type": "string"
-                                    }
+                                    },
+                                    "description": "Supported file formats"
                                   },
                                   "minDuration": {
-                                    "description": "Minimum duration (seconds)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Minimum duration (seconds)"
                                   },
                                   "maxDuration": {
-                                    "description": "Maximum duration of a single file (seconds)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Maximum duration of a single file (seconds)"
                                   },
                                   "maxTotalDuration": {
-                                    "description": "Total maximum duration (seconds)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Total maximum duration (seconds)"
                                   },
                                   "maxSizeMb": {
-                                    "description": "Maximum size of a single file (MB)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Maximum size of a single file (MB)"
                                   },
                                   "minAspectRatio": {
-                                    "description": "minimum aspect ratio",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "minimum aspect ratio"
                                   },
                                   "maxAspectRatio": {
-                                    "description": "Maximum aspect ratio",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Maximum aspect ratio"
                                   },
                                   "minWidth": {
-                                    "description": "minimum width",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "minimum width"
                                   },
                                   "maxWidth": {
-                                    "description": "maximum width",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "maximum width"
                                   },
                                   "minPixels": {
-                                    "description": "Minimum number of pixels",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "Minimum number of pixels"
                                   },
                                   "maxPixels": {
-                                    "description": "Maximum number of pixels",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "Maximum number of pixels"
                                   },
                                   "minFps": {
-                                    "description": "Minimum frame rate",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Minimum frame rate"
                                   },
                                   "maxFps": {
-                                    "description": "Max frame rate",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Max frame rate"
                                   }
                                 },
-                                "additionalProperties": false
+                                "additionalProperties": false,
+                                "description": "Video input constraints"
                               },
                               "audios": {
-                                "description": "Audio input constraints",
                                 "type": "object",
                                 "properties": {
                                   "maxCount": {
-                                    "description": "Maximum number of inputs",
-                                    "type": "number"
+                                    "type": "integer",
+                                    "description": "Maximum number of inputs"
                                   },
                                   "formats": {
-                                    "description": "Supported file formats",
                                     "type": "array",
                                     "items": {
                                       "type": "string"
-                                    }
+                                    },
+                                    "description": "Supported file formats"
                                   },
                                   "minDuration": {
-                                    "description": "Minimum duration (seconds)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Minimum duration (seconds)"
                                   },
                                   "maxDuration": {
-                                    "description": "Maximum duration of a single file (seconds)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Maximum duration of a single file (seconds)"
                                   },
                                   "maxTotalDuration": {
-                                    "description": "Total maximum duration (seconds)",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Total maximum duration (seconds)"
                                   },
                                   "maxSizeMb": {
-                                    "description": "Maximum size of a single file (MB)",
-                                    "type": "number"
-                                  },
-                                  "minAspectRatio": {
-                                    "description": "minimum aspect ratio",
-                                    "type": "number"
-                                  },
-                                  "maxAspectRatio": {
-                                    "description": "Maximum aspect ratio",
-                                    "type": "number"
-                                  },
-                                  "minWidth": {
-                                    "description": "minimum width",
-                                    "type": "number"
-                                  },
-                                  "maxWidth": {
-                                    "description": "maximum width",
-                                    "type": "number"
-                                  },
-                                  "minPixels": {
-                                    "description": "Minimum number of pixels",
-                                    "type": "number"
-                                  },
-                                  "maxPixels": {
-                                    "description": "Maximum number of pixels",
-                                    "type": "number"
-                                  },
-                                  "minFps": {
-                                    "description": "Minimum frame rate",
-                                    "type": "number"
-                                  },
-                                  "maxFps": {
-                                    "description": "Max frame rate",
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Maximum size of a single file (MB)"
                                   }
                                 },
-                                "additionalProperties": false
+                                "additionalProperties": false,
+                                "description": "Audio input constraints"
                               }
                             },
                             "additionalProperties": false,
@@ -351,13 +258,16 @@
                             "type": "object",
                             "properties": {
                               "resolution": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Default video resolution"
                               },
                               "aspectRatio": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Default video aspect ratio"
                               },
                               "duration": {
-                                "type": "number"
+                                "type": "integer",
+                                "description": "Default video duration, in seconds"
                               }
                             },
                             "additionalProperties": false,
@@ -369,25 +279,24 @@
                               "type": "object",
                               "properties": {
                                 "resolution": {
-                                  "type": "string"
-                                },
-                                "aspectRatio": {
-                                  "type": "string"
+                                  "type": "string",
+                                  "description": "Video resolution applicable to this pricing entry"
                                 },
                                 "mode": {
-                                  "type": "string"
+                                  "type": "string",
+                                  "description": "Generation mode applicable to this pricing entry"
                                 },
                                 "duration": {
-                                  "type": "number"
+                                  "type": "integer",
+                                  "description": "Video duration applicable to this pricing entry, in seconds"
                                 },
                                 "price": {
-                                  "type": "number"
-                                },
-                                "discount": {
-                                  "type": "string"
+                                  "type": "number",
+                                  "description": "Current price value"
                                 },
                                 "originPrice": {
-                                  "type": "number"
+                                  "type": "number",
+                                  "description": "Original price value"
                                 }
                               },
                               "required": [
@@ -400,6 +309,7 @@
                         },
                         "required": [
                           "name",
+                          "label",
                           "description",
                           "tags",
                           "creditsScope",
@@ -410,7 +320,8 @@
                           "aspectRatios",
                           "defaults",
                           "pricing"
-                        ]
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -436,47 +347,79 @@
                   ]
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
+                  "types": {
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
                       "data": [
                         {
                           "name": "string",
+                          "label": "string",
                           "description": "string",
-                          "tags": [],
-                          "creditsScope": "general",
+                          "tags": [
+                            "string"
+                          ],
+                          "creditsScope": "string",
                           "modes": [
-                            "text2video"
+                            "string"
                           ],
                           "resolutions": [
                             "string"
                           ],
                           "durations": [
-                            1
+                            "number"
                           ],
-                          "maxInputImages": 1,
+                          "maxInputImages": "number",
+                          "inputConstraints": {
+                            "images": {
+                              "maxCount": "number"
+                            },
+                            "videos": {
+                              "maxCount": "number",
+                              "formats": [
+                                "string"
+                              ],
+                              "minDuration": "number",
+                              "maxDuration": "number",
+                              "maxTotalDuration": "number",
+                              "maxSizeMb": "number",
+                              "minAspectRatio": "number",
+                              "maxAspectRatio": "number",
+                              "minWidth": "number",
+                              "maxWidth": "number",
+                              "minPixels": "number",
+                              "maxPixels": "number",
+                              "minFps": "number",
+                              "maxFps": "number"
+                            },
+                            "audios": {
+                              "maxCount": "number",
+                              "formats": [
+                                "string"
+                              ],
+                              "minDuration": "number",
+                              "maxDuration": "number",
+                              "maxTotalDuration": "number",
+                              "maxSizeMb": "number"
+                            }
+                          },
                           "aspectRatios": [
                             "string"
                           ],
                           "defaults": {
                             "resolution": "string",
                             "aspectRatio": "string",
-                            "duration": 1
+                            "duration": "number"
                           },
                           "pricing": [
                             {
-                              "price": 1,
                               "resolution": "string",
-                              "aspectRatio": "string",
                               "mode": "string",
-                              "duration": 1,
-                              "discount": "string",
-                              "originPrice": 1
+                              "duration": "number",
+                              "price": "number",
+                              "originPrice": "number"
                             }
-                          ],
-                          "summary": "string"
+                          ]
                         }
                       ]
                     }

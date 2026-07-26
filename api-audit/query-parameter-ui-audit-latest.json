@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-07-24T12:06:02.474Z",
+  "baseUrl": "http://localhost:3000",
+  "total": 4,
+  "summary": {
+    "missingRequiredQuery": 4
+  },
+  "endpoints": [
+    {
+      "method": "DELETE",
+      "path": "/api/v2/channels/accounts",
+      "href": "/api-reference/delete-api-v2-channels-accounts",
+      "parameters": [
+        "ids"
+      ],
+      "heading": "批量删除账号",
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/accounts",
+      "missingParameters": [
+        "ids"
+      ],
+      "curl": "curl --request DELETE \\\n  --url https://aitoearn.cn/api/v2/channels/accounts \\\n  --header 'X-Api-Key: <api-key>'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/channels/works/link-info",
+      "href": "/api-reference/get-api-v2-channels-works-link-info",
+      "parameters": [
+        "platform",
+        "link"
+      ],
+      "heading": "解析作品链接",
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/works/link-info",
+      "missingParameters": [
+        "platform",
+        "link"
+      ],
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/works/link-info \\\n  --header 'X-Api-Key: <api-key>'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/channels/works/{platform}",
+      "href": "/api-reference/get-api-v2-channels-works-platform",
+      "parameters": [
+        "accountId"
+      ],
+      "heading": "作品列表",
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/works/{platform}",
+      "missingParameters": [
+        "accountId"
+      ],
+      "curl": "curl --request GET \\\n  --url https://aitoearn.cn/api/v2/channels/works/{platform} \\\n  --header 'X-Api-Key: <api-key>'"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/channels/account-groups",
+      "href": "/api-reference/delete-api-v2-channels-account-groups",
+      "parameters": [
+        "ids"
+      ],
+      "heading": "批量删除分组",
+      "requestUrl": "https://aitoearn.cn/api/v2/channels/account-groups",
+      "missingParameters": [
+        "ids"
+      ],
+      "curl": "curl --request DELETE \\\n  --url https://aitoearn.cn/api/v2/channels/account-groups \\\n  --header 'X-Api-Key: <api-key>'"
+    }
+  ]
+}
