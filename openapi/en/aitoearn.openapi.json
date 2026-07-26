@@ -1037,7 +1037,7 @@
       "get": {
         "summary": "Image Generation Models",
         "deprecated": false,
-        "description": "Interface description: Returns the optional parameters (size, style, etc.) and value range of each image generation model.\n\nThe image is generated as **Wen Sheng Picture**: Generate a new image only through text prompts, without passing in pictures. If you need to make modifications based on existing images (image-generated images), please use [\"Image Editing Model\"](/en/api-reference/get-api-ai-models-image-edit) and the corresponding image editing interface.",
+        "description": "Returns the currently available image generation model catalog, including each model's supported sizes, qualities, styles, credit scope, and pricing. Models and parameter ranges may change as the service is updated, so use the real-time response from this endpoint when calling the image generation API.\n\nThis endpoint only queries the model catalog and does not create an image generation task. To generate an image, call the [Generate Image](/en/api-reference/post-api-ai-image-generate) endpoint.\n\nImage generation is **text-to-image**: it creates a new image from a text prompt without an input image. To modify an existing image, use the [Image Editing Models](/en/api-reference/get-api-ai-models-image-edit) endpoint and the corresponding image editing API.",
         "operationId": "ImageController_getImageGenerationModels",
         "tags": [
           "AI Services/Image Generation"
@@ -1053,6 +1053,7 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "The currently available image generation models. Models, parameter ranges, and pricing may change as the service is updated; always use the latest response from this endpoint.",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -1060,37 +1061,41 @@
                             "type": "string",
                             "description": "Model name"
                           },
-                          "description": {
+                          "label": {
                             "type": "string",
-                            "description": "Model description"
-                          },
-                          "summary": {
-                            "type": "string",
-                            "description": "short summary"
+                            "description": "Model display name"
                           },
                           "tags": {
-                            "default": [],
                             "type": "array",
                             "items": {
                               "type": "string"
                             },
                             "description": "tag list"
                           },
-                          "mainTag": {
+                          "creditsScope": {
                             "type": "string",
-                            "description": "main tags"
+                            "enum": [
+                              "seedance"
+                            ],
+                            "description": "Credit scope used by the model. The current response is `seedance`, which means Seedance-specific credits."
                           },
                           "sizes": {
                             "type": "array",
                             "items": {
                               "type": "string"
                             },
-                            "description": "Supported sizes"
+                            "description": "Supported image size list"
                           },
                           "qualities": {
                             "type": "array",
                             "items": {
-                              "type": "string"
+                              "type": "string",
+                              "enum": [
+                                "auto",
+                                "high",
+                                "medium",
+                                "low"
+                              ]
                             },
                             "description": "Supported quality options"
                           },
@@ -1099,7 +1104,7 @@
                             "items": {
                               "type": "string"
                             },
-                            "description": "Supported style options"
+                            "description": "Supported style options. An empty array means the current model does not support the style parameter."
                           },
                           "pricing": {
                             "type": "array",
@@ -1108,35 +1113,43 @@
                               "properties": {
                                 "size": {
                                   "type": "string",
-                                  "description": "Image size"
+                                  "description": "Image size applicable to this pricing entry"
                                 },
                                 "price": {
                                   "type": "number",
-                                  "description": "Points price"
+                                  "description": "Current price value"
                                 },
                                 "originPrice": {
-                                  "description": "original price",
-                                  "type": "number"
+                                  "type": "number",
+                                  "description": "Original price value"
                                 }
                               },
                               "required": [
                                 "size",
-                                "price"
+                                "price",
+                                "originPrice"
                               ],
                               "additionalProperties": false
                             },
-                            "description": "Resolution price list"
+                            "description": "Image size pricing table"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Model description"
                           }
                         },
                         "required": [
                           "name",
-                          "description",
+                          "label",
                           "tags",
+                          "creditsScope",
                           "sizes",
                           "qualities",
                           "styles",
-                          "pricing"
-                        ]
+                          "pricing",
+                          "description"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -1162,16 +1175,18 @@
                   ]
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
+                  "types": {
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
                       "data": [
                         {
                           "name": "string",
-                          "description": "string",
-                          "tags": [],
+                          "label": "string",
+                          "tags": [
+                            "string"
+                          ],
+                          "creditsScope": "string",
                           "sizes": [
                             "string"
                           ],
@@ -1184,14 +1199,14 @@
                           "pricing": [
                             {
                               "size": "string",
-                              "price": 1,
-                              "originPrice": 1
+                              "price": "number",
+                              "originPrice": "number"
                             }
                           ],
-                          "summary": "string",
-                          "mainTag": "string"
+                          "description": "string"
                         }
-                      ]
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }
@@ -1227,7 +1242,7 @@
       "get": {
         "summary": "Image Editing Models",
         "deprecated": false,
-        "description": "Interface description: Returns the optional parameters and value ranges of each image editing model.\n\nImage editing is **Pictures from Pictures**: You must pass in a reference picture, and follow the prompts to modify and redraw it based on it. If you want to generate a new image (Vincent image) using only text, please use [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) and the corresponding image generation interface.",
+        "description": "Returns the currently available image editing model catalog, including each model's supported sizes, maximum input image count, credit scope, and pricing. Models and parameter ranges may change as the service is updated, so use the real-time response from this endpoint when calling the image editing API.\n\nThis endpoint only queries the model catalog and does not create an image editing task. To edit an image, call the [Edit Image](/en/api-reference/post-api-ai-image-edit) endpoint.\n\nImage editing is **image-to-image**: it requires a reference image and modifies or redraws it according to the prompt. To generate a new image from text only, use the [Image Generation Models](/en/api-reference/get-api-ai-models-image-generation) endpoint and the corresponding image generation API.",
         "operationId": "ImageController_getImageEditModels",
         "tags": [
           "AI Services/Image Generation"
@@ -1243,8 +1258,86 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "The currently available image editing models. Models, parameter ranges, and pricing may change as the service is updated; always use the latest response from this endpoint.",
                       "items": {
-                        "$ref": "#/components/schemas/ImageEditModelParamsVo"
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Model name"
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "Model display name"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "tag list"
+                          },
+                          "creditsScope": {
+                            "type": "string",
+                            "enum": [
+                              "seedance"
+                            ],
+                            "description": "Credit scope used by the model. The current response is `seedance`, which means Seedance-specific credits."
+                          },
+                          "sizes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Supported image size list"
+                          },
+                          "pricing": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "size": {
+                                  "type": "string",
+                                  "description": "Image size applicable to this pricing entry"
+                                },
+                                "price": {
+                                  "type": "number",
+                                  "description": "Current price value"
+                                },
+                                "originPrice": {
+                                  "type": "number",
+                                  "description": "Original price value"
+                                }
+                              },
+                              "required": [
+                                "size",
+                                "price",
+                                "originPrice"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "description": "Image size pricing table"
+                          },
+                          "maxInputImages": {
+                            "type": "integer",
+                            "description": "Maximum number of input images allowed by the model"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Model description"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "label",
+                          "tags",
+                          "creditsScope",
+                          "sizes",
+                          "pricing",
+                          "maxInputImages",
+                          "description"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -1270,32 +1363,33 @@
                   ]
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
+                  "types": {
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
                       "data": [
                         {
                           "name": "string",
-                          "description": "string",
-                          "tags": [],
+                          "label": "string",
+                          "tags": [
+                            "string"
+                          ],
+                          "creditsScope": "string",
                           "sizes": [
                             "string"
                           ],
                           "pricing": [
                             {
                               "size": "string",
-                              "price": 1,
-                              "originPrice": 1
+                              "price": "number",
+                              "originPrice": "number"
                             }
                           ],
-                          "maxInputImages": 1,
-                          "summary": "string",
-                          "logo": "string",
-                          "mainTag": "string"
+                          "maxInputImages": "number",
+                          "description": "string"
                         }
-                      ]
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }
@@ -2227,7 +2321,7 @@
       "get": {
         "summary": "Chat Model List",
         "deprecated": false,
-        "description": "Interface description: Get the list of dialogue models and capability information available for the current account, which is used to select models, display model capabilities and price information before calling the dialogue interface.",
+        "description": "Returns the currently available chat model catalog, including each model's provider channel, applicable scenes, input and output modalities, credit scope, and pricing. Models and capabilities may change as the service is updated, so use the real-time response from this endpoint when calling a chat API.\n\nThis endpoint only queries the model catalog and does not start a model conversation. To call a model, choose the [OpenAI Chat](/en/api-reference/post-api-ai-chat-completions), [Anthropic Chat](/en/api-reference/post-api-ai-v1-messages), or Gemini chat endpoint according to the protocol you use.",
         "operationId": "ChatController_getChatModels",
         "tags": [
           "AI Services/Large Language Models"
@@ -2243,8 +2337,104 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "The currently available chat models. Models, capabilities, and pricing may change as the service is updated; always use the latest response from this endpoint.",
                       "items": {
-                        "$ref": "#/components/schemas/ChatModelConfigVo"
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Model name"
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "Model display name"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "tag list"
+                          },
+                          "channel": {
+                            "type": "string",
+                            "enum": [
+                              "openai",
+                              "deepseek",
+                              "anthropic",
+                              "gemini"
+                            ],
+                            "description": "Model provider channel"
+                          },
+                          "creditsScope": {
+                            "type": "string",
+                            "enum": [
+                              "general",
+                              "seedance"
+                            ],
+                            "description": "Credit scope used by the model. `general` means general credits, and `seedance` means Seedance-specific credits."
+                          },
+                          "scenes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "web",
+                                "comment",
+                                "draft-generation",
+                                "plugin"
+                              ]
+                            },
+                            "description": "Applicable scenarios"
+                          },
+                          "inputModalities": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "text",
+                                "image",
+                                "audio",
+                                "video"
+                              ]
+                            },
+                            "description": "Support input modal"
+                          },
+                          "outputModalities": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "text",
+                                "image"
+                              ]
+                            },
+                            "description": "Support output modal"
+                          },
+                          "pricing": {
+                            "$ref": "#/components/schemas/ChatModelConfigVo/properties/pricing"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Model description"
+                          },
+                          "fixedImagePricing": {
+                            "$ref": "#/components/schemas/ChatModelConfigVo/properties/fixedImagePricing"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "label",
+                          "tags",
+                          "channel",
+                          "creditsScope",
+                          "scenes",
+                          "inputModalities",
+                          "outputModalities",
+                          "pricing",
+                          "description"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -2270,50 +2460,77 @@
                   ]
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
+                  "types": {
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
                       "data": [
                         {
                           "name": "string",
-                          "description": "string",
-                          "tags": [],
-                          "channel": "openai",
-                          "inputModalities": [
-                            "text"
+                          "label": "string",
+                          "tags": [
+                            "string"
                           ],
-                          "outputModalities": [
-                            "text"
-                          ],
-                          "pricing": {
-                            "price": "string",
-                            "originPrice": "string"
-                          },
-                          "summary": "string",
-                          "logo": "string",
-                          "mainTag": "string",
+                          "channel": "string",
+                          "creditsScope": "string",
                           "scenes": [
                             "string"
                           ],
+                          "inputModalities": [
+                            "string"
+                          ],
+                          "outputModalities": [
+                            "string"
+                          ],
+                          "pricing": {
+                            "tiers": [
+                              {
+                                "maxInputTokens": "number",
+                                "input": {
+                                  "text": "string",
+                                  "image": "string",
+                                  "video": "string",
+                                  "audio": "string",
+                                  "cacheRead": "string",
+                                  "cacheWrite5m": "string",
+                                  "cacheWrite1h": "string"
+                                },
+                                "output": {
+                                  "text": "string",
+                                  "image": "string"
+                                }
+                              }
+                            ],
+                            "originPricing": {
+                              "tiers": [
+                                {
+                                  "input": {
+                                    "text": "string",
+                                    "image": "string",
+                                    "video": "string",
+                                    "audio": "string",
+                                    "cacheRead": "string",
+                                    "cacheWrite5m": "string",
+                                    "cacheWrite1h": "string"
+                                  },
+                                  "output": {
+                                    "text": "string",
+                                    "image": "string"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "description": "string",
                           "fixedImagePricing": [
                             {
                               "resolution": "string",
-                              "price": 1
+                              "price": "number"
                             }
                           ]
                         }
-                      ]
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }
@@ -8764,7 +8981,7 @@
       "get": {
         "summary": "Platform List",
         "deprecated": false,
-        "description": "Interface description: Returns the metadata list of registered platforms, including display name, logo, capability statement, etc.",
+        "description": "Returns the metadata catalog for currently registered channel platforms, including display information, authorization methods, content limits, media rules, publishing and engagement capabilities, publishing option schemas, and availability status. Platform capabilities may change as the service is updated; always use the real-time response from this endpoint.\n\nThis endpoint only queries platform metadata and does not start account authorization, publish content, or perform other platform actions.",
         "operationId": "PlatformsController_listPlatforms_v2",
         "tags": [
           "Channel Management/Platforms"
@@ -8780,8 +8997,189 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "The currently registered platform metadata list. Platform capabilities, limits, and status may change as the service is updated; always use the latest response from this endpoint.",
                       "items": {
-                        "$ref": "#/components/schemas/PlatformMetadataVo"
+                        "type": "object",
+                        "properties": {
+                          "platform": {
+                            "type": "string",
+                            "enum": [
+                              "douyin",
+                              "xhs",
+                              "wxSph",
+                              "KWAI",
+                              "youtube",
+                              "wxGzh",
+                              "bilibili",
+                              "twitter",
+                              "tiktok",
+                              "facebook",
+                              "instagram",
+                              "threads",
+                              "pinterest",
+                              "linkedin"
+                            ],
+                            "description": "Platform identification"
+                          },
+                          "displayName": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/displayName"
+                          },
+                          "logoUrl": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/logoUrl"
+                          },
+                          "authType": {
+                            "type": "string",
+                            "enum": [
+                              "oauth2",
+                              "plugin",
+                              "qrcode"
+                            ],
+                            "description": "Authorization type"
+                          },
+                          "authInstructions": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/authInstructions"
+                          },
+                          "emptyAccountHint": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/emptyAccountHint"
+                          },
+                          "editor": {
+                            "type": "string",
+                            "enum": [
+                              "text",
+                              "html"
+                            ],
+                            "description": "Editor type"
+                          },
+                          "contentLimits": {
+                            "type": "object",
+                            "properties": {
+                              "modes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "enum": [
+                                    "article2",
+                                    "article",
+                                    "video"
+                                  ]
+                                },
+                                "description": "Supported publishing content modes"
+                              },
+                              "maxTitleLength": {
+                                "type": "number",
+                                "description": "Maximum title length"
+                              },
+                              "maxBodyLength": {
+                                "type": "number",
+                                "description": "Maximum text length"
+                              },
+                              "maxTotalTextLength": {
+                                "type": "number",
+                                "description": "Maximum length of final published text"
+                              },
+                              "minImages": {
+                                "type": "number",
+                                "description": "Minimum number of images"
+                              },
+                              "maxImages": {
+                                "type": "number",
+                                "description": "Maximum number of pictures"
+                              },
+                              "maxVideos": {
+                                "type": "number",
+                                "description": "Maximum number of videos"
+                              },
+                              "coverRequired": {
+                                "type": "boolean",
+                                "description": "Whether a cover is required"
+                              }
+                            },
+                            "required": [
+                              "modes"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Content restrictions"
+                          },
+                          "mediaRules": {
+                            "type": "object",
+                            "properties": {
+                              "imageFormats": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Picture format"
+                              },
+                              "videoFormats": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "video format"
+                              },
+                              "maxImageSize": {
+                                "type": "number",
+                                "description": "Maximum number of bytes of image"
+                              },
+                              "maxVideoSize": {
+                                "type": "number",
+                                "description": "Maximum number of bytes of video"
+                              },
+                              "maxVideoDuration": {
+                                "type": "number",
+                                "description": "Maximum seconds of video"
+                              },
+                              "minVideoFps": {
+                                "type": "number",
+                                "description": "Minimum video frame rate"
+                              },
+                              "maxVideoFps": {
+                                "type": "number",
+                                "description": "Maximum video frame rate"
+                              },
+                              "maxImageShortSide": {
+                                "type": "number",
+                                "description": "Maximum pixel count of the image's shorter side"
+                              },
+                              "aspectRatio": {
+                                "$ref": "#/components/schemas/PlatformMetadataVo/properties/mediaRules/properties/aspectRatio"
+                              }
+                            },
+                            "additionalProperties": false,
+                            "description": "media rules"
+                          },
+                          "topic": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/topic"
+                          },
+                          "capabilities": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/capabilities"
+                          },
+                          "optionSchema": {
+                            "$ref": "#/components/schemas/PlatformMetadataVo/properties/optionSchema"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "available",
+                              "unavailable"
+                            ],
+                            "description": "Platform status"
+                          }
+                        },
+                        "required": [
+                          "platform",
+                          "displayName",
+                          "logoUrl",
+                          "authType",
+                          "editor",
+                          "contentLimits",
+                          "mediaRules",
+                          "topic",
+                          "capabilities",
+                          "optionSchema",
+                          "status"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -8807,31 +9205,52 @@
                   ]
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
+                  "types": {
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
                       "data": [
                         {
-                          "platform": "douyin",
+                          "platform": "string",
                           "displayName": {
                             "en-US": "string",
                             "zh-CN": "string"
                           },
-                          "logoUrl": "https://assets.aitoearn.cn/example.png",
-                          "authType": "oauth2",
-                          "editor": "none",
+                          "logoUrl": "string",
+                          "authType": "string",
+                          "authInstructions": {
+                            "en-US": "string",
+                            "zh-CN": "string"
+                          },
+                          "emptyAccountHint": {
+                            "title": {
+                              "en-US": "string",
+                              "zh-CN": "string"
+                            },
+                            "description": {
+                              "en-US": "string",
+                              "zh-CN": "string"
+                            },
+                            "action": {
+                              "label": {
+                                "en-US": "string",
+                                "zh-CN": "string"
+                              },
+                              "url": "string"
+                            }
+                          },
+                          "editor": "string",
                           "contentLimits": {
                             "modes": [
-                              "article2"
+                              "string"
                             ],
-                            "maxTitleLength": 1,
-                            "maxBodyLength": 1,
-                            "maxTotalTextLength": 1,
-                            "maxMediaCount": 1,
-                            "maxImages": 1,
-                            "maxVideos": 1
+                            "maxTitleLength": "number",
+                            "maxBodyLength": "number",
+                            "maxTotalTextLength": "number",
+                            "minImages": "number",
+                            "maxImages": "number",
+                            "maxVideos": "number",
+                            "coverRequired": "boolean"
                           },
                           "mediaRules": {
                             "imageFormats": [
@@ -8840,78 +9259,73 @@
                             "videoFormats": [
                               "string"
                             ],
-                            "maxImageSize": 1,
-                            "maxVideoSize": 1,
-                            "minVideoDuration": 1,
-                            "maxVideoDuration": 1,
-                            "minImageWidth": 1,
-                            "minImageHeight": 1,
-                            "maxImageWidth": 1,
-                            "maxImageHeight": 1,
+                            "maxImageSize": "number",
+                            "maxVideoSize": "number",
+                            "maxVideoDuration": "number",
+                            "minVideoFps": "number",
+                            "maxVideoFps": "number",
+                            "maxImageShortSide": "number",
                             "aspectRatio": {
-                              "min": 1,
-                              "max": 1
+                              "min": "number",
+                              "max": "number"
                             }
                           },
                           "topic": {
-                            "supported": true,
-                            "nativeField": true,
-                            "maxCount": 1,
-                            "maxTotalLength": 1
+                            "supported": "boolean",
+                            "nativeField": "boolean",
+                            "maxCount": "number",
+                            "maxTotalLength": "number"
                           },
                           "capabilities": {
                             "auth": {
-                              "supported": true,
-                              "revoke": true,
-                              "selectableAccounts": true,
-                              "refreshAccountAccess": true
+                              "supported": "boolean",
+                              "revoke": "boolean",
+                              "selectableAccounts": "boolean",
+                              "refreshAccountAccess": "boolean"
                             },
                             "publish": {
-                              "supported": true,
-                              "cancel": true,
-                              "update": true,
-                              "verify": true,
-                              "finalize": true,
-                              "scheduleByPlatform": true,
-                              "optionSources": true,
-                              "completionStrategy": "sync"
+                              "supported": "boolean",
+                              "cancel": "boolean",
+                              "update": "boolean",
+                              "verify": "boolean",
+                              "finalize": "boolean",
+                              "scheduleByPlatform": "boolean",
+                              "optionSources": "boolean",
+                              "completionStrategy": "string"
                             },
                             "analytics": {
-                              "account": true,
-                              "work": true
+                              "account": "boolean",
+                              "work": "boolean"
                             },
                             "engagement": {
                               "comments": {
-                                "list": {},
-                                "create": {}
+                                "list": "object",
+                                "create": "object"
                               },
                               "functions": [
-                                {}
+                                "object"
                               ]
                             },
                             "work": {
-                              "listWorks": true,
-                              "listWorksPagination": {},
-                              "getLinkInfo": true,
-                              "getDetail": true,
-                              "verifyOwnership": true
+                              "listWorks": "boolean",
+                              "listWorksPagination": "object",
+                              "getLinkInfo": "boolean",
+                              "getDetail": "boolean",
+                              "verifyOwnership": "boolean"
                             },
                             "browse": {
-                              "search": true,
-                              "getDetail": true
+                              "search": "boolean",
+                              "getDetail": "boolean"
                             },
                             "webhook": {
-                              "supported": true
+                              "supported": "boolean"
                             }
                           },
-                          "optionSchema": {},
-                          "status": "hidden",
-                          "authInstructions": {
-                            "en-US": "string",
-                            "zh-CN": "string"
-                          }
+                          "optionSchema": "object",
+                          "status": "string"
                         }
-                      ]
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }

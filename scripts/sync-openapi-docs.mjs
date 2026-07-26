@@ -1255,6 +1255,9 @@ function applyParameterOverrides(endpoint, operation, overridesMap, parameterLoc
   for (const [parameterName, patch] of Object.entries(overridesMap)) {
     const index = (operation.parameters || []).findIndex(item => item.name === parameterName && item.in === parameterLocation)
     if (index === -1) {
+      if (patch === null) {
+        continue
+      }
       throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} ${parameterLocation}Parameters has unknown parameter: ${parameterName}`)
     }
     if (patch === null) {

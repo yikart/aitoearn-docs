@@ -378,11 +378,263 @@
   },
   "GET /api/ai/models/image/generation": {
     "summary": "图像生成模型",
-    "description": "接口说明：返回各图像生成模型的可选参数（尺寸、风格等）及取值范围。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)及对应的编辑图像接口。"
+    "description": "接口说明：获取当前可用的图像生成模型目录，以及每个模型支持的尺寸、质量、风格、积分范围和价格。模型与参数范围可能随服务更新，调用图像生成接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会创建图像生成任务；需要生成图像时，请调用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)及对应的编辑图像接口。",
+    "responseDataSchema": {
+      "type": "array",
+      "description": "当前可用的图像生成模型列表。模型、参数范围和价格可能随服务更新，请以每次接口返回为准。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "模型名称"
+          },
+          "label": {
+            "type": "string",
+            "description": "模型展示名称"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签列表"
+          },
+          "creditsScope": {
+            "type": "string",
+            "enum": [
+              "seedance"
+            ],
+            "description": "模型使用的积分范围。当前返回 `seedance`，表示 Seedance 专用积分。"
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "支持的图像尺寸列表"
+          },
+          "qualities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "high",
+                "medium",
+                "low"
+              ]
+            },
+            "description": "支持的质量选项"
+          },
+          "styles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "支持的风格选项。返回空数组表示当前模型不支持风格参数。"
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "description": "该价格项适用的图像尺寸"
+                },
+                "price": {
+                  "type": "number",
+                  "description": "当前价格值"
+                },
+                "originPrice": {
+                  "type": "number",
+                  "description": "原价值"
+                }
+              },
+              "required": [
+                "size",
+                "price",
+                "originPrice"
+              ],
+              "additionalProperties": false
+            },
+            "description": "图像尺寸价格表"
+          },
+          "description": {
+            "type": "string",
+            "description": "模型描述"
+          }
+        },
+        "required": [
+          "name",
+          "label",
+          "tags",
+          "creditsScope",
+          "sizes",
+          "qualities",
+          "styles",
+          "pricing",
+          "description"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "types": {
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "name": "string",
+              "label": "string",
+              "tags": [
+                "string"
+              ],
+              "creditsScope": "string",
+              "sizes": [
+                "string"
+              ],
+              "qualities": [
+                "string"
+              ],
+              "styles": [
+                "string"
+              ],
+              "pricing": [
+                {
+                  "size": "string",
+                  "price": "number",
+                  "originPrice": "number"
+                }
+              ],
+              "description": "string"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    }
   },
   "GET /api/ai/models/image/edit": {
     "summary": "图像编辑模型",
-    "description": "接口说明：返回各图像编辑模型的可选参数及取值范围。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)及对应的生成图像接口。"
+    "description": "接口说明：获取当前可用的图像编辑模型目录，以及每个模型支持的尺寸、最大输入图片数量、积分范围和价格。模型与参数范围可能随服务更新，调用图像编辑接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会创建图像编辑任务；需要编辑图像时，请调用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)及对应的生成图像接口。",
+    "responseDataSchema": {
+      "type": "array",
+      "description": "当前可用的图像编辑模型列表。模型、参数范围和价格可能随服务更新，请以每次接口返回为准。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "模型名称"
+          },
+          "label": {
+            "type": "string",
+            "description": "模型展示名称"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签列表"
+          },
+          "creditsScope": {
+            "type": "string",
+            "enum": [
+              "seedance"
+            ],
+            "description": "模型使用的积分范围。当前返回 `seedance`，表示 Seedance 专用积分。"
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "支持的图像尺寸列表"
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "description": "该价格项适用的图像尺寸"
+                },
+                "price": {
+                  "type": "number",
+                  "description": "当前价格值"
+                },
+                "originPrice": {
+                  "type": "number",
+                  "description": "原价值"
+                }
+              },
+              "required": [
+                "size",
+                "price",
+                "originPrice"
+              ],
+              "additionalProperties": false
+            },
+            "description": "图像尺寸价格表"
+          },
+          "maxInputImages": {
+            "type": "integer",
+            "description": "模型允许的最大输入图片数量"
+          },
+          "description": {
+            "type": "string",
+            "description": "模型描述"
+          }
+        },
+        "required": [
+          "name",
+          "label",
+          "tags",
+          "creditsScope",
+          "sizes",
+          "pricing",
+          "maxInputImages",
+          "description"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "types": {
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "name": "string",
+              "label": "string",
+              "tags": [
+                "string"
+              ],
+              "creditsScope": "string",
+              "sizes": [
+                "string"
+              ],
+              "pricing": [
+                {
+                  "size": "string",
+                  "price": "number",
+                  "originPrice": "number"
+                }
+              ],
+              "maxInputImages": "number",
+              "description": "string"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    }
   },
   "POST /api/ai/image/generate": {
     "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/post-api-ai-images-generations)。",
@@ -461,10 +713,187 @@
   },
   "GET /api/ai/models/chat": {
     "tag": "AI 服务/大语言模型",
-    "description": "接口说明：获取当前账号可用的对话模型列表及能力信息，用于在调用对话接口前选择模型、展示模型能力和价格信息。",
+    "description": "接口说明：获取当前可用的对话模型目录，以及每个模型所属渠道、适用场景、输入输出模态、积分范围和价格。模型与能力可能随服务更新，调用对话接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会发起模型对话；需要调用模型时，请根据所用协议选择[「OpenAI 对话」](/api-reference/post-api-ai-chat-completions)、[「Anthropic 对话」](/api-reference/post-api-ai-v1-messages)或 Gemini 对话接口。",
     "queryParameters": {
       "channel": null,
       "scene": null
+    },
+    "responseDataSchema": {
+      "type": "array",
+      "description": "当前可用的对话模型列表。模型、能力和价格可能随服务更新，请以每次接口返回为准。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "模型名称"
+          },
+          "label": {
+            "type": "string",
+            "description": "模型展示名称"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签列表"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "openai",
+              "deepseek",
+              "anthropic",
+              "gemini"
+            ],
+            "description": "模型所属渠道"
+          },
+          "creditsScope": {
+            "type": "string",
+            "enum": [
+              "general",
+              "seedance"
+            ],
+            "description": "模型使用的积分范围。`general` 表示普通积分，`seedance` 表示 Seedance 专用积分。"
+          },
+          "scenes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "web",
+                "comment",
+                "draft-generation",
+                "plugin"
+              ]
+            },
+            "description": "适用场景"
+          },
+          "inputModalities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "text",
+                "image",
+                "audio",
+                "video"
+              ]
+            },
+            "description": "支持输入模态"
+          },
+          "outputModalities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "text",
+                "image"
+              ]
+            },
+            "description": "支持输出模态"
+          },
+          "pricing": {
+            "$ref": "#/components/schemas/ChatModelConfigVo/properties/pricing"
+          },
+          "description": {
+            "type": "string",
+            "description": "模型描述"
+          },
+          "fixedImagePricing": {
+            "$ref": "#/components/schemas/ChatModelConfigVo/properties/fixedImagePricing"
+          }
+        },
+        "required": [
+          "name",
+          "label",
+          "tags",
+          "channel",
+          "creditsScope",
+          "scenes",
+          "inputModalities",
+          "outputModalities",
+          "pricing",
+          "description"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "types": {
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "name": "string",
+              "label": "string",
+              "tags": [
+                "string"
+              ],
+              "channel": "string",
+              "creditsScope": "string",
+              "scenes": [
+                "string"
+              ],
+              "inputModalities": [
+                "string"
+              ],
+              "outputModalities": [
+                "string"
+              ],
+              "pricing": {
+                "tiers": [
+                  {
+                    "maxInputTokens": "number",
+                    "input": {
+                      "text": "string",
+                      "image": "string",
+                      "video": "string",
+                      "audio": "string",
+                      "cacheRead": "string",
+                      "cacheWrite5m": "string",
+                      "cacheWrite1h": "string"
+                    },
+                    "output": {
+                      "text": "string",
+                      "image": "string"
+                    }
+                  }
+                ],
+                "originPricing": {
+                  "tiers": [
+                    {
+                      "input": {
+                        "text": "string",
+                        "image": "string",
+                        "video": "string",
+                        "audio": "string",
+                        "cacheRead": "string",
+                        "cacheWrite5m": "string",
+                        "cacheWrite1h": "string"
+                      },
+                      "output": {
+                        "text": "string",
+                        "image": "string"
+                      }
+                    }
+                  ]
+                }
+              },
+              "description": "string",
+              "fixedImagePricing": [
+                {
+                  "resolution": "string",
+                  "price": "number"
+                }
+              ]
+            }
+          ],
+          "requestId": "string"
+        }
+      }
     }
   },
   "POST /api/ai/chat/completions": {
@@ -671,7 +1100,320 @@
     "summary": "App 拉起链接"
   },
   "GET /api/v2/channels/platforms": {
-    "summary": "平台列表"
+    "summary": "平台列表",
+    "description": "接口说明：获取当前已注册渠道平台的元数据目录，包括平台展示信息、授权方式、内容限制、媒体规则、发布与互动能力、发布选项 Schema 和可用状态。平台能力可能随服务更新，请以本接口的实时返回值为准。\n\n本接口只查询平台元数据，不会发起账号授权、内容发布或其他平台操作。",
+    "responseDataSchema": {
+      "type": "array",
+      "description": "当前已注册的平台元数据列表。平台能力、限制和状态可能随服务更新，请以每次接口返回为准。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "platform": {
+            "type": "string",
+            "enum": [
+              "douyin",
+              "xhs",
+              "wxSph",
+              "KWAI",
+              "youtube",
+              "wxGzh",
+              "bilibili",
+              "twitter",
+              "tiktok",
+              "facebook",
+              "instagram",
+              "threads",
+              "pinterest",
+              "linkedin"
+            ],
+            "description": "平台标识"
+          },
+          "displayName": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/displayName"
+          },
+          "logoUrl": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/logoUrl"
+          },
+          "authType": {
+            "type": "string",
+            "enum": [
+              "oauth2",
+              "plugin",
+              "qrcode"
+            ],
+            "description": "授权类型"
+          },
+          "authInstructions": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/authInstructions"
+          },
+          "emptyAccountHint": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/emptyAccountHint"
+          },
+          "editor": {
+            "type": "string",
+            "enum": [
+              "text",
+              "html"
+            ],
+            "description": "编辑器类型"
+          },
+          "contentLimits": {
+            "type": "object",
+            "properties": {
+              "modes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "article2",
+                    "article",
+                    "video"
+                  ]
+                },
+                "description": "支持的发布内容模式"
+              },
+              "maxTitleLength": {
+                "type": "number",
+                "description": "标题最大长度"
+              },
+              "maxBodyLength": {
+                "type": "number",
+                "description": "正文最大长度"
+              },
+              "maxTotalTextLength": {
+                "type": "number",
+                "description": "最终发布文本最大长度"
+              },
+              "minImages": {
+                "type": "number",
+                "description": "图片最小数量"
+              },
+              "maxImages": {
+                "type": "number",
+                "description": "图片最大数量"
+              },
+              "maxVideos": {
+                "type": "number",
+                "description": "视频最大数量"
+              },
+              "coverRequired": {
+                "type": "boolean",
+                "description": "是否必须提供封面"
+              }
+            },
+            "required": [
+              "modes"
+            ],
+            "additionalProperties": false,
+            "description": "内容限制"
+          },
+          "mediaRules": {
+            "type": "object",
+            "properties": {
+              "imageFormats": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "图片格式"
+              },
+              "videoFormats": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "视频格式"
+              },
+              "maxImageSize": {
+                "type": "number",
+                "description": "图片最大字节数"
+              },
+              "maxVideoSize": {
+                "type": "number",
+                "description": "视频最大字节数"
+              },
+              "maxVideoDuration": {
+                "type": "number",
+                "description": "视频最大秒数"
+              },
+              "minVideoFps": {
+                "type": "number",
+                "description": "视频最小帧率"
+              },
+              "maxVideoFps": {
+                "type": "number",
+                "description": "视频最大帧率"
+              },
+              "maxImageShortSide": {
+                "type": "number",
+                "description": "图片短边最大像素数"
+              },
+              "aspectRatio": {
+                "$ref": "#/components/schemas/PlatformMetadataVo/properties/mediaRules/properties/aspectRatio"
+              }
+            },
+            "additionalProperties": false,
+            "description": "媒体规则"
+          },
+          "topic": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/topic"
+          },
+          "capabilities": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/capabilities"
+          },
+          "optionSchema": {
+            "$ref": "#/components/schemas/PlatformMetadataVo/properties/optionSchema"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "unavailable"
+            ],
+            "description": "平台状态"
+          }
+        },
+        "required": [
+          "platform",
+          "displayName",
+          "logoUrl",
+          "authType",
+          "editor",
+          "contentLimits",
+          "mediaRules",
+          "topic",
+          "capabilities",
+          "optionSchema",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "types": {
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "platform": "string",
+              "displayName": {
+                "en-US": "string",
+                "zh-CN": "string"
+              },
+              "logoUrl": "string",
+              "authType": "string",
+              "authInstructions": {
+                "en-US": "string",
+                "zh-CN": "string"
+              },
+              "emptyAccountHint": {
+                "title": {
+                  "en-US": "string",
+                  "zh-CN": "string"
+                },
+                "description": {
+                  "en-US": "string",
+                  "zh-CN": "string"
+                },
+                "action": {
+                  "label": {
+                    "en-US": "string",
+                    "zh-CN": "string"
+                  },
+                  "url": "string"
+                }
+              },
+              "editor": "string",
+              "contentLimits": {
+                "modes": [
+                  "string"
+                ],
+                "maxTitleLength": "number",
+                "maxBodyLength": "number",
+                "maxTotalTextLength": "number",
+                "minImages": "number",
+                "maxImages": "number",
+                "maxVideos": "number",
+                "coverRequired": "boolean"
+              },
+              "mediaRules": {
+                "imageFormats": [
+                  "string"
+                ],
+                "videoFormats": [
+                  "string"
+                ],
+                "maxImageSize": "number",
+                "maxVideoSize": "number",
+                "maxVideoDuration": "number",
+                "minVideoFps": "number",
+                "maxVideoFps": "number",
+                "maxImageShortSide": "number",
+                "aspectRatio": {
+                  "min": "number",
+                  "max": "number"
+                }
+              },
+              "topic": {
+                "supported": "boolean",
+                "nativeField": "boolean",
+                "maxCount": "number",
+                "maxTotalLength": "number"
+              },
+              "capabilities": {
+                "auth": {
+                  "supported": "boolean",
+                  "revoke": "boolean",
+                  "selectableAccounts": "boolean",
+                  "refreshAccountAccess": "boolean"
+                },
+                "publish": {
+                  "supported": "boolean",
+                  "cancel": "boolean",
+                  "update": "boolean",
+                  "verify": "boolean",
+                  "finalize": "boolean",
+                  "scheduleByPlatform": "boolean",
+                  "optionSources": "boolean",
+                  "completionStrategy": "string"
+                },
+                "analytics": {
+                  "account": "boolean",
+                  "work": "boolean"
+                },
+                "engagement": {
+                  "comments": {
+                    "list": "object",
+                    "create": "object"
+                  },
+                  "functions": [
+                    "object"
+                  ]
+                },
+                "work": {
+                  "listWorks": "boolean",
+                  "listWorksPagination": "object",
+                  "getLinkInfo": "boolean",
+                  "getDetail": "boolean",
+                  "verifyOwnership": "boolean"
+                },
+                "browse": {
+                  "search": "boolean",
+                  "getDetail": "boolean"
+                },
+                "webhook": {
+                  "supported": "boolean"
+                }
+              },
+              "optionSchema": "object",
+              "status": "string"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    }
   },
   "GET /api/v2/channels/platforms/{platform}/publish-options": {
     "summary": "平台发布选项",
