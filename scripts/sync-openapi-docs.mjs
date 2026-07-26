@@ -1319,6 +1319,22 @@ function hasResponseOverride(override) {
   return override?.responseDescription !== undefined
     || override?.responseDataSchema !== undefined
     || override?.responseExamples !== undefined
+    || override?.responseRequired !== undefined
+}
+
+function removeRequiredKeywords(schema) {
+  if (!schema || typeof schema !== 'object') {
+    return
+  }
+  delete schema.required
+  for (const value of Object.values(schema)) {
+    if (Array.isArray(value)) {
+      value.forEach(removeRequiredKeywords)
+    }
+    else {
+      removeRequiredKeywords(value)
+    }
+  }
 }
 
 function applyResponseOverrides(endpoint, operation, override) {
@@ -1344,6 +1360,9 @@ function applyResponseOverrides(endpoint, operation, override) {
       throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} response has no data schema`)
     }
     responseSchema.properties.data = structuredClone(override.responseDataSchema)
+  }
+  if (override.responseRequired === false) {
+    removeRequiredKeywords(jsonContent.schema)
   }
   if (override.responseExamples !== undefined) {
     if (override.responseExamples === null) {

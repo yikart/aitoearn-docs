@@ -299,28 +299,11 @@
                                   "description": "Original price value"
                                 }
                               },
-                              "required": [
-                                "price"
-                              ],
                               "additionalProperties": false
                             },
                             "description": "price list"
                           }
                         },
-                        "required": [
-                          "name",
-                          "label",
-                          "description",
-                          "tags",
-                          "creditsScope",
-                          "modes",
-                          "resolutions",
-                          "durations",
-                          "maxInputImages",
-                          "aspectRatios",
-                          "defaults",
-                          "pricing"
-                        ],
                         "additionalProperties": false
                       }
                     },
@@ -340,11 +323,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "types": {
@@ -1124,11 +1103,6 @@
                                   "description": "Original price value"
                                 }
                               },
-                              "required": [
-                                "size",
-                                "price",
-                                "originPrice"
-                              ],
                               "additionalProperties": false
                             },
                             "description": "Image size pricing table"
@@ -1138,17 +1112,6 @@
                             "description": "Model description"
                           }
                         },
-                        "required": [
-                          "name",
-                          "label",
-                          "tags",
-                          "creditsScope",
-                          "sizes",
-                          "qualities",
-                          "styles",
-                          "pricing",
-                          "description"
-                        ],
                         "additionalProperties": false
                       }
                     },
@@ -1168,11 +1131,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "types": {
@@ -1309,11 +1268,6 @@
                                   "description": "Original price value"
                                 }
                               },
-                              "required": [
-                                "size",
-                                "price",
-                                "originPrice"
-                              ],
                               "additionalProperties": false
                             },
                             "description": "Image size pricing table"
@@ -1327,16 +1281,6 @@
                             "description": "Model description"
                           }
                         },
-                        "required": [
-                          "name",
-                          "label",
-                          "tags",
-                          "creditsScope",
-                          "sizes",
-                          "pricing",
-                          "maxInputImages",
-                          "description"
-                        ],
                         "additionalProperties": false
                       }
                     },
@@ -1356,11 +1300,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "types": {
@@ -2422,18 +2362,6 @@
                             "$ref": "#/components/schemas/ChatModelConfigVo/properties/fixedImagePricing"
                           }
                         },
-                        "required": [
-                          "name",
-                          "label",
-                          "tags",
-                          "channel",
-                          "creditsScope",
-                          "scenes",
-                          "inputModalities",
-                          "outputModalities",
-                          "pricing",
-                          "description"
-                        ],
                         "additionalProperties": false
                       }
                     },
@@ -2453,11 +2381,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "types": {

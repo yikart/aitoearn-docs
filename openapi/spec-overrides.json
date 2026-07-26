@@ -1,6 +1,7 @@
 {
   "GET /api/ai/models/video/generation": {
     "summary": "视频生成模型",
+    "responseRequired": false,
     "description": "接口说明：获取当前可用的视频生成模型目录，以及每个模型支持的模式、分辨率、画面比例、时长、参考媒体限制、默认参数和价格。模型与参数范围可能随服务更新，调用视频生成接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会创建视频生成任务；需要生成视频时，请调用[「生成视频」](/api-reference/post-api-ai-video-generations)接口。\n\n`modes` 字段的常量含义与典型输入参数，请参阅[「视频生成 modes 常量说明」](/zh/use/video-generation#modes-常量说明)。",
     "responseDataSchema": {
       "type": "array",
@@ -378,6 +379,7 @@
   },
   "GET /api/ai/models/image/generation": {
     "summary": "图像生成模型",
+    "responseRequired": false,
     "description": "接口说明：获取当前可用的图像生成模型目录，以及每个模型支持的尺寸、质量、风格、积分范围和价格。模型与参数范围可能随服务更新，调用图像生成接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会创建图像生成任务；需要生成图像时，请调用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)及对应的编辑图像接口。",
     "responseDataSchema": {
       "type": "array",
@@ -519,6 +521,7 @@
   },
   "GET /api/ai/models/image/edit": {
     "summary": "图像编辑模型",
+    "responseRequired": false,
     "description": "接口说明：获取当前可用的图像编辑模型目录，以及每个模型支持的尺寸、最大输入图片数量、积分范围和价格。模型与参数范围可能随服务更新，调用图像编辑接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会创建图像编辑任务；需要编辑图像时，请调用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。\n\n图像编辑为**图生图**：必须传入参考图片，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)及对应的生成图像接口。",
     "responseDataSchema": {
       "type": "array",
@@ -712,6 +715,7 @@
     "summary": "图像任务状态"
   },
   "GET /api/ai/models/chat": {
+    "responseRequired": false,
     "tag": "AI 服务/大语言模型",
     "description": "接口说明：获取当前可用的对话模型目录，以及每个模型所属渠道、适用场景、输入输出模态、积分范围和价格。模型与能力可能随服务更新，调用对话接口时请以本接口的实时返回值为准。\n\n本接口只查询模型目录，不会发起模型对话；需要调用模型时，请根据所用协议选择[「OpenAI 对话」](/api-reference/post-api-ai-chat-completions)、[「Anthropic 对话」](/api-reference/post-api-ai-v1-messages)或 Gemini 对话接口。",
     "queryParameters": {
