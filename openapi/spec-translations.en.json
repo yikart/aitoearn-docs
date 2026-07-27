@@ -757,7 +757,7 @@
   "Feed 链接": "Feed link",
   "Gemini 对话": "Gemini conversation",
   "Gemini 流式对话": "Gemini streaming conversations",
-  "Gemini SDK 兼容接口使用的 API Key header。": "API Key header used by Gemini SDK compatible interface.",
+  "传入从 AiToEarn 获取的 API Key。为兼容 Gemini SDK，本接口使用 `x-goog-api-key` 请求头，无需 Google Gemini 官方 API Key。": "Pass an API Key obtained from AiToEarn. For Gemini SDK compatibility, this endpoint uses the `x-goog-api-key` request header; a Google Gemini API Key is not required.",
   "ID 编号": "ID number",
   "Instagram 发布选项": "Instagram posting options",
   "JSON 输出结构约束，通常配合 `responseMimeType=application/json` 使用": "JSON output structure constraints, usually used with `responseMimeType=application/json`",

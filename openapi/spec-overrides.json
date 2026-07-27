@@ -910,18 +910,182 @@
       },
       "billingGroupId": null,
       "source": null
+    },
+    "responseDescription": "第三方协议原生响应或 SSE 数据。不使用 AiToEarn 通用响应包裹。",
+    "responseContent": {
+      "application/json": {
+        "examples": {
+          "gpt-5.6-terra": {
+            "value": {
+              "id": "string",
+              "object": "string",
+              "created": "integer",
+              "model": "string",
+              "choices": [
+                {
+                  "index": "integer",
+                  "message": {
+                    "role": "string",
+                    "content": "string",
+                    "reasoning_content": "string",
+                    "tool_calls": [
+                      "object"
+                    ]
+                  },
+                  "finish_reason": "string",
+                  "native_finish_reason": "string"
+                }
+              ],
+              "usage": {
+                "completion_tokens": "integer",
+                "total_tokens": "integer",
+                "prompt_tokens": "integer",
+                "prompt_tokens_details": "object | null",
+                "completion_tokens_details": "object | null"
+              }
+            }
+          },
+          "glm-5.2": {
+            "value": {
+              "id": "string",
+              "object": "string",
+              "created": "integer",
+              "model": "string",
+              "choices": [
+                {
+                  "index": "integer",
+                  "finish_reason": "string",
+                  "logprobs": "object | null",
+                  "message": {
+                    "role": "string",
+                    "content": "string",
+                    "name": "string | null",
+                    "reasoning_content": "string",
+                    "tool_calls": [
+                      "object"
+                    ]
+                  }
+                }
+              ],
+              "usage": {
+                "prompt_tokens": "integer",
+                "completion_tokens": "integer",
+                "total_tokens": "integer",
+                "prompt_tokens_details": "object | null"
+              },
+              "cost": "string"
+            }
+          },
+          "deepseek-v4-pro": {
+            "value": {
+              "id": "string",
+              "object": "string",
+              "created": "integer",
+              "model": "string",
+              "choices": [
+                {
+                  "index": "integer",
+                  "finish_reason": "string",
+                  "logprobs": "object | null",
+                  "message": {
+                    "role": "string",
+                    "content": "string",
+                    "reasoning_content": "string"
+                  }
+                }
+              ],
+              "usage": {
+                "prompt_tokens": "integer",
+                "completion_tokens": "integer",
+                "total_tokens": "integer",
+                "prompt_cache_hit_tokens": "integer",
+                "prompt_cache_miss_tokens": "integer",
+                "prompt_tokens_details": "object | null",
+                "completion_tokens_details": "object | null"
+              },
+              "cost": "string"
+            }
+          }
+        }
+      },
+      "text/event-stream": {
+        "schema": {
+          "type": "string",
+          "description": "SSE 流式响应。"
+        },
+        "example": "string"
+      }
     }
   },
   "POST /api/ai/v1/messages": {
     "tag": "AI 服务/大语言模型",
     "summary": "Anthropic 对话",
     "description": "接口说明：Anthropic Messages API（`/v1/messages`）的兼容端点，支持流式输出（SSE）。请求、响应与错误格式遵循 Anthropic 规范；鉴权使用 `x-api-key` 头（Anthropic SDK 默认携带），已有 Anthropic SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
+    "responseDescription": "第三方协议原生响应或 SSE 数据。不使用 AiToEarn 通用响应包裹。",
+    "responseContent": {
+      "text/event-stream": {
+        "schema": {
+          "type": "string",
+          "description": "Anthropic Messages 协议的 SSE 事件流。"
+        },
+        "examples": {
+          "sse": {
+            "value": "event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"model\":\"string\",\"id\":\"string\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[],\"stop_reason\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":\"integer\",\"output_tokens\":\"integer\",\"cache_creation_input_tokens\":\"integer\",\"cache_read_input_tokens\":\"integer\"}}}\n\nevent: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":\"integer\",\"content_block\":{\"type\":\"text\",\"text\":\"string\"}}\n\nevent: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":\"integer\",\"delta\":{\"type\":\"text_delta\",\"text\":\"string\"}}\n\nevent: content_block_stop\ndata: {\"type\":\"content_block_stop\",\"index\":\"integer\"}\n\nevent: message_delta\ndata: {\"type\":\"message_delta\",\"delta\":{\"stop_reason\":\"end_turn\",\"stop_sequence\":null},\"usage\":{\"input_tokens\":\"integer\",\"output_tokens\":\"integer\",\"cache_creation_input_tokens\":\"integer\",\"cache_read_input_tokens\":\"integer\",\"cache_creation\":{\"ephemeral_5m_input_tokens\":\"integer\"}}}\n\nevent: message_stop\ndata: {\"type\":\"message_stop\"}"
+          }
+        }
+      }
+    },
     "bodyProperties": {
+      "messages": {
+        "example": [
+          {
+            "role": "user",
+            "content": "请用一句话介绍 AiToEarn。"
+          }
+        ],
+        "items": {
+          "properties": {
+            "role": {
+              "example": "user"
+            },
+            "content": {
+              "type": "string",
+              "example": "请用一句话介绍 AiToEarn。"
+            }
+          }
+        }
+      },
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "Anthropic 渠道模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），选择返回结果中 `channel` 为 `anthropic` 的 `data[n].name`。",
+        "example": "claude-sonnet-5"
+      },
+      "max_tokens": {
+        "description": "最大输出 Token 数。取值范围为 1 至 9007199254740991，默认值为 32000；示例使用 64 以控制测试消耗。",
+        "example": 64
       },
       "billingGroupId": null,
       "source": null
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "1": {
+              "summary": "基础对话",
+              "value": {
+                "model": "claude-sonnet-5",
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "请用一句话介绍 AiToEarn。"
+                  }
+                ],
+                "max_tokens": 64
+              }
+            }
+          }
+        }
+      }
     }
   },
   "POST /api/ai/v1beta/models/{model}:generateContent": {
@@ -930,12 +1094,77 @@
     "description": "接口说明：Gemini `:generateContent` API 的兼容端点（非流式，聚合返回完整结果）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
     "pathParameters": {
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
+        "example": "gemini-3.5-flash",
+        "schema": {
+          "example": "gemini-3.5-flash"
+        }
       }
     },
     "bodyProperties": {
       "model": {
-        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。"
+        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。",
+        "example": "gemini-3.5-flash"
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "1": {
+              "summary": "基础对话",
+              "value": {
+                "model": "gemini-3.5-flash",
+                "contents": [
+                  {
+                    "role": "user",
+                    "parts": [
+                      {
+                        "text": "请只回复 OK。"
+                      }
+                    ]
+                  }
+                ],
+                "config": {
+                  "temperature": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseDescription": "第三方协议原生响应，不使用 AiToEarn 通用响应包裹。",
+    "responseContent": {
+      "application/json": {
+        "examples": {
+          "success": {
+            "value": {
+              "candidates": [
+                {
+                  "content": {
+                    "role": "string",
+                    "parts": [
+                      {
+                        "text": "string"
+                      }
+                    ]
+                  },
+                  "index": "integer"
+                }
+              ],
+              "modelVersion": "string",
+              "sdkHttpResponse": {
+                "headers": "object"
+              },
+              "usageMetadata": {
+                "promptTokenCount": "integer",
+                "candidatesTokenCount": "integer",
+                "totalTokenCount": "integer"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -945,12 +1174,58 @@
     "description": "接口说明：Gemini `:streamGenerateContent` API 的兼容端点（流式输出，SSE）。请求与响应格式遵循 Gemini 规范；鉴权使用 `x-goog-api-key` 头（Gemini SDK 默认携带），已有 Gemini SDK 只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n调用本接口前，请先请求[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），获取当前可用的模型列表。",
     "pathParameters": {
       "model": {
-        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。"
+        "description": "模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），传入其返回的 `data[n].name`。",
+        "example": "gemini-3.5-flash",
+        "schema": {
+          "example": "gemini-3.5-flash"
+        }
       }
     },
     "bodyProperties": {
       "model": {
-        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。"
+        "description": "模型 ID，与路径参数 `model` 一致。取值来自[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口返回的 `data[n].name`。",
+        "example": "gemini-3.5-flash"
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "1": {
+              "summary": "基础对话",
+              "value": {
+                "model": "gemini-3.5-flash",
+                "contents": [
+                  {
+                    "role": "user",
+                    "parts": [
+                      {
+                        "text": "请只回复 OK。"
+                      }
+                    ]
+                  }
+                ],
+                "config": {
+                  "temperature": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseDescription": "第三方协议原生响应或 SSE 数据。不使用 AiToEarn 通用响应包裹。",
+    "responseContent": {
+      "text/event-stream": {
+        "schema": {
+          "type": "string",
+          "description": "SSE 流式响应。"
+        },
+        "examples": {
+          "sse": {
+            "value": "data: {\"candidates\":[{\"content\":{\"role\":\"string\",\"parts\":[{\"text\":\"string\"}]},\"index\":\"integer\"}],\"modelVersion\":\"string\",\"sdkHttpResponse\":{\"headers\":\"object\"}}\n\ndata: {\"candidates\":[{\"finishReason\":\"string\",\"index\":\"integer\"}],\"modelVersion\":\"string\",\"usageMetadata\":{\"promptTokenCount\":\"integer\",\"candidatesTokenCount\":\"integer\",\"totalTokenCount\":\"integer\"},\"sdkHttpResponse\":{\"headers\":\"object\"}}"
+          }
+        }
       }
     }
   },

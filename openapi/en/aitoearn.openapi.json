@@ -2515,19 +2515,6 @@
                     "stream": false
                   },
                   "summary": "Basic chat"
-                },
-                "2": {
-                  "value": {
-                    "model": "gpt-5.6-terra",
-                    "messages": [
-                      {
-                        "role": "user",
-                        "content": "Introduce AiToEarn in one sentence."
-                      }
-                    ],
-                    "stream": true
-                  },
-                  "summary": "Streaming chat"
                 }
               }
             }
@@ -2539,17 +2526,96 @@
             "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
-                },
                 "examples": {
-                  "success": {
-                    "summary": "Native third-party success response",
+                  "gpt-5.6-terra": {
                     "value": {
-                      "id": "RelayController_chatCompletions_example",
-                      "object": "response"
+                      "id": "string",
+                      "object": "string",
+                      "created": "integer",
+                      "model": "string",
+                      "choices": [
+                        {
+                          "index": "integer",
+                          "message": {
+                            "role": "string",
+                            "content": "string",
+                            "reasoning_content": "string",
+                            "tool_calls": [
+                              "object"
+                            ]
+                          },
+                          "finish_reason": "string",
+                          "native_finish_reason": "string"
+                        }
+                      ],
+                      "usage": {
+                        "completion_tokens": "integer",
+                        "total_tokens": "integer",
+                        "prompt_tokens": "integer",
+                        "prompt_tokens_details": "object | null",
+                        "completion_tokens_details": "object | null"
+                      }
+                    }
+                  },
+                  "glm-5.2": {
+                    "value": {
+                      "id": "string",
+                      "object": "string",
+                      "created": "integer",
+                      "model": "string",
+                      "choices": [
+                        {
+                          "index": "integer",
+                          "finish_reason": "string",
+                          "logprobs": "object | null",
+                          "message": {
+                            "role": "string",
+                            "content": "string",
+                            "name": "string | null",
+                            "reasoning_content": "string",
+                            "tool_calls": [
+                              "object"
+                            ]
+                          }
+                        }
+                      ],
+                      "usage": {
+                        "prompt_tokens": "integer",
+                        "completion_tokens": "integer",
+                        "total_tokens": "integer",
+                        "prompt_tokens_details": "object | null"
+                      },
+                      "cost": "string"
+                    }
+                  },
+                  "deepseek-v4-pro": {
+                    "value": {
+                      "id": "string",
+                      "object": "string",
+                      "created": "integer",
+                      "model": "string",
+                      "choices": [
+                        {
+                          "index": "integer",
+                          "finish_reason": "string",
+                          "logprobs": "object | null",
+                          "message": {
+                            "role": "string",
+                            "content": "string",
+                            "reasoning_content": "string"
+                          }
+                        }
+                      ],
+                      "usage": {
+                        "prompt_tokens": "integer",
+                        "completion_tokens": "integer",
+                        "total_tokens": "integer",
+                        "prompt_cache_hit_tokens": "integer",
+                        "prompt_cache_miss_tokens": "integer",
+                        "prompt_tokens_details": "object | null",
+                        "completion_tokens_details": "object | null"
+                      },
+                      "cost": "string"
                     }
                   }
                 }
@@ -2558,7 +2624,8 @@
                 "schema": {
                   "type": "string",
                   "description": "SSE streaming response."
-                }
+                },
+                "example": "string"
               }
             }
           }
@@ -2607,7 +2674,21 @@
               "schema": {
                 "$ref": "#/components/schemas/ClaudeChatProxyDto"
               },
-              "examples": {}
+              "examples": {
+                "1": {
+                  "summary": "Basic chat",
+                  "value": {
+                    "model": "claude-sonnet-5",
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "Introduce AiToEarn in one sentence."
+                      }
+                    ],
+                    "max_tokens": 64
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -2616,26 +2697,15 @@
           "200": {
             "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
-                },
-                "examples": {
-                  "success": {
-                    "summary": "Native third-party success response",
-                    "value": {
-                      "id": "RelayController_claudeMessages_example",
-                      "object": "response"
-                    }
-                  }
-                }
-              },
               "text/event-stream": {
                 "schema": {
                   "type": "string",
-                  "description": "SSE streaming response."
+                  "description": "SSE event stream using the Anthropic Messages protocol."
+                },
+                "examples": {
+                  "sse": {
+                    "value": "event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"model\":\"string\",\"id\":\"string\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[],\"stop_reason\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":\"integer\",\"output_tokens\":\"integer\",\"cache_creation_input_tokens\":\"integer\",\"cache_read_input_tokens\":\"integer\"}}}\n\nevent: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":\"integer\",\"content_block\":{\"type\":\"text\",\"text\":\"string\"}}\n\nevent: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":\"integer\",\"delta\":{\"type\":\"text_delta\",\"text\":\"string\"}}\n\nevent: content_block_stop\ndata: {\"type\":\"content_block_stop\",\"index\":\"integer\"}\n\nevent: message_delta\ndata: {\"type\":\"message_delta\",\"delta\":{\"stop_reason\":\"end_turn\",\"stop_sequence\":null},\"usage\":{\"input_tokens\":\"integer\",\"output_tokens\":\"integer\",\"cache_creation_input_tokens\":\"integer\",\"cache_read_input_tokens\":\"integer\",\"cache_creation\":{\"ephemeral_5m_input_tokens\":\"integer\"}}}\n\nevent: message_stop\ndata: {\"type\":\"message_stop\"}"
+                  }
                 }
               }
             }
@@ -2684,9 +2754,11 @@
             "in": "path",
             "description": "Model ID. First call the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface (`GET /api/ai/models/chat`) and pass in the `data[n].name` returned by it.",
             "required": true,
-            "example": "",
+            "example": "gemini-3.5-flash",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "gemini-3.5-flash",
+              "default": "gemini-3.5-flash"
             }
           }
         ],
@@ -2698,7 +2770,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "Model ID, consistent with the path parameter `model`. The value comes from `data[n].name` returned by the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface."
+                    "description": "Model ID, consistent with the path parameter `model`. The value comes from `data[n].name` returned by the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface.",
+                    "example": "gemini-3.5-flash"
                   },
                   "contents": {
                     "type": "array",
@@ -2800,35 +2873,63 @@
                   "contents"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "1": {
+                  "summary": "Basic chat",
+                  "value": {
+                    "model": "gemini-3.5-flash",
+                    "contents": [
+                      {
+                        "role": "user",
+                        "parts": [
+                          {
+                            "text": "Reply with OK only."
+                          }
+                        ]
+                      }
+                    ],
+                    "config": {
+                      "temperature": 0
+                    }
+                  }
+                }
+              }
             }
           },
           "required": true
         },
         "responses": {
           "200": {
-            "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
+            "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope.",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
-                },
                 "examples": {
                   "success": {
-                    "summary": "Native third-party success response",
                     "value": {
-                      "id": "RelayController_geminiGenerateContent_example",
-                      "object": "response"
+                      "candidates": [
+                        {
+                          "content": {
+                            "role": "string",
+                            "parts": [
+                              {
+                                "text": "string"
+                              }
+                            ]
+                          },
+                          "index": "integer"
+                        }
+                      ],
+                      "modelVersion": "string",
+                      "sdkHttpResponse": {
+                        "headers": "object"
+                      },
+                      "usageMetadata": {
+                        "promptTokenCount": "integer",
+                        "candidatesTokenCount": "integer",
+                        "totalTokenCount": "integer"
+                      }
                     }
                   }
-                }
-              },
-              "text/event-stream": {
-                "schema": {
-                  "type": "string",
-                  "description": "SSE streaming response."
                 }
               }
             }
@@ -2877,9 +2978,11 @@
             "in": "path",
             "description": "Model ID. First call the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface (`GET /api/ai/models/chat`) and pass in the `data[n].name` returned by it.",
             "required": true,
-            "example": "",
+            "example": "gemini-3.5-flash",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "gemini-3.5-flash",
+              "default": "gemini-3.5-flash"
             }
           }
         ],
@@ -2891,7 +2994,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "Model ID, consistent with the path parameter `model`. The value comes from `data[n].name` returned by the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface."
+                    "description": "Model ID, consistent with the path parameter `model`. The value comes from `data[n].name` returned by the [\"Conversation Model List\"](/en/api-reference/get-api-ai-models-chat) interface.",
+                    "example": "gemini-3.5-flash"
                   },
                   "contents": {
                     "type": "array",
@@ -3044,7 +3148,27 @@
                   "contents"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "1": {
+                  "summary": "Basic chat",
+                  "value": {
+                    "model": "gemini-3.5-flash",
+                    "contents": [
+                      {
+                        "role": "user",
+                        "parts": [
+                          {
+                            "text": "Reply with OK only."
+                          }
+                        ]
+                      }
+                    ],
+                    "config": {
+                      "temperature": 0
+                    }
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3053,26 +3177,15 @@
           "200": {
             "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
-                },
-                "examples": {
-                  "success": {
-                    "summary": "Native third-party success response",
-                    "value": {
-                      "id": "RelayController_geminiStreamGenerateContent_example",
-                      "object": "response"
-                    }
-                  }
-                }
-              },
               "text/event-stream": {
                 "schema": {
                   "type": "string",
                   "description": "SSE streaming response."
+                },
+                "examples": {
+                  "sse": {
+                    "value": "data: {\"candidates\":[{\"content\":{\"role\":\"string\",\"parts\":[{\"text\":\"string\"}]},\"index\":\"integer\"}],\"modelVersion\":\"string\",\"sdkHttpResponse\":{\"headers\":\"object\"}}\n\ndata: {\"candidates\":[{\"finishReason\":\"string\",\"index\":\"integer\"}],\"modelVersion\":\"string\",\"usageMetadata\":{\"promptTokenCount\":\"integer\",\"candidatesTokenCount\":\"integer\",\"totalTokenCount\":\"integer\"},\"sdkHttpResponse\":{\"headers\":\"object\"}}"
+                  }
                 }
               }
             }
@@ -18510,7 +18623,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "x-goog-api-key",
-        "description": "API Key header used by Gemini SDK-compatible endpoints."
+        "description": "Pass an API Key obtained from AiToEarn. For Gemini SDK compatibility, this endpoint uses the `x-goog-api-key` request header; a Google Gemini API Key is not required."
       }
     }
   },

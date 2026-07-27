@@ -28,6 +28,7 @@ const zhApiReferenceBasePath = '/api-reference'
 const enApiReferenceBasePath = '/en/api-reference'
 const apiKeyTutorialHref = '/zh/use/api-key'
 const xApiKeyDescription = `需要从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](${apiKeyTutorialHref})。`
+const geminiApiKeyDescription = '传入从 AiToEarn 获取的 API Key。为兼容 Gemini SDK，本接口使用 `x-goog-api-key` 请求头，无需 Google Gemini 官方 API Key。'
 const legacyOpenApiRedirects = [
   {
     source: '/api-reference/渠道管理授权/授权会话状态',
@@ -1091,6 +1092,11 @@ const englishTextOverrides = {
   '成功': 'Success',
   '未认证或 API Key 无效': 'Unauthenticated or invalid API Key',
   '第三方协议原生成功响应': 'Native third-party success response',
+  '基础对话': 'Basic chat',
+  '请用一句话介绍 AiToEarn。': 'Introduce AiToEarn in one sentence.',
+  '请只回复 OK。': 'Reply with OK only.',
+  'Anthropic 渠道模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），选择返回结果中 `channel` 为 `anthropic` 的 `data[n].name`。': 'Anthropic channel model ID. First call the [Chat Model List](/en/api-reference/get-api-ai-models-chat) endpoint (`GET /api/ai/models/chat`), then select `data[n].name` where `channel` is `anthropic`.',
+  '最大输出 Token 数。取值范围为 1 至 9007199254740991，默认值为 32000；示例使用 64 以控制测试消耗。': 'Maximum output tokens. The allowed range is 1 to 9007199254740991 and the default is 32000; the example uses 64 to limit test usage.',
   '请求成功': 'Request succeeded',
   '请求已被服务处理。业务是否成功以响应体 code === 0 为准。': 'The request has been processed by the service. Business success is determined by whether the response body has code === 0.',
   '业务状态码。0 表示成功，非 0 表示业务错误。': 'Business status code. 0 means success; non-zero means a business error.',
@@ -1100,8 +1106,9 @@ const englishTextOverrides = {
   '第三方协议原生响应，不使用 AiToEarn 通用响应包裹。': 'Native third-party protocol response, not wrapped in the AiToEarn common response envelope.',
   '第三方协议原生响应或 SSE 数据。不使用 AiToEarn 通用响应包裹。': 'Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.',
   'SSE 流式响应。': 'SSE streaming response.',
+  'Anthropic Messages 协议的 SSE 事件流。': 'SSE event stream using the Anthropic Messages protocol.',
   '传入从 AiToEarn 获取 API Key。点击前往[「API Key 获取教程」](/zh/use/api-key)。示例：Bearer xxx。': 'Pass the API Key obtained from AiToEarn. Go to the ["API Key Tutorial"](/en/use/api-key). Example: Bearer xxx.',
-  'Gemini SDK 兼容接口使用的 API Key header。': 'API Key header used by Gemini SDK-compatible endpoints.',
+  '传入从 AiToEarn 获取的 API Key。为兼容 Gemini SDK，本接口使用 `x-goog-api-key` 请求头，无需 Google Gemini 官方 API Key。': 'Pass an API Key obtained from AiToEarn. For Gemini SDK compatibility, this endpoint uses the `x-goog-api-key` request header; a Google Gemini API Key is not required.',
 }
 
 function localizeEnglishLinks(value) {
@@ -1301,6 +1308,9 @@ function applySpecOverride(targetSpec, endpoint, operation, override) {
     for (const [propertyName, patch] of Object.entries(override.bodyProperties)) {
       const property = schema?.properties?.[propertyName]
       if (!property) {
+        if (patch === null) {
+          continue
+        }
         throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} bodyProperties has unknown property: ${propertyName}`)
       }
       if (patch === null) {
@@ -1317,6 +1327,7 @@ function applySpecOverride(targetSpec, endpoint, operation, override) {
 
 function hasResponseOverride(override) {
   return override?.responseDescription !== undefined
+    || override?.responseContent !== undefined
     || override?.responseDataSchema !== undefined
     || override?.responseExamples !== undefined
     || override?.responseRequired !== undefined
@@ -1349,7 +1360,13 @@ function applyResponseOverrides(endpoint, operation, override) {
   if (override.responseDescription !== undefined) {
     response.description = override.responseDescription
   }
-
+  if (override.responseContent !== undefined) {
+    if (override.responseContent === null) {
+      delete response.content
+      return
+    }
+    response.content = structuredClone(override.responseContent)
+  }
   const jsonContent = response.content?.['application/json']
   if ((override.responseDataSchema !== undefined || override.responseExamples !== undefined) && !jsonContent) {
     throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} has no application/json response`)
@@ -1436,7 +1453,7 @@ function generate() {
       type: 'apiKey',
       in: 'header',
       name: 'x-goog-api-key',
-      description: 'Gemini SDK 兼容接口使用的 API Key header。',
+      description: geminiApiKeyDescription,
     },
   }
 
@@ -1639,6 +1656,8 @@ function applyTargetOverridesOnly() {
   const documentedEndpoints = readJson(inventoryPath)
   const appliedEndpoints = []
 
+  targetSpec.components.securitySchemes['apikey-header-x-goog-api-key'].description = geminiApiKeyDescription
+
   for (const endpoint of documentedEndpoints) {
     const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
     if (!hasResponseOverride(override)) {
@@ -1663,6 +1682,10 @@ function applyTargetOverridesOnly() {
 
   sanitizeOpenApi30(targetSpec)
   const englishTranslations = readJson(specTranslationsEnPath)
+  englishTargetSpec.components.securitySchemes['apikey-header-x-goog-api-key'].description = translateOpenApiValue(
+    geminiApiKeyDescription,
+    englishTranslations,
+  )
   for (const endpoint of appliedEndpoints) {
     const method = endpoint.method.toLowerCase()
     const translatedOperation = translateOpenApiValue(
