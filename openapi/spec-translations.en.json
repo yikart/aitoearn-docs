@@ -862,5 +862,11 @@
   "是否必须提供封面": "Whether a cover is required",
   "视频最小帧率": "Minimum video frame rate",
   "视频最大帧率": "Maximum video frame rate",
-  "图片短边最大像素数": "Maximum pixel count of the image's shorter side"
+  "图片短边最大像素数": "Maximum pixel count of the image's shorter side",
+  "接口说明：按指定平台解析社媒作品链接，返回已识别的作品基础信息、快照数组和平台扩展字段。": "Interface description: Parse a social-media work link for the specified platform and return the identified basic work information, snapshots, and platform-specific fields.",
+  "接口说明：查询指定已授权账号在指定平台的作品列表。仅在平台声明 `work.listWorks` 能力时可调用；当前快手返回 cursor 分页结构。": "Interface description: Query the works for an authorized account on the specified platform. This endpoint is available only when the platform declares the `work.listWorks` capability; Kwai currently returns cursor pagination.",
+  "接口说明：查询指定平台作品详情。调用前请以「平台列表」的 `capabilities.work.getDetail` 为准；不支持时返回 `code: 15080`，`data` 仅包含 `platform` 与 `capability`。": "Interface description: Query details for a work on the specified platform. Before calling, check `capabilities.work.getDetail` in the Platform List; if unsupported, the response returns `code: 15080` and `data` contains only `platform` and `capability`.",
+  "接口说明：查询指定平台作品的统计快照。返回 `code: 0` 不代表一定有指标数据；未匹配到已采集的作品数据时，响应会返回空 `snapshots` 与提示 `message`，不会返回 `metrics`。": "Interface description: Query statistics snapshots for a work on the specified platform. A `code: 0` response does not guarantee metrics are available; when no collected work data matches, the response returns empty `snapshots` with a `message` and omits `metrics`.",
+  "平台能力不支持（15080）": "Platform capability is not supported (15080)",
+  "未找到统计数据": "No analytics data found"
 }

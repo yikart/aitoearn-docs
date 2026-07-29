@@ -9691,7 +9691,7 @@
       "get": {
         "summary": "解析作品链接",
         "deprecated": false,
-        "description": "接口说明：根据链接获取作品信息",
+        "description": "接口说明：按指定平台解析社媒作品链接，返回已识别的作品基础信息、快照数组和平台扩展字段。",
         "operationId": "WorksController_getLinkInfo_v2",
         "tags": [
           "渠道管理/作品"
@@ -9702,7 +9702,7 @@
             "in": "query",
             "description": "平台",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
               "type": "string",
               "enum": [
@@ -9722,7 +9722,9 @@
                 "linkedin",
                 "google_business"
               ],
-              "description": "平台"
+              "description": "平台",
+              "example": "douyin",
+              "default": "douyin"
             }
           },
           {
@@ -9730,11 +9732,12 @@
             "in": "query",
             "description": "作品链接",
             "required": true,
-            "example": "",
+            "example": "https://www.douyin.com/video/7667836920484196454",
             "schema": {
               "type": "string",
               "minLength": 1,
-              "description": "作品链接"
+              "description": "作品链接",
+              "example": "https://www.douyin.com/video/7667836920484196454"
             }
           },
           {
@@ -9759,7 +9762,56 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkDataVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "work": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "mediaType": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "snapshots": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "extra": {
+                          "type": "object",
+                          "properties": {
+                            "dataId": {
+                              "type": "string"
+                            },
+                            "uniqueId": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "videoType": {
+                              "type": "string"
+                            },
+                            "resolvedUrl": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -9777,73 +9829,31 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "成功",
                     "value": {
-                      "code": 0,
-                      "message": "请求成功",
+                      "code": "integer",
+                      "message": "string",
                       "data": {
-                        "platform": "douyin",
+                        "platform": "string",
                         "work": {
                           "id": "string",
                           "url": "string",
-                          "title": "string",
-                          "description": "string",
-                          "mediaType": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "status": "string",
-                          "author": "string"
+                          "mediaType": "string"
                         },
-                        "snapshots": [],
-                        "extra": {},
-                        "snapshotId": "string",
-                        "fetchedAt": "2026-07-02T12:00:00.000Z",
-                        "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "授权平台不匹配",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "snapshots": "array",
+                        "extra": {
+                          "dataId": "string",
+                          "uniqueId": "string",
+                          "type": "string",
+                          "videoType": "string",
+                          "resolvedUrl": "string"
+                        }
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -9894,7 +9904,7 @@
       "get": {
         "summary": "作品列表",
         "deprecated": false,
-        "description": "接口说明：获取指定平台账号的作品列表",
+        "description": "接口说明：查询指定已授权账号在指定平台的作品列表。仅在平台声明 `work.listWorks` 能力时可调用；当前快手返回 cursor 分页结构。",
         "operationId": "WorksController_listWorks_v2",
         "tags": [
           "渠道管理/作品"
@@ -9905,9 +9915,11 @@
             "in": "path",
             "description": "平台标识",
             "required": true,
-            "example": "",
+            "example": "KWAI",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "KWAI",
+              "default": "KWAI"
             }
           },
           {
@@ -10036,7 +10048,38 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkListVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "mode": {
+                              "type": "string"
+                            },
+                            "hasNext": {
+                              "type": "boolean"
+                            },
+                            "hasPrevious": {
+                              "type": "boolean"
+                            },
+                            "limit": {
+                              "type": "number"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10054,11 +10097,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -10067,87 +10106,16 @@
                       "code": 0,
                       "message": "请求成功",
                       "data": {
-                        "platform": "douyin",
-                        "items": {
-                          "platformWorkId": "string",
-                          "contentMode": "article2",
-                          "title": "string",
-                          "description": "string",
-                          "url": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "authorName": "string",
-                          "authorPlatformUid": "string",
-                          "status": "string",
-                          "metrics": {
-                            "viewCount": 1,
-                            "playCount": 1,
-                            "impressionCount": 1,
-                            "reachCount": 1,
-                            "likeCount": 1,
-                            "collectCount": 1,
-                            "commentCount": 1,
-                            "shareCount": 1,
-                            "saveCount": 1,
-                            "clickCount": 1,
-                            "engagementCount": 1,
-                            "watchTimeSeconds": 1
-                          }
-                        },
+                        "platform": "string",
+                        "items": [],
                         "pagination": {
-                          "mode": "string",
-                          "hasNext": true,
-                          "hasPrevious": true,
-                          "limit": 1,
-                          "nextCursor": "string",
-                          "previousCursor": "string"
+                          "mode": "cursor",
+                          "hasNext": "boolean",
+                          "hasPrevious": "boolean",
+                          "limit": "number"
                         }
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "授权平台不匹配",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPlatformOperationNotSupported15080": {
-                    "summary": "ChannelPlatformOperationNotSupported (15080)",
-                    "value": {
-                      "code": 15080,
-                      "message": "{{platform}} 不支持该操作",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10203,7 +10171,7 @@
       "get": {
         "summary": "作品详情",
         "deprecated": false,
-        "description": "接口说明：获取指定作品的详细信息",
+        "description": "接口说明：查询指定平台作品详情。调用前请以「平台列表」的 `capabilities.work.getDetail` 为准；不支持时返回 `code: 15080`，`data` 仅包含 `platform` 与 `capability`。",
         "operationId": "WorksController_getDetail_v2",
         "tags": [
           "渠道管理/作品"
@@ -10214,9 +10182,11 @@
             "in": "path",
             "description": "平台标识",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "default": "douyin"
             }
           },
           {
@@ -10224,9 +10194,10 @@
             "in": "path",
             "description": "平台作品 ID",
             "required": true,
-            "example": "",
+            "example": "7665952416433086310",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "7665952416433086310"
             }
           },
           {
@@ -10251,7 +10222,40 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkDataVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "capability": {
+                          "type": "string"
+                        },
+                        "work": {
+                          "type": "object",
+                          "additionalProperties": true
+                        },
+                        "snapshots": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "extra": {
+                          "type": "object",
+                          "additionalProperties": true
+                        },
+                        "snapshotId": {
+                          "type": "string"
+                        },
+                        "fetchedAt": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10269,91 +10273,20 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
-                  "success": {
-                    "summary": "成功",
-                    "value": {
-                      "code": 0,
-                      "message": "请求成功",
-                      "data": {
-                        "platform": "douyin",
-                        "work": {
-                          "id": "string",
-                          "url": "string",
-                          "title": "string",
-                          "description": "string",
-                          "mediaType": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "status": "string",
-                          "author": "string"
-                        },
-                        "snapshots": [],
-                        "extra": {},
-                        "snapshotId": "string",
-                        "fetchedAt": "2026-07-02T12:00:00.000Z",
-                        "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountAuthRequired16037": {
-                    "summary": "AccountAuthRequired (16037)",
-                    "value": {
-                      "code": 16037,
-                      "message": "该平台需要先授权账号才能提交",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "授权平台不匹配",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPlatformOperationNotSupported15080": {
-                    "summary": "ChannelPlatformOperationNotSupported (15080)",
+                  "unsupported": {
+                    "summary": "平台能力不支持（15080）",
                     "value": {
                       "code": 15080,
-                      "message": "{{platform}} 不支持该操作",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "message": "string",
+                      "data": {
+                        "platform": "string",
+                        "capability": "string"
+                      },
+                      "timestamp": "number",
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10414,7 +10347,7 @@
       "get": {
         "summary": "作品数据统计",
         "deprecated": false,
-        "description": "接口说明：获取指定作品的分析数据",
+        "description": "接口说明：查询指定平台作品的统计快照。返回 `code: 0` 不代表一定有指标数据；未匹配到已采集的作品数据时，响应会返回空 `snapshots` 与提示 `message`，不会返回 `metrics`。",
         "operationId": "WorksController_getAnalytics_v2",
         "tags": [
           "渠道管理/作品"
@@ -10425,9 +10358,11 @@
             "in": "path",
             "description": "平台标识",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "default": "douyin"
             }
           },
           {
@@ -10435,9 +10370,10 @@
             "in": "path",
             "description": "平台作品 ID",
             "required": true,
-            "example": "",
+            "example": "7665952416433086310",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "7665952416433086310"
             }
           },
           {
@@ -10486,7 +10422,33 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkAnalyticsVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "platformWorkId": {
+                          "type": "string"
+                        },
+                        "snapshots": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "metrics": {
+                          "type": "object",
+                          "additionalProperties": true
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10504,71 +10466,22 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
-                  "success": {
-                    "summary": "成功",
+                  "notFound": {
+                    "summary": "未找到统计数据",
                     "value": {
                       "code": 0,
                       "message": "请求成功",
                       "data": {
-                        "platform": "douyin",
-                        "platformWorkId": "string",
+                        "platform": "string",
                         "accountId": "string",
-                        "work": {
-                          "id": "string",
-                          "url": "string",
-                          "title": "string",
-                          "description": "string",
-                          "mediaType": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "status": "string",
-                          "author": "string"
-                        },
-                        "metrics": {
-                          "viewCount": 1,
-                          "playCount": 1,
-                          "impressionCount": 1,
-                          "reachCount": 1,
-                          "likeCount": 1,
-                          "collectCount": 1,
-                          "commentCount": 1,
-                          "shareCount": 1,
-                          "saveCount": 1,
-                          "clickCount": 1,
-                          "engagementCount": 1,
-                          "watchTimeSeconds": 1
-                        },
+                        "platformWorkId": "string",
                         "snapshots": [],
-                        "extra": {},
-                        "snapshotId": "string",
-                        "fetchedAt": "2026-07-02T12:00:00.000Z",
                         "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10803,7 +10716,34 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ChannelAccountGroupVo"
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "rank": {
+                            "type": "number"
+                          },
+                          "proxyIp": {
+                            "type": "string"
+                          },
+                          "isDefault": {
+                            "type": "boolean"
+                          },
+                          "hasBrowserConfig": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -10822,11 +10762,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -10838,26 +10774,15 @@
                         {
                           "id": "string",
                           "name": "string",
-                          "hasBrowserConfig": true,
-                          "rank": 1,
-                          "ip": "string",
-                          "location": "string",
-                          "countryCode": "string",
+                          "rank": "number",
                           "proxyIp": "string",
-                          "isDefault": true,
-                          "createdAt": "2026-07-02T12:00:00.000Z",
-                          "updatedAt": "2026-07-02T12:00:00.000Z"
+                          "isDefault": "boolean",
+                          "hasBrowserConfig": "boolean",
+                          "createdAt": "string",
+                          "updatedAt": "string"
                         }
-                      ]
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }
@@ -17767,39 +17692,12 @@
                 "description": "作品链接",
                 "type": "string"
               },
-              "title": {
-                "description": "作品标题",
-                "type": "string"
-              },
-              "description": {
-                "description": "作品描述",
-                "type": "string"
-              },
               "mediaType": {
                 "description": "作品媒体类型",
                 "type": "string"
-              },
-              "coverUrl": {
-                "description": "封面 URL",
-                "type": "string"
-              },
-              "publishedAt": {
-                "description": "发布时间",
-                "type": "string",
-                "format": "date-time"
-              },
-              "status": {
-                "description": "作品状态",
-                "type": "string"
-              },
-              "author": {
-                "description": "作者",
-                "type": "string"
               }
             },
-            "required": [
-              "id"
-            ]
+            "additionalProperties": false
           },
           "snapshots": {
             "default": [],
@@ -17807,172 +17705,38 @@
             "type": "array",
             "items": {
               "type": "object",
-              "properties": {
-                "id": {
-                  "description": "快照 ID",
-                  "type": "string"
-                },
-                "platformWorkId": {
-                  "description": "平台作品 ID",
-                  "type": "string"
-                },
-                "snapshotAt": {
-                  "description": "快照对应时间",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "fetchedAt": {
-                  "description": "平台数据获取时间",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "periodStartAt": {
-                  "description": "区间开始时间",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "periodEndAt": {
-                  "description": "区间结束时间",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "work": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "平台作品 ID"
-                    },
-                    "url": {
-                      "description": "作品链接",
-                      "type": "string"
-                    },
-                    "title": {
-                      "description": "作品标题",
-                      "type": "string"
-                    },
-                    "description": {
-                      "description": "作品描述",
-                      "type": "string"
-                    },
-                    "mediaType": {
-                      "description": "作品媒体类型",
-                      "type": "string"
-                    },
-                    "coverUrl": {
-                      "description": "封面 URL",
-                      "type": "string"
-                    },
-                    "publishedAt": {
-                      "description": "发布时间",
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "status": {
-                      "description": "作品状态",
-                      "type": "string"
-                    },
-                    "author": {
-                      "description": "作者",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "id"
-                  ],
-                  "description": "作品资料"
-                },
-                "metrics": {
-                  "description": "作品指标",
-                  "type": "object",
-                  "properties": {
-                    "viewCount": {
-                      "description": "浏览数",
-                      "type": "number"
-                    },
-                    "playCount": {
-                      "description": "播放数",
-                      "type": "number"
-                    },
-                    "impressionCount": {
-                      "description": "曝光数",
-                      "type": "number"
-                    },
-                    "reachCount": {
-                      "description": "触达数",
-                      "type": "number"
-                    },
-                    "likeCount": {
-                      "description": "点赞数",
-                      "type": "number"
-                    },
-                    "collectCount": {
-                      "description": "收藏数",
-                      "type": "number"
-                    },
-                    "commentCount": {
-                      "description": "评论数",
-                      "type": "number"
-                    },
-                    "shareCount": {
-                      "description": "分享数",
-                      "type": "number"
-                    },
-                    "saveCount": {
-                      "description": "保存数",
-                      "type": "number"
-                    },
-                    "clickCount": {
-                      "description": "点击数",
-                      "type": "number"
-                    },
-                    "engagementCount": {
-                      "description": "互动数",
-                      "type": "number"
-                    },
-                    "watchTimeSeconds": {
-                      "description": "观看时长秒数",
-                      "type": "number"
-                    }
-                  }
-                },
-                "extra": {
-                  "description": "平台特殊字段",
-                  "type": "object",
-                  "additionalProperties": true,
-                  "properties": {}
-                }
-              },
-              "required": [
-                "snapshotAt",
-                "fetchedAt",
-                "work"
-              ]
+              "additionalProperties": true
             }
           },
           "extra": {
-            "description": "平台特殊字段",
             "type": "object",
-            "additionalProperties": true,
-            "properties": {}
-          },
-          "snapshotId": {
-            "description": "本次主快照 ID",
-            "type": "string"
-          },
-          "fetchedAt": {
-            "description": "平台数据获取时间",
-            "type": "string",
-            "format": "date-time"
-          },
-          "message": {
-            "description": "提示信息",
-            "type": "string"
+            "properties": {
+              "dataId": {
+                "type": "string"
+              },
+              "uniqueId": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "videoType": {
+                "type": "string"
+              },
+              "resolvedUrl": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
           }
         },
         "required": [
-          "platform"
-        ]
+          "platform",
+          "work",
+          "snapshots",
+          "extra"
+        ],
+        "additionalProperties": false
       },
       "ChannelWorkListVo": {
         "type": "object",

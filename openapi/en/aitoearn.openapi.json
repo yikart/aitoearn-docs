@@ -9691,7 +9691,7 @@
       "get": {
         "summary": "Parse Work Link",
         "deprecated": false,
-        "description": "Interface description: Obtain work information according to the link",
+        "description": "Interface description: Parse a social-media work link for the specified platform and return the identified basic work information, snapshots, and platform-specific fields.",
         "operationId": "WorksController_getLinkInfo_v2",
         "tags": [
           "Channel Management/Works"
@@ -9702,7 +9702,7 @@
             "in": "query",
             "description": "platform",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
               "type": "string",
               "enum": [
@@ -9722,7 +9722,9 @@
                 "linkedin",
                 "google_business"
               ],
-              "description": "platform"
+              "description": "platform",
+              "example": "douyin",
+              "default": "douyin"
             }
           },
           {
@@ -9730,11 +9732,12 @@
             "in": "query",
             "description": "Work link",
             "required": true,
-            "example": "",
+            "example": "https://www.douyin.com/video/7667836920484196454",
             "schema": {
               "type": "string",
               "minLength": 1,
-              "description": "Work link"
+              "description": "Work link",
+              "example": "https://www.douyin.com/video/7667836920484196454"
             }
           },
           {
@@ -9759,7 +9762,56 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkDataVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "work": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "mediaType": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "snapshots": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "extra": {
+                          "type": "object",
+                          "properties": {
+                            "dataId": {
+                              "type": "string"
+                            },
+                            "uniqueId": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "videoType": {
+                              "type": "string"
+                            },
+                            "resolvedUrl": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -9777,73 +9829,31 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "Success",
                     "value": {
-                      "code": 0,
-                      "message": "Request succeeded",
+                      "code": "integer",
+                      "message": "string",
                       "data": {
-                        "platform": "douyin",
+                        "platform": "string",
                         "work": {
                           "id": "string",
                           "url": "string",
-                          "title": "string",
-                          "description": "string",
-                          "mediaType": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "status": "string",
-                          "author": "string"
+                          "mediaType": "string"
                         },
-                        "snapshots": [],
-                        "extra": {},
-                        "snapshotId": "string",
-                        "fetchedAt": "2026-07-02T12:00:00.000Z",
-                        "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "Authorization platform does not match",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "snapshots": "array",
+                        "extra": {
+                          "dataId": "string",
+                          "uniqueId": "string",
+                          "type": "string",
+                          "videoType": "string",
+                          "resolvedUrl": "string"
+                        }
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -9894,7 +9904,7 @@
       "get": {
         "summary": "Work List",
         "deprecated": false,
-        "description": "Interface description: Get the list of works of the specified platform account",
+        "description": "Interface description: Query the works for an authorized account on the specified platform. This endpoint is available only when the platform declares the `work.listWorks` capability; Kwai currently returns cursor pagination.",
         "operationId": "WorksController_listWorks_v2",
         "tags": [
           "Channel Management/Works"
@@ -9905,9 +9915,11 @@
             "in": "path",
             "description": "Platform identification",
             "required": true,
-            "example": "",
+            "example": "KWAI",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "KWAI",
+              "default": "KWAI"
             }
           },
           {
@@ -10036,7 +10048,38 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkListVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "mode": {
+                              "type": "string"
+                            },
+                            "hasNext": {
+                              "type": "boolean"
+                            },
+                            "hasPrevious": {
+                              "type": "boolean"
+                            },
+                            "limit": {
+                              "type": "number"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10054,11 +10097,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -10067,87 +10106,16 @@
                       "code": 0,
                       "message": "Request succeeded",
                       "data": {
-                        "platform": "douyin",
-                        "items": {
-                          "platformWorkId": "string",
-                          "contentMode": "article2",
-                          "title": "string",
-                          "description": "string",
-                          "url": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "authorName": "string",
-                          "authorPlatformUid": "string",
-                          "status": "string",
-                          "metrics": {
-                            "viewCount": 1,
-                            "playCount": 1,
-                            "impressionCount": 1,
-                            "reachCount": 1,
-                            "likeCount": 1,
-                            "collectCount": 1,
-                            "commentCount": 1,
-                            "shareCount": 1,
-                            "saveCount": 1,
-                            "clickCount": 1,
-                            "engagementCount": 1,
-                            "watchTimeSeconds": 1
-                          }
-                        },
+                        "platform": "string",
+                        "items": [],
                         "pagination": {
-                          "mode": "string",
-                          "hasNext": true,
-                          "hasPrevious": true,
-                          "limit": 1,
-                          "nextCursor": "string",
-                          "previousCursor": "string"
+                          "mode": "cursor",
+                          "hasNext": "boolean",
+                          "hasPrevious": "boolean",
+                          "limit": "number"
                         }
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "Authorization platform does not match",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPlatformOperationNotSupported15080": {
-                    "summary": "ChannelPlatformOperationNotSupported (15080)",
-                    "value": {
-                      "code": 15080,
-                      "message": "{{platform}} does not support this operation",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10203,7 +10171,7 @@
       "get": {
         "summary": "Work Details",
         "deprecated": false,
-        "description": "Interface description: Get detailed information of the specified work",
+        "description": "Interface description: Query details for a work on the specified platform. Before calling, check `capabilities.work.getDetail` in the Platform List; if unsupported, the response returns `code: 15080` and `data` contains only `platform` and `capability`.",
         "operationId": "WorksController_getDetail_v2",
         "tags": [
           "Channel Management/Works"
@@ -10214,9 +10182,11 @@
             "in": "path",
             "description": "Platform identification",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "default": "douyin"
             }
           },
           {
@@ -10224,9 +10194,10 @@
             "in": "path",
             "description": "Platform work ID",
             "required": true,
-            "example": "",
+            "example": "7665952416433086310",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "7665952416433086310"
             }
           },
           {
@@ -10251,7 +10222,40 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkDataVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "capability": {
+                          "type": "string"
+                        },
+                        "work": {
+                          "type": "object",
+                          "additionalProperties": true
+                        },
+                        "snapshots": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "extra": {
+                          "type": "object",
+                          "additionalProperties": true
+                        },
+                        "snapshotId": {
+                          "type": "string"
+                        },
+                        "fetchedAt": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10269,91 +10273,20 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
-                    "value": {
-                      "code": 0,
-                      "message": "Request succeeded",
-                      "data": {
-                        "platform": "douyin",
-                        "work": {
-                          "id": "string",
-                          "url": "string",
-                          "title": "string",
-                          "description": "string",
-                          "mediaType": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "status": "string",
-                          "author": "string"
-                        },
-                        "snapshots": [],
-                        "extra": {},
-                        "snapshotId": "string",
-                        "fetchedAt": "2026-07-02T12:00:00.000Z",
-                        "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountAuthRequired16037": {
-                    "summary": "AccountAuthRequired (16037)",
-                    "value": {
-                      "code": 16037,
-                      "message": "The platform requires an authorized account before submitting",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "Authorization platform does not match",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPlatformOperationNotSupported15080": {
-                    "summary": "ChannelPlatformOperationNotSupported (15080)",
+                  "unsupported": {
+                    "summary": "Platform capability is not supported (15080)",
                     "value": {
                       "code": 15080,
-                      "message": "{{platform}} does not support this operation",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "message": "string",
+                      "data": {
+                        "platform": "string",
+                        "capability": "string"
+                      },
+                      "timestamp": "number",
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10414,7 +10347,7 @@
       "get": {
         "summary": "Work Analytics",
         "deprecated": false,
-        "description": "Interface description: Obtain the analysis data of the specified work",
+        "description": "Interface description: Query statistics snapshots for a work on the specified platform. A `code: 0` response does not guarantee metrics are available; when no collected work data matches, the response returns empty `snapshots` with a `message` and omits `metrics`.",
         "operationId": "WorksController_getAnalytics_v2",
         "tags": [
           "Channel Management/Works"
@@ -10425,9 +10358,11 @@
             "in": "path",
             "description": "Platform identification",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "default": "douyin"
             }
           },
           {
@@ -10435,9 +10370,10 @@
             "in": "path",
             "description": "Platform work ID",
             "required": true,
-            "example": "",
+            "example": "7665952416433086310",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "7665952416433086310"
             }
           },
           {
@@ -10486,7 +10422,33 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkAnalyticsVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "platformWorkId": {
+                          "type": "string"
+                        },
+                        "snapshots": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                          }
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "metrics": {
+                          "type": "object",
+                          "additionalProperties": true
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10504,71 +10466,22 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
-                  "success": {
-                    "summary": "Success",
+                  "notFound": {
+                    "summary": "No analytics data found",
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
                       "data": {
-                        "platform": "douyin",
-                        "platformWorkId": "string",
+                        "platform": "string",
                         "accountId": "string",
-                        "work": {
-                          "id": "string",
-                          "url": "string",
-                          "title": "string",
-                          "description": "string",
-                          "mediaType": "string",
-                          "coverUrl": "string",
-                          "publishedAt": "2026-07-02T12:00:00.000Z",
-                          "status": "string",
-                          "author": "string"
-                        },
-                        "metrics": {
-                          "viewCount": 1,
-                          "playCount": 1,
-                          "impressionCount": 1,
-                          "reachCount": 1,
-                          "likeCount": 1,
-                          "collectCount": 1,
-                          "commentCount": 1,
-                          "shareCount": 1,
-                          "saveCount": 1,
-                          "clickCount": 1,
-                          "engagementCount": 1,
-                          "watchTimeSeconds": 1
-                        },
+                        "platformWorkId": "string",
                         "snapshots": [],
-                        "extra": {},
-                        "snapshotId": "string",
-                        "fetchedAt": "2026-07-02T12:00:00.000Z",
                         "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10803,7 +10716,34 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ChannelAccountGroupVo"
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "rank": {
+                            "type": "number"
+                          },
+                          "proxyIp": {
+                            "type": "string"
+                          },
+                          "isDefault": {
+                            "type": "boolean"
+                          },
+                          "hasBrowserConfig": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -10822,11 +10762,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -10838,26 +10774,15 @@
                         {
                           "id": "string",
                           "name": "string",
-                          "hasBrowserConfig": true,
-                          "rank": 1,
-                          "ip": "string",
-                          "location": "string",
-                          "countryCode": "string",
+                          "rank": "number",
                           "proxyIp": "string",
-                          "isDefault": true,
-                          "createdAt": "2026-07-02T12:00:00.000Z",
-                          "updatedAt": "2026-07-02T12:00:00.000Z"
+                          "isDefault": "boolean",
+                          "hasBrowserConfig": "boolean",
+                          "createdAt": "string",
+                          "updatedAt": "string"
                         }
-                      ]
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }

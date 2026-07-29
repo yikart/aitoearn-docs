@@ -1401,6 +1401,79 @@ function applyResponseOverrides(endpoint, operation, override) {
   }
 }
 
+function applyChannelWorkLinkInfoSchema(spec) {
+  const schema = spec.components?.schemas?.ChannelWorkDataVo
+  if (!schema) {
+    return
+  }
+
+  schema.properties = {
+    platform: {
+      type: 'string',
+      enum: [
+        'douyin',
+        'xhs',
+        'wxSph',
+        'KWAI',
+        'youtube',
+        'wxGzh',
+        'bilibili',
+        'twitter',
+        'tiktok',
+        'facebook',
+        'instagram',
+        'threads',
+        'pinterest',
+        'linkedin',
+        'google_business',
+      ],
+      description: '平台',
+    },
+    work: {
+      description: '作品资料',
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+          description: '平台作品 ID',
+        },
+        url: {
+          description: '作品链接',
+          type: 'string',
+        },
+        mediaType: {
+          description: '作品媒体类型',
+          type: 'string',
+        },
+      },
+      additionalProperties: false,
+    },
+    snapshots: {
+      default: [],
+      description: '本次保存的作品数据快照',
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: true,
+      },
+    },
+    extra: {
+      type: 'object',
+      properties: {
+        dataId: { type: 'string' },
+        uniqueId: { type: 'string' },
+        type: { type: 'string' },
+        videoType: { type: 'string' },
+        resolvedUrl: { type: 'string' },
+      },
+      additionalProperties: false,
+    },
+  }
+
+  schema.required = ['platform', 'work', 'snapshots', 'extra']
+  schema.additionalProperties = false
+}
+
 function generate() {
   const sourceSpec = readJson(sourceSpecPath)
   addVolcengineVideoCompatibilityEndpoints(sourceSpec)
@@ -1466,6 +1539,7 @@ function generate() {
       description: geminiApiKeyDescription,
     },
   }
+  applyChannelWorkLinkInfoSchema(targetSpec)
 
   const endpointHrefs = new Set()
   for (const endpoint of documentedEndpoints) {
@@ -1665,10 +1739,21 @@ function applyTargetOverridesOnly() {
   const specOverrides = readJson(specOverridesPath)
   const documentedEndpoints = readJson(inventoryPath)
   const appliedEndpoints = []
+  const targetIndex = process.argv.indexOf('--target')
+  const targetKeys = new Set(
+    targetIndex === -1
+      ? []
+      : (process.argv[targetIndex + 1] || '').split(',').map(value => value.trim()).filter(Boolean),
+  )
 
   targetSpec.components.securitySchemes['apikey-header-x-goog-api-key'].description = geminiApiKeyDescription
+  applyChannelWorkLinkInfoSchema(targetSpec)
 
   for (const endpoint of documentedEndpoints) {
+    const endpointKey = `${endpoint.method} ${endpoint.path}`
+    if (targetKeys.size > 0 && !targetKeys.has(endpointKey)) {
+      continue
+    }
     const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
     if (!hasResponseOverride(override)) {
       continue

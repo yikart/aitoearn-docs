@@ -267,8 +267,8 @@
     "responseExamples": {
       "types": {
         "value": {
-          "code": 0,
-          "message": "请求成功",
+          "code": "integer",
+          "message": "string",
           "data": [
             {
               "name": "string",
@@ -485,8 +485,8 @@
     "responseExamples": {
       "types": {
         "value": {
-          "code": 0,
-          "message": "请求成功",
+          "code": "integer",
+          "message": "string",
           "data": [
             {
               "name": "string",
@@ -2412,17 +2412,283 @@
   "GET /api/v2/channels/engagement/comments": null,
   "POST /api/v2/channels/engagement/comments": null,
   "POST /api/v2/channels/engagement/function": null,
+  "GET /api/v2/channels/works/link-info": {
+    "description": "接口说明：按指定平台解析社媒作品链接，返回已识别的作品基础信息、快照数组和平台扩展字段。",
+    "queryParameters": {
+      "platform": {
+        "example": "douyin",
+        "schema": {
+          "example": "douyin",
+          "default": "douyin"
+        }
+      },
+      "link": {
+        "example": "https://www.douyin.com/video/7667836920484196454",
+        "schema": {
+          "example": "https://www.douyin.com/video/7667836920484196454"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "platform": { "type": "string" },
+        "work": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "url": { "type": "string" },
+            "mediaType": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "snapshots": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "extra": {
+          "type": "object",
+          "properties": {
+            "dataId": { "type": "string" },
+            "uniqueId": { "type": "string" },
+            "type": { "type": "string" },
+            "videoType": { "type": "string" },
+            "resolvedUrl": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": "integer",
+          "message": "string",
+          "data": {
+            "platform": "string",
+            "work": {
+              "id": "string",
+              "url": "string",
+              "mediaType": "string"
+            },
+            "snapshots": "array",
+            "extra": {
+              "dataId": "string",
+              "uniqueId": "string",
+              "type": "string",
+              "videoType": "string",
+              "resolvedUrl": "string"
+            }
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
+  },
   "GET /api/v2/channels/works/{platform}": {
-    "summary": "作品列表"
+    "summary": "作品列表",
+    "description": "接口说明：查询指定已授权账号在指定平台的作品列表。仅在平台声明 `work.listWorks` 能力时可调用；当前快手返回 cursor 分页结构。",
+    "pathParameters": {
+      "platform": {
+        "example": "KWAI",
+        "schema": {
+          "example": "KWAI",
+          "default": "KWAI"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "platform": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "mode": { "type": "string" },
+            "hasNext": { "type": "boolean" },
+            "hasPrevious": { "type": "boolean" },
+            "limit": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "platform": "string",
+            "items": [],
+            "pagination": {
+              "mode": "cursor",
+              "hasNext": "boolean",
+              "hasPrevious": "boolean",
+              "limit": "number"
+            }
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/works/{platform}/{platformWorkId}": {
-    "summary": "作品详情"
+    "summary": "作品详情",
+    "description": "接口说明：查询指定平台作品详情。调用前请以「平台列表」的 `capabilities.work.getDetail` 为准；不支持时返回 `code: 15080`，`data` 仅包含 `platform` 与 `capability`。",
+    "pathParameters": {
+      "platform": {
+        "example": "douyin",
+        "schema": {
+          "example": "douyin",
+          "default": "douyin"
+        }
+      },
+      "platformWorkId": {
+        "example": "7665952416433086310",
+        "schema": {
+          "example": "7665952416433086310"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "platform": { "type": "string" },
+        "capability": { "type": "string" },
+        "work": { "type": "object", "additionalProperties": true },
+        "snapshots": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "extra": { "type": "object", "additionalProperties": true },
+        "snapshotId": { "type": "string" },
+        "fetchedAt": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "unsupported": {
+        "summary": "平台能力不支持（15080）",
+        "value": {
+          "code": 15080,
+          "message": "string",
+          "data": {
+            "platform": "string",
+            "capability": "string"
+          },
+          "timestamp": "number",
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/works/{platform}/{platformWorkId}/analytics": {
-    "summary": "作品数据统计"
+    "summary": "作品数据统计",
+    "description": "接口说明：查询指定平台作品的统计快照。返回 `code: 0` 不代表一定有指标数据；未匹配到已采集的作品数据时，响应会返回空 `snapshots` 与提示 `message`，不会返回 `metrics`。",
+    "pathParameters": {
+      "platform": {
+        "example": "douyin",
+        "schema": {
+          "example": "douyin",
+          "default": "douyin"
+        }
+      },
+      "platformWorkId": {
+        "example": "7665952416433086310",
+        "schema": {
+          "example": "7665952416433086310"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "platform": { "type": "string" },
+        "accountId": { "type": "string" },
+        "platformWorkId": { "type": "string" },
+        "snapshots": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "message": { "type": "string" },
+        "metrics": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "notFound": {
+        "summary": "未找到统计数据",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "platform": "string",
+            "accountId": "string",
+            "platformWorkId": "string",
+            "snapshots": [],
+            "message": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/account-groups": {
-    "summary": "分组列表"
+    "summary": "分组列表",
+    "responseDataSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "rank": { "type": "number" },
+          "proxyIp": { "type": "string" },
+          "isDefault": { "type": "boolean" },
+          "hasBrowserConfig": { "type": "boolean" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "id": "string",
+              "name": "string",
+              "rank": "number",
+              "proxyIp": "string",
+              "isDefault": "boolean",
+              "hasBrowserConfig": "boolean",
+              "createdAt": "string",
+              "updatedAt": "string"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "POST /api/v2/channels/account-groups": {
     "summary": "创建分组"
