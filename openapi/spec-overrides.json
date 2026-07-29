@@ -1303,9 +1303,193 @@
           "description": "账号状态：`1` 正常（可用），`0` 异常（不可用）。"
         }
       }
-    }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "userId": { "type": "string" },
+              "type": { "type": "string" },
+              "uid": { "type": "string" },
+              "avatar": { "type": "string" },
+              "nickname": { "type": "string" },
+              "fansCount": { "type": "number" },
+              "followingCount": { "type": "number" },
+              "readCount": { "type": "number" },
+              "likeCount": { "type": "number" },
+              "collectCount": { "type": "number" },
+              "forwardCount": { "type": "number" },
+              "commentCount": { "type": "number" },
+              "lastStatsTime": { "type": "string" },
+              "workCount": { "type": "number" },
+              "income": { "type": "number" },
+              "groupId": { "type": "string" },
+              "status": { "type": "number" },
+              "rank": { "type": "number" },
+              "relayAccountRef": { "type": "string", "nullable": true },
+              "createdAt": { "type": "string" },
+              "updatedAt": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "total": "number",
+            "list": [
+              {
+                "id": "string",
+                "userId": "string",
+                "type": "string",
+                "uid": "string",
+                "avatar": "string",
+                "nickname": "string",
+                "fansCount": "number",
+                "followingCount": "number",
+                "readCount": "number",
+                "likeCount": "number",
+                "collectCount": "number",
+                "forwardCount": "number",
+                "commentCount": "number",
+                "lastStatsTime": "string",
+                "workCount": "number",
+                "income": "number",
+                "groupId": "string",
+                "status": "number",
+                "rank": "number",
+                "relayAccountRef": "string | null",
+                "createdAt": "string",
+                "updatedAt": "string"
+              }
+            ]
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "POST /api/v2/channels/accounts": null,
+  "GET /api/v2/channels/accounts/{accountId}": {
+    "pathParameters": {
+      "accountId": {
+        "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。",
+        "schema": {
+          "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "uid": { "type": "string" },
+        "avatar": { "type": "string" },
+        "nickname": { "type": "string" },
+        "fansCount": { "type": "number" },
+        "followingCount": { "type": "number" },
+        "readCount": { "type": "number" },
+        "likeCount": { "type": "number" },
+        "collectCount": { "type": "number" },
+        "forwardCount": { "type": "number" },
+        "commentCount": { "type": "number" },
+        "workCount": { "type": "number" },
+        "income": { "type": "number" },
+        "groupId": { "type": "string" },
+        "status": { "type": "number" },
+        "rank": { "type": "number" },
+        "relayAccountRef": { "type": "string", "nullable": true },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "id": "string",
+            "userId": "string",
+            "type": "string",
+            "uid": "string",
+            "avatar": "string",
+            "nickname": "string",
+            "fansCount": "number",
+            "followingCount": "number",
+            "readCount": "number",
+            "likeCount": "number",
+            "collectCount": "number",
+            "forwardCount": "number",
+            "commentCount": "number",
+            "workCount": "number",
+            "income": "number",
+            "groupId": "string",
+            "status": "number",
+            "rank": "number",
+            "relayAccountRef": "string | null",
+            "createdAt": "string",
+            "updatedAt": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
+  },
+  "GET /api/v2/channels/accounts/{accountId}/auth-status": {
+    "pathParameters": {
+      "accountId": {
+        "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。",
+        "schema": {
+          "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "status": "number"
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
+  },
   "GET /api/v2/channels/accounts/{accountId}/analytics": null,
   "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
     "summary": "发布选项可选值",
@@ -1323,7 +1507,90 @@
           "description": "发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，例如 `tid`、`categoryId`、`location_id`、`boardId`。"
         }
       }
-    }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "field": { "type": "string" },
+        "valueType": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": { "type": "string" },
+              "label": { "type": "string" },
+              "description": { "type": "string" },
+              "disabled": { "type": "boolean" },
+              "children": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": { "type": "string" },
+                    "label": { "type": "string" },
+                    "description": { "type": "string" },
+                    "extra": {
+                      "type": "object",
+                      "properties": {
+                        "parent": { "type": "number" }
+                      },
+                      "additionalProperties": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "extra": {
+                "type": "object",
+                "properties": {
+                  "parent": { "type": "number" }
+                },
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "field": "string",
+            "valueType": "string",
+            "items": [
+              {
+                "value": "string",
+                "label": "string",
+                "description": "string",
+                "disabled": "boolean",
+                "children": [
+                  {
+                    "value": "string",
+                    "label": "string",
+                    "description": "string",
+                    "extra": {
+                      "parent": "number"
+                    }
+                  }
+                ],
+                "extra": {
+                  "parent": "number"
+                }
+              }
+            ]
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
     "summary": "创建发布选项值",
@@ -1358,25 +1625,377 @@
     "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。"
   },
   "GET /api/v2/channels/publish/flows/{flowId}": {
-    "summary": "发布流程详情"
+    "summary": "发布流程详情",
+    "description": "接口说明：根据发布流程 ID 查询一次多账号发布流程及其任务状态。`flowId` 可从[「创建发布流程」](/api-reference/post-api-v2-channels-publish-flows)接口返回的 `data.flowId` 获取，也可从[「发布记录列表」](/api-reference/get-api-v2-channels-publish-records)返回项的 `flowId` 获取。",
+    "pathParameters": {
+      "flowId": {
+        "description": "发布流程 ID。取值来自「创建发布流程」接口返回的 `data.flowId`，或「发布记录列表」返回的 `data[n].flowId`。",
+        "example": null,
+        "schema": {
+          "description": "发布流程 ID。取值来自「创建发布流程」接口返回的 `data.flowId`，或「发布记录列表」返回的 `data[n].flowId`。"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "flowId": { "type": "string" },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "accountId": { "type": "string" },
+              "platform": { "type": "string" },
+              "status": { "type": "number" },
+              "publishTime": { "type": "string" },
+              "platformWorkId": { "type": "string" },
+              "workLink": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "flowId": "string",
+            "tasks": [
+              {
+                "id": "string",
+                "accountId": "string",
+                "platform": "string",
+                "status": "number",
+                "publishTime": "string",
+                "platformWorkId": "string",
+                "workLink": "string"
+              }
+            ]
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/publish/records": {
-    "summary": "发布记录列表"
+    "summary": "发布记录列表",
+    "description": "接口说明：查询当前 API Key 所属用户的发布记录。不传查询参数时返回全部记录；也可以按渠道账号、平台、发布时间范围或发布状态筛选。",
+    "queryParameters": {
+      "accountId": {
+        "description": "渠道账号 ID。可选；取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)返回的 `data.list[n].id`。",
+        "example": null,
+        "schema": { "description": "渠道账号 ID。可选；取值来自「账号列表」返回的 `data.list[n].id`。" }
+      },
+      "accountType": {
+        "description": "平台标识。可选；取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)返回的 `data[n].platform`。",
+        "example": null,
+        "schema": { "description": "平台标识。可选；取值来自「平台列表」返回的 `data[n].platform`。" }
+      },
+      "time": {
+        "description": "发布时间范围。可选；传入开始时间和结束时间，时间格式为 ISO 8601。",
+        "example": null,
+        "schema": { "description": "发布时间范围。可选；传入开始时间和结束时间，时间格式为 ISO 8601。" }
+      },
+      "status": {
+        "description": "发布状态。可选；用于筛选指定状态的发布记录。",
+        "example": null,
+        "schema": { "description": "发布状态。可选；用于筛选指定状态的发布记录。" }
+      }
+    },
+    "responseDataSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "flowId": { "type": "string" },
+          "userTaskId": { "type": "string" },
+          "accountId": { "type": "string" },
+          "accountType": { "type": "string" },
+          "type": { "type": "string" },
+          "status": { "type": "number" },
+          "title": { "type": "string" },
+          "desc": { "type": "string" },
+          "publishTime": { "type": "string" },
+          "platformWorkId": { "type": "string" },
+          "workLink": { "type": "string" },
+          "videoUrl": { "type": "string" },
+          "coverUrl": { "type": "string" },
+          "imgUrlList": { "type": "array", "items": { "type": "string" } },
+          "source": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "id": "string",
+              "flowId": "string",
+              "userTaskId": "string",
+              "accountId": "string",
+              "accountType": "string",
+              "type": "string",
+              "status": "number",
+              "title": "string",
+              "desc": "string",
+              "publishTime": "string",
+              "platformWorkId": "string",
+              "workLink": "string",
+              "videoUrl": "string",
+              "coverUrl": "string",
+              "imgUrlList": ["string"],
+              "source": "string",
+              "createdAt": "string",
+              "updatedAt": "string"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/publish/records/queued": {
-    "summary": "待发布列表"
+    "summary": "待发布列表",
+    "description": "接口说明：查询当前仍在等待、排队或执行中的发布记录。不传查询参数时返回全部待发布记录；也可以按渠道账号、平台或发布时间范围筛选。",
+    "queryParameters": {
+      "accountId": {
+        "description": "渠道账号 ID。可选；取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)返回的 `data.list[n].id`。",
+        "example": null,
+        "schema": { "description": "渠道账号 ID。可选；取值来自「账号列表」返回的 `data.list[n].id`。" }
+      },
+      "accountType": {
+        "description": "平台标识。可选；取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)返回的 `data[n].platform`。",
+        "example": null,
+        "schema": { "description": "平台标识。可选；取值来自「平台列表」返回的 `data[n].platform`。" }
+      },
+      "time": {
+        "description": "发布时间范围。可选；传入开始时间和结束时间，时间格式为 ISO 8601。",
+        "example": null,
+        "schema": { "description": "发布时间范围。可选；传入开始时间和结束时间，时间格式为 ISO 8601。" }
+      }
+    },
+    "responseDataSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "flowId": { "type": "string" },
+          "userTaskId": { "type": "string" },
+          "accountId": { "type": "string" },
+          "accountType": { "type": "string" },
+          "type": { "type": "string" },
+          "status": { "type": "number" },
+          "title": { "type": "string" },
+          "desc": { "type": "string" },
+          "publishTime": { "type": "string" },
+          "platformWorkId": { "type": "string" },
+          "workLink": { "type": "string" },
+          "videoUrl": { "type": "string" },
+          "coverUrl": { "type": "string" },
+          "imgUrlList": { "type": "array", "items": { "type": "string" } },
+          "source": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [],
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/publish/records/published": {
-    "summary": "已发布列表"
+    "summary": "已发布列表",
+    "description": "接口说明：查询已经发布完成的发布记录。不传查询参数时返回全部已发布记录；也可以按渠道账号、平台或发布时间范围筛选。",
+    "queryParameters": {
+      "accountId": {
+        "description": "渠道账号 ID。可选；取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)返回的 `data.list[n].id`。",
+        "example": null,
+        "schema": { "description": "渠道账号 ID。可选；取值来自「账号列表」返回的 `data.list[n].id`。" }
+      },
+      "accountType": {
+        "description": "平台标识。可选；取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)返回的 `data[n].platform`。",
+        "example": null,
+        "schema": { "description": "平台标识。可选；取值来自「平台列表」返回的 `data[n].platform`。" }
+      },
+      "time": {
+        "description": "发布时间范围。可选；传入开始时间和结束时间，时间格式为 ISO 8601。",
+        "example": null,
+        "schema": { "description": "发布时间范围。可选；传入开始时间和结束时间，时间格式为 ISO 8601。" }
+      }
+    },
+    "responseDataSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "flowId": { "type": "string" },
+          "userTaskId": { "type": "string" },
+          "accountId": { "type": "string" },
+          "accountType": { "type": "string" },
+          "type": { "type": "string" },
+          "status": { "type": "number" },
+          "title": { "type": "string" },
+          "desc": { "type": "string" },
+          "publishTime": { "type": "string" },
+          "platformWorkId": { "type": "string" },
+          "workLink": { "type": "string" },
+          "videoUrl": { "type": "string" },
+          "coverUrl": { "type": "string" },
+          "imgUrlList": { "type": "array", "items": { "type": "string" } },
+          "source": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "id": "string",
+              "flowId": "string",
+              "userTaskId": "string",
+              "accountId": "string",
+              "accountType": "string",
+              "type": "string",
+              "status": "number",
+              "title": "string",
+              "desc": "string",
+              "publishTime": "string",
+              "platformWorkId": "string",
+              "workLink": "string",
+              "videoUrl": "string",
+              "coverUrl": "string",
+              "imgUrlList": ["string"],
+              "source": "string",
+              "createdAt": "string",
+              "updatedAt": "string"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "POST /api/v2/channels/publish/tasks/{taskId}/update": null,
   "GET /api/v2/channels/publish/records/public/{recordId}": null,
   "GET /api/v2/channels/publish/records/{recordId}": {
-    "summary": "发布记录详情"
+    "summary": "发布记录详情",
+    "description": "接口说明：根据发布记录 ID 查询单条发布记录的状态、内容、媒体地址和平台作品信息。`recordId` 来自[「发布记录列表」](/api-reference/get-api-v2-channels-publish-records)、[「待发布列表」](/api-reference/get-api-v2-channels-publish-records-queued)或[「已发布列表」](/api-reference/get-api-v2-channels-publish-records-published)返回项的 `id`。",
+    "pathParameters": {
+      "recordId": {
+        "description": "发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`。",
+        "example": null,
+        "schema": { "description": "发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`。" }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "flowId": { "type": "string" },
+        "userTaskId": { "type": "string" },
+        "accountId": { "type": "string" },
+        "accountType": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "number" },
+        "title": { "type": "string" },
+        "desc": { "type": "string" },
+        "publishTime": { "type": "string" },
+        "platformWorkId": { "type": "string" },
+        "workLink": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "imgUrlList": { "type": "array", "items": { "type": "string" } },
+        "source": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "id": "string",
+            "flowId": "string",
+            "userTaskId": "string",
+            "accountId": "string",
+            "accountType": "string",
+            "type": "string",
+            "status": "number",
+            "title": "string",
+            "desc": "string",
+            "publishTime": "string",
+            "platformWorkId": "string",
+            "workLink": "string",
+            "videoUrl": "string",
+            "coverUrl": "string",
+            "imgUrlList": ["string"],
+            "source": "string",
+            "createdAt": "string",
+            "updatedAt": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "PATCH /api/v2/channels/publish/records/{recordId}/work-link": null,
   "GET /api/v2/channels/publish/records/{recordId}/user-action": {
-    "summary": "App 拉起链接"
+    "summary": "App 拉起链接",
+    "description": "> **注意：** 这个接口只对抖音发布记录有效，`recordId` 必须来自**尚未完成发布**的记录。已发布完成、失败或其他状态的记录会返回业务错误 `15018`。\n\n接口说明：获取需要用户在抖音 App 中继续操作的发布记录对应的 App scheme 和短链接。",
+    "x-mint": {
+      "content": "<Warning>\n  这个接口只对抖音发布记录有效。`recordId` 必须来自**尚未完成发布**的记录；已完成、失败或其他状态的记录只会返回业务错误 `15018`，拿不到标准的 App 拉起返回。\n</Warning>"
+    },
+    "pathParameters": {
+      "recordId": {
+        "description": "处于等待用户操作状态的抖音发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`，不能使用已发布完成的记录或其他非抖音发布记录。",
+        "example": null,
+        "schema": {
+          "description": "处于等待用户操作状态的抖音发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`，不能使用已发布完成的记录或其他非抖音发布记录。"
+        }
+      }
+    }
   },
   "GET /api/v2/channels/platforms": {
     "summary": "平台列表",
@@ -1692,19 +2311,103 @@
           "requestId": "string"
         }
       }
-    }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/platforms/{platform}/publish-options": {
     "summary": "平台发布选项",
-    "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。",
+    "description": "接口说明：查询指定平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和账号要求。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果后续返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果包含 `createSchema`，可按该 schema 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。",
     "pathParameters": {
       "platform": {
         "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
+        "example": "bilibili",
         "schema": {
-          "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
+          "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
+          "example": "bilibili",
+          "default": "bilibili",
+          "enum": [
+            "bilibili",
+            "youtube",
+            "pinterest",
+            "twitter",
+            "tiktok",
+            "facebook",
+            "instagram",
+            "threads",
+            "linkedin",
+            "xhs",
+            "wxSph",
+            "douyin",
+            "KWAI",
+            "wxGzh"
+          ]
         }
       }
-    }
+    },
+    "responseDataSchema": {
+      "type": "array",
+      "description": "指定平台当前支持的发布选项列表。返回空数组表示没有额外发布选项。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "发布选项字段"
+          },
+          "label": {
+            "type": "string",
+            "description": "展示名称"
+          },
+          "description": {
+            "type": "string",
+            "description": "说明"
+          },
+          "valueType": {
+            "type": "string",
+            "enum": [
+              "list",
+              "tree"
+            ],
+            "description": "取值结构"
+          },
+          "requiresAccount": {
+            "type": "boolean",
+            "description": "是否需要账号授权"
+          },
+          "filterSchema": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "过滤条件 schema"
+          },
+          "createSchema": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "创建参数 schema"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": [
+            {
+              "field": "string",
+              "label": "string",
+              "description": "string",
+              "valueType": "string",
+              "requiresAccount": "boolean"
+            }
+          ],
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
   },
   "GET /api/v2/channels/engagement/comments": null,
   "POST /api/v2/channels/engagement/comments": null,

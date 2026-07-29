@@ -3451,7 +3451,89 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelAccountListVo"
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "userId": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "uid": {
+                                "type": "string"
+                              },
+                              "avatar": {
+                                "type": "string"
+                              },
+                              "nickname": {
+                                "type": "string"
+                              },
+                              "fansCount": {
+                                "type": "number"
+                              },
+                              "followingCount": {
+                                "type": "number"
+                              },
+                              "readCount": {
+                                "type": "number"
+                              },
+                              "likeCount": {
+                                "type": "number"
+                              },
+                              "collectCount": {
+                                "type": "number"
+                              },
+                              "forwardCount": {
+                                "type": "number"
+                              },
+                              "commentCount": {
+                                "type": "number"
+                              },
+                              "lastStatsTime": {
+                                "type": "string"
+                              },
+                              "workCount": {
+                                "type": "number"
+                              },
+                              "income": {
+                                "type": "number"
+                              },
+                              "groupId": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "rank": {
+                                "type": "number"
+                              },
+                              "relayAccountRef": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "updatedAt": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -3469,11 +3551,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3482,42 +3560,35 @@
                       "code": 0,
                       "message": "请求成功",
                       "data": {
-                        "total": 1,
+                        "total": "number",
                         "list": [
                           {
                             "id": "string",
                             "userId": "string",
-                            "type": "douyin",
+                            "type": "string",
                             "uid": "string",
-                            "nickname": "string",
-                            "groupId": "string",
-                            "status": 1,
-                            "clientType": "web",
-                            "account": "string",
-                            "loginTime": "2026-07-02T12:00:00.000Z",
                             "avatar": "string",
-                            "fansCount": 1
+                            "nickname": "string",
+                            "fansCount": "number",
+                            "followingCount": "number",
+                            "readCount": "number",
+                            "likeCount": "number",
+                            "collectCount": "number",
+                            "forwardCount": "number",
+                            "commentCount": "number",
+                            "lastStatsTime": "string",
+                            "workCount": "number",
+                            "income": "number",
+                            "groupId": "string",
+                            "status": "number",
+                            "rank": "number",
+                            "relayAccountRef": "string | null",
+                            "createdAt": "string",
+                            "updatedAt": "string"
                           }
                         ]
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -3682,11 +3753,12 @@
           {
             "name": "accountId",
             "in": "path",
-            "description": "渠道账号 ID",
+            "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。"
             }
           }
         ],
@@ -3699,7 +3771,74 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelAccountVo"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "uid": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "nickname": {
+                          "type": "string"
+                        },
+                        "fansCount": {
+                          "type": "number"
+                        },
+                        "followingCount": {
+                          "type": "number"
+                        },
+                        "readCount": {
+                          "type": "number"
+                        },
+                        "likeCount": {
+                          "type": "number"
+                        },
+                        "collectCount": {
+                          "type": "number"
+                        },
+                        "forwardCount": {
+                          "type": "number"
+                        },
+                        "commentCount": {
+                          "type": "number"
+                        },
+                        "workCount": {
+                          "type": "number"
+                        },
+                        "income": {
+                          "type": "number"
+                        },
+                        "groupId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "number"
+                        },
+                        "rank": {
+                          "type": "number"
+                        },
+                        "relayAccountRef": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -3717,11 +3856,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3732,44 +3867,27 @@
                       "data": {
                         "id": "string",
                         "userId": "string",
-                        "type": "douyin",
+                        "type": "string",
                         "uid": "string",
-                        "nickname": "string",
-                        "groupId": "string",
-                        "status": 1,
-                        "clientType": "web",
-                        "account": "string",
-                        "loginTime": "2026-07-02T12:00:00.000Z",
                         "avatar": "string",
-                        "fansCount": 1
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "nickname": "string",
+                        "fansCount": "number",
+                        "followingCount": "number",
+                        "readCount": "number",
+                        "likeCount": "number",
+                        "collectCount": "number",
+                        "forwardCount": "number",
+                        "commentCount": "number",
+                        "workCount": "number",
+                        "income": "number",
+                        "groupId": "string",
+                        "status": "number",
+                        "rank": "number",
+                        "relayAccountRef": "string | null",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -3949,11 +4067,12 @@
           {
             "name": "accountId",
             "in": "path",
-            "description": "渠道账号 ID",
+            "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。"
             }
           }
         ],
@@ -3966,7 +4085,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelAccountAuthStatusVo"
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "number"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -3984,11 +4109,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3997,26 +4118,9 @@
                       "code": 0,
                       "message": "请求成功",
                       "data": {
-                        "status": 1
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "status": "number"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -4094,7 +4198,73 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/PublishOptionValuesVo"
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string"
+                        },
+                        "valueType": {
+                          "type": "string"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "disabled": {
+                                "type": "boolean"
+                              },
+                              "children": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "extra": {
+                                      "type": "object",
+                                      "properties": {
+                                        "parent": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "additionalProperties": true
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "extra": {
+                                "type": "object",
+                                "properties": {
+                                  "parent": {
+                                    "type": "number"
+                                  }
+                                },
+                                "additionalProperties": true
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -4112,11 +4282,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -4126,45 +4292,30 @@
                       "message": "请求成功",
                       "data": {
                         "field": "string",
-                        "valueType": "list",
-                        "items": {}
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPlatformOperationNotSupported15080": {
-                    "summary": "ChannelPlatformOperationNotSupported (15080)",
-                    "value": {
-                      "code": 15080,
-                      "message": "{{platform}} 不支持该操作",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "valueType": "string",
+                        "items": [
+                          {
+                            "value": "string",
+                            "label": "string",
+                            "description": "string",
+                            "disabled": "boolean",
+                            "children": [
+                              {
+                                "value": "string",
+                                "label": "string",
+                                "description": "string",
+                                "extra": {
+                                  "parent": "number"
+                                }
+                              }
+                            ],
+                            "extra": {
+                              "parent": "number"
+                            }
+                          }
+                        ]
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -8838,7 +8989,7 @@
       "get": {
         "summary": "App 拉起链接",
         "deprecated": false,
-        "description": "接口说明：获取抖音等待用户操作发布记录的 App scheme 和短链接",
+        "description": "> **注意：** 这个接口只对抖音发布记录有效，`recordId` 必须来自**尚未完成发布**的记录。已发布完成、失败或其他状态的记录会返回业务错误 `15018`。\n\n接口说明：获取需要用户在抖音 App 中继续操作的发布记录对应的 App scheme 和短链接。",
         "operationId": "PublishRecordController_getUserAction_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -8847,7 +8998,7 @@
           {
             "name": "recordId",
             "in": "path",
-            "description": "发布记录 ID",
+            "description": "处于等待用户操作状态的抖音发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`，不能使用已发布完成的记录或其他非抖音发布记录。",
             "required": true,
             "example": "",
             "schema": {
@@ -8972,6 +9123,7 @@
         ],
         "x-mint": {
           "href": "/api-reference/get-api-v2-channels-publish-records-record-id-user-action",
+          "content": "<Warning>\n  这个接口只对抖音发布记录有效。`recordId` 必须来自**尚未完成发布**的记录；已完成、失败或其他状态的记录只会返回业务错误 `15018`，拿不到标准的 App 拉起返回。\n</Warning>",
           "metadata": {
             "title": "App 拉起链接",
             "sidebarTitle": "App 拉起链接"
@@ -9131,9 +9283,6 @@
                                 "description": "是否必须提供封面"
                               }
                             },
-                            "required": [
-                              "modes"
-                            ],
                             "additionalProperties": false,
                             "description": "内容限制"
                           },
@@ -9203,19 +9352,6 @@
                             "description": "平台状态"
                           }
                         },
-                        "required": [
-                          "platform",
-                          "displayName",
-                          "logoUrl",
-                          "authType",
-                          "editor",
-                          "contentLimits",
-                          "mediaRules",
-                          "topic",
-                          "capabilities",
-                          "optionSchema",
-                          "status"
-                        ],
                         "additionalProperties": false
                       }
                     },
@@ -9235,11 +9371,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "types": {
@@ -9398,7 +9530,7 @@
       "get": {
         "summary": "平台发布选项",
         "deprecated": false,
-        "description": "接口说明：查询某个平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和创建规则。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果返回项包含 `createSchema`，说明该字段支持创建新值，可按 `createSchema` 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。",
+        "description": "接口说明：查询指定平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和账号要求。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果后续返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果包含 `createSchema`，可按该 schema 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。",
         "operationId": "PlatformsController_listPublishOptions_v2",
         "tags": [
           "渠道管理/平台"
@@ -9409,10 +9541,28 @@
             "in": "path",
             "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
             "required": true,
-            "example": "",
+            "example": "bilibili",
             "schema": {
               "type": "string",
-              "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。"
+              "description": "平台标识。取值来自[「平台列表」](/api-reference/get-api-v2-channels-platforms)接口（`GET /api/v2/channels/platforms`）返回的 `data[n].platform`。",
+              "example": "bilibili",
+              "enum": [
+                "bilibili",
+                "youtube",
+                "pinterest",
+                "twitter",
+                "tiktok",
+                "facebook",
+                "instagram",
+                "threads",
+                "linkedin",
+                "xhs",
+                "wxSph",
+                "douyin",
+                "KWAI",
+                "wxGzh"
+              ],
+              "default": "bilibili"
             }
           }
         ],
@@ -9426,8 +9576,46 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "指定平台当前支持的发布选项列表。返回空数组表示没有额外发布选项。",
                       "items": {
-                        "$ref": "#/components/schemas/PublishOptionSourceVo"
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "description": "发布选项字段"
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "展示名称"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "说明"
+                          },
+                          "valueType": {
+                            "type": "string",
+                            "enum": [
+                              "list",
+                              "tree"
+                            ],
+                            "description": "取值结构"
+                          },
+                          "requiresAccount": {
+                            "type": "boolean",
+                            "description": "是否需要账号授权"
+                          },
+                          "filterSchema": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "description": "过滤条件 schema"
+                          },
+                          "createSchema": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "description": "创建参数 schema"
+                          }
+                        },
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -9446,11 +9634,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -9462,31 +9646,12 @@
                         {
                           "field": "string",
                           "label": "string",
-                          "valueType": "list",
-                          "requiresAccount": true,
                           "description": "string",
-                          "filterSchema": {},
-                          "createSchema": {}
+                          "valueType": "string",
+                          "requiresAccount": "boolean"
                         }
-                      ]
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }
@@ -15539,7 +15704,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "发布记录 ID"
+            "description": "处于等待用户操作状态的抖音发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`，不能使用已发布完成的记录或其他非抖音发布记录。"
           },
           "flowId": {
             "description": "发布 Flow ID",

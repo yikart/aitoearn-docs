@@ -3451,7 +3451,89 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelAccountListVo"
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "userId": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "uid": {
+                                "type": "string"
+                              },
+                              "avatar": {
+                                "type": "string"
+                              },
+                              "nickname": {
+                                "type": "string"
+                              },
+                              "fansCount": {
+                                "type": "number"
+                              },
+                              "followingCount": {
+                                "type": "number"
+                              },
+                              "readCount": {
+                                "type": "number"
+                              },
+                              "likeCount": {
+                                "type": "number"
+                              },
+                              "collectCount": {
+                                "type": "number"
+                              },
+                              "forwardCount": {
+                                "type": "number"
+                              },
+                              "commentCount": {
+                                "type": "number"
+                              },
+                              "lastStatsTime": {
+                                "type": "string"
+                              },
+                              "workCount": {
+                                "type": "number"
+                              },
+                              "income": {
+                                "type": "number"
+                              },
+                              "groupId": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "rank": {
+                                "type": "number"
+                              },
+                              "relayAccountRef": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "updatedAt": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -3469,11 +3551,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3482,42 +3560,35 @@
                       "code": 0,
                       "message": "Request succeeded",
                       "data": {
-                        "total": 1,
+                        "total": "number",
                         "list": [
                           {
                             "id": "string",
                             "userId": "string",
-                            "type": "douyin",
+                            "type": "string",
                             "uid": "string",
-                            "nickname": "string",
-                            "groupId": "string",
-                            "status": 1,
-                            "clientType": "web",
-                            "account": "string",
-                            "loginTime": "2026-07-02T12:00:00.000Z",
                             "avatar": "string",
-                            "fansCount": 1
+                            "nickname": "string",
+                            "fansCount": "number",
+                            "followingCount": "number",
+                            "readCount": "number",
+                            "likeCount": "number",
+                            "collectCount": "number",
+                            "forwardCount": "number",
+                            "commentCount": "number",
+                            "lastStatsTime": "string",
+                            "workCount": "number",
+                            "income": "number",
+                            "groupId": "string",
+                            "status": "number",
+                            "rank": "number",
+                            "relayAccountRef": "string | null",
+                            "createdAt": "string",
+                            "updatedAt": "string"
                           }
                         ]
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -3682,11 +3753,12 @@
           {
             "name": "accountId",
             "in": "path",
-            "description": "Channel account ID",
+            "description": "Channel account ID. Use `data.list[n].id` returned by the [Account List](/en/api-reference/get-api-v2-channels-accounts) endpoint.",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "Channel account ID. Use `data.list[n].id` returned by the [Account List](/en/api-reference/get-api-v2-channels-accounts) endpoint."
             }
           }
         ],
@@ -3699,7 +3771,74 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelAccountVo"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "uid": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "nickname": {
+                          "type": "string"
+                        },
+                        "fansCount": {
+                          "type": "number"
+                        },
+                        "followingCount": {
+                          "type": "number"
+                        },
+                        "readCount": {
+                          "type": "number"
+                        },
+                        "likeCount": {
+                          "type": "number"
+                        },
+                        "collectCount": {
+                          "type": "number"
+                        },
+                        "forwardCount": {
+                          "type": "number"
+                        },
+                        "commentCount": {
+                          "type": "number"
+                        },
+                        "workCount": {
+                          "type": "number"
+                        },
+                        "income": {
+                          "type": "number"
+                        },
+                        "groupId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "number"
+                        },
+                        "rank": {
+                          "type": "number"
+                        },
+                        "relayAccountRef": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -3717,11 +3856,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3732,44 +3867,27 @@
                       "data": {
                         "id": "string",
                         "userId": "string",
-                        "type": "douyin",
+                        "type": "string",
                         "uid": "string",
-                        "nickname": "string",
-                        "groupId": "string",
-                        "status": 1,
-                        "clientType": "web",
-                        "account": "string",
-                        "loginTime": "2026-07-02T12:00:00.000Z",
                         "avatar": "string",
-                        "fansCount": 1
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "nickname": "string",
+                        "fansCount": "number",
+                        "followingCount": "number",
+                        "readCount": "number",
+                        "likeCount": "number",
+                        "collectCount": "number",
+                        "forwardCount": "number",
+                        "commentCount": "number",
+                        "workCount": "number",
+                        "income": "number",
+                        "groupId": "string",
+                        "status": "number",
+                        "rank": "number",
+                        "relayAccountRef": "string | null",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -3949,11 +4067,12 @@
           {
             "name": "accountId",
             "in": "path",
-            "description": "Channel account ID",
+            "description": "Channel account ID. Use `data.list[n].id` returned by the [Account List](/en/api-reference/get-api-v2-channels-accounts) endpoint.",
             "required": true,
             "example": "",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "Channel account ID. Use `data.list[n].id` returned by the [Account List](/en/api-reference/get-api-v2-channels-accounts) endpoint."
             }
           }
         ],
@@ -3966,7 +4085,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelAccountAuthStatusVo"
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "number"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -3984,11 +4109,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3997,26 +4118,9 @@
                       "code": 0,
                       "message": "Request succeeded",
                       "data": {
-                        "status": 1
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "status": "number"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -4094,7 +4198,73 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/PublishOptionValuesVo"
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string"
+                        },
+                        "valueType": {
+                          "type": "string"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "disabled": {
+                                "type": "boolean"
+                              },
+                              "children": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "extra": {
+                                      "type": "object",
+                                      "properties": {
+                                        "parent": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "additionalProperties": true
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "extra": {
+                                "type": "object",
+                                "properties": {
+                                  "parent": {
+                                    "type": "number"
+                                  }
+                                },
+                                "additionalProperties": true
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -4112,11 +4282,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -4126,45 +4292,30 @@
                       "message": "Request succeeded",
                       "data": {
                         "field": "string",
-                        "valueType": "list",
-                        "items": {}
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPlatformOperationNotSupported15080": {
-                    "summary": "ChannelPlatformOperationNotSupported (15080)",
-                    "value": {
-                      "code": 15080,
-                      "message": "{{platform}} does not support this operation",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "valueType": "string",
+                        "items": [
+                          {
+                            "value": "string",
+                            "label": "string",
+                            "description": "string",
+                            "disabled": "boolean",
+                            "children": [
+                              {
+                                "value": "string",
+                                "label": "string",
+                                "description": "string",
+                                "extra": {
+                                  "parent": "number"
+                                }
+                              }
+                            ],
+                            "extra": {
+                              "parent": "number"
+                            }
+                          }
+                        ]
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -8838,7 +8989,7 @@
       "get": {
         "summary": "App Deep Link",
         "deprecated": false,
-        "description": "Interface description: Get the App scheme and short link of Douyin waiting for user operation release record",
+        "description": "> **Note:** This endpoint only works for Douyin release records, and `recordId` must come from a record that has not finished publishing yet. Completed, failed, or other states return business error `15018`.\n\nInterface description: Get the App scheme and short link for a release record that still requires user action in the Douyin app.",
         "operationId": "PublishRecordController_getUserAction_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -8847,7 +8998,7 @@
           {
             "name": "recordId",
             "in": "path",
-            "description": "Post record ID",
+            "description": "The Douyin release record ID that is still waiting for user action. Use `data[n].id` from the release record list response; do not use a completed record or any non-Douyin release record.",
             "required": true,
             "example": "",
             "schema": {
@@ -8972,6 +9123,7 @@
         ],
         "x-mint": {
           "href": "/en/api-reference/get-api-v2-channels-publish-records-record-id-user-action",
+          "content": "<Warning>\n  This endpoint only works for Douyin release records. `recordId` must come from a record that has not finished publishing yet; completed, failed, or other records only return business error `15018` and do not produce the standard App deep link response.\n</Warning>",
           "metadata": {
             "title": "App Deep Link",
             "sidebarTitle": "App Deep Link"
@@ -9131,9 +9283,6 @@
                                 "description": "Whether a cover is required"
                               }
                             },
-                            "required": [
-                              "modes"
-                            ],
                             "additionalProperties": false,
                             "description": "Content restrictions"
                           },
@@ -9203,19 +9352,6 @@
                             "description": "Platform status"
                           }
                         },
-                        "required": [
-                          "platform",
-                          "displayName",
-                          "logoUrl",
-                          "authType",
-                          "editor",
-                          "contentLimits",
-                          "mediaRules",
-                          "topic",
-                          "capabilities",
-                          "optionSchema",
-                          "status"
-                        ],
                         "additionalProperties": false
                       }
                     },
@@ -9235,11 +9371,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "types": {
@@ -9398,7 +9530,7 @@
       "get": {
         "summary": "Platform Publish Options",
         "deprecated": false,
-        "description": "Interface description: Query whether a platform requires platform-specific additional parameters when publishing, as well as the field names, value structures and creation rules of these parameters.\n\nEach `data[n]` returned represents an additional argument. Common scenarios include B station partition `tid`, YouTube category `categoryId`, Threads location `location_id`, and Pinterest Board `boardId`. If an empty array is returned, it means that the platform currently has no additional parameters that need to be processed through the publishing options interface.\n\nUsage: Get the `field` in the returned item and put it into [\"Publish option optional values\"](/en/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values) interface path parameter `field` to query the optional value; if the returned item contains `filterSchema`, pass the filter conditions as query parameters to the \"Publish option optional values\" interface according to the schema; if the returned item contains `createSchema`, indicating that this field supports the creation of new values. You can organize the request body according to `createSchema` and call the [\"Create publish option values\"](/en/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values) interface.",
+        "description": "Endpoint description: Queries whether a specified platform requires platform-specific publishing parameters, including their field names, value structures, and account requirements.\n\nEach `data[n]` item represents an additional parameter. Common scenarios include the Bilibili partition `tid`, YouTube category `categoryId`, Threads location `location_id`, and Pinterest Board `boardId`. An empty array means the platform currently has no additional parameters that need to be handled through the publishing options endpoint.\n\nUsage: Pass the returned `field` to the [Publish Option Values](/en/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values) endpoint. If a future response includes `filterSchema`, pass matching filters as query parameters. If it includes `createSchema`, construct the request body from that schema and call [Create Publish Option Value](/en/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values).",
         "operationId": "PlatformsController_listPublishOptions_v2",
         "tags": [
           "Channel Management/Platforms"
@@ -9409,10 +9541,28 @@
             "in": "path",
             "description": "Platform ID. The value comes from the `data[n].platform` returned by the [\"Platform List\"](/en/api-reference/get-api-v2-channels-platforms) interface (`GET /api/v2/channels/platforms`).",
             "required": true,
-            "example": "",
+            "example": "bilibili",
             "schema": {
               "type": "string",
-              "description": "Platform ID. The value comes from the `data[n].platform` returned by the [\"Platform List\"](/en/api-reference/get-api-v2-channels-platforms) interface (`GET /api/v2/channels/platforms`)."
+              "description": "Platform ID. The value comes from the `data[n].platform` returned by the [\"Platform List\"](/en/api-reference/get-api-v2-channels-platforms) interface (`GET /api/v2/channels/platforms`).",
+              "example": "bilibili",
+              "enum": [
+                "bilibili",
+                "youtube",
+                "pinterest",
+                "twitter",
+                "tiktok",
+                "facebook",
+                "instagram",
+                "threads",
+                "linkedin",
+                "xhs",
+                "wxSph",
+                "douyin",
+                "KWAI",
+                "wxGzh"
+              ],
+              "default": "bilibili"
             }
           }
         ],
@@ -9426,8 +9576,46 @@
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "The publishing options currently supported by the specified platform. An empty array means there are no additional publishing options.",
                       "items": {
-                        "$ref": "#/components/schemas/PublishOptionSourceVo"
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "description": "Publishing options field"
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "display name"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "illustrate"
+                          },
+                          "valueType": {
+                            "type": "string",
+                            "enum": [
+                              "list",
+                              "tree"
+                            ],
+                            "description": "Value structure"
+                          },
+                          "requiresAccount": {
+                            "type": "boolean",
+                            "description": "Is account authorization required?"
+                          },
+                          "filterSchema": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "description": "filter schema"
+                          },
+                          "createSchema": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "description": "Create parameter schema"
+                          }
+                        },
+                        "additionalProperties": false
                       }
                     },
                     "code": {
@@ -9446,11 +9634,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -9462,31 +9646,12 @@
                         {
                           "field": "string",
                           "label": "string",
-                          "valueType": "list",
-                          "requiresAccount": true,
                           "description": "string",
-                          "filterSchema": {},
-                          "createSchema": {}
+                          "valueType": "string",
+                          "requiresAccount": "boolean"
                         }
-                      ]
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      ],
+                      "requestId": "string"
                     }
                   }
                 }
@@ -15528,7 +15693,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Post record ID"
+            "description": "The Douyin release record ID that is still waiting for user action. Use `data[n].id` from the release record list response; do not use a completed record or any non-Douyin release record."
           },
           "flowId": {
             "description": "Post Flow ID",

@@ -1016,7 +1016,10 @@ function sanitizeOpenApi30(value) {
     value.items = value.items[0] || {}
   }
 
-  for (const child of Object.values(value)) {
+  for (const [key, child] of Object.entries(value)) {
+    if (key === 'example' || key === 'examples') {
+      continue
+    }
     sanitizeOpenApi30(child)
   }
   return value
@@ -1073,6 +1076,10 @@ const englishTextOverrides = {
   '删除发布记录': 'Delete Publish Record',
   '发布记录详情': 'Publish Record Details',
   'App 拉起链接': 'App Deep Link',
+  '这个接口只对抖音发布记录有效。`recordId` 必须来自**尚未完成发布**的记录；已完成、失败或其他状态的记录只会返回业务错误 `15018`，拿不到标准的 App 拉起返回。': 'This endpoint only works for Douyin release records. `recordId` must come from a record that has not finished publishing yet; completed, failed, or other records only return business error `15018` and do not produce the standard App deep link response.',
+  '处于等待用户操作状态的抖音发布记录 ID。取值来自发布记录列表接口返回的 `data[n].id`，不能使用已发布完成的记录或其他非抖音发布记录。': 'The Douyin release record ID that is still waiting for user action. Use `data[n].id` from the release record list response; do not use a completed record or any non-Douyin release record.',
+  '接口说明：根据发布流程 ID 查询一次多账号发布流程及其任务状态。`flowId` 可从[创建发布流程](/en/api-reference/post-api-v2-channels-publish-flows)接口返回的 `data.flowId` 获取，也可从[发布记录列表](/en/api-reference/get-api-v2-channels-publish-records)返回项的 `flowId` 获取。': 'Interface description: Query a multi-account publish flow and its task status by publish flow ID. `flowId` can be obtained from the `data.flowId` returned by the [Create Publish Flow](/en/api-reference/post-api-v2-channels-publish-flows) endpoint, or from the `flowId` field in the [Publish Record List](/en/api-reference/get-api-v2-channels-publish-records) response items.',
+  '发布流程 ID。取值来自创建发布流程接口返回的 `data.flowId`，或发布记录列表返回的 `data[n].flowId`。': 'Publish flow ID. Use the `data.flowId` returned by the Create Publish Flow endpoint, or the `data[n].flowId` returned by the Publish Record List endpoint.',
   '平台列表': 'Platform List',
   '平台发布选项': 'Platform Publish Options',
   '解析作品链接': 'Parse Work Link',
@@ -1095,6 +1102,9 @@ const englishTextOverrides = {
   '基础对话': 'Basic chat',
   '请用一句话介绍 AiToEarn。': 'Introduce AiToEarn in one sentence.',
   '请只回复 OK。': 'Reply with OK only.',
+  '指定平台当前支持的发布选项列表。返回空数组表示没有额外发布选项。': 'The publishing options currently supported by the specified platform. An empty array means there are no additional publishing options.',
+  '渠道账号 ID。取值来自[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口返回的 `data.list[n].id`。': 'Channel account ID. Use `data.list[n].id` returned by the [Account List](/en/api-reference/get-api-v2-channels-accounts) endpoint.',
+  '接口说明：查询指定平台在发布时是否需要平台专属的额外参数，以及这些参数的字段名、取值结构和账号要求。\n\n返回的每个 `data[n]` 表示一个额外参数。常见场景包括 B 站分区 `tid`、YouTube 分类 `categoryId`、Threads 地点 `location_id`、Pinterest Board `boardId`。如果返回空数组，说明该平台当前没有需要通过发布选项接口处理的额外参数。\n\n使用方式：取返回项中的 `field`，放到[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口路径参数 `field` 中查询可选值；如果后续返回项包含 `filterSchema`，按该 schema 将过滤条件作为查询参数传给「发布选项可选值」接口；如果包含 `createSchema`，可按该 schema 组织请求体后调用[「创建发布选项值」](/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values)接口。': 'Endpoint description: Queries whether a specified platform requires platform-specific publishing parameters, including their field names, value structures, and account requirements.\n\nEach `data[n]` item represents an additional parameter. Common scenarios include the Bilibili partition `tid`, YouTube category `categoryId`, Threads location `location_id`, and Pinterest Board `boardId`. An empty array means the platform currently has no additional parameters that need to be handled through the publishing options endpoint.\n\nUsage: Pass the returned `field` to the [Publish Option Values](/en/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values) endpoint. If a future response includes `filterSchema`, pass matching filters as query parameters. If it includes `createSchema`, construct the request body from that schema and call [Create Publish Option Value](/en/api-reference/post-api-v2-channels-accounts-account-id-publish-options-field-values).',
   'Anthropic 渠道模型 ID。先调用[「对话模型列表」](/api-reference/get-api-ai-models-chat)接口（`GET /api/ai/models/chat`），选择返回结果中 `channel` 为 `anthropic` 的 `data[n].name`。': 'Anthropic channel model ID. First call the [Chat Model List](/en/api-reference/get-api-ai-models-chat) endpoint (`GET /api/ai/models/chat`), then select `data[n].name` where `channel` is `anthropic`.',
   '最大输出 Token 数。取值范围为 1 至 9007199254740991，默认值为 32000；示例使用 64 以控制测试消耗。': 'Maximum output tokens. The allowed range is 1 to 9007199254740991 and the default is 32000; the example uses 64 to limit test usage.',
   '请求成功': 'Request succeeded',

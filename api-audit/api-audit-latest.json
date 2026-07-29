@@ -10638,7 +10638,7 @@
       "method": "GET",
       "path": "/api/v2/channels/publish/records/{recordId}/user-action",
       "summary": "App 拉起链接",
-      "description": "接口说明：获取抖音等待用户操作发布记录的 App scheme 和短链接",
+      "description": "接口说明：获取需要用户在抖音 App 中继续操作的发布记录对应的 App scheme 和短链接。本接口仅对抖音发布记录有效，且 recordId 必须是尚未完成发布的记录。已发布完成、失败或其他状态的记录都会返回业务码 15018，不能拿来做成功示例。",
       "tags": [
         "渠道管理/内容发布"
       ],
