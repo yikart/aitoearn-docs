@@ -641,32 +641,91 @@
   },
   "POST /api/ai/image/generate": {
     "description": "接口说明：同步生成图像，根据所选模型与提示词返回生成结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改、重绘（图生图），请使用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像生成」](/api-reference/post-api-ai-images-generations)。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "lowest-cost": {
+              "summary": "最低积分示例",
+              "value": {
+                "prompt": "A cute orange cat sitting by a window, soft natural light",
+                "model": "gpt-image-2",
+                "quality": "low",
+                "response_format": "url",
+                "size": "1024x1024"
+              }
+            }
+          }
+        }
+      }
+    },
     "bodyProperties": {
+      "prompt": {
+        "example": "A cute orange cat sitting by a window, soft natural light"
+      },
       "model": {
-        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+        "example": "gpt-image-2"
       },
       "n": null,
       "quality": {
-        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
+        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
+        "example": "low"
+      },
+      "response_format": {
+        "example": "url"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。当前示例使用 `1024x1024`，对应最低价格 1 积分。",
+        "example": "1024x1024"
       },
-      "style": {
-        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
-      },
+      "style": null,
       "user": null,
       "source": null
     }
   },
   "POST /api/ai/image/edit": {
     "description": "接口说明：同步编辑图像，基于参考图与指令进行编辑。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘或风格化。如需仅用文字生成全新图像（文生图），请使用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。\n\n如已在使用 OpenAI SDK 或生态工具，可改用 OpenAI 兼容端点[「OpenAI 图像编辑」](/api-reference/post-api-ai-images-edits)。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "lowest-cost": {
+              "summary": "最低积分示例",
+              "value": {
+                "model": "gpt-image-2",
+                "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style.",
+                "n": 1,
+                "size": "1024x1024",
+                "response_format": "url"
+              }
+            }
+          }
+        }
+      }
+    },
     "bodyProperties": {
       "model": {
-        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。",
+        "example": "gpt-image-2"
+      },
+      "image": {
+        "description": "原始图片。支持单个图片 URL、data URL 或图片 URL 数组；当前 `gpt-image-2` 最多支持 14 张输入图片。",
+        "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
+      },
+      "prompt": {
+        "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style."
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。当前示例使用 `1024x1024`，对应最低价格 1 积分。",
+        "example": "1024x1024"
+      },
+      "n": {
+        "example": 1
+      },
+      "response_format": {
+        "example": "url"
       },
       "mask": {
         "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
@@ -676,39 +735,99 @@
     }
   },
   "POST /api/ai/image/generate/async": {
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "lowest-cost": {
+              "summary": "最低积分示例",
+              "value": {
+                "prompt": "A cute orange cat sitting by a window, soft natural light",
+                "model": "gpt-image-2",
+                "quality": "low",
+                "response_format": "url",
+                "size": "1024x1024"
+              }
+            }
+          }
+        }
+      }
+    },
     "description": "接口说明：异步生成图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），获取当前可用的模型列表及各模型支持的尺寸、质量、风格与价格，再据此填写本接口参数。\n\n图像生成为**文生图**：仅通过文字提示词生成全新图像，不传入图片。如需基于已有图片进行修改（图生图），请使用[「异步编辑图像」](/api-reference/post-api-ai-image-edit-async)接口。",
     "bodyProperties": {
       "model": {
-        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+        "example": "gpt-image-2"
       },
       "n": null,
       "quality": {
-        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
+        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
+        "example": "low"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+        "example": "1024x1024"
       },
       "style": {
         "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
       },
       "user": null,
-      "source": null
+      "source": null,
+      "prompt": {
+        "example": "A cute orange cat sitting by a window, soft natural light"
+      },
+      "response_format": {
+        "example": "url"
+      }
     }
   },
   "POST /api/ai/image/edit/async": {
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "lowest-cost": {
+              "summary": "最低积分示例",
+              "value": {
+                "model": "gpt-image-2",
+                "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style.",
+                "n": 1,
+                "size": "1024x1024",
+                "response_format": "url"
+              }
+            }
+          }
+        }
+      }
+    },
     "description": "接口说明：异步编辑图像，立即返回 logId，通过查询任务状态接口轮询结果。\n\n调用本接口前，请先请求[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），获取当前可用的模型列表及各模型支持的尺寸、最大输入图片数与价格，再据此填写本接口参数。\n\n图像编辑为**图生图**：必须传入参考图片 `image`，按提示词在其基础上修改、重绘。如需仅用文字生成全新图像（文生图），请使用[「异步生成图像」](/api-reference/post-api-ai-image-generate-async)接口。",
     "bodyProperties": {
       "model": {
-        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。",
+        "example": "gpt-image-2"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+        "example": "1024x1024"
       },
       "mask": {
         "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
       },
       "user": null,
-      "source": null
+      "source": null,
+      "image": {
+        "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
+      },
+      "prompt": {
+        "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style."
+      },
+      "n": {
+        "example": 1
+      },
+      "response_format": {
+        "example": "url"
+      }
     }
   },
   "GET /api/ai/image/task/{logId}": {
@@ -1232,20 +1351,207 @@
   "POST /api/ai/images/generations": {
     "tag": "AI 服务/图像生成",
     "summary": "OpenAI 图像生成",
+    "responseContent": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "created": {
+              "type": "number"
+            },
+            "quality": {
+              "type": "string"
+            },
+            "size": {
+              "type": "string"
+            },
+            "usage": {
+              "type": "object",
+              "properties": {
+                "input_tokens": {
+                  "type": "number"
+                },
+                "output_tokens": {
+                  "type": "number"
+                },
+                "total_tokens": {
+                  "type": "number"
+                },
+                "input_tokens_details": {
+                  "type": "object",
+                  "properties": {
+                    "text_tokens": {
+                      "type": "number"
+                    },
+                    "image_tokens": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "output_tokens_details": {
+                  "type": "object",
+                  "properties": {
+                    "text_tokens": {
+                      "type": "number"
+                    },
+                    "image_tokens": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": true,
+          "example": {
+            "data": [
+              {
+                "url": "string"
+              }
+            ],
+            "created": "number",
+            "quality": "string",
+            "size": "string",
+            "usage": {
+              "input_tokens": "number",
+              "output_tokens": "number",
+              "total_tokens": "number",
+              "input_tokens_details": {
+                "text_tokens": "number",
+                "image_tokens": "number"
+              },
+              "output_tokens_details": {
+                "text_tokens": "number",
+                "image_tokens": "number"
+              }
+            }
+          }
+        }
+      },
+      "text/event-stream": {
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "第三方协议原生成功响应",
+        "value": {
+          "data": [
+            {
+              "url": "string"
+            }
+          ],
+          "created": "number",
+          "quality": "string",
+          "size": "string",
+          "usage": {
+            "input_tokens": "number",
+            "output_tokens": "number",
+            "total_tokens": "number",
+            "input_tokens_details": {
+              "text_tokens": "number",
+              "image_tokens": "number"
+            },
+            "output_tokens_details": {
+              "text_tokens": "number",
+              "image_tokens": "number"
+            }
+          }
+        }
+      }
+    },
     "description": "接口说明：OpenAI Images API `/v1/images/generations` 的兼容端点（文生图）。请求、响应与错误格式完全遵循 OpenAI 规范：返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「生成图像」](/api-reference/post-api-ai-image-generate)接口。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": null,
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "quality": {
+                "type": "string"
+              },
+              "response_format": {
+                "type": "string",
+                "enum": [
+                  "url",
+                  "b64_json"
+                ]
+              },
+              "size": {
+                "type": "string"
+              },
+              "style": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "prompt",
+              "model"
+            ],
+            "additionalProperties": true,
+            "example": {
+              "prompt": "A cute orange cat sitting by a window, soft natural light",
+              "model": "gpt-image-2",
+              "quality": "low",
+              "response_format": "url",
+              "size": "1024x1024"
+            }
+          },
+          "examples": {
+            "lowest-cost": {
+              "summary": "最低积分示例",
+              "value": {
+                "prompt": "A cute orange cat sitting by a window, soft natural light",
+                "model": "gpt-image-2",
+                "quality": "low",
+                "response_format": "url",
+                "size": "1024x1024"
+              }
+            }
+          }
+        }
+      }
+    },
     "bodyProperties": {
       "model": {
-        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+        "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+        "example": "gpt-image-2"
       },
       "n": null,
       "quality": {
-        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
+        "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
+        "example": "low"
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+        "example": "1024x1024"
       },
-      "style": {
-        "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。"
+      "style": null,
+      "prompt": {
+        "example": "A cute orange cat sitting by a window, soft natural light"
+      },
+      "response_format": {
+        "example": "url"
       },
       "user": null,
       "source": null
@@ -1254,16 +1560,227 @@
   "POST /api/ai/images/edits": {
     "tag": "AI 服务/图像生成",
     "summary": "OpenAI 图像编辑",
+    "responseContent": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "created": {
+              "type": "number"
+            },
+            "size": {
+              "type": "string"
+            },
+            "usage": {
+              "type": "object",
+              "properties": {
+                "input_tokens": {
+                  "type": "number"
+                },
+                "output_tokens": {
+                  "type": "number"
+                },
+                "total_tokens": {
+                  "type": "number"
+                },
+                "input_tokens_details": {
+                  "type": "object",
+                  "properties": {
+                    "text_tokens": {
+                      "type": "number"
+                    },
+                    "image_tokens": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "output_tokens_details": {
+                  "type": "object",
+                  "properties": {
+                    "text_tokens": {
+                      "type": "number"
+                    },
+                    "image_tokens": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": true,
+          "example": {
+            "data": [
+              {
+                "url": "string"
+              }
+            ],
+            "created": "number",
+            "size": "string",
+            "usage": {
+              "input_tokens": "number",
+              "output_tokens": "number",
+              "total_tokens": "number",
+              "input_tokens_details": {
+                "text_tokens": "number",
+                "image_tokens": "number"
+              },
+              "output_tokens_details": {
+                "text_tokens": "number",
+                "image_tokens": "number"
+              }
+            }
+          }
+        }
+      },
+      "text/event-stream": {
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": null,
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string"
+              },
+              "image": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "description": "图片列表"
+              },
+              "prompt": {
+                "type": "string",
+                "description": "提示词"
+              },
+              "mask": {
+                "type": "string"
+              },
+              "n": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991,
+                "description": "生成数量"
+              },
+              "size": {
+                "type": "string"
+              },
+              "response_format": {
+                "type": "string",
+                "enum": [
+                  "url",
+                  "b64_json"
+                ],
+                "description": "返回格式"
+              }
+            },
+            "required": [
+              "model",
+              "image",
+              "prompt"
+            ],
+            "additionalProperties": true,
+            "example": {
+              "model": "gpt-image-2",
+              "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+              "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window.",
+              "n": 1,
+              "size": "1024x1024",
+              "response_format": "url"
+            }
+          },
+          "examples": {
+            "lowest-cost": {
+              "summary": "最低积分示例",
+              "value": {
+                "model": "gpt-image-2",
+                "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window.",
+                "n": 1,
+                "size": "1024x1024",
+                "response_format": "url"
+              }
+            }
+          }
+        }
+      }
+    },
     "description": "接口说明：OpenAI Images API `/v1/images/edits` 的兼容端点（图生图）。请求、响应与错误格式完全遵循 OpenAI 规范：支持 `application/json` 与 `multipart/form-data`（可直接上传图片与遮罩文件），返回 OpenAI 原始 `ImagesResponse`，不使用 AiToEarn 通用响应包裹；图片链接为上游原始返回，不做转存。鉴权使用 `Authorization: Bearer <API Key>`（OpenAI SDK 默认携带），已有 OpenAI SDK 或生态工具只需替换 baseURL 与 API Key 即可接入，按 AiToEarn 积分计费。\n\n模型取值来自[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].name`。如需 AiToEarn 通用响应格式（`code === 0`）与转存后的稳定图片链接，请改用[「编辑图像」](/api-reference/post-api-ai-image-edit)接口。",
+    "responseExamples": {
+      "success": {
+        "summary": "第三方协议原生成功响应",
+        "value": {
+          "data": [
+            {
+              "url": "string"
+            }
+          ],
+          "created": "number",
+          "size": "string",
+          "usage": {
+            "input_tokens": "number",
+            "output_tokens": "number",
+            "total_tokens": "number",
+            "input_tokens_details": {
+              "text_tokens": "number",
+              "image_tokens": "number"
+            },
+            "output_tokens_details": {
+              "text_tokens": "number",
+              "image_tokens": "number"
+            }
+          }
+        }
+      }
+    },
     "bodyProperties": {
       "model": {
-        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+        "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。",
+        "example": "gpt-image-2"
+      },
+      "image": {
+        "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
+      },
+      "prompt": {
+        "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window."
+      },
+      "n": {
+        "example": 1
       },
       "size": {
-        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+        "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+        "example": "1024x1024"
       },
       "mask": {
         "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
+      },
+      "response_format": {
+        "example": "url"
       },
       "user": null,
       "source": null
@@ -1386,6 +1903,49 @@
     "responseRequired": false
   },
   "POST /api/v2/channels/accounts": null,
+  "DELETE /api/v2/channels/accounts": {
+    "queryParameters": {
+      "ids": {
+        "name": "ids[]",
+        "description": "账号 ID 数组",
+        "style": "form",
+        "explode": true,
+        "example": ["accountId"],
+        "schema": {
+          "description": "账号 ID 数组",
+          "example": ["accountId"]
+        }
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
+  },
+  "DELETE /api/v2/channels/accounts/{accountId}": {
+    "responseDataSchema": {
+      "type": "boolean"
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "data": "boolean",
+          "code": 0,
+          "message": "请求成功",
+          "requestId": "string"
+        }
+      }
+    },
+    "responseRequired": false
+  },
   "GET /api/v2/channels/accounts/{accountId}": {
     "pathParameters": {
       "accountId": {
@@ -1594,7 +2154,7 @@
   },
   "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values": {
     "summary": "创建发布选项值",
-    "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口查询后选择。",
+    "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n本接口不是所有平台和字段都支持。调用前必须先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`），只有返回项明确包含 `createSchema` 的字段才可以调用本接口；将该返回项的 `field` 放到路径参数，并严格按照 `createSchema` 组织 JSON 请求体。若返回项没有 `createSchema`，请改用[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口查询并选择已有值。\n\n例如，当前 Bilibili 返回的 `tid` 仅支持查询分区，不支持通过本接口创建；使用 Bilibili 的 `tid` 调用会返回 `15080`（平台不支持该操作）。",
     "pathParameters": {
       "accountId": {
         "description": "渠道账号 ID。必须是当前用户已授权的账号，且账号所属平台应与「平台发布选项」接口中查询的平台一致。",
@@ -1603,26 +2163,335 @@
         }
       },
       "field": {
-        "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
+        "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`；没有 `createSchema` 的字段不支持本接口。",
         "schema": {
-          "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
+          "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`；没有 `createSchema` 的字段不支持本接口。"
         }
       }
     },
+    "requestBody": null
+  },
+  "POST /api/v2/channels/publish/flows": {
     "requestBody": {
-      "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。",
       "content": {
         "application/json": {
-          "schema": {
-            "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准。"
+          "example": null,
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "flowId": null,
+                "content": {
+                  "title": "publish-demo-video",
+                  "body": "Publish a video using the AiToEarn API.",
+                  "media": [
+                    {
+                      "url": "https://assets.aitoearn.cn/6a3b48b5ec793a848a671de1/ai/video/doubao-seedance-2-0-260128/202607/I-lRTCBUkjE43NRd77eWC.mp4"
+                    }
+                  ],
+                  "cover": {
+                    "url": "https://assets.aitoearn.cn/6a3b48b5ec793a848a671de1/ai/images/gpt-image-2/202607/GlhuS1TEyXtDAyumLezfo.png"
+                  }
+                },
+                "publishAt": "2030-01-01T00:00:00.000Z",
+                "items": [
+                  {
+                    "platform": "douyin",
+                    "accountId": "account-id-from-accounts-list"
+                  }
+                ]
+              }
+            }
           }
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "flowId": { "type": "string" },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "accountId": { "type": "string" },
+              "platform": { "type": "string" },
+              "status": { "type": "number" },
+              "publishTime": { "type": "string" },
+              "platformWorkId": { "type": "string" },
+              "workLink": { "type": "string" },
+              "linkStatus": { "type": "string" },
+              "linkError": { "type": "string" },
+              "linkMeta": { "type": "object" },
+              "errorMsg": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "flowId": "string",
+            "tasks": [
+              {
+                "id": "string",
+                "accountId": "string",
+                "platform": "string",
+                "status": "number",
+                "publishTime": "string",
+                "platformWorkId": "string",
+                "workLink": "string",
+                "linkStatus": "string",
+                "linkError": "string",
+                "linkMeta": "object",
+                "errorMsg": "string"
+              }
+            ]
+          },
+          "requestId": "string"
+        }
+      }
+    },
+    "summary": "创建发布流程",
+    "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。请求体中的 `items[n].accountId` 必须来自账号列表接口；`content.media[n].url` 必须是可公网访问的真实媒体 URL，不能直接复制示例中的占位值。推荐先按[资源上传教程](/zh/use/asset-upload)完成“生成上传签名 → 直传文件 → 确认资源上传”，再填写确认接口返回的 `data.url`；也可使用其他可被服务端直接访问和解析的真实媒体 URL。链接不可访问或无法解析时会返回 `15051`（`media_unreachable`）。`publishAt` 必须填写未来的 ISO 8601 时间。调用成功后，`data.flowId` 可用于查询流程详情，`data.tasks[n].id` 可用于立即发布、重试、取消或修改发布时间。该接口会创建真实发布任务，请确认参数无误后再发送。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。"
+  },
+  "POST /api/v2/channels/publish/tasks/{taskId}/publish-now": {
+    "description": "接口说明：将定时任务调整为立即发布。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`。仅能对仍处于可立即发布状态的任务调用；使用示例占位符不会产生真实发布。",
+    "pathParameters": {
+      "taskId": {
+        "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
+        "example": "task-id-from-create-flow",
+        "schema": {
+          "example": "task-id-from-create-flow"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "taskId": "string"
+          },
+          "requestId": "string"
         }
       }
     }
   },
-  "POST /api/v2/channels/publish/flows": {
-    "summary": "创建发布流程",
-    "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。"
+  "POST /api/v2/channels/publish/tasks/{taskId}/retry": {
+    "description": "接口说明：重试当前用户失败的发布任务。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`。只有接口返回的任务状态允许重试时才会成功。",
+    "pathParameters": {
+      "taskId": {
+        "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
+        "example": "task-id-from-create-flow",
+        "schema": {
+          "example": "task-id-from-create-flow"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "taskId": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
+  },
+  "DELETE /api/v2/channels/publish/tasks/{taskId}": {
+    "description": "接口说明：取消指定的发布任务。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`。取消操作可能同时影响平台侧预约任务，是否支持取决于平台能力。",
+    "pathParameters": {
+      "taskId": {
+        "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
+        "example": "task-id-from-create-flow",
+        "schema": {
+          "example": "task-id-from-create-flow"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "taskId": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
+  },
+  "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at": {
+    "description": "接口说明：修改待发布任务的发布时间。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`；`publishAt` 必须填写未来的 ISO 8601 时间，且任务状态必须允许修改。",
+    "pathParameters": {
+      "taskId": {
+        "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
+        "example": "task-id-from-create-flow",
+        "schema": {
+          "example": "task-id-from-create-flow"
+        }
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "publishAt": "2030-01-01T00:00:00.000Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "taskId": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "taskId": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
+  },
+  "DELETE /api/v2/channels/publish/records/{recordId}": {
+    "description": "接口说明：删除当前用户的终态本地发布记录，不删除平台作品。`recordId` 来自发布记录列表、已发布列表或发布记录详情接口。只能删除符合接口状态要求的终态记录。",
+    "pathParameters": {
+      "recordId": {
+        "description": "发布记录 ID，取自发布记录列表或详情响应",
+        "example": "record-id-from-publish-records",
+        "schema": {
+          "example": "record-id-from-publish-records"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {},
+          "requestId": "string"
+        }
+      }
+    }
+  },
+  "POST /api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify": {
+    "description": "接口说明：验证作品是否属于指定账号。调用前先通过账号列表接口获取候选账号，再通过该账号在对应平台的作品列表获取作品 ID。`platform`、`platformWorkId` 和 `candidateAccountId` 必须来自同一平台和同一已授权账号。",
+    "pathParameters": {
+      "platform": {
+        "description": "平台标识。需与候选账号及作品保持一致，例如快手使用 `KWAI`。",
+        "example": "KWAI",
+        "schema": {
+          "example": "KWAI"
+        }
+      },
+      "platformWorkId": {
+        "description": "平台作品 ID。通过[「作品列表」](/api-reference/get-api-v2-channels-works-platform)接口获取：将与当前平台一致的账号 ID 作为 `accountId` 参数，取返回作品项的 `platformWorkId`。",
+        "example": "platform-work-id-from-work-list",
+        "schema": {
+          "example": "platform-work-id-from-work-list"
+        }
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "candidateAccountId": "account-id-from-accounts-list"
+              }
+            }
+          }
+        }
+      }
+    },
+    "bodyProperties": {
+      "candidateAccountId": {
+        "description": "候选账号 ID。通过[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口获取，取目标已授权账号的 `data.list[n].id`；该账号必须与 `platform` 和 `platformWorkId` 属于同一平台。"
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "platform": { "type": "string" },
+        "owned": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "platform": "string",
+            "owned": "boolean"
+          },
+          "requestId": "string"
+        }
+      }
+    }
   },
   "GET /api/v2/channels/publish/flows/{flowId}": {
     "summary": "发布流程详情",
@@ -2500,6 +3369,97 @@
         }
       }
     },
+    "queryParameters": {
+      "accountId": {
+        "example": "KWAI_f1b6d99b9252a17314bf5724eacc2e07",
+        "schema": {
+          "example": "KWAI_f1b6d99b9252a17314bf5724eacc2e07"
+        }
+      },
+      "pagination": {
+        "description": "分页参数（可选，不传时使用平台默认分页）",
+        "example": "{}",
+        "schema": {
+          "default": {},
+          "description": "分页参数（可选，不传时使用平台默认分页）",
+          "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "type": "integer",
+                      "exclusiveMinimum": true,
+                      "maximum": 9007199254740991,
+                      "description": "页码，可选，不传时使用平台默认值",
+                      "minimum": 0
+                    },
+                    "pageSize": {
+                      "type": "integer",
+                      "exclusiveMinimum": true,
+                      "maximum": 9007199254740991,
+                      "description": "每页数量，可选，不传时使用平台默认值",
+                      "minimum": 0
+                    }
+                  }
+                },
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "cursor": {
+                      "type": "string",
+                      "description": "分页游标"
+                    },
+                    "limit": {
+                      "description": "每页数量，不传时使用平台默认值",
+                      "type": "integer",
+                      "exclusiveMinimum": true,
+                      "maximum": 9007199254740991,
+                      "minimum": 0
+                    },
+                    "direction": {
+                      "description": "分页方向，不传时默认下一页",
+                      "type": "string",
+                      "enum": [
+                        "next",
+                        "previous"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "limit": {
+                      "type": "integer",
+                      "exclusiveMinimum": true,
+                      "maximum": 9007199254740991,
+                      "description": "每页数量，不传时使用平台默认值"
+                    },
+                    "direction": {
+                      "description": "分页方向，不传时默认下一页",
+                      "type": "string",
+                      "const": "next"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "direction": {
+                      "type": "string",
+                      "const": "next",
+                      "description": "分页方向，不传时默认下一页"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
     "responseDataSchema": {
       "type": "object",
       "properties": {
@@ -2546,44 +3506,164 @@
   "GET /api/v2/channels/works/{platform}/{platformWorkId}": {
     "summary": "作品详情",
     "description": "接口说明：查询指定平台作品详情。调用前请以「平台列表」的 `capabilities.work.getDetail` 为准；不支持时返回 `code: 15080`，`data` 仅包含 `platform` 与 `capability`。",
-    "pathParameters": {
-      "platform": {
-        "example": "douyin",
-        "schema": {
-          "example": "douyin",
-          "default": "douyin"
-        }
-      },
-      "platformWorkId": {
-        "example": "7665952416433086310",
-        "schema": {
-          "example": "7665952416433086310"
-        }
-      }
-    },
-    "responseDataSchema": {
-      "type": "object",
-      "properties": {
-        "platform": { "type": "string" },
-        "capability": { "type": "string" },
-        "work": { "type": "object", "additionalProperties": true },
-        "snapshots": {
-          "type": "array",
-          "items": { "type": "object", "additionalProperties": true }
+      "pathParameters": {
+        "platform": {
+          "example": "KWAI",
+          "schema": {
+            "example": "KWAI",
+            "default": "KWAI"
+          }
         },
-        "extra": { "type": "object", "additionalProperties": true },
-        "snapshotId": { "type": "string" },
-        "fetchedAt": { "type": "string" },
-        "message": { "type": "string" }
+        "platformWorkId": {
+          "example": "3xqv95gh4s3pi44",
+          "schema": {
+            "example": "3xqv95gh4s3pi44"
+          }
+        }
       },
-      "additionalProperties": false
-    },
-    "responseExamples": {
-      "unsupported": {
-        "summary": "平台能力不支持（15080）",
-        "value": {
-          "code": 15080,
-          "message": "string",
+      "queryParameters": {
+        "accountId": {
+          "example": null,
+          "schema": {
+            "example": null,
+            "default": null
+          }
+        }
+      },
+      "responseDataSchema": {
+        "type": "object",
+        "properties": {
+          "platform": { "type": "string" },
+          "work": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "url": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "mediaType": { "type": "string" },
+              "coverUrl": { "type": "string" },
+              "publishedAt": { "type": "string" },
+              "status": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "snapshots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "platformWorkId": { "type": "string" },
+                "snapshotAt": { "type": "string" },
+                "fetchedAt": { "type": "string" },
+                "work": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "url": { "type": "string" },
+                    "title": { "type": "string" },
+                    "description": { "type": "string" },
+                    "mediaType": { "type": "string" },
+                    "coverUrl": { "type": "string" },
+                    "publishedAt": { "type": "string" },
+                    "status": { "type": "string" }
+                  },
+                  "additionalProperties": false
+                },
+                "metrics": {
+                  "type": "object",
+                  "properties": {
+                    "viewCount": { "type": "number" },
+                    "likeCount": { "type": "number" },
+                    "commentCount": { "type": "number" }
+                  },
+                  "additionalProperties": false
+                },
+                "extra": {
+                  "type": "object",
+                  "properties": {
+                    "pending": { "type": "boolean" }
+                  },
+                  "required": ["pending"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["id", "platformWorkId", "snapshotAt", "fetchedAt", "work", "metrics", "extra"],
+              "additionalProperties": false
+            }
+          },
+          "extra": {
+            "type": "object",
+            "properties": {
+              "pending": { "type": "boolean" }
+            },
+            "required": ["pending"],
+            "additionalProperties": false
+          },
+          "snapshotId": { "type": "string" },
+          "fetchedAt": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "responseExamples": {
+        "success": {
+          "summary": "成功",
+          "value": {
+            "code": 0,
+            "message": "请求成功",
+            "data": {
+              "platform": "KWAI",
+              "work": {
+                "id": "string",
+                "url": "string",
+                "title": "string",
+                "description": "string",
+                "mediaType": "string",
+                "coverUrl": "string",
+                "publishedAt": "string",
+                "status": "string"
+              },
+              "snapshots": [
+                {
+                  "id": "string",
+                  "platformWorkId": "string",
+                  "snapshotAt": "string",
+                  "fetchedAt": "string",
+                  "work": {
+                    "id": "string",
+                    "url": "string",
+                    "title": "string",
+                    "description": "string",
+                    "mediaType": "string",
+                    "coverUrl": "string",
+                    "publishedAt": "string",
+                    "status": "string"
+                  },
+                  "metrics": {
+                    "viewCount": "number",
+                    "likeCount": "number",
+                    "commentCount": "number"
+                  },
+                  "extra": {
+                    "pending": "boolean"
+                  }
+                }
+              ],
+              "extra": {
+                "pending": "boolean"
+              },
+              "snapshotId": "string",
+              "fetchedAt": "string"
+            },
+            "requestId": "string"
+          }
+        },
+        "unsupported": {
+          "summary": "平台能力不支持（15080）",
+          "value": {
+            "code": 15080,
+            "message": "string",
           "data": {
             "platform": "string",
             "capability": "string"
@@ -2691,25 +3771,382 @@
     "responseRequired": false
   },
   "POST /api/v2/channels/account-groups": {
-    "summary": "创建分组"
+    "summary": "创建分组",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "name": "api-doc-test"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "id": "string",
+            "name": "string",
+            "hasBrowserConfig": "boolean",
+            "rank": "number",
+            "ip": "string",
+            "location": "string",
+            "countryCode": "string",
+            "proxyIp": "string",
+            "isDefault": "boolean",
+            "createdAt": "string",
+            "updatedAt": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
   },
   "DELETE /api/v2/channels/account-groups": {
-    "summary": "批量删除分组"
+    "summary": "批量删除分组",
+    "queryParameters": {
+      "ids": {
+        "example": [
+          "group-id-from-create-response"
+        ],
+        "schema": {
+          "example": [
+            "group-id-from-create-response"
+          ]
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "boolean"
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": "boolean",
+          "requestId": "string"
+        }
+      }
+    }
   },
   "PATCH /api/v2/channels/account-groups/{groupId}": {
-    "summary": "更新分组"
+    "summary": "更新分组",
+    "pathParameters": {
+      "groupId": {
+        "example": "group-id-from-create-response",
+        "schema": {
+          "example": "group-id-from-create-response"
+        }
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "name": "api-doc-test-updated"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "id": "string",
+            "name": "string",
+            "hasBrowserConfig": "boolean",
+            "rank": "number",
+            "ip": "string",
+            "location": "string",
+            "countryCode": "string",
+            "proxyIp": "string",
+            "isDefault": "boolean",
+            "createdAt": "string",
+            "updatedAt": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
   },
   "PATCH /api/v2/channels/account-groups/{groupId}/accounts/rank": {
-    "summary": "调整账号排序"
+    "summary": "调整账号排序",
+    "description": "接口说明：更新指定分组内的账号排序。\n\n`groupId` 必须是现有分组 ID，`list[n].id` 必须是该分组下的账号 ID；`list` 为必填且至少包含一个账号。分组与账号不匹配时会返回 `12600`。",
+    "pathParameters": {
+      "groupId": {
+        "example": "group-id-from-create-response",
+        "schema": {
+          "example": "group-id-from-create-response"
+        }
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "list": [
+                  {
+                    "id": "account-id-in-group",
+                    "rank": 1
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "bodyProperties": {
+      "list": {
+        "minItems": 1,
+        "description": "排序列表，至少包含一个属于该分组的账号"
+      }
+    },
+    "responseDataSchema": {
+      "type": "boolean"
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": "boolean",
+          "requestId": "string"
+        }
+      }
+    }
   },
   "GET /api/v2/channels/accounts/auth/{platform}": {
-    "summary": "发起平台授权"
+    "summary": "发起平台授权",
+    "description": "接口说明：生成平台授权二维码、会话 ID 和过期时间。\n\n调用成功后，请从响应的 `data.sessionId` 获取本次授权会话 ID，并将它与相同的 `platform` 一起传入[获取授权状态](/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id)接口进行轮询。`platform` 可选值：`douyin`、`xhs`、`wxSph`、`KWAI`、`wxGzh`、`bilibili`。具体平台是否可用，请以[平台列表](/api-reference/get-api-v2-channels-platforms)返回的 `capabilities.auth.supported` 为准。",
+    "pathParameters": {
+      "platform": {
+        "description": "授权平台。可选值：douyin、xhs、wxSph、KWAI、wxGzh、bilibili。",
+        "example": "douyin",
+        "schema": {
+          "example": "douyin",
+          "enum": [
+            "douyin",
+            "xhs",
+            "wxSph",
+            "KWAI",
+            "wxGzh",
+            "bilibili"
+          ]
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "url": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "expiresAt": { "type": "string" },
+        "authInstructions": {
+          "type": "object",
+          "properties": {
+            "en-US": { "type": "string" },
+            "zh-CN": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "url": "string",
+            "sessionId": "string",
+            "expiresAt": "string",
+            "authInstructions": {
+              "en-US": "string",
+              "zh-CN": "string"
+            }
+          },
+          "requestId": "string"
+        }
+      }
+    }
   },
   "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}": {
-    "summary": "获取授权状态"
+    "summary": "获取授权状态",
+    "description": "接口说明：轮询平台授权 Session 状态。`sessionId` 必须使用[发起平台授权](/api-reference/get-api-v2-channels-accounts-auth-platform)成功响应中的 `data.sessionId`，不能自行生成或跨授权会话复用。",
+    "pathParameters": {
+      "platform": {
+        "description": "授权平台。必须与发起授权时使用的 platform 一致。可选值：douyin、xhs、wxSph、KWAI、wxGzh、bilibili。",
+        "example": "douyin",
+        "schema": {
+          "example": "douyin",
+          "enum": [
+            "douyin",
+            "xhs",
+            "wxSph",
+            "KWAI",
+            "wxGzh",
+            "bilibili"
+          ]
+        }
+      },
+      "sessionId": {
+        "description": "发起平台授权接口成功响应中的 data.sessionId",
+        "example": "session-id-from-auth-start",
+        "schema": {
+          "example": "session-id-from-auth-start"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string" },
+        "status": { "type": "string" },
+        "requiresSelection": { "type": "boolean" },
+        "expiresAt": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "sessionId": "string",
+            "status": "string",
+            "requiresSelection": "boolean",
+            "expiresAt": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
   },
   "POST /api/assets/uploadSign": {
     "summary": "生成上传签名",
-    "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [资源上传教程](/zh/use/asset-upload)。"
+    "description": "接口说明：生成用于直传对象存储的签名 URL，上传路径按用户与资源类型自动生成。查看 [资源上传教程](/zh/use/asset-upload)。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "success": {
+              "summary": "成功",
+              "value": {
+                "filename": "api-doc-audit.txt",
+                "type": "temp",
+                "size": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "path": { "type": "string" },
+        "url": { "type": "string" },
+        "uploadUrl": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "id": "string",
+            "path": "string",
+            "url": "string",
+            "uploadUrl": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
+  },
+  "POST /api/assets/{id}/confirm": {
+    "summary": "确认资源上传",
+    "description": "接口说明：客户端直传对象存储完成后回调确认，记录资源最终状态与访问路径。",
+    "pathParameters": {
+      "id": {
+        "example": "asset-id-from-upload-sign",
+        "schema": {
+          "example": "asset-id-from-upload-sign"
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userType": { "type": "string" },
+        "path": { "type": "string" },
+        "url": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "string" },
+        "size": { "type": "number" },
+        "mimeType": { "type": "string" },
+        "filename": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "id": "string",
+            "userId": "string",
+            "userType": "string",
+            "path": "string",
+            "url": "string",
+            "type": "string",
+            "status": "string",
+            "size": "number",
+            "mimeType": "string",
+            "filename": "string",
+            "createdAt": "string",
+            "updatedAt": "string"
+          },
+          "requestId": "string"
+        }
+      }
+    }
   }
 }

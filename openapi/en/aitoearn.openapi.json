@@ -1381,31 +1381,32 @@
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "Image description tips"
+                    "description": "Image description tips",
+                    "example": "A cute orange cat sitting by a window, soft natural light"
                   },
                   "model": {
                     "type": "string",
-                    "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface."
+                    "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface.",
+                    "example": "gpt-image-2"
                   },
                   "quality": {
                     "description": "Image quality. The optional values ​​vary from model to model, and are subject to the `data[n].qualities` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface.",
-                    "type": "string"
+                    "type": "string",
+                    "example": "low"
                   },
                   "response_format": {
                     "description": "Return format",
                     "type": "string",
+                    "example": "url",
                     "enum": [
                       "url",
                       "b64_json"
                     ]
                   },
                   "size": {
-                    "description": "Image size. The optional values ​​vary with the model, and are subject to the `data[n].sizes` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface; the prices for different sizes are different, see `data[n].pricing`.",
-                    "type": "string"
-                  },
-                  "style": {
-                    "description": "Image style. The optional values ​​vary with the model, and are subject to the `data[n].styles` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface; returning empty means that the model does not support style parameters.",
-                    "type": "string"
+                    "description": "Image size. The optional values ​​vary with the model, and are subject to the `data[n].sizes` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface; the prices for different sizes are different, see `data[n].pricing`. This example uses `1024x1024`, the lowest-priced size at 1 credit.",
+                    "type": "string",
+                    "example": "1024x1024"
                   }
                 },
                 "required": [
@@ -1413,7 +1414,18 @@
                   "model"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "Lowest-cost example",
+                  "value": {
+                    "prompt": "A cute orange cat sitting by a window, soft natural light",
+                    "model": "gpt-image-2",
+                    "quality": "low",
+                    "response_format": "url",
+                    "size": "1024x1024"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -1562,7 +1574,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "Image editing model name. First call the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface (`GET /api/ai/models/image/edit`) and pass in the `data[n].name` returned by it; the size, maximum number of input images and price supported by each model shall be subject to the return of this interface."
+                    "description": "Image editing model name. First call the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface (`GET /api/ai/models/image/edit`) and pass in the `data[n].name` returned by it; the size, maximum number of input images and price supported by each model shall be subject to the return of this interface.",
+                    "example": "gpt-image-2"
                   },
                   "image": {
                     "anyOf": [
@@ -1576,13 +1589,15 @@
                         }
                       }
                     ],
-                    "description": "original picture"
+                    "description": "Original image. Supports a single image URL, data URL, or an array of image URLs; `gpt-image-2` currently supports up to 14 input images.",
+                    "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
                   },
                   "prompt": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "Edit description"
+                    "description": "Edit description",
+                    "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style."
                   },
                   "mask": {
                     "description": "Mask image URL for **partial redraw** (optional). It needs to be a PNG image with the same size as `image`: the completely transparent area (alpha is 0) represents the part that needs to be redrawn according to the prompt word, and the opaque area remains unchanged. Edit the entire image when not uploading.",
@@ -1592,15 +1607,18 @@
                     "description": "Number of images generated",
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 1
+                    "maximum": 1,
+                    "example": 1
                   },
                   "size": {
-                    "description": "Image size. The optional values ​​vary from model to model, and are subject to the `data[n].sizes` returned by the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface; the prices for different sizes are different, see `data[n].pricing`.",
-                    "type": "string"
+                    "description": "Image size. The optional values ​​vary from model to model, and are subject to the `data[n].sizes` returned by the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface; the prices for different sizes are different, see `data[n].pricing`. This example uses `1024x1024`, the lowest-priced size at 1 credit.",
+                    "type": "string",
+                    "example": "1024x1024"
                   },
                   "response_format": {
                     "description": "Return format",
                     "type": "string",
+                    "example": "url",
                     "enum": [
                       "url",
                       "b64_json"
@@ -1613,7 +1631,19 @@
                   "prompt"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "Lowest-cost example",
+                  "value": {
+                    "model": "gpt-image-2",
+                    "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                    "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style.",
+                    "n": 1,
+                    "size": "1024x1024",
+                    "response_format": "url"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -1764,15 +1794,18 @@
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "Image description tips"
+                    "description": "Image description tips",
+                    "example": "A cute orange cat sitting by a window, soft natural light"
                   },
                   "model": {
                     "type": "string",
-                    "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface."
+                    "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface.",
+                    "example": "gpt-image-2"
                   },
                   "quality": {
                     "description": "Image quality. The optional values ​​vary from model to model, and are subject to the `data[n].qualities` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface.",
-                    "type": "string"
+                    "type": "string",
+                    "example": "low"
                   },
                   "response_format": {
                     "description": "Return format",
@@ -1780,11 +1813,13 @@
                     "enum": [
                       "url",
                       "b64_json"
-                    ]
+                    ],
+                    "example": "url"
                   },
                   "size": {
                     "description": "Image size. The optional values ​​vary with the model, and are subject to the `data[n].sizes` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface; the prices for different sizes are different, see `data[n].pricing`.",
-                    "type": "string"
+                    "type": "string",
+                    "example": "1024x1024"
                   },
                   "style": {
                     "description": "Image style. The optional values ​​vary with the model, and are subject to the `data[n].styles` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface; returning empty means that the model does not support style parameters.",
@@ -1796,7 +1831,18 @@
                   "model"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "Lowest-cost example",
+                  "value": {
+                    "prompt": "A cute orange cat sitting by a window, soft natural light",
+                    "model": "gpt-image-2",
+                    "quality": "low",
+                    "response_format": "url",
+                    "size": "1024x1024"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -1944,7 +1990,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "Image editing model name. First call the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface (`GET /api/ai/models/image/edit`) and pass in the `data[n].name` returned by it; the size, maximum number of input images and price supported by each model shall be subject to the return of this interface."
+                    "description": "Image editing model name. First call the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface (`GET /api/ai/models/image/edit`) and pass in the `data[n].name` returned by it; the size, maximum number of input images and price supported by each model shall be subject to the return of this interface.",
+                    "example": "gpt-image-2"
                   },
                   "image": {
                     "anyOf": [
@@ -1958,13 +2005,15 @@
                         }
                       }
                     ],
-                    "description": "original picture"
+                    "description": "original picture",
+                    "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
                   },
                   "prompt": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "Edit description"
+                    "description": "Edit description",
+                    "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style."
                   },
                   "mask": {
                     "description": "Mask image URL for **partial redraw** (optional). It needs to be a PNG image with the same size as `image`: the completely transparent area (alpha is 0) represents the part that needs to be redrawn according to the prompt word, and the opaque area remains unchanged. Edit the entire image when not uploading.",
@@ -1974,11 +2023,13 @@
                     "description": "Number of images generated",
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 1
+                    "maximum": 1,
+                    "example": 1
                   },
                   "size": {
                     "description": "Image size. The optional values ​​vary from model to model, and are subject to the `data[n].sizes` returned by the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface; the prices for different sizes are different, see `data[n].pricing`.",
-                    "type": "string"
+                    "type": "string",
+                    "example": "1024x1024"
                   },
                   "response_format": {
                     "description": "Return format",
@@ -1986,7 +2037,8 @@
                     "enum": [
                       "url",
                       "b64_json"
-                    ]
+                    ],
+                    "example": "url"
                   }
                 },
                 "required": [
@@ -1995,7 +2047,19 @@
                   "prompt"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "Lowest-cost example",
+                  "value": {
+                    "model": "gpt-image-2",
+                    "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                    "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style.",
+                    "n": 1,
+                    "size": "1024x1024",
+                    "response_format": "url"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3233,9 +3297,61 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RelayImageGenerationDto"
+                "example": {
+                  "prompt": "A cute orange cat sitting by a window, soft natural light",
+                  "model": "gpt-image-2",
+                  "quality": "low",
+                  "response_format": "url",
+                  "size": "1024x1024"
+                },
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "example": "A cute orange cat sitting by a window, soft natural light"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "Image generation model name. First call the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface (`GET /api/ai/models/image/generation`) and pass in the `data[n].name` returned by it; the size, quality, style and price supported by each model shall be subject to the return of this interface.",
+                    "example": "gpt-image-2"
+                  },
+                  "quality": {
+                    "type": "string",
+                    "description": "Image quality. The optional values ​​vary from model to model, and are subject to the `data[n].qualities` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface.",
+                    "example": "low"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "example": "url"
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "Image size. The optional values ​​vary with the model, and are subject to the `data[n].sizes` returned by the [\"Image Generation Model\"](/en/api-reference/get-api-ai-models-image-generation) interface; the prices for different sizes are different, see `data[n].pricing`.",
+                    "example": "1024x1024"
+                  }
+                },
+                "required": [
+                  "prompt",
+                  "model"
+                ],
+                "additionalProperties": true
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "Lowest-cost example",
+                  "value": {
+                    "prompt": "A cute orange cat sitting by a window, soft natural light",
+                    "model": "gpt-image-2",
+                    "quality": "low",
+                    "response_format": "url",
+                    "size": "1024x1024"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3247,23 +3363,121 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "created": {
+                      "type": "number"
+                    },
+                    "quality": {
+                      "type": "string"
+                    },
+                    "size": {
+                      "type": "string"
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "input_tokens": {
+                          "type": "number"
+                        },
+                        "output_tokens": {
+                          "type": "number"
+                        },
+                        "total_tokens": {
+                          "type": "number"
+                        },
+                        "input_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "output_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
                   "additionalProperties": true,
-                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
+                  "example": {
+                    "data": [
+                      {
+                        "url": "string"
+                      }
+                    ],
+                    "created": "number",
+                    "quality": "string",
+                    "size": "string",
+                    "usage": {
+                      "input_tokens": "number",
+                      "output_tokens": "number",
+                      "total_tokens": "number",
+                      "input_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      },
+                      "output_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      }
+                    }
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "Native third-party success response",
                     "value": {
-                      "id": "RelayController_imagesGenerations_example",
-                      "object": "response"
+                      "data": [
+                        {
+                          "url": "string"
+                        }
+                      ],
+                      "created": "number",
+                      "quality": "string",
+                      "size": "string",
+                      "usage": {
+                        "input_tokens": "number",
+                        "output_tokens": "number",
+                        "total_tokens": "number",
+                        "input_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        },
+                        "output_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        }
+                      }
                     }
                   }
                 }
               },
               "text/event-stream": {
                 "schema": {
-                  "type": "string",
-                  "description": "SSE streaming response."
+                  "type": "string"
                 }
               }
             }
@@ -3311,9 +3525,87 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RelayImageEditDto"
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "Image editing model name. First call the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface (`GET /api/ai/models/image/edit`) and pass in the `data[n].name` returned by it; the size, maximum number of input images and price supported by each model shall be subject to the return of this interface.",
+                    "example": "gpt-image-2"
+                  },
+                  "image": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ],
+                    "description": "Picture list",
+                    "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "prompt word",
+                    "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window."
+                  },
+                  "mask": {
+                    "type": "string",
+                    "description": "Mask image URL for **partial redraw** (optional). It needs to be a PNG image with the same size as `image`: the completely transparent area (alpha is 0) represents the part that needs to be redrawn according to the prompt word, and the opaque area remains unchanged. Edit the entire image when not uploading."
+                  },
+                  "n": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991,
+                    "description": "Generate quantity",
+                    "example": 1
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "Image size. The optional values ​​vary from model to model, and are subject to the `data[n].sizes` returned by the [\"Image Editing Models\"](/en/api-reference/get-api-ai-models-image-edit) interface; the prices for different sizes are different, see `data[n].pricing`.",
+                    "example": "1024x1024"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "description": "Return format",
+                    "example": "url"
+                  }
+                },
+                "required": [
+                  "model",
+                  "image",
+                  "prompt"
+                ],
+                "additionalProperties": true,
+                "example": {
+                  "model": "gpt-image-2",
+                  "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                  "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window.",
+                  "n": 1,
+                  "size": "1024x1024",
+                  "response_format": "url"
+                }
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "Lowest-cost example",
+                  "value": {
+                    "model": "gpt-image-2",
+                    "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                    "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window.",
+                    "n": 1,
+                    "size": "1024x1024",
+                    "response_format": "url"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3325,23 +3617,116 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "created": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "string"
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "input_tokens": {
+                          "type": "number"
+                        },
+                        "output_tokens": {
+                          "type": "number"
+                        },
+                        "total_tokens": {
+                          "type": "number"
+                        },
+                        "input_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "output_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
                   "additionalProperties": true,
-                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
+                  "example": {
+                    "data": [
+                      {
+                        "url": "string"
+                      }
+                    ],
+                    "created": "number",
+                    "size": "string",
+                    "usage": {
+                      "input_tokens": "number",
+                      "output_tokens": "number",
+                      "total_tokens": "number",
+                      "input_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      },
+                      "output_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      }
+                    }
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "Native third-party success response",
                     "value": {
-                      "id": "RelayController_imagesEdits_example",
-                      "object": "response"
+                      "data": [
+                        {
+                          "url": "string"
+                        }
+                      ],
+                      "created": "number",
+                      "size": "string",
+                      "usage": {
+                        "input_tokens": "number",
+                        "output_tokens": "number",
+                        "total_tokens": "number",
+                        "input_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        },
+                        "output_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        }
+                      }
                     }
                   }
                 }
               },
               "text/event-stream": {
                 "schema": {
-                  "type": "string",
-                  "description": "SSE streaming response."
+                  "type": "string"
                 }
               }
             }
@@ -3633,11 +4018,13 @@
         ],
         "parameters": [
           {
-            "name": "ids",
+            "name": "ids[]",
             "in": "query",
             "description": "Account ID array",
             "required": true,
-            "example": "",
+            "example": [
+              "accountId"
+            ],
             "schema": {
               "minItems": 1,
               "type": "array",
@@ -3645,8 +4032,13 @@
                 "type": "string",
                 "minLength": 1
               },
-              "description": "Account ID array"
-            }
+              "description": "Account ID array",
+              "example": [
+                "accountId"
+              ]
+            },
+            "style": "form",
+            "explode": true
           }
         ],
         "responses": {
@@ -3674,11 +4066,7 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3686,25 +4074,7 @@
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -3956,7 +4326,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "boolean"
+                    },
                     "code": {
                       "type": "integer",
                       "description": "Business status code. 0 means success; non-zero means a business error."
@@ -3973,46 +4345,16 @@
                       "type": "integer",
                       "description": "Error response timestamp in Unix milliseconds."
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "Success",
                     "value": {
+                      "data": "boolean",
                       "code": 0,
                       "message": "Request succeeded",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -4364,7 +4706,7 @@
       "post": {
         "summary": "Create Publish Option Value",
         "deprecated": false,
-        "description": "Interface description: Additional parameter values ​​required when creating platform publishing for an authorized channel account. After successful creation, an option `item` that can be directly used for publishing tasks is returned.\n\nAll additional parameters on the platform side that \"need to be created first and then selected\" are processed through this interface. For example, Pinterest needs to create a Board first, and then use the returned Board as the publishing target `boardId`.\n\nCalling process: First call the [\"Platform Publish Options\"](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options) interface (`GET /api/v2/channels/platforms/{platform}/publish-options`) to query what additional parameters the platform has; only fields whose return items contain `createSchema` are supported for creation. Put the `field` in the return item into the path parameter `field` of this interface, and organize the JSON request body according to the `createSchema`. For fields that do not need to be created, please call the [\"Publish option optional values\"](/en/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values) interface to query and select.",
+        "description": "Endpoint description: Create additional parameter values required by a platform when publishing for an authorized channel account. On success, an option `item` that can be used directly in publishing tasks is returned.\n\nThis endpoint is not supported for every platform or field. Before calling it, call [Platform Publish Options](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options) (`GET /api/v2/channels/platforms/{platform}/publish-options`). Only a field whose returned item explicitly contains `createSchema` can be used with this endpoint; put that item's `field` in the path parameter and build the JSON request body strictly according to `createSchema`. If the returned item has no `createSchema`, use [Publish Option Values](/en/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values) to query and select an existing value.\n\nFor example, the current Bilibili response exposes `tid` for querying partitions only and does not support creation through this endpoint; calling it with Bilibili's `tid` returns `15080` (the platform does not support this operation).",
         "operationId": "AccountsController_createPublishOptionValue_v2",
         "tags": [
           "Channel Management/Accounts"
@@ -4384,30 +4726,15 @@
           {
             "name": "field",
             "in": "path",
-            "description": "The publishing options field to create a value for. The value comes from the `data[n].field` returned by the [\"Platform Publish Options\"](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options) interface, and the return item must contain `createSchema`.",
+            "description": "The publishing option field to create a value for. The value comes from `data[n].field` returned by [Platform Publish Options](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options), and the returned item must contain `createSchema`; fields without `createSchema` are not supported by this endpoint.",
             "required": true,
             "example": "",
             "schema": {
               "type": "string",
-              "description": "The publishing options field to create a value for. The value comes from the `data[n].field` returned by the [\"Platform Publish Options\"](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options) interface, and the return item must contain `createSchema`."
+              "description": "The publishing option field to create a value for. The value comes from `data[n].field` returned by [Platform Publish Options](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options), and the returned item must contain `createSchema`; fields without `createSchema` are not supported by this endpoint."
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "description": "Create the JSON parameters required to post option values. The specific fields are not fixed structures and must be based on the `createSchema` in the return item of the [\"Platform Publishing Options\"](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options) interface.",
-                "properties": {}
-              },
-              "examples": {}
-            }
-          },
-          "required": true,
-          "description": "Create the JSON parameters required to post option values. The specific fields are not fixed structures and must be based on the `createSchema` in the item returned by the [\"Platform Publish Options\"](/en/api-reference/get-api-v2-channels-platforms-platform-publish-options) interface; for example, Pinterest's `boardId` field will return the schema required to create a Board."
-        },
         "responses": {
           "200": {
             "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
@@ -4538,7 +4865,7 @@
       "post": {
         "summary": "Create Publish Flow",
         "deprecated": false,
-        "description": "Interface description: Create a multi-platform publishing flow, and one request can generate multiple single-platform tasks.\n\nBefore calling this interface, please make sure you understand the complete publishing process and click [Learn the complete publishing process](/en/use/publish-flow).\n\nTip: Except for X/Twitter (Twitter) publishing, publishing on other platforms is currently free; for X/Twitter publishing billing, please [click to view](https://aitoearn.ai/pricing#pricing-table-social-publishing).",
+        "description": "Interface description: Create a multi-platform publishing Flow; one request can create multiple single-platform tasks.\n\nBefore calling this endpoint, read the complete [publishing flow guide](/en/use/publish-flow). `items[n].accountId` must come from the account list endpoint. `content.media[n].url` must be a real, publicly accessible media URL; do not copy the placeholder from the example. We recommend following the [asset upload guide](/en/use/asset-upload): generate an upload signature, upload the file, confirm the upload, then use the confirmation response `data.url`. You may also use another real media URL that the service can access and parse directly. An inaccessible or unparseable URL returns `15051` (`media_unreachable`). `publishAt` must be a future ISO 8601 timestamp. After success, use `data.flowId` to query the flow and `data.tasks[n].id` to publish now, retry, cancel, or update the publish time. This endpoint creates real publishing tasks, so verify the parameters before sending.\n\nExcept for X/Twitter publishing, publishing on other platforms is currently free. For X/Twitter pricing, see [the pricing page](https://aitoearn.ai/pricing#pricing-table-social-publishing).",
         "operationId": "PublishFlowController_createFlow_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -6953,51 +7280,29 @@
                   "items"
                 ]
               },
-              "example": {
-                "content": {
-                  "body": "test",
-                  "media": [
-                    {
-                      "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4",
-                      "metadata": {
-                        "type": "video"
-                      }
-                    }
-                  ],
-                  "cover": {
-                    "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/dS2sNtXUgrLfosukfpXwd.jpg",
-                    "metadata": {
-                      "type": "image"
-                    }
-                  },
-                  "title": "test title"
-                },
-                "publishAt": "2026-06-29T09:43:42Z",
-                "context": {
-                  "type": "video",
-                  "videoUrl": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4",
-                  "source": "web"
-                },
-                "items": {
-                  "accountId": "KWAI_f1b6d99b9252a17314bf5724e666123f",
-                  "platform": "KWAI",
-                  "overrides": {
-                    "body": "test",
-                    "media": [
-                      {
-                        "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4",
-                        "metadata": {
-                          "type": "video"
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "content": {
+                      "title": "publish-demo-video",
+                      "body": "Publish a video using the AiToEarn API.",
+                      "media": [
+                        {
+                          "url": "https://assets.aitoearn.cn/6a3b48b5ec793a848a671de1/ai/video/doubao-seedance-2-0-260128/202607/I-lRTCBUkjE43NRd77eWC.mp4"
                         }
-                      }
-                    ],
-                    "cover": {
-                      "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/dS2sNtXUgrLfosukfpXwd.jpg",
-                      "metadata": {
-                        "type": "image"
+                      ],
+                      "cover": {
+                        "url": "https://assets.aitoearn.cn/6a3b48b5ec793a848a671de1/ai/images/gpt-image-2/202607/GlhuS1TEyXtDAyumLezfo.png"
                       }
                     },
-                    "title": "test title"
+                    "publishAt": "2030-01-01T00:00:00.000Z",
+                    "items": [
+                      {
+                        "platform": "douyin",
+                        "accountId": "account-id-from-accounts-list"
+                      }
+                    ]
                   }
                 }
               }
@@ -7014,7 +7319,55 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishFlowVo"
+                      "type": "object",
+                      "properties": {
+                        "flowId": {
+                          "type": "string"
+                        },
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "platform": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "publishTime": {
+                                "type": "string"
+                              },
+                              "platformWorkId": {
+                                "type": "string"
+                              },
+                              "workLink": {
+                                "type": "string"
+                              },
+                              "linkStatus": {
+                                "type": "string"
+                              },
+                              "linkError": {
+                                "type": "string"
+                              },
+                              "linkMeta": {
+                                "type": "object"
+                              },
+                              "errorMsg": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7050,132 +7403,19 @@
                           {
                             "id": "string",
                             "accountId": "string",
-                            "platform": "douyin",
-                            "status": -1,
-                            "publishTime": "2026-07-02T12:00:00.000Z",
+                            "platform": "string",
+                            "status": "number",
+                            "publishTime": "string",
                             "platformWorkId": "string",
                             "workLink": "string",
-                            "linkStatus": "pending",
+                            "linkStatus": "string",
                             "linkError": "string",
-                            "linkMeta": {},
+                            "linkMeta": "object",
                             "errorMsg": "string"
                           }
                         ]
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAccountNotFound15021": {
-                    "summary": "ChannelAccountNotFound (15021)",
-                    "value": {
-                      "code": 15021,
-                      "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again.",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishDuplicateItem15052": {
-                    "summary": "ChannelPublishDuplicateItem (15052)",
-                    "value": {
-                      "code": 15052,
-                      "message": "{{platform}} account {{accountId}} has duplicate publishing items",
-                      "data": {
-                        "accountId": "acc_123",
-                        "platform": "douyin"
                       },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishMixedRelayAndLocalAccounts15087": {
-                    "summary": "ChannelPublishMixedRelayAndLocalAccounts (15087)",
-                    "value": {
-                      "code": 15087,
-                      "message": "Relay accounts and local accounts cannot be mixed in the same publishing process.",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPermalinkMissing15093": {
-                    "summary": "ChannelPublishPermalinkMissing (15093)",
-                    "value": {
-                      "code": 15093,
-                      "message": "Missing link to published work",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformNotSupported15062": {
-                    "summary": "ChannelPublishPlatformNotSupported (15062)",
-                    "value": {
-                      "code": 15062,
-                      "message": "This platform does not support publishing",
-                      "data": {
-                        "platform": "douyin"
-                      },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformStatusFailed15063": {
-                    "summary": "ChannelPublishPlatformStatusFailed (15063)",
-                    "value": {
-                      "code": 15063,
-                      "message": "Platform publishing failed, status code: {{status}}",
-                      "data": {
-                        "status": 500
-                      },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformWorkIdMissing15060": {
-                    "summary": "ChannelPublishPlatformWorkIdMissing (15060)",
-                    "value": {
-                      "code": 15060,
-                      "message": "Missing platform title ID",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishTaskAlreadyExists15025": {
-                    "summary": "ChannelPublishTaskAlreadyExists (15025)",
-                    "value": {
-                      "code": 15025,
-                      "message": "Release task already exists",
-                      "data": {
-                        "flowId": "flow_123"
-                      },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishValidationFailed15051": {
-                    "summary": "ChannelPublishValidationFailed (15051)",
-                    "value": {
-                      "code": 15051,
-                      "message": "Published content verification failed",
-                      "data": {
-                        "platform": "douyin",
-                        "accountId": "acc_123",
-                        "issues": [
-                          "Published content verification failed"
-                        ]
-                      },
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7407,7 +7647,7 @@
       "post": {
         "summary": "Publish Now",
         "deprecated": false,
-        "description": "Interface description: Adjust scheduled tasks to release immediately",
+        "description": "Interface description: Change a scheduled task to publish immediately. `taskId` comes from `data.tasks[n].id` in the successful Create Publishing Flow response. This endpoint only succeeds for tasks that are currently eligible for immediate publishing; the placeholder in the example does not trigger a real publication.",
         "operationId": "PublishTaskController_publishNow_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -7416,11 +7656,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "Task ID",
+            "description": "Task ID from `data.tasks[n].id` in the Create Publishing Flow response.",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -7433,7 +7674,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7465,61 +7712,8 @@
                       "message": "Request succeeded",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishNowNotAllowed15058": {
-                    "summary": "ChannelPublishNowNotAllowed (15058)",
-                    "value": {
-                      "code": 15058,
-                      "message": "The current task status does not allow immediate release",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueFailed15056": {
-                    "summary": "ChannelPublishQueueFailed (15056)",
-                    "value": {
-                      "code": 15056,
-                      "message": "Publish task failed to join the queue",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueRemoveFailed15053": {
-                    "summary": "ChannelPublishQueueRemoveFailed (15053)",
-                    "value": {
-                      "code": 15053,
-                      "message": "Failed to remove publishing task from queue",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "Task not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7580,7 +7774,7 @@
       "post": {
         "summary": "Retry Publish Task",
         "deprecated": false,
-        "description": "Interface description: Retry the failed publishing task for the current user",
+        "description": "Interface description: Retry a failed publishing task for the current user. `taskId` comes from `data.tasks[n].id` in the successful Create Publishing Flow response. The request succeeds only when the task status allows retrying.",
         "operationId": "PublishTaskController_retryTask_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -7589,11 +7783,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "Task ID",
+            "description": "Task ID from `data.tasks[n].id` in the Create Publishing Flow response.",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -7606,7 +7801,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7638,63 +7839,8 @@
                       "message": "Request succeeded",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformNotSupported15062": {
-                    "summary": "ChannelPublishPlatformNotSupported (15062)",
-                    "value": {
-                      "code": 15062,
-                      "message": "This platform does not support publishing",
-                      "data": {
-                        "platform": "douyin"
                       },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueFailed15056": {
-                    "summary": "ChannelPublishQueueFailed (15056)",
-                    "value": {
-                      "code": 15056,
-                      "message": "Publish task failed to join the queue",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishRetryNotAllowed15095": {
-                    "summary": "ChannelPublishRetryNotAllowed (15095)",
-                    "value": {
-                      "code": 15095,
-                      "message": "The current publishing task does not allow retries",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "Task not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7755,7 +7901,7 @@
       "delete": {
         "summary": "Cancel Publish Task",
         "deprecated": false,
-        "description": "Interface description: Cancel the specified publishing task",
+        "description": "Interface description: Cancel the specified publishing task. `taskId` comes from `data.tasks[n].id` in the successful Create Publishing Flow response. Cancellation may also affect a scheduled task on the platform; support depends on the platform capability.",
         "operationId": "PublishTaskController_cancelTask_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -7764,11 +7910,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "Task ID",
+            "description": "Task ID from `data.tasks[n].id` in the Create Publishing Flow response.",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -7781,7 +7928,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7813,90 +7966,8 @@
                       "message": "Request succeeded",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAccountNotFound15021": {
-                    "summary": "ChannelAccountNotFound (15021)",
-                    "value": {
-                      "code": 15021,
-                      "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again.",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAccountUnbound15096": {
-                    "summary": "ChannelAccountUnbound (15096)",
-                    "value": {
-                      "code": 15096,
-                      "message": "The bound channel account has been unbound, and the related publishing task has been terminated.",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishCancelNotSupported15055": {
-                    "summary": "ChannelPublishCancelNotSupported (15055)",
-                    "value": {
-                      "code": 15055,
-                      "message": "The platform does not support canceling scheduled publishing tasks",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformCancelFailed15054": {
-                    "summary": "ChannelPublishPlatformCancelFailed (15054)",
-                    "value": {
-                      "code": 15054,
-                      "message": "Failed to cancel the publishing task on the platform side",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformNotSupported15062": {
-                    "summary": "ChannelPublishPlatformNotSupported (15062)",
-                    "value": {
-                      "code": 15062,
-                      "message": "This platform does not support publishing",
-                      "data": {
-                        "platform": "douyin"
                       },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueRemoveFailed15053": {
-                    "summary": "ChannelPublishQueueRemoveFailed (15053)",
-                    "value": {
-                      "code": 15053,
-                      "message": "Failed to remove publishing task from queue",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "Task not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7972,7 +8043,7 @@
       "patch": {
         "summary": "Update Publish Time",
         "deprecated": false,
-        "description": "Interface description: Modify the release time of the task to be released",
+        "description": "Interface description: Update the publish time of a pending task. `taskId` comes from `data.tasks[n].id` in the successful Create Publishing Flow response. `publishAt` must be a future ISO 8601 timestamp, and the task status must allow the update.",
         "operationId": "PublishTaskController_updatePublishAt_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -7981,11 +8052,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "Task ID",
+            "description": "Task ID from `data.tasks[n].id` in the Create Publishing Flow response.",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -8005,7 +8077,14 @@
                   "publishAt"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "publishAt": "2030-01-01T00:00:00.000Z"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -8019,7 +8098,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -8051,61 +8136,8 @@
                       "message": "Request succeeded",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueFailed15056": {
-                    "summary": "ChannelPublishQueueFailed (15056)",
-                    "value": {
-                      "code": 15056,
-                      "message": "Publish task failed to join the queue",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueRemoveFailed15053": {
-                    "summary": "ChannelPublishQueueRemoveFailed (15053)",
-                    "value": {
-                      "code": 15053,
-                      "message": "Failed to remove publishing task from queue",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishTimeUpdateNotAllowed15057": {
-                    "summary": "ChannelPublishTimeUpdateNotAllowed (15057)",
-                    "value": {
-                      "code": 15057,
-                      "message": "The current task status does not allow modification of the release time",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "Task not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -8708,7 +8740,7 @@
       "delete": {
         "summary": "Delete Publish Record",
         "deprecated": false,
-        "description": "Interface description: Delete the current user's final local publishing record, but do not delete the platform works",
+        "description": "Interface description: Delete a terminal local publishing record for the current user without deleting the platform work. `recordId` comes from the publishing record list, published list, or record detail endpoint. Only terminal records that meet the endpoint's status requirements can be deleted.",
         "operationId": "PublishRecordController_deleteRecord_v2",
         "tags": [
           "Channel Management/Publishing"
@@ -8717,11 +8749,12 @@
           {
             "name": "recordId",
             "in": "path",
-            "description": "Post record ID",
+            "description": "Publishing record ID from a publishing record list or detail response.",
             "required": true,
-            "example": "",
+            "example": "record-id-from-publish-records",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "record-id-from-publish-records"
             }
           }
         ],
@@ -8733,7 +8766,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false
+                    },
                     "code": {
                       "type": "integer",
                       "description": "Business status code. 0 means success; non-zero means a business error."
@@ -8762,43 +8798,8 @@
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
                       "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishRecordNotFound15000": {
-                    "summary": "PublishRecordNotFound (15000)",
-                    "value": {
-                      "code": 15000,
-                      "message": "Release record not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskStatusInvalid15018": {
-                    "summary": "PublishTaskStatusInvalid (15018)",
-                    "value": {
-                      "code": 15018,
-                      "message": "Post task status does not allow this operation",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -9702,7 +9703,7 @@
             "in": "query",
             "description": "platform",
             "required": true,
-            "example": "douyin",
+            "example": "KWAI",
             "schema": {
               "type": "string",
               "enum": [
@@ -9723,8 +9724,8 @@
                 "google_business"
               ],
               "description": "platform",
-              "example": "douyin",
-              "default": "douyin"
+              "example": "KWAI",
+              "default": "KWAI"
             }
           },
           {
@@ -9927,22 +9928,23 @@
             "in": "query",
             "description": "Account ID",
             "required": true,
-            "example": "",
+            "example": "KWAI_f1b6d99b9252a17314bf5724eacc2e07",
             "schema": {
               "type": "string",
               "minLength": 1,
-              "description": "Account ID"
+              "description": "Account ID",
+              "example": "KWAI_f1b6d99b9252a17314bf5724eacc2e07"
             }
           },
           {
             "name": "pagination",
             "in": "query",
-            "description": "Paging parameters",
+            "description": "Paging parameters (optional; use the platform default pagination when omitted)",
             "required": false,
             "example": "{}",
             "schema": {
               "default": {},
-              "description": "Paging parameters",
+              "description": "Paging parameters (optional; use the platform default pagination when omitted)",
               "anyOf": [
                 {
                   "type": "object",
@@ -9951,21 +9953,17 @@
                       "type": "integer",
                       "exclusiveMinimum": true,
                       "maximum": 9007199254740991,
-                      "description": "page number",
+                      "description": "Page number (optional; use the platform default when omitted)",
                       "minimum": 0
                     },
                     "pageSize": {
                       "type": "integer",
                       "exclusiveMinimum": true,
                       "maximum": 9007199254740991,
-                      "description": "Quantity per page",
+                      "description": "Quantity per page (optional; use the platform default when omitted)",
                       "minimum": 0
                     }
-                  },
-                  "required": [
-                    "page",
-                    "pageSize"
-                  ]
+                  }
                 },
                 {
                   "anyOf": [
@@ -9991,10 +9989,7 @@
                             "previous"
                           ]
                         }
-                      },
-                      "required": [
-                        "cursor"
-                      ]
+                      }
                     },
                     {
                       "type": "object",
@@ -10003,8 +9998,7 @@
                           "type": "integer",
                           "exclusiveMinimum": true,
                           "maximum": 9007199254740991,
-                          "description": "Quantity per page, if not passed, the platform default value will be used.",
-                          "minimum": 0
+                          "description": "Quantity per page, if not passed, the platform default value will be used."
                         },
                         "direction": {
                           "description": "Pagination direction, default to next page when not uploaded",
@@ -10013,10 +10007,7 @@
                             "next"
                           ]
                         }
-                      },
-                      "required": [
-                        "limit"
-                      ]
+                      }
                     },
                     {
                       "type": "object",
@@ -10028,10 +10019,7 @@
                             "next"
                           ]
                         }
-                      },
-                      "required": [
-                        "direction"
-                      ]
+                      }
                     }
                   ]
                 }
@@ -10194,10 +10182,10 @@
             "in": "path",
             "description": "Platform work ID",
             "required": true,
-            "example": "7665952416433086310",
+            "example": "3xqv95gh4s3pi44",
             "schema": {
               "type": "string",
-              "example": "7665952416433086310"
+              "example": "3xqv95gh4s3pi44"
             }
           },
           {
@@ -10205,7 +10193,6 @@
             "in": "query",
             "description": "Account ID",
             "required": false,
-            "example": "",
             "schema": {
               "description": "Account ID",
               "type": "string",
@@ -10227,31 +10214,139 @@
                         "platform": {
                           "type": "string"
                         },
-                        "capability": {
-                          "type": "string"
-                        },
                         "work": {
                           "type": "object",
-                          "additionalProperties": true
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "mediaType": {
+                              "type": "string"
+                            },
+                            "coverUrl": {
+                              "type": "string"
+                            },
+                            "publishedAt": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
                         },
                         "snapshots": {
                           "type": "array",
                           "items": {
                             "type": "object",
-                            "additionalProperties": true
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "platformWorkId": {
+                                "type": "string"
+                              },
+                              "snapshotAt": {
+                                "type": "string"
+                              },
+                              "fetchedAt": {
+                                "type": "string"
+                              },
+                              "work": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "mediaType": {
+                                    "type": "string"
+                                  },
+                                  "coverUrl": {
+                                    "type": "string"
+                                  },
+                                  "publishedAt": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "metrics": {
+                                "type": "object",
+                                "properties": {
+                                  "viewCount": {
+                                    "type": "number"
+                                  },
+                                  "likeCount": {
+                                    "type": "number"
+                                  },
+                                  "commentCount": {
+                                    "type": "number"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "extra": {
+                                "type": "object",
+                                "properties": {
+                                  "pending": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "pending"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "platformWorkId",
+                              "snapshotAt",
+                              "fetchedAt",
+                              "work",
+                              "metrics",
+                              "extra"
+                            ],
+                            "additionalProperties": false
                           }
                         },
                         "extra": {
                           "type": "object",
-                          "additionalProperties": true
+                          "properties": {
+                            "pending": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "pending"
+                          ],
+                          "additionalProperties": false
                         },
                         "snapshotId": {
                           "type": "string"
                         },
                         "fetchedAt": {
-                          "type": "string"
-                        },
-                        "message": {
                           "type": "string"
                         }
                       },
@@ -10276,6 +10371,58 @@
                   }
                 },
                 "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request successful",
+                      "data": {
+                        "platform": "KWAI",
+                        "work": {
+                          "id": "string",
+                          "url": "string",
+                          "title": "string",
+                          "description": "string",
+                          "mediaType": "string",
+                          "coverUrl": "string",
+                          "publishedAt": "string",
+                          "status": "string"
+                        },
+                        "snapshots": [
+                          {
+                            "id": "string",
+                            "platformWorkId": "string",
+                            "snapshotAt": "string",
+                            "fetchedAt": "string",
+                            "work": {
+                              "id": "string",
+                              "url": "string",
+                              "title": "string",
+                              "description": "string",
+                              "mediaType": "string",
+                              "coverUrl": "string",
+                              "publishedAt": "string",
+                              "status": "string"
+                            },
+                            "metrics": {
+                              "viewCount": "number",
+                              "likeCount": "number",
+                              "commentCount": "number"
+                            },
+                            "extra": {
+                              "pending": "boolean"
+                            }
+                          }
+                        ],
+                        "extra": {
+                          "pending": "boolean"
+                        },
+                        "snapshotId": "string",
+                        "fetchedAt": "string"
+                      },
+                      "requestId": "string"
+                    }
+                  },
                   "unsupported": {
                     "summary": "Platform capability is not supported (15080)",
                     "value": {
@@ -10521,7 +10668,7 @@
       "post": {
         "summary": "Verify Work Ownership",
         "deprecated": false,
-        "description": "Interface description: Verify whether the work belongs to the specified account",
+        "description": "Interface description: Verify whether a work belongs to the specified account. First get the candidate account from the account list endpoint, then get the work ID from that account's work list on the target platform. `platform`, `platformWorkId`, and `candidateAccountId` must belong to the same platform and the same authorized account.",
         "operationId": "WorksController_verifyOwnership_v2",
         "tags": [
           "Channel Management/Works"
@@ -10530,21 +10677,23 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "Platform identification",
+            "description": "Platform identifier. It must match the candidate account and work; for example, use `KWAI` for Kuaishou.",
             "required": true,
-            "example": "",
+            "example": "KWAI",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "KWAI"
             }
           },
           {
             "name": "platformWorkId",
             "in": "path",
-            "description": "Platform work ID",
+            "description": "Platform work ID. Get it through the [Work List](/en/api-reference/get-api-v2-channels-works-platform) endpoint: pass the account ID for the current platform as `accountId`, then use `platformWorkId` from a returned work item.",
             "required": true,
-            "example": "",
+            "example": "platform-work-id-from-work-list",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "platform-work-id-from-work-list"
             }
           }
         ],
@@ -10557,14 +10706,21 @@
                   "candidateAccountId": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "Candidate account ID"
+                    "description": "Candidate account ID. Get it through the [Account List](/en/api-reference/get-api-v2-channels-accounts) endpoint using `data.list[n].id` for the target authorized account. The account must belong to the same platform as `platform` and `platformWorkId`."
                   }
                 },
                 "required": [
                   "candidateAccountId"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "candidateAccountId": "account-id-from-accounts-list"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -10578,7 +10734,16 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkOwnershipVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "owned": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10609,46 +10774,10 @@
                       "code": 0,
                       "message": "Request succeeded",
                       "data": {
-                        "platform": "douyin",
-                        "owned": true,
-                        "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "Account not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "Authorization platform does not match",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "platform": "string",
+                        "owned": "boolean"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10868,7 +10997,14 @@
                   "name"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "name": "api-doc-test"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -10915,34 +11051,17 @@
                       "data": {
                         "id": "string",
                         "name": "string",
-                        "hasBrowserConfig": true,
-                        "rank": 1,
+                        "hasBrowserConfig": "boolean",
+                        "rank": "number",
                         "ip": "string",
                         "location": "string",
                         "countryCode": "string",
                         "proxyIp": "string",
-                        "isDefault": true,
-                        "createdAt": "2026-07-02T12:00:00.000Z",
-                        "updatedAt": "2026-07-02T12:00:00.000Z"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "isDefault": "boolean",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10991,7 +11110,9 @@
             "in": "query",
             "description": "Group ID array",
             "required": true,
-            "example": "",
+            "example": [
+              "group-id-from-create-response"
+            ],
             "schema": {
               "minItems": 1,
               "type": "array",
@@ -10999,7 +11120,10 @@
                 "type": "string",
                 "minLength": 1
               },
-              "description": "Group ID array"
+              "description": "Group ID array",
+              "example": [
+                "group-id-from-create-response"
+              ]
             }
           }
         ],
@@ -11011,7 +11135,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "boolean"
+                    },
                     "code": {
                       "type": "integer",
                       "description": "Business status code. 0 means success; non-zero means a business error."
@@ -11040,34 +11166,8 @@
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountGroupNotFound12601": {
-                    "summary": "AccountGroupNotFound (12601)",
-                    "value": {
-                      "code": 12601,
-                      "message": "Account group not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "data": "boolean",
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11124,9 +11224,10 @@
             "in": "path",
             "description": "Group ID",
             "required": true,
-            "example": "",
+            "example": "group-id-from-create-response",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "group-id-from-create-response"
             }
           }
         ],
@@ -11169,7 +11270,14 @@
                   }
                 }
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "name": "api-doc-test-updated"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -11216,43 +11324,17 @@
                       "data": {
                         "id": "string",
                         "name": "string",
-                        "hasBrowserConfig": true,
-                        "rank": 1,
+                        "hasBrowserConfig": "boolean",
+                        "rank": "number",
                         "ip": "string",
                         "location": "string",
                         "countryCode": "string",
                         "proxyIp": "string",
-                        "isDefault": true,
-                        "createdAt": "2026-07-02T12:00:00.000Z",
-                        "updatedAt": "2026-07-02T12:00:00.000Z"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountGroupNotFound12601": {
-                    "summary": "AccountGroupNotFound (12601)",
-                    "value": {
-                      "code": 12601,
-                      "message": "Account group not found",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "isDefault": "boolean",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11298,7 +11380,7 @@
       "patch": {
         "summary": "Update Account Order",
         "deprecated": false,
-        "description": "Interface description: Update the account sorting within the specified group.",
+        "description": "Interface description: Update the account sorting within the specified group.\n\n`groupId` must be an existing group ID, and `list[n].id` must be an account ID belonging to that group. `list` is required and must contain at least one account. If the group and account do not match, the endpoint returns `12600`.",
         "operationId": "AccountGroupsController_sortAccounts_v2",
         "tags": [
           "Channel Management/Account Groups"
@@ -11309,9 +11391,10 @@
             "in": "path",
             "description": "Group ID",
             "required": true,
-            "example": "",
+            "example": "group-id-from-create-response",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "group-id-from-create-response"
             }
           }
         ],
@@ -11341,14 +11424,27 @@
                         "rank"
                       ]
                     },
-                    "description": "sorted list"
+                    "description": "Sorted list; it must contain at least one account belonging to the group.",
+                    "minItems": 1
                   }
                 },
                 "required": [
                   "list"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "list": [
+                      {
+                        "id": "account-id-in-group",
+                        "rank": 1
+                      }
+                    ]
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -11361,7 +11457,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "boolean"
+                    },
                     "code": {
                       "type": "integer",
                       "description": "Business status code. 0 means success; non-zero means a business error."
@@ -11390,25 +11488,8 @@
                     "value": {
                       "code": 0,
                       "message": "Request succeeded",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "data": "boolean",
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11448,7 +11529,7 @@
       "get": {
         "summary": "Start Platform Authorization",
         "deprecated": false,
-        "description": "Interface description: Generate platform OAuth authorization URL",
+        "description": "Interface description: Generate a platform authorization QR code, session ID, and expiration time.\n\nAfter a successful response, read the authorization session ID from `data.sessionId` and pass it with the same `platform` to [Get Authorization Status](/en/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id) to poll the authorization. Supported values for `platform` are `douyin`, `xhs`, `wxSph`, `KWAI`, `wxGzh`, and `bilibili`. Check `capabilities.auth.supported` in the [Platform List](/en/api-reference/get-api-v2-channels-platforms) response to confirm availability.",
         "operationId": "AuthController_startAuth_v2",
         "tags": [
           "Channel Management/Authorization"
@@ -11457,11 +11538,20 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "",
+            "description": "Authorization platform. Supported values: douyin, xhs, wxSph, KWAI, wxGzh, and bilibili.",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "enum": [
+                "douyin",
+                "xhs",
+                "wxSph",
+                "KWAI",
+                "wxGzh",
+                "bilibili"
+              ]
             }
           },
           {
@@ -11509,7 +11599,31 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/AuthStartVo"
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        },
+                        "sessionId": {
+                          "type": "string"
+                        },
+                        "expiresAt": {
+                          "type": "string"
+                        },
+                        "authInstructions": {
+                          "type": "object",
+                          "properties": {
+                            "en-US": {
+                              "type": "string"
+                            },
+                            "zh-CN": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -11542,30 +11656,13 @@
                       "data": {
                         "url": "string",
                         "sessionId": "string",
-                        "expiresAt": "2026-07-02T12:00:00.000Z",
+                        "expiresAt": "string",
                         "authInstructions": {
                           "en-US": "string",
                           "zh-CN": "string"
                         }
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11598,7 +11695,7 @@
       "get": {
         "summary": "Get Authorization Status",
         "deprecated": false,
-        "description": "Interface description: Polling platform authorization session status",
+        "description": "Interface description: Poll the platform authorization session status. `sessionId` must come from `data.sessionId` in the successful response of [Start Platform Authorization](/en/api-reference/get-api-v2-channels-accounts-auth-platform); do not generate it yourself or reuse it across authorization sessions.",
         "operationId": "AuthController_getAuthStatus_v2",
         "tags": [
           "Channel Management/Authorization"
@@ -11607,21 +11704,31 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "Platform identification",
+            "description": "Authorization platform. It must match the `platform` used to start authorization. Supported values: douyin, xhs, wxSph, KWAI, wxGzh, and bilibili.",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "enum": [
+                "douyin",
+                "xhs",
+                "wxSph",
+                "KWAI",
+                "wxGzh",
+                "bilibili"
+              ]
             }
           },
           {
             "name": "sessionId",
             "in": "path",
-            "description": "Session ID",
+            "description": "The `data.sessionId` from the successful Start Platform Authorization response.",
             "required": true,
-            "example": "",
+            "example": "session-id-from-auth-start",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "session-id-from-auth-start"
             }
           }
         ],
@@ -11634,7 +11741,22 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/AuthSessionStatusVo"
+                      "type": "object",
+                      "properties": {
+                        "sessionId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "requiresSelection": {
+                          "type": "boolean"
+                        },
+                        "expiresAt": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -11666,71 +11788,11 @@
                       "message": "Request succeeded",
                       "data": {
                         "sessionId": "string",
-                        "status": "pending",
-                        "requiresSelection": true,
-                        "errorCode": 1,
-                        "expiresAt": "2026-07-02T12:00:00.000Z",
-                        "accountId": "string",
-                        "accountIds": [
-                          "string"
-                        ],
-                        "accounts": [
-                          {
-                            "accountId": "string",
-                            "platform": "douyin",
-                            "platformUid": "string",
-                            "displayName": "string",
-                            "account": "string",
-                            "avatarUrl": "string"
-                          }
-                        ],
-                        "selectableAccounts": [
-                          {
-                            "platform": "douyin",
-                            "platformUid": "string",
-                            "displayName": "string",
-                            "account": "string",
-                            "avatarUrl": "string",
-                            "parentPlatformUid": "string"
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "Authorization platform does not match",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthSessionInvalid15039": {
-                    "summary": "ChannelAuthSessionInvalid (15039)",
-                    "value": {
-                      "code": 15039,
-                      "message": "Authorization session is invalid or expired",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "status": "string",
+                        "requiresSelection": "boolean",
+                        "expiresAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11844,7 +11906,16 @@
                   "filename"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "Success",
+                  "value": {
+                    "filename": "api-doc-audit.txt",
+                    "type": "temp",
+                    "size": 1
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -11858,7 +11929,22 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/UploadResultVo"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "uploadUrl": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -11892,36 +11978,9 @@
                         "id": "string",
                         "path": "string",
                         "url": "string",
-                        "uploadUrl": "string",
-                        "uploadFields": {}
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetTooLarge12752": {
-                    "summary": "AssetTooLarge (12752)",
-                    "value": {
-                      "code": 12752,
-                      "message": "Resources are too large",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "uploadUrl": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11978,9 +12037,10 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": "",
+            "example": "asset-id-from-upload-sign",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "asset-id-from-upload-sign"
             }
           }
         ],
@@ -11993,7 +12053,46 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/AssetVo"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string"
+                        },
+                        "userType": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "mimeType": {
+                          "type": "string"
+                        },
+                        "filename": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -12026,62 +12125,18 @@
                       "data": {
                         "id": "string",
                         "userId": "string",
-                        "userType": "user",
+                        "userType": "string",
                         "path": "string",
-                        "type": "aiImage",
-                        "status": "pending",
-                        "mimeType": "string",
-                        "createdAt": "2026-07-02T12:00:00.000Z",
-                        "updatedAt": "2026-07-02T12:00:00.000Z",
                         "url": "string",
-                        "size": 1,
-                        "filename": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "Parameter validation failed",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "Unauthenticated or invalid API Key",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetNotFound12750": {
-                    "summary": "AssetNotFound (12750)",
-                    "value": {
-                      "code": 12750,
-                      "message": "Resource not found",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetTooLarge12752": {
-                    "summary": "AssetTooLarge (12752)",
-                    "value": {
-                      "code": 12752,
-                      "message": "Resources are too large",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetUploadFailed12751": {
-                    "summary": "AssetUploadFailed (12751)",
-                    "value": {
-                      "code": 12751,
-                      "message": "Resource upload failed",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "type": "string",
+                        "status": "string",
+                        "size": "number",
+                        "mimeType": "string",
+                        "filename": "string",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }

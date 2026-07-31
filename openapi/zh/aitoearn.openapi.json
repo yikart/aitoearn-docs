@@ -1381,31 +1381,32 @@
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "图片描述提示"
+                    "description": "图片描述提示",
+                    "example": "A cute orange cat sitting by a window, soft natural light"
                   },
                   "model": {
                     "type": "string",
-                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+                    "example": "gpt-image-2"
                   },
                   "quality": {
                     "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
-                    "type": "string"
+                    "type": "string",
+                    "example": "low"
                   },
                   "response_format": {
                     "description": "返回格式",
                     "type": "string",
+                    "example": "url",
                     "enum": [
                       "url",
                       "b64_json"
                     ]
                   },
                   "size": {
-                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
-                    "type": "string"
-                  },
-                  "style": {
-                    "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
-                    "type": "string"
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。当前示例使用 `1024x1024`，对应最低价格 1 积分。",
+                    "type": "string",
+                    "example": "1024x1024"
                   }
                 },
                 "required": [
@@ -1413,7 +1414,18 @@
                   "model"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "最低积分示例",
+                  "value": {
+                    "prompt": "A cute orange cat sitting by a window, soft natural light",
+                    "model": "gpt-image-2",
+                    "quality": "low",
+                    "response_format": "url",
+                    "size": "1024x1024"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -1562,7 +1574,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。",
+                    "example": "gpt-image-2"
                   },
                   "image": {
                     "anyOf": [
@@ -1576,13 +1589,15 @@
                         }
                       }
                     ],
-                    "description": "原始图片"
+                    "description": "原始图片。支持单个图片 URL、data URL 或图片 URL 数组；当前 `gpt-image-2` 最多支持 14 张输入图片。",
+                    "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
                   },
                   "prompt": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "编辑描述"
+                    "description": "编辑描述",
+                    "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style."
                   },
                   "mask": {
                     "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。",
@@ -1592,15 +1607,18 @@
                     "description": "生成图片数量",
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 1
+                    "maximum": 1,
+                    "example": 1
                   },
                   "size": {
-                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
-                    "type": "string"
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。当前示例使用 `1024x1024`，对应最低价格 1 积分。",
+                    "type": "string",
+                    "example": "1024x1024"
                   },
                   "response_format": {
                     "description": "返回格式",
                     "type": "string",
+                    "example": "url",
                     "enum": [
                       "url",
                       "b64_json"
@@ -1613,7 +1631,19 @@
                   "prompt"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "最低积分示例",
+                  "value": {
+                    "model": "gpt-image-2",
+                    "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                    "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style.",
+                    "n": 1,
+                    "size": "1024x1024",
+                    "response_format": "url"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -1764,15 +1794,18 @@
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "图片描述提示"
+                    "description": "图片描述提示",
+                    "example": "A cute orange cat sitting by a window, soft natural light"
                   },
                   "model": {
                     "type": "string",
-                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+                    "example": "gpt-image-2"
                   },
                   "quality": {
                     "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
-                    "type": "string"
+                    "type": "string",
+                    "example": "low"
                   },
                   "response_format": {
                     "description": "返回格式",
@@ -1780,11 +1813,13 @@
                     "enum": [
                       "url",
                       "b64_json"
-                    ]
+                    ],
+                    "example": "url"
                   },
                   "size": {
                     "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
-                    "type": "string"
+                    "type": "string",
+                    "example": "1024x1024"
                   },
                   "style": {
                     "description": "图像风格。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].styles` 为准；返回为空表示该模型不支持风格参数。",
@@ -1796,7 +1831,18 @@
                   "model"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "最低积分示例",
+                  "value": {
+                    "prompt": "A cute orange cat sitting by a window, soft natural light",
+                    "model": "gpt-image-2",
+                    "quality": "low",
+                    "response_format": "url",
+                    "size": "1024x1024"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -1944,7 +1990,8 @@
                 "properties": {
                   "model": {
                     "type": "string",
-                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。"
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。",
+                    "example": "gpt-image-2"
                   },
                   "image": {
                     "anyOf": [
@@ -1958,13 +2005,15 @@
                         }
                       }
                     ],
-                    "description": "原始图片"
+                    "description": "原始图片",
+                    "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
                   },
                   "prompt": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 4000,
-                    "description": "编辑描述"
+                    "description": "编辑描述",
+                    "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style."
                   },
                   "mask": {
                     "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。",
@@ -1974,11 +2023,13 @@
                     "description": "生成图片数量",
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 1
+                    "maximum": 1,
+                    "example": 1
                   },
                   "size": {
                     "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
-                    "type": "string"
+                    "type": "string",
+                    "example": "1024x1024"
                   },
                   "response_format": {
                     "description": "返回格式",
@@ -1986,7 +2037,8 @@
                     "enum": [
                       "url",
                       "b64_json"
-                    ]
+                    ],
+                    "example": "url"
                   }
                 },
                 "required": [
@@ -1995,7 +2047,19 @@
                   "prompt"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "最低积分示例",
+                  "value": {
+                    "model": "gpt-image-2",
+                    "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                    "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window. Preserve its orange fur, seated pose, and facial expression, enhance the soft natural light, add warm tones and subtle detail, and maintain a realistic photography style.",
+                    "n": 1,
+                    "size": "1024x1024",
+                    "response_format": "url"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3233,9 +3297,61 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RelayImageGenerationDto"
+                "example": {
+                  "prompt": "A cute orange cat sitting by a window, soft natural light",
+                  "model": "gpt-image-2",
+                  "quality": "low",
+                  "response_format": "url",
+                  "size": "1024x1024"
+                },
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "example": "A cute orange cat sitting by a window, soft natural light"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+                    "example": "gpt-image-2"
+                  },
+                  "quality": {
+                    "type": "string",
+                    "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
+                    "example": "low"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "example": "url"
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+                    "example": "1024x1024"
+                  }
+                },
+                "required": [
+                  "prompt",
+                  "model"
+                ],
+                "additionalProperties": true
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "最低积分示例",
+                  "value": {
+                    "prompt": "A cute orange cat sitting by a window, soft natural light",
+                    "model": "gpt-image-2",
+                    "quality": "low",
+                    "response_format": "url",
+                    "size": "1024x1024"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3247,23 +3363,121 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "created": {
+                      "type": "number"
+                    },
+                    "quality": {
+                      "type": "string"
+                    },
+                    "size": {
+                      "type": "string"
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "input_tokens": {
+                          "type": "number"
+                        },
+                        "output_tokens": {
+                          "type": "number"
+                        },
+                        "total_tokens": {
+                          "type": "number"
+                        },
+                        "input_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "output_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
                   "additionalProperties": true,
-                  "description": "第三方协议原生响应，不使用 AiToEarn 通用响应包裹。"
+                  "example": {
+                    "data": [
+                      {
+                        "url": "string"
+                      }
+                    ],
+                    "created": "number",
+                    "quality": "string",
+                    "size": "string",
+                    "usage": {
+                      "input_tokens": "number",
+                      "output_tokens": "number",
+                      "total_tokens": "number",
+                      "input_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      },
+                      "output_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      }
+                    }
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "第三方协议原生成功响应",
                     "value": {
-                      "id": "RelayController_imagesGenerations_example",
-                      "object": "response"
+                      "data": [
+                        {
+                          "url": "string"
+                        }
+                      ],
+                      "created": "number",
+                      "quality": "string",
+                      "size": "string",
+                      "usage": {
+                        "input_tokens": "number",
+                        "output_tokens": "number",
+                        "total_tokens": "number",
+                        "input_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        },
+                        "output_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        }
+                      }
                     }
                   }
                 }
               },
               "text/event-stream": {
                 "schema": {
-                  "type": "string",
-                  "description": "SSE 流式响应。"
+                  "type": "string"
                 }
               }
             }
@@ -3311,9 +3525,87 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RelayImageEditDto"
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "图像编辑模型名称。先调用[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口（`GET /api/ai/models/image/edit`），传入其返回的 `data[n].name`；各模型支持的尺寸、最大输入图片数与价格以该接口返回为准。",
+                    "example": "gpt-image-2"
+                  },
+                  "image": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ],
+                    "description": "图片列表",
+                    "example": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "提示词",
+                    "example": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window."
+                  },
+                  "mask": {
+                    "type": "string",
+                    "description": "遮罩图片 URL，用于**局部重绘**（可选）。需为与 `image` 尺寸一致的 PNG 图片：完全透明（alpha 为 0）的区域表示需要按提示词重绘的部分，不透明区域保持原图不变。不传时对整张图片进行编辑。"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991,
+                    "description": "生成数量",
+                    "example": 1
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "图像尺寸。可选值随模型而不同，以[「图像编辑模型」](/api-reference/get-api-ai-models-image-edit)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。",
+                    "example": "1024x1024"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "description": "返回格式",
+                    "example": "url"
+                  }
+                },
+                "required": [
+                  "model",
+                  "image",
+                  "prompt"
+                ],
+                "additionalProperties": true,
+                "example": {
+                  "model": "gpt-image-2",
+                  "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                  "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window.",
+                  "n": 1,
+                  "size": "1024x1024",
+                  "response_format": "url"
+                }
               },
-              "examples": {}
+              "examples": {
+                "lowest-cost": {
+                  "summary": "最低积分示例",
+                  "value": {
+                    "model": "gpt-image-2",
+                    "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=1024&q=80",
+                    "prompt": "Edit the provided image into a cozy realistic scene by placing the cute orange cat beside a sunlit window.",
+                    "n": 1,
+                    "size": "1024x1024",
+                    "response_format": "url"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -3325,23 +3617,116 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "created": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "string"
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "input_tokens": {
+                          "type": "number"
+                        },
+                        "output_tokens": {
+                          "type": "number"
+                        },
+                        "total_tokens": {
+                          "type": "number"
+                        },
+                        "input_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "output_tokens_details": {
+                          "type": "object",
+                          "properties": {
+                            "text_tokens": {
+                              "type": "number"
+                            },
+                            "image_tokens": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
                   "additionalProperties": true,
-                  "description": "第三方协议原生响应，不使用 AiToEarn 通用响应包裹。"
+                  "example": {
+                    "data": [
+                      {
+                        "url": "string"
+                      }
+                    ],
+                    "created": "number",
+                    "size": "string",
+                    "usage": {
+                      "input_tokens": "number",
+                      "output_tokens": "number",
+                      "total_tokens": "number",
+                      "input_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      },
+                      "output_tokens_details": {
+                        "text_tokens": "number",
+                        "image_tokens": "number"
+                      }
+                    }
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "第三方协议原生成功响应",
                     "value": {
-                      "id": "RelayController_imagesEdits_example",
-                      "object": "response"
+                      "data": [
+                        {
+                          "url": "string"
+                        }
+                      ],
+                      "created": "number",
+                      "size": "string",
+                      "usage": {
+                        "input_tokens": "number",
+                        "output_tokens": "number",
+                        "total_tokens": "number",
+                        "input_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        },
+                        "output_tokens_details": {
+                          "text_tokens": "number",
+                          "image_tokens": "number"
+                        }
+                      }
                     }
                   }
                 }
               },
               "text/event-stream": {
                 "schema": {
-                  "type": "string",
-                  "description": "SSE 流式响应。"
+                  "type": "string"
                 }
               }
             }
@@ -3633,11 +4018,13 @@
         ],
         "parameters": [
           {
-            "name": "ids",
+            "name": "ids[]",
             "in": "query",
             "description": "账号 ID 数组",
             "required": true,
-            "example": "",
+            "example": [
+              "accountId"
+            ],
             "schema": {
               "minItems": 1,
               "type": "array",
@@ -3645,8 +4032,13 @@
                 "type": "string",
                 "minLength": 1
               },
-              "description": "账号 ID 数组"
-            }
+              "description": "账号 ID 数组",
+              "example": [
+                "accountId"
+              ]
+            },
+            "style": "form",
+            "explode": true
           }
         ],
         "responses": {
@@ -3674,11 +4066,7 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
@@ -3686,25 +4074,7 @@
                     "value": {
                       "code": 0,
                       "message": "请求成功",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -3956,7 +4326,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "boolean"
+                    },
                     "code": {
                       "type": "integer",
                       "description": "业务状态码。0 表示成功，非 0 表示业务错误。"
@@ -3973,46 +4345,16 @@
                       "type": "integer",
                       "description": "错误响应时间戳，Unix 毫秒。"
                     }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
+                  }
                 },
                 "examples": {
                   "success": {
                     "summary": "成功",
                     "value": {
+                      "data": "boolean",
                       "code": 0,
                       "message": "请求成功",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -4364,7 +4706,7 @@
       "post": {
         "summary": "创建发布选项值",
         "deprecated": false,
-        "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n所有平台侧“需要先创建再选择”的额外参数都通过本接口处理。例如 Pinterest 需要先创建 Board，再把返回的 Board 作为发布目标 `boardId` 使用。\n\n调用流程：先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`）查询该平台有哪些额外参数；只有返回项包含 `createSchema` 的字段才支持创建。将返回项中的 `field` 放到本接口路径参数 `field`，并按该 `createSchema` 组织 JSON 请求体。不需要创建的字段，请调用[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口查询后选择。",
+        "description": "接口说明：为某个已授权渠道账号创建平台发布时需要的额外参数值，创建成功后返回可直接用于发布任务的选项 `item`。\n\n本接口不是所有平台和字段都支持。调用前必须先调用[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口（`GET /api/v2/channels/platforms/{platform}/publish-options`），只有返回项明确包含 `createSchema` 的字段才可以调用本接口；将该返回项的 `field` 放到路径参数，并严格按照 `createSchema` 组织 JSON 请求体。若返回项没有 `createSchema`，请改用[「发布选项可选值」](/api-reference/get-api-v2-channels-accounts-account-id-publish-options-field-values)接口查询并选择已有值。\n\n例如，当前 Bilibili 返回的 `tid` 仅支持查询分区，不支持通过本接口创建；使用 Bilibili 的 `tid` 调用会返回 `15080`（平台不支持该操作）。",
         "operationId": "AccountsController_createPublishOptionValue_v2",
         "tags": [
           "渠道管理/账号"
@@ -4384,30 +4726,15 @@
           {
             "name": "field",
             "in": "path",
-            "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。",
+            "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`；没有 `createSchema` 的字段不支持本接口。",
             "required": true,
             "example": "",
             "schema": {
               "type": "string",
-              "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`。"
+              "description": "要创建取值的发布选项字段。取值来自[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回的 `data[n].field`，并且该返回项必须包含 `createSchema`；没有 `createSchema` 的字段不支持本接口。"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准。",
-                "properties": {}
-              },
-              "examples": {}
-            }
-          },
-          "required": true,
-          "description": "创建发布选项值所需的 JSON 参数。具体字段不是固定结构，必须以[「平台发布选项」](/api-reference/get-api-v2-channels-platforms-platform-publish-options)接口返回项中的 `createSchema` 为准；例如 Pinterest 的 `boardId` 字段会返回创建 Board 所需的 schema。"
-        },
         "responses": {
           "200": {
             "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
@@ -4538,7 +4865,7 @@
       "post": {
         "summary": "创建发布流程",
         "deprecated": false,
-        "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。",
+        "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。请求体中的 `items[n].accountId` 必须来自账号列表接口；`content.media[n].url` 必须是可公网访问的真实媒体 URL，不能直接复制示例中的占位值。推荐先按[资源上传教程](/zh/use/asset-upload)完成“生成上传签名 → 直传文件 → 确认资源上传”，再填写确认接口返回的 `data.url`；也可使用其他可被服务端直接访问和解析的真实媒体 URL。链接不可访问或无法解析时会返回 `15051`（`media_unreachable`）。`publishAt` 必须填写未来的 ISO 8601 时间。调用成功后，`data.flowId` 可用于查询流程详情，`data.tasks[n].id` 可用于立即发布、重试、取消或修改发布时间。该接口会创建真实发布任务，请确认参数无误后再发送。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。",
         "operationId": "PublishFlowController_createFlow_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -6953,51 +7280,29 @@
                   "items"
                 ]
               },
-              "example": {
-                "content": {
-                  "body": "test",
-                  "media": [
-                    {
-                      "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4",
-                      "metadata": {
-                        "type": "video"
-                      }
-                    }
-                  ],
-                  "cover": {
-                    "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/dS2sNtXUgrLfosukfpXwd.jpg",
-                    "metadata": {
-                      "type": "image"
-                    }
-                  },
-                  "title": "test title"
-                },
-                "publishAt": "2026-06-29T09:43:42Z",
-                "context": {
-                  "type": "video",
-                  "videoUrl": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4",
-                  "source": "web"
-                },
-                "items": {
-                  "accountId": "KWAI_f1b6d99b9252a17314bf5724e666123f",
-                  "platform": "KWAI",
-                  "overrides": {
-                    "body": "test",
-                    "media": [
-                      {
-                        "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/WZR5ZtF0t1lIQTx1_wW-_.mp4",
-                        "metadata": {
-                          "type": "video"
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "content": {
+                      "title": "publish-demo-video",
+                      "body": "Publish a video using the AiToEarn API.",
+                      "media": [
+                        {
+                          "url": "https://assets.aitoearn.cn/6a3b48b5ec793a848a671de1/ai/video/doubao-seedance-2-0-260128/202607/I-lRTCBUkjE43NRd77eWC.mp4"
                         }
-                      }
-                    ],
-                    "cover": {
-                      "url": "https://assets.aitoearn.cn/69a5882a0ae8abf6b443675f/user/media/202606/dS2sNtXUgrLfosukfpXwd.jpg",
-                      "metadata": {
-                        "type": "image"
+                      ],
+                      "cover": {
+                        "url": "https://assets.aitoearn.cn/6a3b48b5ec793a848a671de1/ai/images/gpt-image-2/202607/GlhuS1TEyXtDAyumLezfo.png"
                       }
                     },
-                    "title": "test title"
+                    "publishAt": "2030-01-01T00:00:00.000Z",
+                    "items": [
+                      {
+                        "platform": "douyin",
+                        "accountId": "account-id-from-accounts-list"
+                      }
+                    ]
                   }
                 }
               }
@@ -7014,7 +7319,55 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishFlowVo"
+                      "type": "object",
+                      "properties": {
+                        "flowId": {
+                          "type": "string"
+                        },
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "platform": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "publishTime": {
+                                "type": "string"
+                              },
+                              "platformWorkId": {
+                                "type": "string"
+                              },
+                              "workLink": {
+                                "type": "string"
+                              },
+                              "linkStatus": {
+                                "type": "string"
+                              },
+                              "linkError": {
+                                "type": "string"
+                              },
+                              "linkMeta": {
+                                "type": "object"
+                              },
+                              "errorMsg": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7050,132 +7403,19 @@
                           {
                             "id": "string",
                             "accountId": "string",
-                            "platform": "douyin",
-                            "status": -1,
-                            "publishTime": "2026-07-02T12:00:00.000Z",
+                            "platform": "string",
+                            "status": "number",
+                            "publishTime": "string",
                             "platformWorkId": "string",
                             "workLink": "string",
-                            "linkStatus": "pending",
+                            "linkStatus": "string",
                             "linkError": "string",
-                            "linkMeta": {},
+                            "linkMeta": "object",
                             "errorMsg": "string"
                           }
                         ]
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAccountNotFound15021": {
-                    "summary": "ChannelAccountNotFound (15021)",
-                    "value": {
-                      "code": 15021,
-                      "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishDuplicateItem15052": {
-                    "summary": "ChannelPublishDuplicateItem (15052)",
-                    "value": {
-                      "code": 15052,
-                      "message": "{{platform}} 账号 {{accountId}} 存在重复发布项",
-                      "data": {
-                        "accountId": "acc_123",
-                        "platform": "douyin"
                       },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishMixedRelayAndLocalAccounts15087": {
-                    "summary": "ChannelPublishMixedRelayAndLocalAccounts (15087)",
-                    "value": {
-                      "code": 15087,
-                      "message": "同一个发布流程不能混用中继账号和本地账号",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPermalinkMissing15093": {
-                    "summary": "ChannelPublishPermalinkMissing (15093)",
-                    "value": {
-                      "code": 15093,
-                      "message": "缺少已发布作品链接",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformNotSupported15062": {
-                    "summary": "ChannelPublishPlatformNotSupported (15062)",
-                    "value": {
-                      "code": 15062,
-                      "message": "该平台不支持发布",
-                      "data": {
-                        "platform": "douyin"
-                      },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformStatusFailed15063": {
-                    "summary": "ChannelPublishPlatformStatusFailed (15063)",
-                    "value": {
-                      "code": 15063,
-                      "message": "平台发布失败，状态码：{{status}}",
-                      "data": {
-                        "status": 500
-                      },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformWorkIdMissing15060": {
-                    "summary": "ChannelPublishPlatformWorkIdMissing (15060)",
-                    "value": {
-                      "code": 15060,
-                      "message": "缺少平台作品 ID",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishTaskAlreadyExists15025": {
-                    "summary": "ChannelPublishTaskAlreadyExists (15025)",
-                    "value": {
-                      "code": 15025,
-                      "message": "发布任务已存在",
-                      "data": {
-                        "flowId": "flow_123"
-                      },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishValidationFailed15051": {
-                    "summary": "ChannelPublishValidationFailed (15051)",
-                    "value": {
-                      "code": 15051,
-                      "message": "发布内容校验失败",
-                      "data": {
-                        "platform": "douyin",
-                        "accountId": "acc_123",
-                        "issues": [
-                          "发布内容校验失败"
-                        ]
-                      },
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7407,7 +7647,7 @@
       "post": {
         "summary": "立即发布",
         "deprecated": false,
-        "description": "接口说明：将定时任务调整为立即发布",
+        "description": "接口说明：将定时任务调整为立即发布。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`。仅能对仍处于可立即发布状态的任务调用；使用示例占位符不会产生真实发布。",
         "operationId": "PublishTaskController_publishNow_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -7416,11 +7656,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "任务 ID",
+            "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -7433,7 +7674,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7465,61 +7712,8 @@
                       "message": "请求成功",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishNowNotAllowed15058": {
-                    "summary": "ChannelPublishNowNotAllowed (15058)",
-                    "value": {
-                      "code": 15058,
-                      "message": "当前任务状态不允许立即发布",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueFailed15056": {
-                    "summary": "ChannelPublishQueueFailed (15056)",
-                    "value": {
-                      "code": 15056,
-                      "message": "发布任务入队失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueRemoveFailed15053": {
-                    "summary": "ChannelPublishQueueRemoveFailed (15053)",
-                    "value": {
-                      "code": 15053,
-                      "message": "发布任务移出队列失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "未发现任务",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7580,7 +7774,7 @@
       "post": {
         "summary": "重试发布任务",
         "deprecated": false,
-        "description": "接口说明：重试当前用户失败的发布任务",
+        "description": "接口说明：重试当前用户失败的发布任务。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`。只有接口返回的任务状态允许重试时才会成功。",
         "operationId": "PublishTaskController_retryTask_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -7589,11 +7783,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "任务 ID",
+            "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -7606,7 +7801,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7638,63 +7839,8 @@
                       "message": "请求成功",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformNotSupported15062": {
-                    "summary": "ChannelPublishPlatformNotSupported (15062)",
-                    "value": {
-                      "code": 15062,
-                      "message": "该平台不支持发布",
-                      "data": {
-                        "platform": "douyin"
                       },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueFailed15056": {
-                    "summary": "ChannelPublishQueueFailed (15056)",
-                    "value": {
-                      "code": 15056,
-                      "message": "发布任务入队失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishRetryNotAllowed15095": {
-                    "summary": "ChannelPublishRetryNotAllowed (15095)",
-                    "value": {
-                      "code": 15095,
-                      "message": "当前发布任务不允许重试",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "未发现任务",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7755,7 +7901,7 @@
       "delete": {
         "summary": "取消发布任务",
         "deprecated": false,
-        "description": "接口说明：取消指定的发布任务",
+        "description": "接口说明：取消指定的发布任务。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`。取消操作可能同时影响平台侧预约任务，是否支持取决于平台能力。",
         "operationId": "PublishTaskController_cancelTask_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -7764,11 +7910,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "任务 ID",
+            "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -7781,7 +7928,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -7813,90 +7966,8 @@
                       "message": "请求成功",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAccountNotFound15021": {
-                    "summary": "ChannelAccountNotFound (15021)",
-                    "value": {
-                      "code": 15021,
-                      "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAccountUnbound15096": {
-                    "summary": "ChannelAccountUnbound (15096)",
-                    "value": {
-                      "code": 15096,
-                      "message": "绑定的渠道账号已解绑，关联的发布任务已终止",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishCancelNotSupported15055": {
-                    "summary": "ChannelPublishCancelNotSupported (15055)",
-                    "value": {
-                      "code": 15055,
-                      "message": "该平台不支持取消已预约的发布任务",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformCancelFailed15054": {
-                    "summary": "ChannelPublishPlatformCancelFailed (15054)",
-                    "value": {
-                      "code": 15054,
-                      "message": "平台侧取消发布任务失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishPlatformNotSupported15062": {
-                    "summary": "ChannelPublishPlatformNotSupported (15062)",
-                    "value": {
-                      "code": 15062,
-                      "message": "该平台不支持发布",
-                      "data": {
-                        "platform": "douyin"
                       },
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueRemoveFailed15053": {
-                    "summary": "ChannelPublishQueueRemoveFailed (15053)",
-                    "value": {
-                      "code": 15053,
-                      "message": "发布任务移出队列失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "未发现任务",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -7972,7 +8043,7 @@
       "patch": {
         "summary": "修改发布时间",
         "deprecated": false,
-        "description": "接口说明：修改待发布任务的发布时间",
+        "description": "接口说明：修改待发布任务的发布时间。`taskId` 来自创建发布流程接口成功响应中的 `data.tasks[n].id`；`publishAt` 必须填写未来的 ISO 8601 时间，且任务状态必须允许修改。",
         "operationId": "PublishTaskController_updatePublishAt_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -7981,11 +8052,12 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "任务 ID",
+            "description": "任务 ID，取自创建发布流程响应中的 data.tasks[n].id",
             "required": true,
-            "example": "",
+            "example": "task-id-from-create-flow",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "task-id-from-create-flow"
             }
           }
         ],
@@ -8005,7 +8077,14 @@
                   "publishAt"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "publishAt": "2030-01-01T00:00:00.000Z"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -8019,7 +8098,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelPublishTaskOperationVo"
+                      "type": "object",
+                      "properties": {
+                        "taskId": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -8051,61 +8136,8 @@
                       "message": "请求成功",
                       "data": {
                         "taskId": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueFailed15056": {
-                    "summary": "ChannelPublishQueueFailed (15056)",
-                    "value": {
-                      "code": 15056,
-                      "message": "发布任务入队失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishQueueRemoveFailed15053": {
-                    "summary": "ChannelPublishQueueRemoveFailed (15053)",
-                    "value": {
-                      "code": 15053,
-                      "message": "发布任务移出队列失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelPublishTimeUpdateNotAllowed15057": {
-                    "summary": "ChannelPublishTimeUpdateNotAllowed (15057)",
-                    "value": {
-                      "code": 15057,
-                      "message": "当前任务状态不允许修改发布时间",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskNotFound15004": {
-                    "summary": "PublishTaskNotFound (15004)",
-                    "value": {
-                      "code": 15004,
-                      "message": "未发现任务",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -8708,7 +8740,7 @@
       "delete": {
         "summary": "删除发布记录",
         "deprecated": false,
-        "description": "接口说明：删除当前用户的终态本地发布记录，不删除平台作品",
+        "description": "接口说明：删除当前用户的终态本地发布记录，不删除平台作品。`recordId` 来自发布记录列表、已发布列表或发布记录详情接口。只能删除符合接口状态要求的终态记录。",
         "operationId": "PublishRecordController_deleteRecord_v2",
         "tags": [
           "渠道管理/内容发布"
@@ -8717,11 +8749,12 @@
           {
             "name": "recordId",
             "in": "path",
-            "description": "发布记录 ID",
+            "description": "发布记录 ID，取自发布记录列表或详情响应",
             "required": true,
-            "example": "",
+            "example": "record-id-from-publish-records",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "record-id-from-publish-records"
             }
           }
         ],
@@ -8733,7 +8766,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false
+                    },
                     "code": {
                       "type": "integer",
                       "description": "业务状态码。0 表示成功，非 0 表示业务错误。"
@@ -8762,43 +8798,8 @@
                     "value": {
                       "code": 0,
                       "message": "请求成功",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
                       "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishRecordNotFound15000": {
-                    "summary": "PublishRecordNotFound (15000)",
-                    "value": {
-                      "code": 15000,
-                      "message": "发布记录未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "publishTaskStatusInvalid15018": {
-                    "summary": "PublishTaskStatusInvalid (15018)",
-                    "value": {
-                      "code": 15018,
-                      "message": "发布任务状态不允许此操作",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "requestId": "string"
                     }
                   }
                 }
@@ -9702,7 +9703,7 @@
             "in": "query",
             "description": "平台",
             "required": true,
-            "example": "douyin",
+            "example": "KWAI",
             "schema": {
               "type": "string",
               "enum": [
@@ -9723,8 +9724,8 @@
                 "google_business"
               ],
               "description": "平台",
-              "example": "douyin",
-              "default": "douyin"
+              "example": "KWAI",
+              "default": "KWAI"
             }
           },
           {
@@ -10182,11 +10183,11 @@
             "in": "path",
             "description": "平台标识",
             "required": true,
-            "example": "douyin",
+            "example": "KWAI",
             "schema": {
               "type": "string",
-              "example": "douyin",
-              "default": "douyin"
+              "example": "KWAI",
+              "default": "KWAI"
             }
           },
           {
@@ -10194,10 +10195,10 @@
             "in": "path",
             "description": "平台作品 ID",
             "required": true,
-            "example": "7665952416433086310",
+            "example": "3xqv95gh4s3pi44",
             "schema": {
               "type": "string",
-              "example": "7665952416433086310"
+              "example": "3xqv95gh4s3pi44"
             }
           },
           {
@@ -10205,7 +10206,6 @@
             "in": "query",
             "description": "账号 ID",
             "required": false,
-            "example": "",
             "schema": {
               "description": "账号 ID",
               "type": "string",
@@ -10227,31 +10227,139 @@
                         "platform": {
                           "type": "string"
                         },
-                        "capability": {
-                          "type": "string"
-                        },
                         "work": {
                           "type": "object",
-                          "additionalProperties": true
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "mediaType": {
+                              "type": "string"
+                            },
+                            "coverUrl": {
+                              "type": "string"
+                            },
+                            "publishedAt": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
                         },
                         "snapshots": {
                           "type": "array",
                           "items": {
                             "type": "object",
-                            "additionalProperties": true
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "platformWorkId": {
+                                "type": "string"
+                              },
+                              "snapshotAt": {
+                                "type": "string"
+                              },
+                              "fetchedAt": {
+                                "type": "string"
+                              },
+                              "work": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "mediaType": {
+                                    "type": "string"
+                                  },
+                                  "coverUrl": {
+                                    "type": "string"
+                                  },
+                                  "publishedAt": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "metrics": {
+                                "type": "object",
+                                "properties": {
+                                  "viewCount": {
+                                    "type": "number"
+                                  },
+                                  "likeCount": {
+                                    "type": "number"
+                                  },
+                                  "commentCount": {
+                                    "type": "number"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "extra": {
+                                "type": "object",
+                                "properties": {
+                                  "pending": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "pending"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "platformWorkId",
+                              "snapshotAt",
+                              "fetchedAt",
+                              "work",
+                              "metrics",
+                              "extra"
+                            ],
+                            "additionalProperties": false
                           }
                         },
                         "extra": {
                           "type": "object",
-                          "additionalProperties": true
+                          "properties": {
+                            "pending": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "pending"
+                          ],
+                          "additionalProperties": false
                         },
                         "snapshotId": {
                           "type": "string"
                         },
                         "fetchedAt": {
-                          "type": "string"
-                        },
-                        "message": {
                           "type": "string"
                         }
                       },
@@ -10276,6 +10384,58 @@
                   }
                 },
                 "examples": {
+                  "success": {
+                    "summary": "成功",
+                    "value": {
+                      "code": 0,
+                      "message": "请求成功",
+                      "data": {
+                        "platform": "KWAI",
+                        "work": {
+                          "id": "string",
+                          "url": "string",
+                          "title": "string",
+                          "description": "string",
+                          "mediaType": "string",
+                          "coverUrl": "string",
+                          "publishedAt": "string",
+                          "status": "string"
+                        },
+                        "snapshots": [
+                          {
+                            "id": "string",
+                            "platformWorkId": "string",
+                            "snapshotAt": "string",
+                            "fetchedAt": "string",
+                            "work": {
+                              "id": "string",
+                              "url": "string",
+                              "title": "string",
+                              "description": "string",
+                              "mediaType": "string",
+                              "coverUrl": "string",
+                              "publishedAt": "string",
+                              "status": "string"
+                            },
+                            "metrics": {
+                              "viewCount": "number",
+                              "likeCount": "number",
+                              "commentCount": "number"
+                            },
+                            "extra": {
+                              "pending": "boolean"
+                            }
+                          }
+                        ],
+                        "extra": {
+                          "pending": "boolean"
+                        },
+                        "snapshotId": "string",
+                        "fetchedAt": "string"
+                      },
+                      "requestId": "string"
+                    }
+                  },
                   "unsupported": {
                     "summary": "平台能力不支持（15080）",
                     "value": {
@@ -10521,7 +10681,7 @@
       "post": {
         "summary": "验证作品归属",
         "deprecated": false,
-        "description": "接口说明：验证作品是否属于指定账号",
+        "description": "接口说明：验证作品是否属于指定账号。调用前先通过账号列表接口获取候选账号，再通过该账号在对应平台的作品列表获取作品 ID。`platform`、`platformWorkId` 和 `candidateAccountId` 必须来自同一平台和同一已授权账号。",
         "operationId": "WorksController_verifyOwnership_v2",
         "tags": [
           "渠道管理/作品"
@@ -10530,21 +10690,23 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "平台标识",
+            "description": "平台标识。需与候选账号及作品保持一致，例如快手使用 `KWAI`。",
             "required": true,
-            "example": "",
+            "example": "KWAI",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "KWAI"
             }
           },
           {
             "name": "platformWorkId",
             "in": "path",
-            "description": "平台作品 ID",
+            "description": "平台作品 ID。通过[「作品列表」](/api-reference/get-api-v2-channels-works-platform)接口获取：将与当前平台一致的账号 ID 作为 `accountId` 参数，取返回作品项的 `platformWorkId`。",
             "required": true,
-            "example": "",
+            "example": "platform-work-id-from-work-list",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "platform-work-id-from-work-list"
             }
           }
         ],
@@ -10557,14 +10719,21 @@
                   "candidateAccountId": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "候选账号 ID"
+                    "description": "候选账号 ID。通过[「账号列表」](/api-reference/get-api-v2-channels-accounts)接口获取，取目标已授权账号的 `data.list[n].id`；该账号必须与 `platform` 和 `platformWorkId` 属于同一平台。"
                   }
                 },
                 "required": [
                   "candidateAccountId"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "candidateAccountId": "account-id-from-accounts-list"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -10578,7 +10747,16 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ChannelWorkOwnershipVo"
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string"
+                        },
+                        "owned": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -10609,46 +10787,10 @@
                       "code": 0,
                       "message": "请求成功",
                       "data": {
-                        "platform": "douyin",
-                        "owned": true,
-                        "message": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountNotFound12600": {
-                    "summary": "AccountNotFound (12600)",
-                    "value": {
-                      "code": 12600,
-                      "message": "账号未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "授权平台不匹配",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "platform": "string",
+                        "owned": "boolean"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10868,7 +11010,14 @@
                   "name"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "name": "api-doc-test"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -10915,34 +11064,17 @@
                       "data": {
                         "id": "string",
                         "name": "string",
-                        "hasBrowserConfig": true,
-                        "rank": 1,
+                        "hasBrowserConfig": "boolean",
+                        "rank": "number",
                         "ip": "string",
                         "location": "string",
                         "countryCode": "string",
                         "proxyIp": "string",
-                        "isDefault": true,
-                        "createdAt": "2026-07-02T12:00:00.000Z",
-                        "updatedAt": "2026-07-02T12:00:00.000Z"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "isDefault": "boolean",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -10991,7 +11123,9 @@
             "in": "query",
             "description": "分组 ID 数组",
             "required": true,
-            "example": "",
+            "example": [
+              "group-id-from-create-response"
+            ],
             "schema": {
               "minItems": 1,
               "type": "array",
@@ -10999,7 +11133,10 @@
                 "type": "string",
                 "minLength": 1
               },
-              "description": "分组 ID 数组"
+              "description": "分组 ID 数组",
+              "example": [
+                "group-id-from-create-response"
+              ]
             }
           }
         ],
@@ -11011,7 +11148,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "boolean"
+                    },
                     "code": {
                       "type": "integer",
                       "description": "业务状态码。0 表示成功，非 0 表示业务错误。"
@@ -11040,34 +11179,8 @@
                     "value": {
                       "code": 0,
                       "message": "请求成功",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountGroupNotFound12601": {
-                    "summary": "AccountGroupNotFound (12601)",
-                    "value": {
-                      "code": 12601,
-                      "message": "账号分组未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "data": "boolean",
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11124,9 +11237,10 @@
             "in": "path",
             "description": "分组 ID",
             "required": true,
-            "example": "",
+            "example": "group-id-from-create-response",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "group-id-from-create-response"
             }
           }
         ],
@@ -11169,7 +11283,14 @@
                   }
                 }
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "name": "api-doc-test-updated"
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -11216,43 +11337,17 @@
                       "data": {
                         "id": "string",
                         "name": "string",
-                        "hasBrowserConfig": true,
-                        "rank": 1,
+                        "hasBrowserConfig": "boolean",
+                        "rank": "number",
                         "ip": "string",
                         "location": "string",
                         "countryCode": "string",
                         "proxyIp": "string",
-                        "isDefault": true,
-                        "createdAt": "2026-07-02T12:00:00.000Z",
-                        "updatedAt": "2026-07-02T12:00:00.000Z"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "accountGroupNotFound12601": {
-                    "summary": "AccountGroupNotFound (12601)",
-                    "value": {
-                      "code": 12601,
-                      "message": "账号分组未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "isDefault": "boolean",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11298,7 +11393,7 @@
       "patch": {
         "summary": "调整账号排序",
         "deprecated": false,
-        "description": "接口说明：更新指定分组内的账号排序。",
+        "description": "接口说明：更新指定分组内的账号排序。\n\n`groupId` 必须是现有分组 ID，`list[n].id` 必须是该分组下的账号 ID；`list` 为必填且至少包含一个账号。分组与账号不匹配时会返回 `12600`。",
         "operationId": "AccountGroupsController_sortAccounts_v2",
         "tags": [
           "渠道管理/账号分组"
@@ -11309,9 +11404,10 @@
             "in": "path",
             "description": "分组 ID",
             "required": true,
-            "example": "",
+            "example": "group-id-from-create-response",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "group-id-from-create-response"
             }
           }
         ],
@@ -11341,14 +11437,27 @@
                         "rank"
                       ]
                     },
-                    "description": "排序列表"
+                    "description": "排序列表，至少包含一个属于该分组的账号",
+                    "minItems": 1
                   }
                 },
                 "required": [
                   "list"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "list": [
+                      {
+                        "id": "account-id-in-group",
+                        "rank": 1
+                      }
+                    ]
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -11361,7 +11470,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {},
+                    "data": {
+                      "type": "boolean"
+                    },
                     "code": {
                       "type": "integer",
                       "description": "业务状态码。0 表示成功，非 0 表示业务错误。"
@@ -11390,25 +11501,8 @@
                     "value": {
                       "code": 0,
                       "message": "请求成功",
-                      "data": "string"
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      "data": "boolean",
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11448,7 +11542,7 @@
       "get": {
         "summary": "发起平台授权",
         "deprecated": false,
-        "description": "接口说明：生成平台 OAuth 授权 URL",
+        "description": "接口说明：生成平台授权二维码、会话 ID 和过期时间。\n\n调用成功后，请从响应的 `data.sessionId` 获取本次授权会话 ID，并将它与相同的 `platform` 一起传入[获取授权状态](/api-reference/get-api-v2-channels-accounts-auth-platform-status-session-id)接口进行轮询。`platform` 可选值：`douyin`、`xhs`、`wxSph`、`KWAI`、`wxGzh`、`bilibili`。具体平台是否可用，请以[平台列表](/api-reference/get-api-v2-channels-platforms)返回的 `capabilities.auth.supported` 为准。",
         "operationId": "AuthController_startAuth_v2",
         "tags": [
           "渠道管理/授权"
@@ -11457,11 +11551,20 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "",
+            "description": "授权平台。可选值：douyin、xhs、wxSph、KWAI、wxGzh、bilibili。",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "enum": [
+                "douyin",
+                "xhs",
+                "wxSph",
+                "KWAI",
+                "wxGzh",
+                "bilibili"
+              ]
             }
           },
           {
@@ -11509,7 +11612,31 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/AuthStartVo"
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        },
+                        "sessionId": {
+                          "type": "string"
+                        },
+                        "expiresAt": {
+                          "type": "string"
+                        },
+                        "authInstructions": {
+                          "type": "object",
+                          "properties": {
+                            "en-US": {
+                              "type": "string"
+                            },
+                            "zh-CN": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -11542,30 +11669,13 @@
                       "data": {
                         "url": "string",
                         "sessionId": "string",
-                        "expiresAt": "2026-07-02T12:00:00.000Z",
+                        "expiresAt": "string",
                         "authInstructions": {
                           "en-US": "string",
                           "zh-CN": "string"
                         }
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11598,7 +11708,7 @@
       "get": {
         "summary": "获取授权状态",
         "deprecated": false,
-        "description": "接口说明：轮询平台授权 Session 状态",
+        "description": "接口说明：轮询平台授权 Session 状态。`sessionId` 必须使用[发起平台授权](/api-reference/get-api-v2-channels-accounts-auth-platform)成功响应中的 `data.sessionId`，不能自行生成或跨授权会话复用。",
         "operationId": "AuthController_getAuthStatus_v2",
         "tags": [
           "渠道管理/授权"
@@ -11607,21 +11717,31 @@
           {
             "name": "platform",
             "in": "path",
-            "description": "平台标识",
+            "description": "授权平台。必须与发起授权时使用的 platform 一致。可选值：douyin、xhs、wxSph、KWAI、wxGzh、bilibili。",
             "required": true,
-            "example": "",
+            "example": "douyin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "douyin",
+              "enum": [
+                "douyin",
+                "xhs",
+                "wxSph",
+                "KWAI",
+                "wxGzh",
+                "bilibili"
+              ]
             }
           },
           {
             "name": "sessionId",
             "in": "path",
-            "description": "会话 ID",
+            "description": "发起平台授权接口成功响应中的 data.sessionId",
             "required": true,
-            "example": "",
+            "example": "session-id-from-auth-start",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "session-id-from-auth-start"
             }
           }
         ],
@@ -11634,7 +11754,22 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/AuthSessionStatusVo"
+                      "type": "object",
+                      "properties": {
+                        "sessionId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "requiresSelection": {
+                          "type": "boolean"
+                        },
+                        "expiresAt": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -11666,71 +11801,11 @@
                       "message": "请求成功",
                       "data": {
                         "sessionId": "string",
-                        "status": "pending",
-                        "requiresSelection": true,
-                        "errorCode": 1,
-                        "expiresAt": "2026-07-02T12:00:00.000Z",
-                        "accountId": "string",
-                        "accountIds": [
-                          "string"
-                        ],
-                        "accounts": [
-                          {
-                            "accountId": "string",
-                            "platform": "douyin",
-                            "platformUid": "string",
-                            "displayName": "string",
-                            "account": "string",
-                            "avatarUrl": "string"
-                          }
-                        ],
-                        "selectableAccounts": [
-                          {
-                            "platform": "douyin",
-                            "platformUid": "string",
-                            "displayName": "string",
-                            "account": "string",
-                            "avatarUrl": "string",
-                            "parentPlatformUid": "string"
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthPlatformMismatch15040": {
-                    "summary": "ChannelAuthPlatformMismatch (15040)",
-                    "value": {
-                      "code": 15040,
-                      "message": "授权平台不匹配",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "channelAuthSessionInvalid15039": {
-                    "summary": "ChannelAuthSessionInvalid (15039)",
-                    "value": {
-                      "code": 15039,
-                      "message": "授权会话无效或已过期",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "status": "string",
+                        "requiresSelection": "boolean",
+                        "expiresAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11844,7 +11919,16 @@
                   "filename"
                 ]
               },
-              "examples": {}
+              "examples": {
+                "success": {
+                  "summary": "成功",
+                  "value": {
+                    "filename": "api-doc-audit.txt",
+                    "type": "temp",
+                    "size": 1
+                  }
+                }
+              }
             }
           },
           "required": true
@@ -11858,7 +11942,22 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/UploadResultVo"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "uploadUrl": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -11892,36 +11991,9 @@
                         "id": "string",
                         "path": "string",
                         "url": "string",
-                        "uploadUrl": "string",
-                        "uploadFields": {}
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetTooLarge12752": {
-                    "summary": "AssetTooLarge (12752)",
-                    "value": {
-                      "code": 12752,
-                      "message": "资源过大",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "uploadUrl": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -11978,9 +12050,10 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": "",
+            "example": "asset-id-from-upload-sign",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "asset-id-from-upload-sign"
             }
           }
         ],
@@ -11993,7 +12066,46 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/AssetVo"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string"
+                        },
+                        "userType": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "mimeType": {
+                          "type": "string"
+                        },
+                        "filename": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
                     },
                     "code": {
                       "type": "integer",
@@ -12026,62 +12138,18 @@
                       "data": {
                         "id": "string",
                         "userId": "string",
-                        "userType": "user",
+                        "userType": "string",
                         "path": "string",
-                        "type": "aiImage",
-                        "status": "pending",
-                        "mimeType": "string",
-                        "createdAt": "2026-07-02T12:00:00.000Z",
-                        "updatedAt": "2026-07-02T12:00:00.000Z",
                         "url": "string",
-                        "size": 1,
-                        "filename": "string"
-                      }
-                    }
-                  },
-                  "validationFailed10002": {
-                    "summary": "ValidationFailed (10002)",
-                    "value": {
-                      "code": 10002,
-                      "message": "参数验证失败",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "unauthorized401": {
-                    "summary": "未认证或 API Key 无效",
-                    "value": {
-                      "code": 401,
-                      "message": "Unauthorized",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetNotFound12750": {
-                    "summary": "AssetNotFound (12750)",
-                    "value": {
-                      "code": 12750,
-                      "message": "资源未找到",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetTooLarge12752": {
-                    "summary": "AssetTooLarge (12752)",
-                    "value": {
-                      "code": 12752,
-                      "message": "资源过大",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "assetUploadFailed12751": {
-                    "summary": "AssetUploadFailed (12751)",
-                    "value": {
-                      "code": 12751,
-                      "message": "资源上传失败",
-                      "data": {},
-                      "timestamp": 1772099056662
+                        "type": "string",
+                        "status": "string",
+                        "size": "number",
+                        "mimeType": "string",
+                        "filename": "string",
+                        "createdAt": "string",
+                        "updatedAt": "string"
+                      },
+                      "requestId": "string"
                     }
                   }
                 }
@@ -14377,15 +14445,18 @@
         "properties": {
           "prompt": {
             "type": "string",
-            "description": "提示词"
+            "description": "提示词",
+            "example": "A cute orange cat sitting by a window, soft natural light"
           },
           "model": {
             "type": "string",
-            "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。"
+            "description": "图像生成模型名称。先调用[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口（`GET /api/ai/models/image/generation`），传入其返回的 `data[n].name`；各模型支持的尺寸、质量、风格与价格以该接口返回为准。",
+            "example": "gpt-image-2"
           },
           "quality": {
             "type": "string",
-            "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。"
+            "description": "图像质量。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].qualities` 为准。",
+            "example": "low"
           },
           "response_format": {
             "type": "string",
@@ -14393,11 +14464,13 @@
               "url",
               "b64_json"
             ],
-            "description": "返回格式"
+            "description": "返回格式",
+            "example": "url"
           },
           "size": {
             "type": "string",
-            "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`。"
+            "description": "图像尺寸。可选值随模型而不同，以[「图像生成模型」](/api-reference/get-api-ai-models-image-generation)接口返回的 `data[n].sizes` 为准；不同尺寸的价格不同，见 `data[n].pricing`；当前示例使用 `1024x1024`，对应最低价格 1 积分。",
+            "example": "1024x1024"
           },
           "style": {
             "type": "string",

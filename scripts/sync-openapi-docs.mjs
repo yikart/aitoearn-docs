@@ -1304,11 +1304,16 @@ function applySpecOverride(targetSpec, endpoint, operation, override) {
   if (override.pathParameters) {
     applyParameterOverrides(endpoint, operation, override.pathParameters, 'path')
   }
-  if (override.requestBody) {
-    if (!operation.requestBody) {
-      throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} has no requestBody`)
+  if (override.requestBody !== undefined) {
+    if (override.requestBody === null) {
+      delete operation.requestBody
     }
-    mergePatch(operation.requestBody, override.requestBody)
+    else {
+      if (!operation.requestBody) {
+        throw new Error(`spec-overrides.json: ${endpoint.method} ${endpoint.path} has no requestBody`)
+      }
+      mergePatch(operation.requestBody, override.requestBody)
+    }
   }
   if (override.bodyProperties) {
     let schema = operation.requestBody?.content?.['application/json']?.schema
@@ -1755,7 +1760,7 @@ function applyTargetOverridesOnly() {
       continue
     }
     const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
-    if (!hasResponseOverride(override)) {
+    if (!override) {
       continue
     }
     const operation = targetSpec.paths?.[endpoint.path]?.[endpoint.method.toLowerCase()]
@@ -1772,7 +1777,7 @@ function applyTargetOverridesOnly() {
   }
 
   if (appliedEndpoints.length === 0) {
-    throw new Error('No response overrides found in spec-overrides.json')
+    throw new Error('No matching overrides found in spec-overrides.json')
   }
 
   sanitizeOpenApi30(targetSpec)
