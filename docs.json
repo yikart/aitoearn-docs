@@ -495,21 +495,31 @@
                 "pages": [
                   "zh/help/index",
                   "zh/help/creator/index",
-                  "zh/help/short-drama/index",
                   "zh/help/advertiser/index"
+                ]
+              },
+              {
+                "group": "短剧任务",
+                "pages": [
+                  "zh/help/short-drama/index",
+                  "zh/help/account-reporting/index",
+                  "zh/help/cloud-workspace/index",
+                  "zh/help/revenue-sharing/index"
+                ]
+              },
+              {
+                "group": "平台运营",
+                "pages": [
+                  "zh/help/facebook-account-operations/index",
+                  "zh/help/tiktok-account-operations/index",
+                  "zh/help/youtube-account-operations/index"
                 ]
               },
               {
                 "group": "常见问题",
                 "pages": [
                   "zh/help/guide",
-                  "zh/help/faq",
-                  "zh/help/account-reporting/index",
-                  "zh/help/revenue-sharing/index",
-                  "zh/help/facebook-account-operations/index",
-                  "zh/help/tiktok-account-operations/index",
-                  "zh/help/youtube-account-operations/index",
-                  "zh/help/cloud-workspace/index"
+                  "zh/help/faq"
                 ]
               },
               {
