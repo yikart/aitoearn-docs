@@ -1,0 +1,488 @@
+---
+title: "通过插件发布"
+description: "使用 AiToEarn 浏览器插件发布小红书、微信视频号和抖音内容。"
+---
+
+AiToEarn 浏览器插件会复用当前浏览器中的平台登录态，让你的网页可以一键发布到小红书、微信视频号和抖音。网页不需要让用户复制 Cookie。
+
+| 平台       | `platform` | 视频 | 图文            | 主要要求                                        |
+| ---------- | ---------- | ---- | --------------- | ----------------------------------------------- |
+| 小红书     | `xhs`      | 支持 | 支持，最多 9 张 | 视频必须提供封面                                |
+| 微信视频号 | `wxSph`    | 支持 | 暂不支持        | 视频必须提供封面                                |
+| 抖音       | `douyin`   | 支持 | 支持，1～35 张  | 标题最多 30 字、正文最多 1000 字、话题最多 5 个 |
+
+<Info>
+  你可以先下载并运行[开放平台
+  Demo](https://assets.aitoearn.cn/comment/assets/open-platform-demo.zip)，在页面顶部切换到“浏览器插件”，再对照本教程接入。
+</Info>
+
+## 第一步：安装插件
+
+先按[插件安装教程](https://aitoearn.cn/zh-CN/websit/plugin-guide)安装 AiToEarn 浏览器插件。
+
+## 第二步：选择“仅授权”
+
+打开插件侧栏，点击 **Authorize Only（仅授权）**。这种方式不要求用户登录 AiToEarn 网页账号。
+
+![在插件登录页点击 Authorize Only（仅授权）](/assets/use/plugin-publish/01-authorize-only.png)
+
+<Info>
+  `Authorize Only` 只省略 AiToEarn 网页账号登录，不会禁用 Web
+  API。完成下一步的域名授权后，已授权网页可以调用 `login()`、`publish()`
+  以及本页列出的辅助方法。
+</Info>
+
+## 第三步：配置可注入域名
+
+在“允许注入的域名”中填写**调用插件的网页地址**。运行本地 Demo 时填写：
+
+```text
+http://localhost:5173/
+```
+
+正式部署时改为网页的实际来源，例如 `https://demo.example.com/`。每行填写一个 HTTP 或 HTTPS 地址。
+
+<Warning>
+  这里填写的是你自己的 Demo
+  或业务网页来源，不是小红书、微信视频号或抖音的网址。插件会按来源保存匹配规则，例如
+  `http://localhost:5173/` 会保存为
+  `http://localhost:5173/*`。只添加你信任的域名。
+</Warning>
+
+点击 **Confirm and authorize（确认并授权）**，然后刷新网页，让插件注入 `window.AIToEarnPlugin`。
+
+![填写允许注入 AiToEarn Web API 的 Demo 域名](/assets/use/plugin-publish/02-configure-injectable-domains.png)
+
+## 第四步：检测插件并读取平台账号
+
+先检查全局对象、插件版本和权限，再读取当前浏览器中的平台登录态：
+
+```js
+const plugin = window.AIToEarnPlugin;
+
+if (!plugin) {
+  // 在产品中应展示本教程地址，而不是继续调用 API
+  throw new Error("未检测到 AiToEarn 浏览器插件");
+}
+
+const [{ version }, permission] = await Promise.all([
+  plugin.getVersion(),
+  plugin.checkPermission(),
+]);
+
+if (!permission.granted) {
+  throw new Error(permission.error || "插件尚未授权");
+}
+
+const account = await plugin.login("xhs");
+
+// 业务界面只保留需要展示的账号摘要
+const accountSummary = {
+  type: account.type,
+  uid: account.uid,
+  account: account.account,
+  avatar: account.avatar,
+  nickname: account.nickname,
+  fansCount: account.fansCount,
+};
+
+console.log("插件版本", version);
+console.log("当前账号", accountSummary);
+```
+
+<Info>
+  `login(platform)` 的名字表示“获取指定发布平台的登录信息”。它不会登录
+  AiToEarn，也不会弹出平台登录表单；用户应先在同一个浏览器中登录目标平台。如果平台登录态不存在或已过期，Promise
+  会抛出错误。
+</Info>
+
+<Warning>
+  `login()` 的原始返回中包含
+  `loginCookie`。这是敏感字段，不要展示、打印日志、持久化或传给第三方。只需要显示账号时，请像上面的示例一样立即映射为昵称、头像和
+  UID 等摘要。
+</Warning>
+
+## 第五步：发布内容
+
+下面示例将本地视频发布到小红书，并接收下载、上传和发布进度：
+
+```js
+const result = await window.AIToEarnPlugin.publish(
+  {
+    platform: "xhs",
+    type: "video",
+    title: "今天的创作记录",
+    desc: "这是一条通过浏览器插件发布的内容。",
+    video: videoFile,
+    cover: coverFile,
+    topics: ["创作记录"],
+    visibility: "public",
+  },
+  (event) => {
+    console.log(event.stage, event.progress, event.message);
+  },
+);
+
+if (!result.success) {
+  throw new Error(result.failReason || "发布失败");
+}
+
+console.log("作品 ID", result.workId);
+console.log("作品链接", result.shareLink);
+```
+
+`video`、`cover` 和 `images` 都支持浏览器 `File` 对象或可访问的 HTTP/HTTPS URL。图文发布示例：
+
+```js
+const result = await window.AIToEarnPlugin.publish(
+  {
+    platform: "douyin",
+    type: "image",
+    title: "旅行照片",
+    desc: "记录今天看到的风景。",
+    images: [firstImageFile, "https://example.com/second-image.jpg"],
+    topics: ["旅行", "摄影"],
+  },
+  ({ stage, progress }) => {
+    console.log(`${stage}: ${progress}%`);
+  },
+);
+```
+
+<Warning>
+  URL 素材会先由插件下载。请确保 URL
+  可直接访问、未过期，并允许插件获取；不要传本地路径、内网地址或必须登录后才能打开的
+  URL。
+</Warning>
+
+## `Authorize Only` 支持的方法
+
+配置可注入域名后，`Authorize Only` 模式支持以下 Web API：
+
+| 方法                            | 用途                                   | 返回值                                 |
+| ------------------------------- | -------------------------------------- | -------------------------------------- |
+| `checkPermission()`             | 检查插件权限                           | `Promise<CheckPermissionResult>`       |
+| `getVersion()`                  | 获取插件版本                           | `Promise<GetVersionResult>`            |
+| `login(platform)`               | 读取并验证平台登录态                   | `Promise<PlatAccountInfo>`             |
+| `publish(params, onProgress?)`  | 发布视频或图文                         | `Promise<PublishResult>`               |
+| `xhsSearchLocation(params)`     | 搜索小红书位置                         | `Promise<XhsLocationItem[]>`           |
+| `douyinSearchLocation(params)`  | 搜索抖音位置                           | `Promise<DouyinLocationSearchResult>`  |
+| `wxSphSearchLocation(params)`   | 搜索视频号位置                         | `Promise<WxSphLocationItem[]>`         |
+| `wxSphSearchActivity(params)`   | 搜索视频号活动                         | `Promise<WxSphEventInfo[]>`            |
+| `wxSphStartLinkPolling(params)` | 启动视频号作品链接轮询                 | `Promise<WxSphStartLinkPollingResult>` |
+| `douyinInteraction(params)`     | 抖音点赞、收藏或评论                   | `Promise<DouyinInteractionResult>`     |
+| `douyinDirectMessage(params)`   | 发送抖音私信                           | `Promise<DouyinDirectMessageResult>`   |
+| `unifiedInteraction(params)`    | 对小红书或抖音作品执行点赞、收藏或评论 | `Promise<UnifiedInteractionResult>`    |
+
+## 基础方法参数与返回值
+
+### `checkPermission()`
+
+无需参数，返回：
+
+| 字段          | 类型               | 说明                   |
+| ------------- | ------------------ | ---------------------- |
+| `granted`     | `boolean`          | 是否已授予插件所需权限 |
+| `permissions` | `string[]`（可选） | 已授予的权限列表       |
+| `hostAccess`  | `boolean`（可选）  | 是否已授予站点访问权限 |
+| `error`       | `string`（可选）   | 检查失败时的错误说明   |
+
+### `getVersion()`
+
+无需参数，返回：
+
+| 字段      | 类型             | 说明                 |
+| --------- | ---------------- | -------------------- |
+| `version` | `string`（可选） | 当前插件版本号       |
+| `error`   | `string`（可选） | 获取失败时的错误说明 |
+
+### `login(platform)`
+
+`platform` 只能使用 `xhs`、`wxSph` 或 `douyin`。成功时返回：
+
+| 字段               | 类型                                          | 说明                                        |
+| ------------------ | --------------------------------------------- | ------------------------------------------- |
+| `type`             | `"xhs" \| "wxSph" \| "douyin"`                | 平台标识                                    |
+| `loginCookie`      | `string`                                      | 平台登录 Cookie；敏感字段，业务页面不应消费 |
+| `uid`              | `string`                                      | 平台用户 ID                                 |
+| `account`          | `string`                                      | 平台账号                                    |
+| `avatar`           | `string`                                      | 头像地址                                    |
+| `nickname`         | `string`                                      | 昵称                                        |
+| `fansCount`        | `number`（可选）                              | 粉丝数                                      |
+| `xhsLoginStatus`   | `{ home: boolean; creator: boolean }`（可选） | 小红书主页和创作中心登录状态                |
+| `wxSphLoginStatus` | `{ channels: boolean }`（可选）               | 视频号登录状态                              |
+
+失败时 Promise 会抛出 `Error`；部分错误还带有 `code` 和 `errorCode`。
+
+## `publish()` 参数
+
+调用形式：
+
+```ts
+plugin.publish(params, onProgress?): Promise<PublishResult>
+```
+
+`params` 字段如下：
+
+| 字段             | 类型                                 | 必填                   | 说明                                     |
+| ---------------- | ------------------------------------ | ---------------------- | ---------------------------------------- |
+| `platform`       | `"xhs" \| "wxSph" \| "douyin"`       | 是                     | 目标平台                                 |
+| `type`           | `"video" \| "image"`                 | 是                     | 内容类型；视频号只能传 `video`           |
+| `title`          | `string`                             | 否                     | 标题                                     |
+| `desc`           | `string`                             | 否                     | 正文或描述                               |
+| `video`          | `File \| string`                     | 视频必填               | 视频文件或 URL                           |
+| `images`         | `(File \| string)[]`                 | 图文必填               | 图片文件或 URL 数组                      |
+| `cover`          | `File \| string`                     | 小红书和视频号视频必填 | 封面文件或 URL                           |
+| `topics`         | `string[]`                           | 否                     | 话题名称，不需要包含 `#`                 |
+| `location`       | `LocationInfo`                       | 否                     | 位置；建议先调用对应平台的位置搜索方法   |
+| `visibility`     | `"public" \| "private" \| "friends"` | 否                     | 可见范围；当前用于小红书                 |
+| `mentionedUsers` | `{ id: string; nickname: string }[]` | 否                     | @用户；当前用于小红书                    |
+| `scheduledTime`  | `number`                             | 否                     | 定时发布时间，毫秒时间戳；按平台能力使用 |
+| `platformConfig` | `object`                             | 否                     | 平台扩展配置                             |
+
+`LocationInfo` 的结构：
+
+```ts
+interface LocationInfo {
+  id: string;
+  name: string;
+  poiType?: number;
+  address?: string;
+  simpleAddress?: string;
+  latitude?: number;
+  longitude?: number;
+  cityCode?: string;
+  cityName?: string;
+}
+```
+
+小红书声明可放在 `platformConfig`：
+
+```js
+platformConfig: {
+  originalStatement: true,
+  userDeclarationBind: {
+    // 1=虚拟演绎，仅供娱乐；2=笔记含 AI 合成内容；3=内容包含营销广告
+    origin: 2,
+  },
+}
+```
+
+### 平台参数差异
+
+| 能力            | 小红书                      | 微信视频号                  | 抖音                     |
+| --------------- | --------------------------- | --------------------------- | ------------------------ |
+| `type: "video"` | 支持，`video`、`cover` 必填 | 支持，`video`、`cover` 必填 | 支持，`video` 必填       |
+| `type: "image"` | 支持，1～9 张               | 不支持                      | 支持，1～35 张           |
+| 话题            | 支持                        | 支持，最多 10 个            | 支持，最多 5 个          |
+| 位置搜索        | `xhsSearchLocation()`       | `wxSphSearchLocation()`     | `douyinSearchLocation()` |
+| 定时发布        | 不建议使用                  | 支持                        | 支持                     |
+| 可见范围、@用户 | 支持                        | 不支持                      | 暂不支持                 |
+
+平台规则可能随平台调整。业务页面应把插件返回的参数校验或发布错误展示给用户，不要静默忽略。
+
+## 发布进度回调
+
+`onProgress` 每次接收一个 `ProgressEvent`：
+
+| 字段        | 类型                                                           | 说明                    |
+| ----------- | -------------------------------------------------------------- | ----------------------- |
+| `stage`     | `"download" \| "upload" \| "publish" \| "complete" \| "error"` | 当前阶段                |
+| `progress`  | `number`                                                       | 进度百分比，范围 0～100 |
+| `message`   | `string`（可选）                                               | 当前进度说明            |
+| `data`      | `object`（可选）                                               | 当前阶段的附加数据      |
+| `timestamp` | `number`（可选）                                               | 事件时间戳              |
+
+不同阶段的 `data`：
+
+| `stage`    | `data` 字段                                                 |
+| ---------- | ----------------------------------------------------------- |
+| `download` | `loaded`、`total`、`speed?`，单位为字节，速度单位为 bytes/s |
+| `upload`   | `loaded`、`total`、`chunkIndex?`、`totalChunks?`            |
+| `publish`  | `step`：`preparing`、`signing`、`submitting` 或 `verifying` |
+| `complete` | `workId`、`shareLink?`、`platformData?`                     |
+| `error`    | `code?`、`error`                                            |
+
+## 发布返回值
+
+`publish()` 完成后返回 `PublishResult`：
+
+| 字段           | 类型              | 说明                                       |
+| -------------- | ----------------- | ------------------------------------------ |
+| `success`      | `boolean`         | 是否发布成功                               |
+| `workId`       | `string`（可选）  | 平台作品 ID                                |
+| `shareLink`    | `string`（可选）  | 可打开的作品链接；部分平台可能不会立即返回 |
+| `publishTime`  | `number`（可选）  | 发布时间戳                                 |
+| `failReason`   | `string`（可选）  | 失败原因                                   |
+| `errorCode`    | `string`（可选）  | 失败错误码                                 |
+| `platformData` | `unknown`（可选） | 平台扩展数据；使用前应做类型检查           |
+
+通信失败、超时或平台错误也可能让 Promise 直接抛出异常。建议同时处理返回结果和 `catch`：
+
+```js
+try {
+  const result = await window.AIToEarnPlugin.publish(params, onProgress);
+
+  if (!result.success) {
+    showError(result.failReason || result.errorCode || "发布失败");
+    return;
+  }
+
+  showSuccess(result.shareLink);
+} catch (error) {
+  showError(error.message || "插件调用失败");
+}
+```
+
+## 位置与视频号辅助方法
+
+### 搜索位置
+
+```ts
+xhsSearchLocation({
+  keyword?: string;
+  latitude: number;
+  longitude: number;
+  page?: number;
+  size?: number;
+}): Promise<Array<{
+  poiId: string;
+  poiType?: number;
+  name: string;
+  address?: string;
+  fullAddress?: string;
+  cityName?: string;
+  latitude?: number;
+  longitude?: number;
+}>>;
+
+douyinSearchLocation({
+  keyword?: string;
+  latitude?: number;
+  longitude?: number;
+  cityCode?: string;
+  cityName?: string;
+  searchType?: 0 | 7;
+  page?: number;
+  count?: number;
+}): Promise<{
+  items: Array<{
+    poiId: string;
+    name: string;
+    address?: string;
+    cityCode?: string;
+    cityName?: string;
+    latitude?: number;
+    longitude?: number;
+    distance?: string;
+    poiType?: number;
+  }>;
+  cities: Array<{ code: string; name: string; isDefault: boolean }>;
+  hasMore: boolean;
+  nextPage?: number;
+}>;
+
+wxSphSearchLocation({
+  query?: string;
+  longitude?: number;
+  latitude?: number;
+}): Promise<Array<{
+  uid: string;
+  name: string;
+  longitude: number;
+  latitude: number;
+  address?: string;
+  province?: string;
+  city?: string;
+  region?: string;
+  fullAddress?: string;
+  poiCheckSum?: string;
+}>>;
+```
+
+位置选择后，将平台返回项映射到 `publish()` 的顶层 `location`。视频号发布如需保留 `poiCheckSum` 等专有字段，可将完整位置项映射到 `platformConfig.wxSph.poiInfo`。
+
+### 视频号活动与作品链接
+
+```ts
+wxSphSearchActivity({
+  query: string;
+}): Promise<Array<{
+  eventTopicId: string;
+  eventName: string;
+  eventCreatorNickname?: string;
+  eventAttendCount?: number;
+}>>;
+
+wxSphStartLinkPolling({
+  recordId: string;
+  mediaMd5sum: string;
+  apiBaseUrl?: string;
+  authToken?: string;
+  accountId?: string;
+  videoClipTaskId?: string;
+  scheduledTime?: number;
+}): Promise<{
+  success: boolean;
+  status?: "pending" | "ready" | "failed";
+  error?: string;
+  code?: string;
+}>;
+```
+
+`wxSphSearchActivity()` 的选中结果可传入 `platformConfig.wxSph.event`。视频号发布结果没有立即提供作品链接时，可使用 `platformData` 中的 `mediaMd5sum` 等字段启动链接轮询；`platformData` 是平台扩展数据，读取前先验证字段是否存在。
+
+## 互动方法
+
+这些方法也在 `Authorize Only` 白名单内，但不是发布内容的必需步骤：
+
+```ts
+douyinInteraction({
+  action: "like" | "favorite" | "comment";
+  workId: string;
+  targetState: boolean;
+  content?: string; // comment 时必填
+}): Promise<{
+  success: boolean;
+  currentState?: boolean;
+  message?: string;
+  error?: string;
+}>;
+
+douyinDirectMessage({
+  workId?: string; // 与 authorUrl 二选一
+  authorUrl?: string;
+  content: string;
+}): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+}>;
+
+unifiedInteraction({
+  platform: "xhs" | "douyin";
+  action: "like" | "favorite" | "comment";
+  workLink: string;
+  targetState: boolean;
+  content?: string; // comment 时必填
+  needScreenshot?: boolean;
+}): Promise<{
+  success: boolean;
+  currentState?: boolean;
+  message?: string;
+  screenshot?: string;
+  needHumanAssist?: boolean;
+  verificationReason?: string;
+  error?: string;
+}>;
+```
+
+自动化互动可能遇到验证码或平台风控。`needHumanAssist: true` 时，应停止自动重试，并用 `verificationReason` 提示用户人工处理。
+
+## 常见问题
+
+- **未检测到 `window.AIToEarnPlugin`**：确认插件已安装、当前网页来源已加入可注入域名，然后刷新页面。未安装时请向用户展示本教程链接：`https://docs.aitoearn.ai/zh/use/plugin-publish`。
+- **`Authorize Only` 后仍不能调用 `login()`**：确认使用的是包含 `login()` 白名单支持的最新插件版本，并在修改域名配置后刷新网页。
+- **账号检查失败**：先在同一浏览器登录目标平台，再回到网页重新调用 `login(platform)`。
+- **发布失败**：同时展示 Promise 异常、`failReason` 和 `errorCode`；再检查素材 URL、平台登录状态、内容类型及封面要求。
+- **发布中没有立即拿到作品链接**：先使用 `workId` 保存结果。视频号可按上文使用 `wxSphStartLinkPolling()` 启动链接轮询。
