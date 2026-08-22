@@ -269,6 +269,14 @@
     {
       "source": "/api-reference/get-v3-contents-generations-tasks-task-id",
       "destination": "/api-reference/get-api-ai-v3-contents-generations-tasks-task-id"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/创建抖音打卡",
+      "destination": "/api-reference/post-api-v2-channels-douyin-open-offline-qr"
+    },
+    {
+      "source": "/api-reference/渠道管理内容发布/获取小红书签名",
+      "destination": "/api-reference/post-api-v2-channels-rednote-open-offline-qr-share-config"
     }
   ],
   "errors": {
@@ -427,7 +435,9 @@
                   "GET /api/v2/channels/publish/records/published",
                   "DELETE /api/v2/channels/publish/records/{recordId}",
                   "GET /api/v2/channels/publish/records/{recordId}",
-                  "GET /api/v2/channels/publish/records/{recordId}/user-action"
+                  "GET /api/v2/channels/publish/records/{recordId}/user-action",
+                  "POST /api/v2/channels/douyin/open/offline-qr",
+                  "POST /api/v2/channels/rednote/open/offline-qr/share-config"
                 ]
               },
               {
@@ -669,7 +679,9 @@
                   "GET /api/v2/channels/publish/records/published",
                   "DELETE /api/v2/channels/publish/records/{recordId}",
                   "GET /api/v2/channels/publish/records/{recordId}",
-                  "GET /api/v2/channels/publish/records/{recordId}/user-action"
+                  "GET /api/v2/channels/publish/records/{recordId}/user-action",
+                  "POST /api/v2/channels/douyin/open/offline-qr",
+                  "POST /api/v2/channels/rednote/open/offline-qr/share-config"
                 ]
               },
               {

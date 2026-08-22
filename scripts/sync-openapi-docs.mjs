@@ -729,6 +729,225 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
   }
 }
 
+function addOfflineCheckinEndpoints(spec) {
+  spec.paths = spec.paths || {}
+
+  const mediaOptionsSchema = {
+    type: 'object',
+    description: '媒体处理选项',
+    properties: {
+      adaptation: {
+        type: 'object',
+        description: '媒体格式转换选项',
+        properties: {
+          imageFormat: {
+            type: 'string',
+            enum: ['off', 'auto', 'jpeg', 'png', 'webp'],
+            description: '图片和封面格式转换目标',
+          },
+        },
+        additionalProperties: false,
+      },
+    },
+    additionalProperties: false,
+  }
+
+  const mediaSchema = {
+    type: 'object',
+    properties: {
+      url: {
+        type: 'string',
+        format: 'uri',
+        description: '媒体 URL',
+      },
+      options: mediaOptionsSchema,
+    },
+    required: ['url'],
+    additionalProperties: false,
+  }
+
+  const coverSchema = {
+    type: 'object',
+    properties: {
+      url: {
+        type: 'string',
+        format: 'uri',
+        description: '封面 URL',
+      },
+      options: mediaOptionsSchema,
+    },
+    required: ['url'],
+    additionalProperties: false,
+  }
+
+  const wrappedResponse = dataSchema => ({
+    default: {
+      description: '请求已被服务处理。',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              code: { type: 'integer' },
+              message: { type: 'string' },
+              data: dataSchema,
+            },
+            required: ['code', 'message'],
+          },
+        },
+      },
+    },
+  })
+
+  spec.paths['/api/v2/channels/douyin/open/offline-qr'] = spec.paths['/api/v2/channels/douyin/open/offline-qr'] || {}
+  spec.paths['/api/v2/channels/douyin/open/offline-qr'].post = spec.paths['/api/v2/channels/douyin/open/offline-qr'].post || {
+    tags: ['渠道管理/内容发布'],
+    summary: '创建抖音 Open 线下打卡发布记录',
+    description: '通过 API Key 创建抖音线下打卡发布记录，并返回抖音 App scheme、短链和分享 ID。',
+    operationId: 'DouyinOpenOfflineQrController_createOpenPublish_v2',
+    parameters: [],
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              content: {
+                type: 'object',
+                description: '发布内容',
+                properties: {
+                  title: {
+                    type: 'string',
+                    description: '标题',
+                  },
+                  body: {
+                    type: 'string',
+                    description: '正文',
+                  },
+                  media: {
+                    type: 'array',
+                    default: [],
+                    description: '主体媒体列表',
+                    items: mediaSchema,
+                  },
+                  cover: {
+                    ...coverSchema,
+                    description: '封面',
+                  },
+                },
+                required: ['media'],
+                additionalProperties: false,
+              },
+              option: {
+                type: 'object',
+                description: '抖音发布选项',
+                properties: {
+                  short_title: {
+                    type: 'string',
+                    maxLength: 12,
+                    description: '短标题',
+                  },
+                  cover_tsp: {
+                    type: 'integer',
+                    minimum: 0,
+                    description: '封面时间戳，单位毫秒',
+                  },
+                  download_type: {
+                    type: 'integer',
+                    enum: [1, 2],
+                    description: '下载权限：1 允许，2 不允许',
+                  },
+                  private_status: {
+                    type: 'integer',
+                    enum: [0, 1, 2],
+                    description: '可见范围：0 公开，1 私密，2 好友可见',
+                  },
+                  poi_id: {
+                    type: 'string',
+                    description: '抖音 POI ID',
+                  },
+                },
+                additionalProperties: false,
+              },
+            },
+            required: ['content'],
+            additionalProperties: false,
+          },
+        },
+      },
+    },
+    responses: wrappedResponse({
+      type: 'object',
+      properties: {
+        recordId: { type: 'string', description: '发布记录 ID' },
+        status: { type: 'integer', description: '发布状态' },
+        userAction: {
+          type: 'object',
+          description: '用户操作信息',
+          properties: {
+            shareId: { type: 'string', description: '抖音分享 ID' },
+            schemeUrl: { type: 'string', description: '抖音 App Scheme URL' },
+            shortLink: { type: 'string', description: '短链接' },
+            expiresAt: { type: 'string', format: 'date-time', description: '过期时间' },
+          },
+          required: ['shareId', 'schemeUrl', 'shortLink', 'expiresAt'],
+          additionalProperties: false,
+        },
+      },
+      required: ['recordId', 'status', 'userAction'],
+      additionalProperties: false,
+    }),
+  }
+
+  spec.paths['/api/v2/channels/rednote/open/offline-qr/share-config'] = spec.paths['/api/v2/channels/rednote/open/offline-qr/share-config'] || {}
+  spec.paths['/api/v2/channels/rednote/open/offline-qr/share-config'].post = spec.paths['/api/v2/channels/rednote/open/offline-qr/share-config'].post || {
+    tags: ['渠道管理/内容发布'],
+    summary: '获取小红书 Open 线下打卡分享签名配置',
+    description: '通过 API Key 生成前端 xhs.share 所需 verifyConfig。',
+    operationId: 'RedNoteOpenOfflineQrController_createOpenShareConfig_v2',
+    parameters: [],
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              nonce: {
+                type: 'string',
+                minLength: 1,
+                maxLength: 64,
+                description: '可选 nonce；不传时服务端自动生成',
+              },
+            },
+            additionalProperties: false,
+          },
+        },
+      },
+    },
+    responses: wrappedResponse({
+      type: 'object',
+      properties: {
+        verifyConfig: {
+          type: 'object',
+          description: '小红书分享校验配置',
+          properties: {
+            appKey: { type: 'string', description: '小红书 App Key' },
+            nonce: { type: 'string', description: 'nonce' },
+            timestamp: { type: 'string', description: '时间戳' },
+            signature: { type: 'string', description: '签名' },
+          },
+          required: ['appKey', 'nonce', 'timestamp', 'signature'],
+          additionalProperties: false,
+        },
+      },
+      required: ['verifyConfig'],
+      additionalProperties: false,
+    }),
+  }
+}
+
 function isVolcengineVideoCompatibilityEndpoint(endpoint) {
   return endpoint.path === '/api/ai/v3/contents/generations/tasks'
     || endpoint.path === '/api/ai/v3/contents/generations/tasks/{taskId}'
@@ -1481,10 +1700,11 @@ function applyChannelWorkLinkInfoSchema(spec) {
 
 function generate() {
   const sourceSpec = readJson(sourceSpecPath)
+  addOfflineCheckinEndpoints(sourceSpec)
   addVolcengineVideoCompatibilityEndpoints(sourceSpec)
   const endpoints = listEndpoints(sourceSpec)
-  if (endpoints.length !== 63) {
-    throw new Error(`Expected 63 endpoints, got ${endpoints.length}`)
+  if (endpoints.length !== 65) {
+    throw new Error(`Expected 65 endpoints, got ${endpoints.length}`)
   }
 
   const specOverrides = readJson(specOverridesPath)
@@ -1813,7 +2033,207 @@ function applyTargetOverridesOnly() {
   }, null, 2))
 }
 
-if (process.argv.includes('--target-overrides-only')) {
+function applyOfflineCheckinEndpointsOnly() {
+  const targetSpec = readJson(zhTargetSpecPath)
+  const englishTargetSpec = readJson(enTargetSpecPath)
+  const sourceSpec = readJson(sourceSpecPath)
+  const specOverrides = readJson(specOverridesPath)
+  const englishTranslations = readJson(specTranslationsEnPath)
+  const inventory = readJson(inventoryPath)
+  const matrix = readJson(matrixPath)
+  const docsJson = readJson(docsJsonPath)
+  const codeMap = parseResponseCodeMap()
+  const messageMap = parseMessageMap()
+
+  addOfflineCheckinEndpoints(sourceSpec)
+
+  const definitions = [
+    {
+      method: 'POST',
+      path: '/api/v2/channels/douyin/open/offline-qr',
+      controllerClass: 'DouyinOpenOfflineQrController',
+      controllerMethod: 'createOpenPublish',
+      controllerFile: path.join(backendRoot, 'apps/aitoearn-server/src/core/channels/platforms/douyin/offline-qr/douyin-offline-qr.controller.ts'),
+      serviceProperty: 'douyinOfflineQrService',
+      serviceType: 'DouyinOfflineQrService',
+      serviceMethod: 'createOpenPublish',
+      serviceFile: path.join(backendRoot, 'apps/aitoearn-server/src/core/channels/platforms/douyin/offline-qr/douyin-offline-qr.service.ts'),
+      serviceMethodsVisited: ['createOpenPublish', 'prepareContent', 'createPublishRecord'],
+      responseCodes: ['ChannelPublishValidationFailed'],
+    },
+    {
+      method: 'POST',
+      path: '/api/v2/channels/rednote/open/offline-qr/share-config',
+      controllerClass: 'RedNoteOpenOfflineQrController',
+      controllerMethod: 'createOpenShareConfig',
+      controllerFile: path.join(backendRoot, 'apps/aitoearn-server/src/core/channels/platforms/rednote/offline-qr/rednote-offline-qr.controller.ts'),
+      serviceProperty: 'redNoteOfflineQrService',
+      serviceType: 'RedNoteOfflineQrService',
+      serviceMethod: 'createShareConfig',
+      serviceFile: path.join(backendRoot, 'apps/aitoearn-server/src/core/channels/platforms/rednote/offline-qr/rednote-offline-qr.service.ts'),
+      serviceMethodsVisited: ['createShareConfig', 'generateNonce', 'fetchAccessToken', 'buildSignature'],
+      responseCodes: ['ChannelPlatformApiFailed'],
+    },
+  ]
+
+  const endpointKeys = new Set(definitions.map(item => `${item.method} ${item.path}`))
+  const retainedInventory = inventory.filter(item => !endpointKeys.has(`${item.method} ${item.path}`))
+  const retainedMatrix = matrix.filter(item => !endpointKeys.has(`${item.method} ${item.path}`))
+  let nextIndex = Math.max(0, ...retainedInventory.map(item => item.index || 0)) + 1
+  const addedEndpoints = []
+  const addedMatrix = []
+
+  for (const definition of definitions) {
+    const sourceOperation = sourceSpec.paths[definition.path]?.[definition.method.toLowerCase()]
+    if (!sourceOperation) {
+      throw new Error(`Offline check-in source operation is missing: ${definition.method} ${definition.path}`)
+    }
+
+    const endpoint = {
+      index: nextIndex++,
+      method: definition.method,
+      path: definition.path,
+      operationId: sourceOperation.operationId || '',
+      tag: sourceOperation.tags?.[0] || '渠道管理/内容发布',
+      summary: sourceOperation.summary || '',
+      hasRequestBody: Boolean(sourceOperation.requestBody),
+      parameterCount: sourceOperation.parameters?.length || 0,
+      originalResponseKeys: Object.keys(sourceOperation.responses || {}),
+    }
+    const operation = structuredClone(sourceOperation)
+    const override = specOverrides[`${endpoint.method} ${endpoint.path}`]
+    applySpecOverride(targetSpec, endpoint, operation, override)
+    operation['x-mint'] = {
+      href: endpointHref(endpoint),
+      metadata: {
+        title: operation.summary,
+        sidebarTitle: operation.summary,
+      },
+    }
+    operation.security = [{ 'apikey-header-X-Api-Key': [] }]
+    syncXApiKeyHeaderParameter(operation)
+
+    const responseCodeValues = definition.responseCodes.map(codeName => ({
+      name: codeName,
+      code: codeMap.get(codeName) ?? null,
+      message: messageMap.get(codeName) || null,
+    }))
+    operation['x-aitoearn-backend'] = {
+      controller: normalizePathForDocs(definition.controllerFile),
+      controllerMethod: definition.controllerMethod,
+      services: [{
+        property: definition.serviceProperty,
+        type: definition.serviceType,
+        file: normalizePathForDocs(definition.serviceFile),
+        method: definition.serviceMethod,
+      }],
+      responseCodes: responseCodeValues,
+      rawResponse: false,
+    }
+    operation.responses = {
+      200: {
+        description: '请求已被服务处理。业务是否成功以响应体 code === 0 为准。',
+        content: {
+          'application/json': {
+            schema: commonResponseSchema(resolveDataSchema(sourceOperation)),
+            examples: buildExamples(endpoint, sourceOperation, {
+              requiresAuth: true,
+              responseCodes: definition.responseCodes,
+            }, sourceSpec, codeMap, messageMap),
+          },
+        },
+      },
+    }
+    applyResponseOverrides(endpoint, operation, override)
+    sanitizeOpenApi30(operation)
+
+    targetSpec.paths[endpoint.path] = targetSpec.paths[endpoint.path] || {}
+    targetSpec.paths[endpoint.path][endpoint.method.toLowerCase()] = operation
+
+    const translatedOperation = translateOpenApiValue(structuredClone(operation), englishTranslations)
+    translatedOperation['x-mint'].href = endpointHref(endpoint, enApiReferenceBasePath)
+    const cjkStrings = collectCjkStrings(translatedOperation)
+    if (cjkStrings.length > 0) {
+      const samples = cjkStrings.slice(0, 12).map(item => `${item.path}: ${item.value}`).join('\n')
+      throw new Error(`English offline check-in operation still contains untranslated Chinese strings:\n${samples}`)
+    }
+    englishTargetSpec.paths[endpoint.path] = englishTargetSpec.paths[endpoint.path] || {}
+    englishTargetSpec.paths[endpoint.path][endpoint.method.toLowerCase()] = translatedOperation
+
+    addedEndpoints.push(endpoint)
+    addedMatrix.push({
+      ...endpoint,
+      controllerClass: definition.controllerClass,
+      controllerMethod: definition.controllerMethod,
+      controllerFile: normalizePathForDocs(definition.controllerFile),
+      controllerFound: true,
+      requiresAuth: true,
+      isPublic: false,
+      skipResponseInterceptor: false,
+      apiKeyHeader: 'X-Api-Key',
+      serviceCalls: [{
+        property: definition.serviceProperty,
+        type: definition.serviceType,
+        file: normalizePathForDocs(definition.serviceFile),
+        method: definition.serviceMethod,
+      }],
+      serviceMethodsVisited: definition.serviceMethodsVisited,
+      responseCodes: definition.responseCodes,
+      responseCodeValues,
+      customExceptions: [],
+      aiServiceTracked: false,
+      status: 'completed',
+      notes: [],
+    })
+  }
+
+  const pageKeys = definitions.map(item => `${item.method} ${item.path}`)
+  for (const language of docsJson.navigation.languages) {
+    const apiTab = language.tabs.find(item => item.tab === 'API 文档' || item.tab === 'API Docs')
+    if (!apiTab) {
+      continue
+    }
+    for (const group of apiTab.groups) {
+      if (Array.isArray(group.pages)) {
+        group.pages = group.pages.filter(page => !pageKeys.includes(page))
+      }
+    }
+    const publishingGroupName = language.language === 'zh'
+      ? '渠道管理/内容发布'
+      : 'Channel Management/Publishing'
+    const publishingGroup = apiTab.groups.find(item => item.group === publishingGroupName)
+    if (!publishingGroup) {
+      throw new Error(`API publishing navigation group is missing for language: ${language.language}`)
+    }
+    publishingGroup.pages.push(...pageKeys)
+  }
+
+  docsJson.redirects = mergeRedirects(
+    docsJson.redirects,
+    buildOpenApiRedirects(addedEndpoints.map(endpoint => ({
+      ...endpoint,
+      tag: specOverrides[`${endpoint.method} ${endpoint.path}`]?.tag || endpoint.tag,
+    })), targetSpec),
+  )
+
+  writeJson(zhTargetSpecPath, targetSpec)
+  writeJson(enTargetSpecPath, englishTargetSpec)
+  writeJson(inventoryPath, [...retainedInventory, ...addedEndpoints])
+  writeJson(matrixPath, [...retainedMatrix, ...addedMatrix])
+  writeJson(docsJsonPath, docsJson)
+
+  console.log(JSON.stringify({
+    mode: 'offline-checkin-only',
+    added: addedEndpoints.length,
+    zhTargetSpecPath: normalizePathForDocs(zhTargetSpecPath),
+    enTargetSpecPath: normalizePathForDocs(enTargetSpecPath),
+  }, null, 2))
+}
+
+if (process.argv.includes('--offline-checkin-only')) {
+  applyOfflineCheckinEndpointsOnly()
+}
+else if (process.argv.includes('--target-overrides-only')) {
   applyTargetOverridesOnly()
 }
 else {

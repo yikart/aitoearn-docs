@@ -713,5 +713,31 @@
     "originalResponseKeys": [
       "200"
     ]
+  },
+  {
+    "index": 56,
+    "method": "POST",
+    "path": "/api/v2/channels/douyin/open/offline-qr",
+    "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "创建抖音 Open 线下打卡发布记录",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 57,
+    "method": "POST",
+    "path": "/api/v2/channels/rednote/open/offline-qr/share-config",
+    "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取小红书 Open 线下打卡分享签名配置",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
   }
 ]

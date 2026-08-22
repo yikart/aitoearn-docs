@@ -4148,5 +4148,245 @@
         }
       }
     }
+  },
+  "POST /api/v2/channels/douyin/open/offline-qr": {
+    "summary": "创建抖音打卡",
+    "tag": "渠道管理/内容发布",
+    "description": "接口说明：创建抖音线下打卡发布入口。无需提前授权或绑定抖音账号，也不需要创建发布流程。接口返回抖音 App 拉起链接和短链接，用户需要在抖音 App 内确认并完成发布。\n\n接口会创建发布记录，初始 `status` 为 `8`，表示等待用户操作。`schemeUrl` 和 `shortLink` 均有有效期，请以 `expiresAt` 为准；过期后需要重新调用本接口。\n\n图片和视频不能混合上传。图片最多 12 张，支持 JPG、JPEG、PNG、BMP，单张最大 20 MB；视频最多 1 个，支持 MP4、AVI、MKV、MOV，最大 1 GB、最长 3600 秒。单个用户每 60 秒最多调用 30 次。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "properties": {
+              "content": {
+                "description": "线下打卡发布内容",
+                "properties": {
+                  "title": {
+                    "maxLength": 30,
+                    "description": "标题，最多 30 个字符"
+                  },
+                  "body": {
+                    "description": "正文，可在正文中使用 #话题；最多 5 个话题。标题与去除话题后的正文合计最多 1000 个字符"
+                  },
+                  "media": {
+                    "minItems": 1,
+                    "maxItems": 12,
+                    "description": "图片或视频列表，至少传入 1 个媒体。图片最多 12 张，视频最多 1 个，图片和视频不能混合上传"
+                  },
+                  "cover": {
+                    "description": "视频封面；发布视频时可传入公网可访问的图片 URL"
+                  }
+                }
+              },
+              "option": {
+                "description": "抖音发布选项",
+                "properties": {
+                  "short_title": {
+                    "description": "抖音短标题，最多 12 个字符"
+                  },
+                  "cover_tsp": {
+                    "description": "视频封面时间戳，单位为毫秒"
+                  },
+                  "download_type": {
+                    "description": "下载权限：1 表示允许下载，2 表示不允许下载"
+                  },
+                  "private_status": {
+                    "description": "可见范围：0 表示公开，1 表示私密，2 表示好友可见"
+                  },
+                  "poi_id": {
+                    "description": "抖音地理位置 POI ID"
+                  }
+                }
+              }
+            }
+          },
+          "examples": {
+            "video": {
+              "summary": "视频打卡",
+              "value": {
+                "content": {
+                  "title": "线下打卡",
+                  "body": "今天来参加活动 #线下打卡",
+                  "media": [
+                    {
+                      "url": "https://assets.example.com/check-in.mp4"
+                    }
+                  ],
+                  "cover": {
+                    "url": "https://assets.example.com/check-in-cover.jpg"
+                  }
+                },
+                "option": {
+                  "short_title": "活动打卡",
+                  "download_type": 1,
+                  "private_status": 0
+                }
+              }
+            },
+            "images": {
+              "summary": "图文打卡",
+              "value": {
+                "content": {
+                  "title": "门店打卡",
+                  "body": "记录今天的探店体验 #探店",
+                  "media": [
+                    {
+                      "url": "https://assets.example.com/check-in-1.jpg"
+                    },
+                    {
+                      "url": "https://assets.example.com/check-in-2.jpg"
+                    }
+                  ]
+                },
+                "option": {
+                  "poi_id": "poi_xxx",
+                  "private_status": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "description": "AiToEarn 发布记录 ID"
+        },
+        "status": {
+          "type": "integer",
+          "enum": [8],
+          "description": "发布状态。创建后固定为 8，表示等待用户在抖音 App 内继续操作"
+        },
+        "userAction": {
+          "type": "object",
+          "description": "用户继续完成抖音发布所需的信息",
+          "properties": {
+            "shareId": {
+              "type": "string",
+              "description": "抖音分享 ID"
+            },
+            "schemeUrl": {
+              "type": "string",
+              "description": "用于拉起抖音 App 的 Scheme URL"
+            },
+            "shortLink": {
+              "type": "string",
+              "description": "无法直接打开 Scheme 时使用的短链接"
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "拉起链接的过期时间"
+            }
+          },
+          "required": ["shareId", "schemeUrl", "shortLink", "expiresAt"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["recordId", "status", "userAction"],
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "recordId": "66c5f23ec7d9b89d23e6b102",
+            "status": 8,
+            "userAction": {
+              "shareId": "7400000000000000000",
+              "schemeUrl": "snssdk1128://openplatform/share?state=7400000000000000000",
+              "shortLink": "https://aitoearn.cn/api/shortLink/abc123",
+              "expiresAt": "2026-08-22T13:00:00.000Z"
+            }
+          },
+          "requestId": "request_xxx"
+        }
+      }
+    }
+  },
+  "POST /api/v2/channels/rednote/open/offline-qr/share-config": {
+    "summary": "获取小红书签名",
+    "tag": "渠道管理/内容发布",
+    "description": "接口说明：获取前端调用小红书 `xhs.share` 所需的签名配置。无需提前授权或绑定小红书账号。\n\n本接口只生成 `verifyConfig`，不接收图片、视频、标题或正文，不创建 AiToEarn 发布记录，也不返回最终作品信息。分享内容由接入方前端调用 `xhs.share` 时传入。单个用户每 60 秒最多调用 60 次。",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "properties": {
+              "nonce": {
+                "description": "可选随机字符串，最长 64 个字符；不传时由服务端自动生成"
+              }
+            }
+          },
+          "examples": {
+            "automatic": {
+              "summary": "自动生成 nonce",
+              "value": {}
+            },
+            "custom": {
+              "summary": "自定义 nonce",
+              "value": {
+                "nonce": "checkin_8f72c9"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responseDataSchema": {
+      "type": "object",
+      "properties": {
+        "verifyConfig": {
+          "type": "object",
+          "description": "调用小红书 xhs.share 时使用的校验配置",
+          "properties": {
+            "appKey": {
+              "type": "string",
+              "description": "小红书应用 App Key"
+            },
+            "nonce": {
+              "type": "string",
+              "description": "本次签名使用的随机字符串"
+            },
+            "timestamp": {
+              "type": "string",
+              "description": "字符串形式的 Unix 毫秒时间戳"
+            },
+            "signature": {
+              "type": "string",
+              "description": "前端调用 xhs.share 时使用的签名"
+            }
+          },
+          "required": ["appKey", "nonce", "timestamp", "signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["verifyConfig"],
+      "additionalProperties": false
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "verifyConfig": {
+              "appKey": "app_key",
+              "nonce": "checkin_8f72c9",
+              "timestamp": "1787389200000",
+              "signature": "signature_xxx"
+            }
+          },
+          "requestId": "request_xxx"
+        }
+      }
+    }
   }
 }

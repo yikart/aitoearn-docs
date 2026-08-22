@@ -111,6 +111,14 @@ const SEMANTIC_PROFILES = {
     expectedResult: '创建跨账号发布流程并返回流程 ID 与发布任务',
     kind: 'object', required: ['flowId', 'tasks'],
   },
+  'POST /api/v2/channels/douyin/open/offline-qr': {
+    expectedResult: '创建抖音线下打卡发布入口并返回 App 拉起信息',
+    kind: 'object', required: ['recordId', 'status', 'userAction'],
+  },
+  'POST /api/v2/channels/rednote/open/offline-qr/share-config': {
+    expectedResult: '返回小红书 xhs.share 所需的签名配置',
+    kind: 'object', required: ['verifyConfig'],
+  },
   'GET /api/v2/channels/publish/flows/{flowId}': {
     expectedResult: '返回指定发布流程及其任务状态',
     kind: 'object', required: ['flowId', 'tasks'],

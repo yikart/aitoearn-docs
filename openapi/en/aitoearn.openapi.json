@@ -12622,6 +12622,523 @@
           "rawResponse": true
         }
       }
+    },
+    "/api/v2/channels/douyin/open/offline-qr": {
+      "post": {
+        "tags": [
+          "Channel Management/Publishing"
+        ],
+        "summary": "Create Douyin Check-in",
+        "description": "Create a Douyin offline check-in publish entry. The user does not need to authorize or bind a Douyin account in advance, and no publish flow is required. The endpoint returns a Douyin App scheme and a short link; the user must confirm and complete publishing in the Douyin App.\n\nA publish record is created with initial `status` `8`, meaning that user action is required. Both `schemeUrl` and `shortLink` expire; use `expiresAt` as the source of truth and call this endpoint again after expiration.\n\nImages and video cannot be mixed. Up to 12 JPG, JPEG, PNG, or BMP images are supported, with a maximum size of 20 MB each. One MP4, AVI, MKV, or MOV video is supported, with a maximum size of 1 GB and a maximum duration of 3,600 seconds. Each user can call this endpoint up to 30 times per 60 seconds.",
+        "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "object",
+                    "description": "Offline check-in publish content",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "Title, up to 30 characters",
+                        "maxLength": 30
+                      },
+                      "body": {
+                        "type": "string",
+                        "description": "Body text. Hashtags can be included using `#topic`, with up to 5 topics. The title and body excluding topics can contain up to 1,000 characters in total."
+                      },
+                      "media": {
+                        "type": "array",
+                        "default": [],
+                        "description": "Image or video list containing at least one media item. Up to 12 images or one video is supported, and images and video cannot be mixed.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string",
+                              "format": "uri",
+                              "description": "Media URL"
+                            },
+                            "options": {
+                              "type": "object",
+                              "description": "Media handling options",
+                              "properties": {
+                                "adaptation": {
+                                  "type": "object",
+                                  "description": "Media format conversion options",
+                                  "properties": {
+                                    "imageFormat": {
+                                      "type": "string",
+                                      "enum": [
+                                        "off",
+                                        "auto",
+                                        "jpeg",
+                                        "png",
+                                        "webp"
+                                      ],
+                                      "description": "Image and cover format conversion targets"
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "url"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 12
+                      },
+                      "cover": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "Cover URL"
+                          },
+                          "options": {
+                            "type": "object",
+                            "description": "Media handling options",
+                            "properties": {
+                              "adaptation": {
+                                "type": "object",
+                                "description": "Media format conversion options",
+                                "properties": {
+                                  "imageFormat": {
+                                    "type": "string",
+                                    "enum": [
+                                      "off",
+                                      "auto",
+                                      "jpeg",
+                                      "png",
+                                      "webp"
+                                    ],
+                                    "description": "Image and cover format conversion targets"
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "url"
+                        ],
+                        "additionalProperties": false,
+                        "description": "Optional video cover using a publicly accessible image URL."
+                      }
+                    },
+                    "required": [
+                      "media"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "option": {
+                    "type": "object",
+                    "description": "TikTok publishing options",
+                    "properties": {
+                      "short_title": {
+                        "type": "string",
+                        "maxLength": 12,
+                        "description": "Douyin short title, up to 12 characters"
+                      },
+                      "cover_tsp": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "description": "Video cover timestamp in milliseconds"
+                      },
+                      "download_type": {
+                        "type": "integer",
+                        "enum": [
+                          1,
+                          2
+                        ],
+                        "description": "Download permission: 1 allows downloads and 2 disallows downloads"
+                      },
+                      "private_status": {
+                        "type": "integer",
+                        "enum": [
+                          0,
+                          1,
+                          2
+                        ],
+                        "description": "Visibility: 0 is public, 1 is private, and 2 is visible to friends"
+                      },
+                      "poi_id": {
+                        "type": "string",
+                        "description": "Douyin location POI ID"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "video": {
+                  "summary": "Video check-in",
+                  "value": {
+                    "content": {
+                      "title": "Offline check-in",
+                      "body": "Joining today's event #OfflineCheckIn",
+                      "media": [
+                        {
+                          "url": "https://assets.example.com/check-in.mp4"
+                        }
+                      ],
+                      "cover": {
+                        "url": "https://assets.example.com/check-in-cover.jpg"
+                      }
+                    },
+                    "option": {
+                      "short_title": "Event check-in",
+                      "download_type": 1,
+                      "private_status": 0
+                    }
+                  }
+                },
+                "images": {
+                  "summary": "Image check-in",
+                  "value": {
+                    "content": {
+                      "title": "Store check-in",
+                      "body": "Sharing today's store visit #StoreVisit",
+                      "media": [
+                        {
+                          "url": "https://assets.example.com/check-in-1.jpg"
+                        },
+                        {
+                          "url": "https://assets.example.com/check-in-2.jpg"
+                        }
+                      ]
+                    },
+                    "option": {
+                      "poi_id": "poi_xxx",
+                      "private_status": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "recordId": {
+                          "type": "string",
+                          "description": "AiToEarn publish record ID"
+                        },
+                        "status": {
+                          "type": "integer",
+                          "enum": [
+                            8
+                          ],
+                          "description": "Publish status. The initial value is always 8, meaning that the user must continue in the Douyin App."
+                        },
+                        "userAction": {
+                          "type": "object",
+                          "description": "Information required for the user to complete publishing on Douyin",
+                          "properties": {
+                            "shareId": {
+                              "type": "string",
+                              "description": "Douyin share ID"
+                            },
+                            "schemeUrl": {
+                              "type": "string",
+                              "description": "Scheme URL used to open the Douyin App"
+                            },
+                            "shortLink": {
+                              "type": "string",
+                              "description": "Short link used when the Scheme cannot be opened directly"
+                            },
+                            "expiresAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Expiration time of the App launch links"
+                            }
+                          },
+                          "required": [
+                            "shareId",
+                            "schemeUrl",
+                            "shortLink",
+                            "expiresAt"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "recordId",
+                        "status",
+                        "userAction"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "recordId": "66c5f23ec7d9b89d23e6b102",
+                        "status": 8,
+                        "userAction": {
+                          "shareId": "7400000000000000000",
+                          "schemeUrl": "snssdk1128://openplatform/share?state=7400000000000000000",
+                          "shortLink": "https://aitoearn.cn/api/shortLink/abc123",
+                          "expiresAt": "2026-08-22T13:00:00.000Z"
+                        }
+                      },
+                      "requestId": "request_xxx"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/post-api-v2-channels-douyin-open-offline-qr",
+          "metadata": {
+            "title": "Create Douyin Check-in",
+            "sidebarTitle": "Create Douyin Check-in"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/douyin/offline-qr/douyin-offline-qr.controller.ts",
+          "controllerMethod": "createOpenPublish",
+          "services": [
+            {
+              "property": "douyinOfflineQrService",
+              "type": "DouyinOfflineQrService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/douyin/offline-qr/douyin-offline-qr.service.ts",
+              "method": "createOpenPublish"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "ChannelPublishValidationFailed",
+              "code": 15051,
+              "message": "Published content verification failed"
+            }
+          ],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/v2/channels/rednote/open/offline-qr/share-config": {
+      "post": {
+        "tags": [
+          "Channel Management/Publishing"
+        ],
+        "summary": "Get REDnote Signature",
+        "description": "Get the signature configuration required for the frontend to call REDnote `xhs.share`. The user does not need to authorize or bind a REDnote account in advance.\n\nThis endpoint only generates `verifyConfig`. It does not accept images, video, titles, or body text, does not create an AiToEarn publish record, and does not return final work information. The frontend supplies the share content when calling `xhs.share`. Each user can call this endpoint up to 60 times per 60 seconds.",
+        "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nonce": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "description": "Optional random string with a maximum length of 64 characters. The server generates one automatically when omitted."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "automatic": {
+                  "summary": "Generate nonce automatically",
+                  "value": {}
+                },
+                "custom": {
+                  "summary": "Custom nonce",
+                  "value": {
+                    "nonce": "checkin_8f72c9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "verifyConfig": {
+                          "type": "object",
+                          "description": "Verification configuration used when calling REDnote xhs.share",
+                          "properties": {
+                            "appKey": {
+                              "type": "string",
+                              "description": "REDnote application App Key"
+                            },
+                            "nonce": {
+                              "type": "string",
+                              "description": "Random string used for this signature"
+                            },
+                            "timestamp": {
+                              "type": "string",
+                              "description": "Unix timestamp in milliseconds represented as a string"
+                            },
+                            "signature": {
+                              "type": "string",
+                              "description": "Signature used by the frontend when calling xhs.share"
+                            }
+                          },
+                          "required": [
+                            "appKey",
+                            "nonce",
+                            "timestamp",
+                            "signature"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "verifyConfig"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "verifyConfig": {
+                          "appKey": "app_key",
+                          "nonce": "checkin_8f72c9",
+                          "timestamp": "1787389200000",
+                          "signature": "signature_xxx"
+                        }
+                      },
+                      "requestId": "request_xxx"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/post-api-v2-channels-rednote-open-offline-qr-share-config",
+          "metadata": {
+            "title": "Get REDnote Signature",
+            "sidebarTitle": "Get REDnote Signature"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/rednote/offline-qr/rednote-offline-qr.controller.ts",
+          "controllerMethod": "createOpenShareConfig",
+          "services": [
+            {
+              "property": "redNoteOfflineQrService",
+              "type": "RedNoteOfflineQrService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/rednote/offline-qr/rednote-offline-qr.service.ts",
+              "method": "createShareConfig"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "ChannelPlatformApiFailed",
+              "code": 15070,
+              "message": "{{platform}} platform API request failed"
+            }
+          ],
+          "rawResponse": false
+        }
+      }
     }
   },
   "components": {

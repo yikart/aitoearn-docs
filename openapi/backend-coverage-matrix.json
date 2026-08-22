@@ -2768,5 +2768,102 @@
     "notes": [
       "Raw third-party protocol response; not wrapped by ResponseInterceptor."
     ]
+  },
+  {
+    "index": 56,
+    "method": "POST",
+    "path": "/api/v2/channels/douyin/open/offline-qr",
+    "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "创建抖音 Open 线下打卡发布记录",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "DouyinOpenOfflineQrController",
+    "controllerMethod": "createOpenPublish",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/douyin/offline-qr/douyin-offline-qr.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "douyinOfflineQrService",
+        "type": "DouyinOfflineQrService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/douyin/offline-qr/douyin-offline-qr.service.ts",
+        "method": "createOpenPublish"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "createOpenPublish",
+      "prepareContent",
+      "createPublishRecord"
+    ],
+    "responseCodes": [
+      "ChannelPublishValidationFailed"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "ChannelPublishValidationFailed",
+        "code": 15051,
+        "message": "发布内容校验失败"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": false,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 57,
+    "method": "POST",
+    "path": "/api/v2/channels/rednote/open/offline-qr/share-config",
+    "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取小红书 Open 线下打卡分享签名配置",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "RedNoteOpenOfflineQrController",
+    "controllerMethod": "createOpenShareConfig",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/rednote/offline-qr/rednote-offline-qr.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "redNoteOfflineQrService",
+        "type": "RedNoteOfflineQrService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/rednote/offline-qr/rednote-offline-qr.service.ts",
+        "method": "createShareConfig"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "createShareConfig",
+      "generateNonce",
+      "fetchAccessToken",
+      "buildSignature"
+    ],
+    "responseCodes": [
+      "ChannelPlatformApiFailed"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "ChannelPlatformApiFailed",
+        "code": 15070,
+        "message": "{{platform}} 平台接口请求失败"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": false,
+    "status": "completed",
+    "notes": []
   }
 ]
