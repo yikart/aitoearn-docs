@@ -12629,7 +12629,7 @@
           "Channel Management/Publishing"
         ],
         "summary": "Create Douyin Check-in",
-        "description": "Create a Douyin offline check-in publish entry. The user does not need to authorize or bind a Douyin account in advance, and no publish flow is required. The endpoint returns a Douyin App scheme and a short link; the user must confirm and complete publishing in the Douyin App.\n\nA publish record is created with initial `status` `8`, meaning that user action is required. Both `schemeUrl` and `shortLink` expire; use `expiresAt` as the source of truth and call this endpoint again after expiration.\n\nImages and video cannot be mixed. Up to 12 JPG, JPEG, PNG, or BMP images are supported, with a maximum size of 20 MB each. One MP4, AVI, MKV, or MOV video is supported, with a maximum size of 1 GB and a maximum duration of 3,600 seconds. Each user can call this endpoint up to 30 times per 60 seconds.",
+        "description": "Create a Douyin offline check-in publish entry. The API key belongs to the integration partner; the person scanning the QR code does not need an AiToEarn account and does not need to authorize or bind a Douyin account in advance.\n\nStore `recordId`. You can display the server-generated `userAction.qrCodeUrl` directly or generate your own QR code from `userAction.shortLink` to customize its size, styling, or logo. Scanning the code opens the Douyin App, where the user confirms and completes publishing. `schemeUrl` can be used by a mobile page to attempt to open the Douyin App directly. The initial `status` is always `8`, which means user action is required and does not indicate success.\n\nAfter publishing completes, AiToEarn updates the publish record from the Douyin webhook. From the integration backend, use the same API key that created the record to call the existing `GET /api/v2/channels/publish/records/{recordId}` endpoint. The QR code and launch links expire; use `expiresAt` as the source of truth and create a new entry after expiration.\n\nImages and video cannot be mixed. Up to 12 JPG, JPEG, PNG, or BMP images are supported, with a maximum size of 20 MB each. One MP4, AVI, MKV, or MOV video is supported, with a maximum size of 1 GB and a maximum duration of 3,600 seconds. Each API key can call this endpoint up to 30 times per 60 seconds.",
         "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
         "parameters": [],
         "requestBody": {
@@ -12872,7 +12872,11 @@
                             },
                             "shortLink": {
                               "type": "string",
-                              "description": "Short link used when the Scheme cannot be opened directly"
+                              "description": "HTTPS launch short link that the integration can use to generate and customize its own QR code"
+                            },
+                            "qrCodeUrl": {
+                              "type": "string",
+                              "description": "Server-generated QR code PNG Data URL that can be used directly as an img src"
                             },
                             "expiresAt": {
                               "type": "string",
@@ -12884,6 +12888,7 @@
                             "shareId",
                             "schemeUrl",
                             "shortLink",
+                            "qrCodeUrl",
                             "expiresAt"
                           ],
                           "additionalProperties": false
@@ -12931,6 +12936,7 @@
                           "shareId": "7400000000000000000",
                           "schemeUrl": "snssdk1128://openplatform/share?state=7400000000000000000",
                           "shortLink": "https://aitoearn.cn/api/shortLink/abc123",
+                          "qrCodeUrl": "data:image/png;base64,iVBORw0KGgo...",
                           "expiresAt": "2026-08-22T13:00:00.000Z"
                         }
                       },
@@ -12982,7 +12988,7 @@
           "Channel Management/Publishing"
         ],
         "summary": "Get REDnote Signature",
-        "description": "Get the signature configuration required for the frontend to call REDnote `xhs.share`. The user does not need to authorize or bind a REDnote account in advance.\n\nThis endpoint only generates `verifyConfig`. It does not accept images, video, titles, or body text, does not create an AiToEarn publish record, and does not return final work information. The frontend supplies the share content when calling `xhs.share`. Each user can call this endpoint up to 60 times per 60 seconds.",
+        "description": "Get the signature configuration required for the frontend to call REDnote `xhs.share`. The API key belongs to the integration partner; the person scanning the QR code does not need an AiToEarn account and does not need to authorize or bind a REDnote account in advance.\n\nProvide your own mobile sharing page and encode its URL as the offline QR code. The landing page should call the integration backend, which calls this endpoint and returns `verifyConfig` to the frontend for `xhs.share`. Never expose the API key to the frontend.\n\nThis endpoint only generates `verifyConfig`. It does not accept images, video, title, or body, does not create an AiToEarn publish record, and does not return the final post result. Pass the sharing content when the integration frontend calls `xhs.share`. Request the signature when the user is ready to share, use the `nonce`, `timestamp`, and `signature` from the same response together, and do not cache it for a long time, mix fields from different requests, or reuse it across multiple sharing attempts.\n\nA successful `xhs.share` callback only indicates that the SDK invocation or app launch succeeded; it does not confirm that the user finally published the post. Each API key can call this endpoint up to 60 times per 60 seconds.",
         "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
         "parameters": [],
         "requestBody": {

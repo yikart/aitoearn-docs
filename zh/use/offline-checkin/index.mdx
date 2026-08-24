@@ -1,0 +1,132 @@
+---
+title: 线下打卡开放接口
+description: 接入抖音和小红书线下打卡能力，让匿名用户扫码后在平台 App 内完成发布。
+---
+
+线下打卡开放接口面向持有 API Key 的接入方。扫码用户不需要 AiToEarn 账号，也不需要提前绑定抖音或小红书账号。
+
+## 参与方
+
+| 参与方 | 职责 |
+| --- | --- |
+| 接入方服务端 | 保存 API Key、调用 AiToEarn Open API、保存业务记录 |
+| 接入方页面 | 展示二维码或移动端分享页面 |
+| 扫码用户 | 匿名扫码，在抖音或小红书 App 内确认发布 |
+| AiToEarn | 生成平台拉起参数，并在平台支持时记录发布结果 |
+
+## 抖音接入流程
+
+<Steps>
+  <Step title="创建发布入口">
+    接入方服务端调用 `POST /api/v2/channels/douyin/open/offline-qr`，请求头携带 `X-Api-Key`。
+  </Step>
+  <Step title="展示二维码">
+    保存响应中的 `recordId`。可以直接展示 `userAction.qrCodeUrl`，也可以使用 `userAction.shortLink` 自行生成二维码。不要把 API Key 下发给前端。
+  </Step>
+  <Step title="用户完成发布">
+    用户使用手机扫码。短链接会拉起抖音 App，并带入标题、正文和媒体；用户确认后完成发布。
+  </Step>
+  <Step title="查询发布结果">
+    接入方服务端使用创建记录时的同一 API Key，调用已有的 `GET /api/v2/channels/publish/records/{recordId}` 查询结果。
+  </Step>
+</Steps>
+
+接口提供两种二维码展示方式：
+
+- `qrCodeUrl`：服务端生成的 PNG Data URL，可直接用于网页 `<img>`。
+- `shortLink`：HTTPS 短链接，可由接入方自行生成二维码，适合自定义尺寸、颜色、样式或添加 Logo。
+
+直接展示接口生成的二维码：
+
+```html
+<img src="<qrCodeUrl>" alt="抖音线下打卡二维码" />
+```
+
+无论使用哪种方式，二维码内容最终都是 `shortLink`。`schemeUrl` 可用于移动端页面直接尝试拉起抖音 App。
+
+创建接口返回的 `status: 8` 只表示等待用户操作，不表示发布成功。
+
+| status | 含义 | 处理方式 |
+| ---: | --- | --- |
+| `8` | 等待用户在抖音操作 | 继续展示二维码并定期查询 |
+| `1` | 发布成功 | 读取并保存 `workLink` |
+| `-1` | 发布失败或操作超时 | 读取 `error`，必要时重新创建入口 |
+
+抖音发布完成后，AiToEarn 会通过抖音回调更新发布记录。建议每 5～10 秒查询一次，并在 `expiresAt` 后停止轮询；链接过期后需要重新调用创建接口。
+
+```bash
+curl "https://aitoearn.cn/api/v2/channels/publish/records/<recordId>" \
+  -H "X-Api-Key: <YOUR_API_KEY>"
+```
+
+## 小红书接入流程
+
+小红书接口提供的是 `xhs.share` 签名，不会创建 AiToEarn 发布记录，也不会返回最终作品结果。
+
+<Steps>
+  <Step title="准备移动端落地页">
+    接入方提供自己的移动端分享页面，并将该页面地址生成线下二维码。
+  </Step>
+  <Step title="获取签名">
+    页面打开后，由接入方服务端调用 `POST /api/v2/channels/rednote/open/offline-qr/share-config`。API Key 只能保存在服务端。
+  </Step>
+  <Step title="调用 xhs.share">
+    接入方前端使用返回的 `verifyConfig` 调用 `xhs.share`，并在调用时传入标题、正文、图片或视频。
+  </Step>
+  <Step title="用户完成分享">
+    用户在小红书 App 内确认发布。前端回调只能用于判断 `xhs.share` 的调用或拉起结果，不能直接视为最终发布成功。
+  </Step>
+</Steps>
+
+### 接入方后端代理
+
+扫码页面不能直接携带 API Key 请求 AiToEarn。页面应请求接入方自己的后端，再由接入方后端调用签名接口，并把 `verifyConfig` 返回给页面。
+
+```ts
+async function getRedNoteShareConfig() {
+  const response = await fetch(
+    'https://aitoearn.cn/api/v2/channels/rednote/open/offline-qr/share-config',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': '<YOUR_API_KEY>',
+      },
+      body: JSON.stringify({}),
+    },
+  )
+
+  if (!response.ok) {
+    throw new Error('获取小红书签名失败')
+  }
+
+  const result = await response.json()
+  return result.data.verifyConfig
+}
+```
+
+`nonce` 可以不传，由 AiToEarn 自动生成。如果接入方自行生成 `nonce`，必须完整使用接口返回的 `nonce`、`timestamp` 和 `signature`，不能与其他请求的字段混用。
+
+### 扫码页面使用签名
+
+扫码页面从接入方后端取得 `verifyConfig` 后，将其原样用于小红书 `xhs.share`。标题、正文、图片或视频不是传给 AiToEarn 签名接口，而是在调用 `xhs.share` 时按照接入方使用的小红书 SDK 版本传入。
+
+```js
+const response = await fetch('/api/checkin/rednote/share-config', {
+  method: 'POST',
+})
+const { verifyConfig } = await response.json()
+
+// 将 verifyConfig 原样传给 xhs.share。
+// 分享内容参数按照当前使用的小红书 SDK 版本填写。
+```
+
+建议在用户准备分享时即时获取签名，不要长期缓存或跨多次分享复用签名配置。AiToEarn 不会为小红书创建发布记录，因此没有 `recordId`，也不需要调用发布记录查询接口。
+
+<Note>
+  `xhs.share` 返回成功只代表 SDK 调用或 App 拉起成功。用户是否最终确认发布，以小红书 App 内的实际操作为准。
+</Note>
+
+<Warning>
+  抖音接口直接返回可展示的二维码；小红书接口返回的是前端分享签名。两者不是相同的发布协议，请分别按上面的流程接入。
+</Warning>

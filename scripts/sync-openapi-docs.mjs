@@ -803,7 +803,7 @@ function addOfflineCheckinEndpoints(spec) {
   spec.paths['/api/v2/channels/douyin/open/offline-qr'].post = spec.paths['/api/v2/channels/douyin/open/offline-qr'].post || {
     tags: ['渠道管理/内容发布'],
     summary: '创建抖音 Open 线下打卡发布记录',
-    description: '通过 API Key 创建抖音线下打卡发布记录，并返回抖音 App scheme、短链和分享 ID。',
+    description: '通过 API Key 创建抖音线下打卡发布记录，并返回可直接展示的二维码、抖音 App scheme、短链和分享 ID。',
     operationId: 'DouyinOpenOfflineQrController_createOpenPublish_v2',
     parameters: [],
     requestBody: {
@@ -888,10 +888,11 @@ function addOfflineCheckinEndpoints(spec) {
           properties: {
             shareId: { type: 'string', description: '抖音分享 ID' },
             schemeUrl: { type: 'string', description: '抖音 App Scheme URL' },
-            shortLink: { type: 'string', description: '短链接' },
+            shortLink: { type: 'string', description: 'HTTPS 拉起短链接；可由接入方自行生成和定制二维码' },
+            qrCodeUrl: { type: 'string', description: '服务端生成的二维码 PNG Data URL，可直接用于 img src' },
             expiresAt: { type: 'string', format: 'date-time', description: '过期时间' },
           },
-          required: ['shareId', 'schemeUrl', 'shortLink', 'expiresAt'],
+          required: ['shareId', 'schemeUrl', 'shortLink', 'qrCodeUrl', 'expiresAt'],
           additionalProperties: false,
         },
       },

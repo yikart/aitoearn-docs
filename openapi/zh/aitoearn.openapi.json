@@ -12642,7 +12642,7 @@
           "渠道管理/内容发布"
         ],
         "summary": "创建抖音打卡",
-        "description": "接口说明：创建抖音线下打卡发布入口。无需提前授权或绑定抖音账号，也不需要创建发布流程。接口返回抖音 App 拉起链接和短链接，用户需要在抖音 App 内确认并完成发布。\n\n接口会创建发布记录，初始 `status` 为 `8`，表示等待用户操作。`schemeUrl` 和 `shortLink` 均有有效期，请以 `expiresAt` 为准；过期后需要重新调用本接口。\n\n图片和视频不能混合上传。图片最多 12 张，支持 JPG、JPEG、PNG、BMP，单张最大 20 MB；视频最多 1 个，支持 MP4、AVI、MKV、MOV，最大 1 GB、最长 3600 秒。单个用户每 60 秒最多调用 30 次。",
+        "description": "接口说明：创建抖音线下打卡发布入口。API Key 属于接入方；扫码用户不需要 AiToEarn 账号，也无需提前授权或绑定抖音账号。\n\n接入方应保存 `recordId`。可以直接展示服务端生成的 `userAction.qrCodeUrl`，也可以使用 `userAction.shortLink` 自行生成二维码，以便自定义尺寸、样式或添加 Logo。用户扫码后会拉起抖音 App，并在 App 内确认和完成发布。`schemeUrl` 可用于移动端页面直接尝试拉起抖音 App。创建后的 `status` 固定为 `8`，表示等待用户操作，不表示发布成功。\n\n抖音发布完成后，AiToEarn 会通过抖音回调更新发布记录。接入方服务端应使用创建记录时的同一 API Key 调用已有的 `GET /api/v2/channels/publish/records/{recordId}` 查询结果。二维码和拉起链接均有有效期，请以 `expiresAt` 为准；过期后需要重新调用本接口。\n\n图片和视频不能混合上传。图片最多 12 张，支持 JPG、JPEG、PNG、BMP，单张最大 20 MB；视频最多 1 个，支持 MP4、AVI、MKV、MOV，最大 1 GB、最长 3600 秒。单个 API Key 每 60 秒最多调用 30 次。",
         "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
         "parameters": [],
         "requestBody": {
@@ -12885,7 +12885,11 @@
                             },
                             "shortLink": {
                               "type": "string",
-                              "description": "无法直接打开 Scheme 时使用的短链接"
+                              "description": "HTTPS 拉起短链接；可由接入方自行生成和定制二维码"
+                            },
+                            "qrCodeUrl": {
+                              "type": "string",
+                              "description": "服务端生成的二维码 PNG Data URL，可直接用于 img src"
                             },
                             "expiresAt": {
                               "type": "string",
@@ -12897,6 +12901,7 @@
                             "shareId",
                             "schemeUrl",
                             "shortLink",
+                            "qrCodeUrl",
                             "expiresAt"
                           ],
                           "additionalProperties": false
@@ -12944,6 +12949,7 @@
                           "shareId": "7400000000000000000",
                           "schemeUrl": "snssdk1128://openplatform/share?state=7400000000000000000",
                           "shortLink": "https://aitoearn.cn/api/shortLink/abc123",
+                          "qrCodeUrl": "data:image/png;base64,iVBORw0KGgo...",
                           "expiresAt": "2026-08-22T13:00:00.000Z"
                         }
                       },
@@ -12995,7 +13001,7 @@
           "渠道管理/内容发布"
         ],
         "summary": "获取小红书签名",
-        "description": "接口说明：获取前端调用小红书 `xhs.share` 所需的签名配置。无需提前授权或绑定小红书账号。\n\n本接口只生成 `verifyConfig`，不接收图片、视频、标题或正文，不创建 AiToEarn 发布记录，也不返回最终作品信息。分享内容由接入方前端调用 `xhs.share` 时传入。单个用户每 60 秒最多调用 60 次。",
+        "description": "接口说明：获取前端调用小红书 `xhs.share` 所需的签名配置。API Key 属于接入方；扫码用户不需要 AiToEarn 账号，也无需提前授权或绑定小红书账号。\n\n接入方需要提供自己的移动端分享页面，并将该页面地址生成线下二维码。扫码页面应请求接入方自己的后端，由接入方后端调用本接口，再将返回的 `verifyConfig` 交给前端调用 `xhs.share`。API Key 不得下发到前端。\n\n本接口只生成 `verifyConfig`，不接收图片、视频、标题或正文，不创建 AiToEarn 发布记录，也不返回最终作品信息。分享内容由接入方前端调用 `xhs.share` 时传入。建议在用户准备分享时即时获取签名，并完整使用同一次响应中的 `nonce`、`timestamp` 和 `signature`，不要长期缓存、跨请求混用或跨多次分享复用。\n\n`xhs.share` 的成功回调只表示 SDK 调用或 App 拉起成功，不能直接视为用户最终发布成功。单个 API Key 每 60 秒最多调用 60 次。",
         "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
         "parameters": [],
         "requestBody": {

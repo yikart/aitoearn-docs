@@ -302,7 +302,12 @@
     },
     "url": "full",
     "examples": {
-      "languages": ["curl", "python", "javascript", "go"],
+      "languages": [
+        "curl",
+        "python",
+        "javascript",
+        "go"
+      ],
       "defaults": "required",
       "prefill": true,
       "autogenerate": true
@@ -335,7 +340,9 @@
               {
                 "group": "首页",
                 "hidden": true,
-                "pages": ["zh/home"]
+                "pages": [
+                  "zh/home"
+                ]
               }
             ]
           },
@@ -348,6 +355,7 @@
                 "pages": [
                   "zh/use/introduction",
                   "zh/use/publish-flow/index",
+                  "zh/use/offline-checkin/index",
                   "zh/use/plugin-publish/index",
                   "zh/use/asset-upload/index",
                   "zh/use/api-key/index",
@@ -367,7 +375,9 @@
             "groups": [
               {
                 "group": "概览",
-                "pages": ["zh/api/index"]
+                "pages": [
+                  "zh/api/index"
+                ]
               },
               {
                 "group": "AI 服务/视频生成",
@@ -519,7 +529,10 @@
               },
               {
                 "group": "常见问题",
-                "pages": ["zh/help/guide", "zh/help/faq"]
+                "pages": [
+                  "zh/help/guide",
+                  "zh/help/faq"
+                ]
               },
               {
                 "group": "概览",
@@ -579,7 +592,9 @@
               {
                 "group": "Home",
                 "hidden": true,
-                "pages": ["en/home"]
+                "pages": [
+                  "en/home"
+                ]
               }
             ]
           },
@@ -592,6 +607,7 @@
                 "pages": [
                   "en/use/index",
                   "en/use/publish-flow/index",
+                  "en/use/offline-checkin/index",
                   "en/use/plugin-publish/index",
                   "en/use/asset-upload/index",
                   "en/use/api-key/index",
@@ -611,7 +627,9 @@
             "groups": [
               {
                 "group": "Overview",
-                "pages": ["en/api/index"]
+                "pages": [
+                  "en/api/index"
+                ]
               },
               {
                 "group": "AI Services/Video Generation",
@@ -746,7 +764,10 @@
               },
               {
                 "group": "FAQ",
-                "pages": ["en/help/guide", "en/help/faq"]
+                "pages": [
+                  "en/help/guide",
+                  "en/help/faq"
+                ]
               },
               {
                 "group": "Overview",
@@ -785,7 +806,11 @@
     ]
   },
   "contextual": {
-    "options": ["copy", "view", "download-spec"]
+    "options": [
+      "copy",
+      "view",
+      "download-spec"
+    ]
   },
   "footer": {
     "socials": {
