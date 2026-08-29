@@ -4865,7 +4865,7 @@
       "post": {
         "summary": "创建发布流程",
         "deprecated": false,
-        "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。请求体中的 `items[n].accountId` 必须来自账号列表接口；`content.media[n].url` 必须是可公网访问的真实媒体 URL，不能直接复制示例中的占位值。推荐先按[资源上传教程](/zh/use/asset-upload)完成“生成上传签名 → 直传文件 → 确认资源上传”，再填写确认接口返回的 `data.url`；也可使用其他可被服务端直接访问和解析的真实媒体 URL。链接不可访问或无法解析时会返回 `15051`（`media_unreachable`）。`publishAt` 必须填写未来的 ISO 8601 时间。调用成功后，`data.flowId` 可用于查询流程详情，`data.tasks[n].id` 可用于立即发布、重试、取消或修改发布时间。该接口会创建真实发布任务，请确认参数无误后再发送。\n\n提示：除 X/Twitter（推特）发布外，其他平台发布目前都是免费的；关于 X/Twitter 发布计费，请[点击查看](https://aitoearn.ai/pricing#pricing-table-social-publishing)。",
+        "description": "接口说明：创建多平台发布 Flow，一次请求可生成多个单平台任务。\n\n调用本接口前，请先确保你已经了解完整发布流程，点击[了解完整发布流程](/zh/use/publish-flow)。请求体中的 `items[n].accountId` 必须来自账号列表接口；`content.media[n].url` 必须是可公网访问的真实媒体 URL，不能直接复制示例中的占位值。推荐先按[资源上传教程](/zh/use/asset-upload)完成“生成上传签名 → 直传文件 → 确认资源上传”，再填写确认接口返回的 `data.url`；也可使用其他可被服务端直接访问和解析的真实媒体 URL。链接不可访问或无法解析时会返回 `15051`（`media_unreachable`）。`publishAt` 必须填写未来的 ISO 8601 时间。调用成功后，`data.flowId` 可用于查询流程详情，`data.tasks[n].id` 可用于立即发布、重试、取消或修改发布时间。该接口会创建真实发布任务，请确认参数无误后再发送。\n\n额度说明：所有平台合计共享每月 1,000 次免费发布接口调用额度，额度按月刷新。可在[国内站 API Key 页面](https://aitoearn.cn/zh-CN/developer/api-keys)或[国际站 API Key 页面](https://aitoearn.ai/developer/api-keys)查看当前用量和剩余额度。X/Twitter（推特）发布除占用上述额度外，还会产生由 X/Twitter 官方收取的额外费用，详情请查看[定价页「社交平台」](https://aitoearn.ai/pricing#pricing-table-social-publishing)。超出免费额度后，如需提升限额，新增发布额度按人民币 0.1 元/条计费。当前请联系我们办理；更便捷的自助提升方式将在后续提供。",
         "operationId": "PublishFlowController_createFlow_v2",
         "tags": [
           "渠道管理/内容发布"
