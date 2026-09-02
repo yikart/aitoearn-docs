@@ -13,7 +13,7 @@
     ],
     "controllerClass": "VideoController",
     "controllerMethod": "getVideoGenerationModels",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
     "controllerFound": true,
     "requiresAuth": false,
     "isPublic": true,
@@ -23,7 +23,7 @@
       {
         "property": "videoService",
         "type": "VideoService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
         "method": "getVideoGenerationModelParams"
       }
     ],
@@ -51,7 +51,7 @@
     ],
     "controllerClass": "VideoController",
     "controllerMethod": "videoGeneration",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -61,14 +61,15 @@
       {
         "property": "videoService",
         "type": "VideoService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
         "method": "userVideoGeneration"
       }
     ],
     "serviceMethodsVisited": [
       "userVideoGeneration",
+      "getCandidateChannels",
       "resolveRuntimeModel",
-      "requireChannel"
+      "dispatchVideoRequest"
     ],
     "responseCodes": [
       "AiVideoGenerationUnsupportedMode",
@@ -111,7 +112,7 @@
     ],
     "controllerClass": "VideoController",
     "controllerMethod": "listVideoTasks",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -121,17 +122,13 @@
       {
         "property": "videoService",
         "type": "VideoService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
         "method": "listVideoTasks"
       }
     ],
     "serviceMethodsVisited": [
       "listVideoTasks",
-      "transformToCommonResponse",
-      "extractInput",
-      "requireChannel",
-      "ensureSavedVideoMedia",
-      "getChannelTaskResult"
+      "transformToCommonResponse"
     ],
     "responseCodes": [
       "InvalidAiTaskId"
@@ -162,7 +159,7 @@
     ],
     "controllerClass": "VideoController",
     "controllerMethod": "getVideoTaskStatus",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -172,17 +169,13 @@
       {
         "property": "videoService",
         "type": "VideoService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
         "method": "getVideoTaskStatus"
       }
     ],
     "serviceMethodsVisited": [
       "getVideoTaskStatus",
-      "transformToCommonResponse",
-      "extractInput",
-      "requireChannel",
-      "ensureSavedVideoMedia",
-      "getChannelTaskResult"
+      "transformToCommonResponse"
     ],
     "responseCodes": [
       "InvalidAiTaskId"
@@ -213,7 +206,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "getImageGenerationModels",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": false,
     "isPublic": true,
@@ -223,7 +216,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "generationModelConfig"
       }
     ],
@@ -251,7 +244,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "getImageEditModels",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": false,
     "isPublic": true,
@@ -261,7 +254,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "editModelConfig"
       }
     ],
@@ -289,7 +282,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "generateImage",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -299,7 +292,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "userGeneration"
       }
     ],
@@ -345,7 +338,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "editImage",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -355,7 +348,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "userEdit"
       }
     ],
@@ -405,7 +398,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "generateImageAsync",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -415,7 +408,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "userGenerationAsync"
       }
     ],
@@ -464,7 +457,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "editImageAsync",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -474,7 +467,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "userEditAsync"
       }
     ],
@@ -523,7 +516,7 @@
     ],
     "controllerClass": "ImageController",
     "controllerMethod": "getImageTaskStatus",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -533,7 +526,7 @@
       {
         "property": "imageService",
         "type": "ImageService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/image/image.service.ts",
         "method": "getTaskStatus"
       }
     ],
@@ -563,7 +556,7 @@
     ],
     "controllerClass": "ChatController",
     "controllerMethod": "getChatModels",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/chat/chat.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/chat/chat.controller.ts",
     "controllerFound": true,
     "requiresAuth": false,
     "isPublic": true,
@@ -573,7 +566,7 @@
       {
         "property": "chatService",
         "type": "ChatService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/chat/chat.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/chat/chat.service.ts",
         "method": "getChatModelConfig"
       }
     ],
@@ -601,7 +594,7 @@
     ],
     "controllerClass": "RelayController",
     "controllerMethod": "chatCompletions",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -611,7 +604,7 @@
       {
         "property": "relayService",
         "type": "RelayService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
         "method": "chatCompletions"
       }
     ],
@@ -641,7 +634,7 @@
     ],
     "controllerClass": "RelayController",
     "controllerMethod": "claudeMessages",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -651,7 +644,7 @@
       {
         "property": "relayService",
         "type": "RelayService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
         "method": "claudeMessages"
       }
     ],
@@ -681,7 +674,7 @@
     ],
     "controllerClass": "RelayController",
     "controllerMethod": "geminiGenerateContent",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -691,7 +684,7 @@
       {
         "property": "relayService",
         "type": "RelayService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
         "method": "geminiGenerateContent"
       }
     ],
@@ -721,7 +714,7 @@
     ],
     "controllerClass": "RelayController",
     "controllerMethod": "geminiStreamGenerateContent",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -731,7 +724,7 @@
       {
         "property": "relayService",
         "type": "RelayService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
         "method": "geminiStreamGenerateContent"
       }
     ],
@@ -761,7 +754,7 @@
     ],
     "controllerClass": "RelayController",
     "controllerMethod": "imagesGenerations",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -771,7 +764,7 @@
       {
         "property": "relayService",
         "type": "RelayService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
         "method": "imagesGenerations"
       }
     ],
@@ -801,7 +794,7 @@
     ],
     "controllerClass": "RelayController",
     "controllerMethod": "imagesEdits",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -811,7 +804,7 @@
       {
         "property": "relayService",
         "type": "RelayService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/relay/relay.service.ts",
         "method": "imagesEdits"
       }
     ],
@@ -841,7 +834,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "list",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -851,7 +844,7 @@
       {
         "property": "accountService",
         "type": "AccountService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
         "method": "list"
       }
     ],
@@ -879,7 +872,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "deleteMany",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -889,7 +882,7 @@
       {
         "property": "accountService",
         "type": "AccountService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
         "method": "deleteMany"
       }
     ],
@@ -917,7 +910,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "getById",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -927,7 +920,7 @@
       {
         "property": "accountService",
         "type": "AccountService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
         "method": "getById"
       }
     ],
@@ -968,7 +961,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "delete",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -978,7 +971,7 @@
       {
         "property": "accountService",
         "type": "AccountService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
         "method": "delete"
       }
     ],
@@ -1015,7 +1008,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "authStatus",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1025,7 +1018,7 @@
       {
         "property": "accountService",
         "type": "AccountService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account.service.ts",
         "method": "getAuthStatus"
       }
     ],
@@ -1053,7 +1046,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "publishOptionValues",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1063,7 +1056,7 @@
       {
         "property": "platformsService",
         "type": "PlatformsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.service.ts",
         "method": "getAccountValues"
       }
     ],
@@ -1109,7 +1102,7 @@
     ],
     "controllerClass": "AccountsController",
     "controllerMethod": "createPublishOptionValue",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/accounts.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1119,7 +1112,7 @@
       {
         "property": "platformsService",
         "type": "PlatformsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.service.ts",
         "method": "createAccountValue"
       }
     ],
@@ -1165,7 +1158,7 @@
     ],
     "controllerClass": "PublishFlowController",
     "controllerMethod": "createFlow",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1175,13 +1168,14 @@
       {
         "property": "publishFlowService",
         "type": "PublishFlowService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.service.ts",
         "method": "createFlow"
       }
     ],
     "serviceMethodsVisited": [
       "createFlow",
       "resolveFlowAccounts",
+      "isDirectPublishItem",
       "createFlowRecords",
       "mergeContent",
       "resolveMediaRules",
@@ -1272,7 +1266,7 @@
     ],
     "controllerClass": "PublishFlowController",
     "controllerMethod": "getFlow",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1282,7 +1276,7 @@
       {
         "property": "publishFlowService",
         "type": "PublishFlowService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/flows/publish-flow.service.ts",
         "method": "getFlowDetail"
       }
     ],
@@ -1318,7 +1312,7 @@
     ],
     "controllerClass": "PublishTaskController",
     "controllerMethod": "publishNow",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1328,7 +1322,7 @@
       {
         "property": "publishTaskService",
         "type": "PublishTaskService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
         "method": "publishNow"
       }
     ],
@@ -1384,7 +1378,7 @@
     ],
     "controllerClass": "PublishTaskController",
     "controllerMethod": "retryTask",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1394,7 +1388,7 @@
       {
         "property": "publishTaskService",
         "type": "PublishTaskService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
         "method": "retryTask"
       }
     ],
@@ -1451,7 +1445,7 @@
     ],
     "controllerClass": "PublishTaskController",
     "controllerMethod": "cancelTask",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1461,7 +1455,7 @@
       {
         "property": "publishTaskService",
         "type": "PublishTaskService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
         "method": "cancelTask"
       }
     ],
@@ -1539,7 +1533,7 @@
     ],
     "controllerClass": "PublishTaskController",
     "controllerMethod": "updatePublishAt",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1549,7 +1543,7 @@
       {
         "property": "publishTaskService",
         "type": "PublishTaskService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/tasks/publish-task.service.ts",
         "method": "updatePublishAt"
       }
     ],
@@ -1606,7 +1600,7 @@
     ],
     "controllerClass": "PublishRecordController",
     "controllerMethod": "listRecords",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1616,7 +1610,7 @@
       {
         "property": "recordReadService",
         "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
         "method": "listByUserId"
       }
     ],
@@ -1644,7 +1638,7 @@
     ],
     "controllerClass": "PublishRecordController",
     "controllerMethod": "listQueued",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1654,7 +1648,7 @@
       {
         "property": "recordReadService",
         "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
         "method": "listQueued"
       }
     ],
@@ -1682,7 +1676,7 @@
     ],
     "controllerClass": "PublishRecordController",
     "controllerMethod": "listPublished",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1692,7 +1686,7 @@
       {
         "property": "recordReadService",
         "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
         "method": "listPublished"
       }
     ],
@@ -1720,7 +1714,7 @@
     ],
     "controllerClass": "PublishRecordController",
     "controllerMethod": "deleteRecord",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1730,7 +1724,7 @@
       {
         "property": "recordReadService",
         "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
         "method": "deleteById"
       }
     ],
@@ -1772,7 +1766,7 @@
     ],
     "controllerClass": "PublishRecordController",
     "controllerMethod": "getRecord",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1782,7 +1776,7 @@
       {
         "property": "recordReadService",
         "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
         "method": "getDetail"
       }
     ],
@@ -1820,7 +1814,7 @@
     ],
     "controllerClass": "PublishRecordController",
     "controllerMethod": "getUserAction",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1830,7 +1824,7 @@
       {
         "property": "recordReadService",
         "type": "PublishRecordReadService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/publish/records/publish-record-read.service.ts",
         "method": "getUserAction"
       }
     ],
@@ -1884,7 +1878,7 @@
     ],
     "controllerClass": "PlatformsController",
     "controllerMethod": "listPlatforms",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.controller.ts",
     "controllerFound": true,
     "requiresAuth": false,
     "isPublic": true,
@@ -1894,7 +1888,7 @@
       {
         "property": "registry",
         "type": "PlatformIntegrationRegistry",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.registry.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.registry.ts",
         "method": "listMetadata"
       }
     ],
@@ -1922,7 +1916,7 @@
     ],
     "controllerClass": "PlatformsController",
     "controllerMethod": "listPublishOptions",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1932,7 +1926,7 @@
       {
         "property": "platformsService",
         "type": "PlatformsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/platforms/platforms.service.ts",
         "method": "listSources"
       }
     ],
@@ -1961,7 +1955,7 @@
     ],
     "controllerClass": "WorksController",
     "controllerMethod": "getLinkInfo",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -1971,7 +1965,7 @@
       {
         "property": "workService",
         "type": "WorkService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
         "method": "getLinkInfo"
       }
     ],
@@ -2020,7 +2014,7 @@
     ],
     "controllerClass": "WorksController",
     "controllerMethod": "listWorks",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2030,12 +2024,13 @@
       {
         "property": "workService",
         "type": "WorkService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
         "method": "listWorks"
       }
     ],
     "serviceMethodsVisited": [
       "listWorks",
+      "createEmptyPaginationResult",
       "getPlatformCredential",
       "getPlatformAccount",
       "callPlatformProvider"
@@ -2083,7 +2078,7 @@
     ],
     "controllerClass": "WorksController",
     "controllerMethod": "getDetail",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2093,7 +2088,7 @@
       {
         "property": "workService",
         "type": "WorkService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
         "method": "getDetail"
       }
     ],
@@ -2153,7 +2148,7 @@
     ],
     "controllerClass": "WorksController",
     "controllerMethod": "getAnalytics",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2163,7 +2158,7 @@
       {
         "property": "analyticsService",
         "type": "AnalyticsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/analytics/analytics.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/analytics/analytics.service.ts",
         "method": "fetchWorkAnalytics"
       }
     ],
@@ -2191,7 +2186,7 @@
     ],
     "controllerClass": "WorksController",
     "controllerMethod": "verifyOwnership",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/works.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2201,7 +2196,7 @@
       {
         "property": "workService",
         "type": "WorkService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/works/work.service.ts",
         "method": "verifyOwnership"
       }
     ],
@@ -2248,7 +2243,7 @@
     ],
     "controllerClass": "AccountGroupsController",
     "controllerMethod": "list",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2258,7 +2253,7 @@
       {
         "property": "accountGroupService",
         "type": "AccountGroupService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
         "method": "list"
       }
     ],
@@ -2286,7 +2281,7 @@
     ],
     "controllerClass": "AccountGroupsController",
     "controllerMethod": "create",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2296,7 +2291,7 @@
       {
         "property": "accountGroupService",
         "type": "AccountGroupService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
         "method": "create"
       }
     ],
@@ -2324,7 +2319,7 @@
     ],
     "controllerClass": "AccountGroupsController",
     "controllerMethod": "deleteMany",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2334,7 +2329,7 @@
       {
         "property": "accountGroupService",
         "type": "AccountGroupService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
         "method": "deleteMany"
       }
     ],
@@ -2370,7 +2365,7 @@
     ],
     "controllerClass": "AccountGroupsController",
     "controllerMethod": "update",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2380,7 +2375,7 @@
       {
         "property": "accountGroupService",
         "type": "AccountGroupService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
         "method": "update"
       }
     ],
@@ -2417,7 +2412,7 @@
     ],
     "controllerClass": "AccountGroupsController",
     "controllerMethod": "sortAccounts",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-groups.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2427,7 +2422,7 @@
       {
         "property": "accountGroupService",
         "type": "AccountGroupService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/accounts/account-group.service.ts",
         "method": "sortAccounts"
       }
     ],
@@ -2455,7 +2450,7 @@
     ],
     "controllerClass": "AuthController",
     "controllerMethod": "startAuth",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2486,7 +2481,7 @@
     ],
     "controllerClass": "AuthController",
     "controllerMethod": "getAuthStatus",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.controller.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.controller.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2496,19 +2491,19 @@
       {
         "property": "oauthLoginService",
         "type": "OAuthLoginService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/oauth-login.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/oauth-login.service.ts",
         "method": "isOAuthLoginSession"
       },
       {
         "property": "oauthLoginService",
         "type": "OAuthLoginService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/oauth-login.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/oauth-login.service.ts",
         "method": "getAuthSessionResult"
       },
       {
         "property": "authService",
         "type": "AuthService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-server/src/core/channels/auth/auth.service.ts",
         "method": "getAuthSessionResult"
       }
     ],
@@ -2555,7 +2550,7 @@
     ],
     "controllerClass": "AssetsHttpController",
     "controllerMethod": "createUploadSign",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/libs/assets/src/http/assets-http.controller-base.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/libs/assets/src/http/assets-http.controller-base.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2565,7 +2560,7 @@
       {
         "property": "assetsService",
         "type": "AssetsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/libs/assets/src/assets.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/libs/assets/src/assets.service.ts",
         "method": "createUploadSign"
       }
     ],
@@ -2604,7 +2599,7 @@
     ],
     "controllerClass": "AssetsHttpController",
     "controllerMethod": "confirmUpload",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/libs/assets/src/http/assets-http.controller-base.ts",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/libs/assets/src/http/assets-http.controller-base.ts",
     "controllerFound": true,
     "requiresAuth": true,
     "isPublic": false,
@@ -2614,7 +2609,7 @@
       {
         "property": "assetsService",
         "type": "AssetsService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/libs/assets/src/assets.service.ts",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/libs/assets/src/assets.service.ts",
         "method": "confirmUploadByUser"
       }
     ],
@@ -2652,125 +2647,6 @@
   },
   {
     "index": 54,
-    "method": "POST",
-    "path": "/api/ai/v3/contents/generations/tasks",
-    "operationId": "VolcengineVideoController_videoGeneration",
-    "tag": "AI 服务/视频生成",
-    "summary": "火山格式创建视频生成任务",
-    "hasRequestBody": true,
-    "parameterCount": 0,
-    "originalResponseKeys": [
-      "200"
-    ],
-    "controllerClass": "VolcengineVideoController",
-    "controllerMethod": "videoGeneration",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": true,
-    "apiKeyHeader": "Authorization",
-    "serviceCalls": [
-      {
-        "property": "volcengineVideoService",
-        "type": "VolcengineVideoService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
-        "method": "create"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "create",
-      "normalizeRequest",
-      "extractInlineParams",
-      "validateContent",
-      "buildSafetyIdentifier",
-      "getModelConfig",
-      "calculatePrice",
-      "getBillingMode"
-    ],
-    "responseCodes": [
-      "AiVideoGenerationUnsupportedInput",
-      "InvalidModel",
-      "UserCreditsInsufficient"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "AiVideoGenerationUnsupportedInput",
-        "code": 12311,
-        "message": "不支持的视频生成输入"
-      },
-      {
-        "name": "InvalidModel",
-        "code": 12300,
-        "message": "无效的 AI 模型"
-      },
-      {
-        "name": "UserCreditsInsufficient",
-        "code": 12001,
-        "message": "用户Credits不足"
-      }
-    ],
-    "customExceptions": [],
-    "aiServiceTracked": true,
-    "status": "completed",
-    "notes": [
-      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
-    ]
-  },
-  {
-    "index": 55,
-    "method": "GET",
-    "path": "/api/ai/v3/contents/generations/tasks/{taskId}",
-    "operationId": "VolcengineVideoController_videoTaskStatus",
-    "tag": "AI 服务/视频生成",
-    "summary": "火山格式查询视频任务",
-    "hasRequestBody": false,
-    "parameterCount": 1,
-    "originalResponseKeys": [
-      "200"
-    ],
-    "controllerClass": "VolcengineVideoController",
-    "controllerMethod": "videoTaskStatus",
-    "controllerFile": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
-    "controllerFound": true,
-    "requiresAuth": true,
-    "isPublic": false,
-    "skipResponseInterceptor": true,
-    "apiKeyHeader": "Authorization",
-    "serviceCalls": [
-      {
-        "property": "volcengineVideoService",
-        "type": "VolcengineVideoService",
-        "file": "E:/project-dev/node/yika/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
-        "method": "getTask"
-      }
-    ],
-    "serviceMethodsVisited": [
-      "getTask",
-      "callback",
-      "calculateActualPoints",
-      "getFailureMessage",
-      "enqueueTaskRefund"
-    ],
-    "responseCodes": [
-      "InvalidAiTaskId"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "InvalidAiTaskId",
-        "code": 12302,
-        "message": "无效的 AI 任务 ID"
-      }
-    ],
-    "customExceptions": [],
-    "aiServiceTracked": true,
-    "status": "completed",
-    "notes": [
-      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
-    ]
-  },
-  {
-    "index": 56,
     "method": "POST",
     "path": "/api/v2/channels/douyin/open/offline-qr",
     "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
@@ -2818,7 +2694,7 @@
     "notes": []
   },
   {
-    "index": 57,
+    "index": 55,
     "method": "POST",
     "path": "/api/v2/channels/rednote/open/offline-qr/share-config",
     "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
@@ -2847,6 +2723,7 @@
     ],
     "serviceMethodsVisited": [
       "createShareConfig",
+      "getAccessToken",
       "generateNonce",
       "fetchAccessToken",
       "buildSignature"
@@ -2863,6 +2740,653 @@
     ],
     "customExceptions": [],
     "aiServiceTracked": false,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 56,
+    "method": "POST",
+    "path": "/api/ai/v3/contents/generations/tasks",
+    "operationId": "VolcengineVideoController_videoGeneration",
+    "tag": "AI 服务/视频生成",
+    "summary": "火山格式创建视频生成任务",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "200"
+    ],
+    "controllerClass": "VolcengineVideoController",
+    "controllerMethod": "videoGeneration",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "Authorization",
+    "serviceCalls": [
+      {
+        "property": "volcengineVideoService",
+        "type": "VolcengineVideoService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
+        "method": "create"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "create",
+      "normalizeRequest",
+      "extractInlineParams",
+      "buildSafetyIdentifier",
+      "getModelConfig",
+      "calculatePrice",
+      "getBillingMode"
+    ],
+    "responseCodes": [
+      "InvalidModel",
+      "UserCreditsInsufficient"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "InvalidModel",
+        "code": 12300,
+        "message": "无效的 AI 模型"
+      },
+      {
+        "name": "UserCreditsInsufficient",
+        "code": 12001,
+        "message": "用户Credits不足"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
+  },
+  {
+    "index": 57,
+    "method": "GET",
+    "path": "/api/ai/v3/contents/generations/tasks/{taskId}",
+    "operationId": "VolcengineVideoController_videoTaskStatus",
+    "tag": "AI 服务/视频生成",
+    "summary": "火山格式查询视频任务",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "200"
+    ],
+    "controllerClass": "VolcengineVideoController",
+    "controllerMethod": "videoTaskStatus",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "Authorization",
+    "serviceCalls": [
+      {
+        "property": "volcengineVideoService",
+        "type": "VolcengineVideoService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
+        "method": "getTask"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getTask",
+      "resolveChannel",
+      "callback",
+      "calculateActualPoints",
+      "getFailureMessage",
+      "enqueueTaskRefund"
+    ],
+    "responseCodes": [
+      "InvalidAiTaskId"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "InvalidAiTaskId",
+        "code": 12302,
+        "message": "无效的 AI 任务 ID"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
+  },
+  {
+    "index": 58,
+    "method": "POST",
+    "path": "/api/ai/volcengine/assets/groups",
+    "operationId": "VolcengineAssetsController_createAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "创建普通素材组",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "createAssetGroup",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "createAssetGroup"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "createAssetGroup"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 59,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/groups",
+    "operationId": "VolcengineAssetsController_listAssetGroupsWithPagination",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材组列表",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "listAssetGroupsWithPagination",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "listAssetGroupsWithPagination"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "listAssetGroupsWithPagination"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 60,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/groups/{groupId}",
+    "operationId": "VolcengineAssetsController_getAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材组详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "getAssetGroup",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "getAssetGroup"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getAssetGroup",
+      "getOwnedGroup"
+    ],
+    "responseCodes": [
+      "VolcengineAssetGroupNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetGroupNotFound",
+        "code": 12323,
+        "message": "火山素材组未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 61,
+    "method": "PATCH",
+    "path": "/api/ai/volcengine/assets/groups/{groupId}",
+    "operationId": "VolcengineAssetsController_updateAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "更新素材组",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "updateAssetGroup",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "updateAssetGroup"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "updateAssetGroup",
+      "getOwnedGroup"
+    ],
+    "responseCodes": [
+      "VolcengineAssetGroupNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetGroupNotFound",
+        "code": 12323,
+        "message": "火山素材组未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 62,
+    "method": "DELETE",
+    "path": "/api/ai/volcengine/assets/groups/{groupId}",
+    "operationId": "VolcengineAssetsController_deleteAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "删除素材组",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "deleteAssetGroup",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "deleteAssetGroup"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "deleteAssetGroup",
+      "getOwnedGroup"
+    ],
+    "responseCodes": [
+      "VolcengineAssetGroupNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetGroupNotFound",
+        "code": 12323,
+        "message": "火山素材组未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 63,
+    "method": "POST",
+    "path": "/api/ai/volcengine/assets/items",
+    "operationId": "VolcengineAssetsController_createAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "创建素材",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "createAsset",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "createAsset"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "createAsset",
+      "getOwnedGroup"
+    ],
+    "responseCodes": [
+      "VolcengineAssetGroupNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetGroupNotFound",
+        "code": 12323,
+        "message": "火山素材组未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 64,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/items",
+    "operationId": "VolcengineAssetsController_listAssetsWithPagination",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材列表",
+    "hasRequestBody": false,
+    "parameterCount": 5,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "listAssetsWithPagination",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "listAssetsWithPagination"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "listAssetsWithPagination"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 65,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/items/{assetId}",
+    "operationId": "VolcengineAssetsController_getAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "getAsset",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "getAsset"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getAsset",
+      "refreshAsset",
+      "getOwnedAsset"
+    ],
+    "responseCodes": [
+      "VolcengineAssetNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetNotFound",
+        "code": 12324,
+        "message": "火山素材未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 66,
+    "method": "PATCH",
+    "path": "/api/ai/volcengine/assets/items/{assetId}",
+    "operationId": "VolcengineAssetsController_updateAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "更新素材",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "updateAsset",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "updateAsset"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "updateAsset",
+      "getOwnedAsset"
+    ],
+    "responseCodes": [
+      "VolcengineAssetNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetNotFound",
+        "code": 12324,
+        "message": "火山素材未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 67,
+    "method": "DELETE",
+    "path": "/api/ai/volcengine/assets/items/{assetId}",
+    "operationId": "VolcengineAssetsController_deleteAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "删除素材",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "deleteAsset",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "deleteAsset"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "deleteAsset",
+      "getOwnedAsset"
+    ],
+    "responseCodes": [
+      "VolcengineAssetNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineAssetNotFound",
+        "code": 12324,
+        "message": "火山素材未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 68,
+    "method": "POST",
+    "path": "/api/ai/volcengine/assets/visual-validation-sessions",
+    "operationId": "VolcengineAssetsController_createVisualValidationSession",
+    "tag": "AI 服务/真人素材",
+    "summary": "创建真人认证会话",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "createVisualValidationSession",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "createVisualValidationSession"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "createVisualValidationSession"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 69,
+    "method": "POST",
+    "path": "/api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete",
+    "operationId": "VolcengineAssetsController_completeVisualValidation",
+    "tag": "AI 服务/真人素材",
+    "summary": "完成真人认证",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "VolcengineAssetsController",
+    "controllerMethod": "completeVisualValidation",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "assetsService",
+        "type": "VolcengineAssetsService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/asset/volcengine-assets.service.ts",
+        "method": "completeVisualValidation"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "completeVisualValidation"
+    ],
+    "responseCodes": [
+      "VolcengineLivenessSessionInvalid",
+      "VolcengineLivenessVerificationPending"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "VolcengineLivenessSessionInvalid",
+        "code": 12322,
+        "message": "火山数字人会话无效"
+      },
+      {
+        "name": "VolcengineLivenessVerificationPending",
+        "code": 12329,
+        "message": "火山真人认证尚未完成，请稍后重试"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
     "status": "completed",
     "notes": []
   }

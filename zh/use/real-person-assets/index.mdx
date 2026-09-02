@@ -1,0 +1,196 @@
+---
+title: 真人素材
+description: 完成真人活体认证，创建真人素材，并在 Seedance 视频生成中通过 asset:// 引用。
+---
+
+真人素材用于在 Seedance 视频生成中安全地引用已授权的真人图片、视频或音频。接入方只需要 AiToEarn 的 `X-Api-Key`，不需要配置或传递火山引擎 AK/SK。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。创建认证会话、完成认证、创建素材和生成视频应使用同一个 API Key。
+</Info>
+
+<Warning>
+  真人认证和真人素材仅可用于已获得本人明确授权的内容。API Key 必须保存在服务端，不要放到认证落地页、浏览器脚本或移动端应用中。
+</Warning>
+
+## 接入流程
+
+<Steps>
+  <Step title="创建真人认证会话">
+    服务端调用创建会话接口，保存返回的 `bytedToken`，并把 `shortLink` 或 `h5Link` 提供给需要认证的本人。
+  </Step>
+  <Step title="本人完成认证">
+    用户在手机浏览器中打开认证链接，按页面提示完成人脸活体认证。
+  </Step>
+  <Step title="接收认证回调">
+    认证页面结束后会跳转到你提供的 `callbackUrl`，并携带 `bytedToken`、`resultCode` 等查询参数。
+  </Step>
+  <Step title="完成认证并取得素材组">
+    服务端使用同一 API Key 和 `bytedToken` 调用完成接口，取得 `avatarType=RealPerson` 的 `groupId`。
+  </Step>
+  <Step title="上传并创建素材">
+    先获得公网可访问的素材 URL，再把图片、视频或音频创建到真人素材组中。
+  </Step>
+  <Step title="等待素材可用">
+    查询素材详情，等待 `status` 变为 `Active`。
+  </Step>
+  <Step title="生成视频">
+    将 `asset://{assetId}` 放入 Seedance 视频生成请求的参考素材字段。
+  </Step>
+</Steps>
+
+## 创建认证会话
+
+调用 [创建真人认证会话](/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions)：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/volcengine/assets/visual-validation-sessions' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "callbackUrl": "https://example.com/real-person/callback"
+  }'
+```
+
+成功响应中的关键字段：
+
+```json
+{
+  "code": 0,
+  "message": "请求成功",
+  "data": {
+    "bytedToken": "20260902170610426DEDD5F07EEF7EF075",
+    "h5Link": "https://ark.volcengine.com/region:cn-beijing/mobile/...",
+    "shortLink": "https://aitoearn.cn/s/xxx",
+    "callbackUrl": "https://example.com/real-person/callback"
+  }
+}
+```
+
+- `bytedToken`：当前认证会话的唯一标识，完成认证时需要使用。
+- `h5Link`：可直接在手机浏览器打开的认证页面。
+- `shortLink`：适合生成二维码或发送给用户，最终会进入同一个认证页面。
+
+AiToEarn 会话保留 30 分钟。超过时限后，应重新创建认证会话。
+
+## 处理认证回调
+
+认证页面完成后，浏览器会跳转到你提交的 `callbackUrl`。AiToEarn 会把认证结果参数合并到回调地址，例如：
+
+```text
+https://example.com/real-person/callback?bytedToken=...&resultCode=10000
+```
+
+`resultCode=10000` 表示认证页面报告成功，但服务端仍应调用完成认证接口取得最终结果和真人素材组。回调页面不要直接携带 API Key 调用 AiToEarn；建议把 `bytedToken` 交给你自己的服务端处理。
+
+## 完成认证
+
+调用 [完成真人认证](/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete)：
+
+```bash
+curl --request POST \
+  'https://aitoearn.cn/api/ai/volcengine/assets/visual-validation-sessions/<BYTED_TOKEN>/complete' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+必须使用创建该会话时的同一个 API Key。成功后保存 `data.groupId`：
+
+```json
+{
+  "code": 0,
+  "message": "请求成功",
+  "data": {
+    "groupId": "group_xxx",
+    "name": "real_person_group",
+    "avatarType": "RealPerson",
+    "createdAt": "2026-09-02T09:10:00.000Z",
+    "updatedAt": "2026-09-02T09:10:00.000Z"
+  }
+}
+```
+
+如果返回业务码 `12329`，说明认证结果尚未同步完成，可以短暂等待后重试。完成成功后会话即被消费，重复完成会返回会话无效。
+
+<Note>
+  `POST /api/ai/volcengine/assets/groups` 创建的是 `avatarType=Virtual` 的普通素材组，不能代替真人认证。真人素材组只能由完成认证接口创建。
+</Note>
+
+## 上传并创建真人素材
+
+创建素材时需要公网可访问的 URL。如果文件还在本地或私有存储中，先按 [资源上传](/zh/use/asset-upload) 获取确认后的 `data.url`。
+
+然后调用 [创建素材](/api-reference/post-api-ai-volcengine-assets-items)：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/volcengine/assets/items' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "groupId": "group_xxx",
+    "url": "https://assets.example.com/person-reference.jpg",
+    "assetType": "Image",
+    "name": "person-reference"
+  }'
+```
+
+`assetType` 可使用 `Image`、`Video` 或 `Audio`。创建成功后保存 `data.assetId`，初始状态通常是 `Processing`。
+
+## 等待素材变为 Active
+
+调用 [素材详情](/api-reference/get-api-ai-volcengine-assets-items-asset-id) 会刷新上游处理状态：
+
+```bash
+curl --request GET \
+  'https://aitoearn.cn/api/ai/volcengine/assets/items/<ASSET_ID>' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+| status | 含义 | 处理方式 |
+| --- | --- | --- |
+| `Processing` | 素材正在处理 | 稍后再次查询详情 |
+| `Active` | 素材可用 | 可以用于 Seedance 视频生成 |
+| `Failed` | 素材处理失败 | 检查源文件与人物素材要求后重新创建 |
+
+素材列表保存的是本地登记记录；等待处理结果时应查询单个素材详情，以取得最新状态。
+
+## 在 Seedance 中使用
+
+素材状态变为 `Active` 后，把素材 ID 写成 `asset://{assetId}`。下面使用通用视频生成接口：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/video/generations' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "doubao-seedance-2-0-260128",
+    "prompt": "保持人物身份和面部特征，生成自然说话的半身视频",
+    "mode": "multi-ref",
+    "images": ["asset://<ASSET_ID>"],
+    "resolution": "720p",
+    "ratio": "16:9",
+    "duration": 5
+  }'
+```
+
+先调用 [视频生成模型](/api-reference/get-api-ai-models-video-generation)，选择当前站点可用且支持所需输入模式的 Seedance 模型。
+
+## 使用限制
+
+- 认证会话与创建它的 API Key 账号绑定；完成认证必须使用同一 API Key。
+- 真人素材应属于已完成认证的本人。同一真人素材组不要混入其他人物。
+- 人像素材应清晰、无遮挡，避免多人脸、严重裁切或无法识别面部的内容。
+- 素材源 URL 在创建和处理期间必须可以从公网访问。
+- `asset://` 后只能填写素材 ID，不能追加路径、查询参数或锚点。
+- 引用类型必须匹配：图片素材放入 `images`，视频素材放入 `videos`，音频素材放入 `audios`。
+- 只有 `Active` 状态的素材可以用于生成。
+
+相关 API：
+
+<CardGroup cols={2}>
+  <Card title="真人认证" icon="scan-face" href="/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions">
+    创建认证会话并取得真人素材组。
+  </Card>
+  <Card title="素材管理" icon="folder-open" href="/api-reference/get-api-ai-volcengine-assets-groups">
+    查询素材组、创建素材并检查处理状态。
+  </Card>
+</CardGroup>

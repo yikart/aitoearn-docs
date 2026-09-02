@@ -22,6 +22,8 @@ The video generation flow is straightforward: request the model list, select an 
 
 If you need to upload a reference image, video, or audio file, use [Asset upload](/en/use/asset-upload) first to obtain a publicly accessible URL, and then pass that URL in the corresponding reference asset field.
 
+For an authorized real person, complete the [Real-person assets](/en/use/real-person-assets) flow first. After the asset becomes `Active`, pass `asset://{assetId}` in `images`, `videos`, or `audios`.
+
 ## Model list and modes
 
 `GET /api/ai/models/video/generation` returns the currently available video models. Do not hard-code model parameters when creating a generation task. Use the model item's `name` as `model`, and select `mode`, `resolution`, `ratio`, and `duration` from the values supported by that same model item.

@@ -125,3 +125,4 @@ async function uploadToAitoearn(file: File, apiKey: string) {
 - 调用中国站 `https://aitoearn.cn` 上传后，确认接口返回的资源 URL 通常来自 `assets.aitoearn.cn`。
 - 调用国际站 `https://aitoearn.ai` 上传后，确认接口返回的资源 URL 通常来自 `assets.aitoearn.ai`。
 - 后续创建发布流程时，把确认后的 URL 写入 `content.media[n].url` 或 `content.cover.url`。
+- 创建真人素材时，把确认后的 URL 传给 [创建素材](/api-reference/post-api-ai-volcengine-assets-items) 的 `url` 字段；不要把对象存储的 `uploadUrl` 当作真人素材 URL。

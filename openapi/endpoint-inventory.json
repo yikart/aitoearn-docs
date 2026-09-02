@@ -691,6 +691,32 @@
   {
     "index": 54,
     "method": "POST",
+    "path": "/api/v2/channels/douyin/open/offline-qr",
+    "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "创建抖音 Open 线下打卡发布记录",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 55,
+    "method": "POST",
+    "path": "/api/v2/channels/rednote/open/offline-qr/share-config",
+    "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
+    "tag": "渠道管理/内容发布",
+    "summary": "获取小红书 Open 线下打卡分享签名配置",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 56,
+    "method": "POST",
     "path": "/api/ai/v3/contents/generations/tasks",
     "operationId": "VolcengineVideoController_videoGeneration",
     "tag": "AI 服务/视频生成",
@@ -702,7 +728,7 @@
     ]
   },
   {
-    "index": 55,
+    "index": 57,
     "method": "GET",
     "path": "/api/ai/v3/contents/generations/tasks/{taskId}",
     "operationId": "VolcengineVideoController_videoTaskStatus",
@@ -715,12 +741,12 @@
     ]
   },
   {
-    "index": 56,
+    "index": 58,
     "method": "POST",
-    "path": "/api/v2/channels/douyin/open/offline-qr",
-    "operationId": "DouyinOpenOfflineQrController_createOpenPublish_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "创建抖音 Open 线下打卡发布记录",
+    "path": "/api/ai/volcengine/assets/groups",
+    "operationId": "VolcengineAssetsController_createAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "创建普通素材组",
     "hasRequestBody": true,
     "parameterCount": 0,
     "originalResponseKeys": [
@@ -728,14 +754,144 @@
     ]
   },
   {
-    "index": 57,
+    "index": 59,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/groups",
+    "operationId": "VolcengineAssetsController_listAssetGroupsWithPagination",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材组列表",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 60,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/groups/{groupId}",
+    "operationId": "VolcengineAssetsController_getAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材组详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 61,
+    "method": "PATCH",
+    "path": "/api/ai/volcengine/assets/groups/{groupId}",
+    "operationId": "VolcengineAssetsController_updateAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "更新素材组",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 62,
+    "method": "DELETE",
+    "path": "/api/ai/volcengine/assets/groups/{groupId}",
+    "operationId": "VolcengineAssetsController_deleteAssetGroup",
+    "tag": "AI 服务/真人素材",
+    "summary": "删除素材组",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 63,
     "method": "POST",
-    "path": "/api/v2/channels/rednote/open/offline-qr/share-config",
-    "operationId": "RedNoteOpenOfflineQrController_createOpenShareConfig_v2",
-    "tag": "渠道管理/内容发布",
-    "summary": "获取小红书 Open 线下打卡分享签名配置",
+    "path": "/api/ai/volcengine/assets/items",
+    "operationId": "VolcengineAssetsController_createAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "创建素材",
     "hasRequestBody": true,
     "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 64,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/items",
+    "operationId": "VolcengineAssetsController_listAssetsWithPagination",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材列表",
+    "hasRequestBody": false,
+    "parameterCount": 5,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 65,
+    "method": "GET",
+    "path": "/api/ai/volcengine/assets/items/{assetId}",
+    "operationId": "VolcengineAssetsController_getAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "素材详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 66,
+    "method": "PATCH",
+    "path": "/api/ai/volcengine/assets/items/{assetId}",
+    "operationId": "VolcengineAssetsController_updateAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "更新素材",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 67,
+    "method": "DELETE",
+    "path": "/api/ai/volcengine/assets/items/{assetId}",
+    "operationId": "VolcengineAssetsController_deleteAsset",
+    "tag": "AI 服务/真人素材",
+    "summary": "删除素材",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 68,
+    "method": "POST",
+    "path": "/api/ai/volcengine/assets/visual-validation-sessions",
+    "operationId": "VolcengineAssetsController_createVisualValidationSession",
+    "tag": "AI 服务/真人素材",
+    "summary": "创建真人认证会话",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ]
+  },
+  {
+    "index": 69,
+    "method": "POST",
+    "path": "/api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete",
+    "operationId": "VolcengineAssetsController_completeVisualValidation",
+    "tag": "AI 服务/真人素材",
+    "summary": "完成真人认证",
+    "hasRequestBody": false,
+    "parameterCount": 1,
     "originalResponseKeys": [
       "default"
     ]
