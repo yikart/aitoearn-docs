@@ -729,6 +729,319 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
   }
 }
 
+function sourceResponse(dataSchema) {
+  return {
+    default: {
+      description: '请求成功',
+      content: {
+        'application/json': {
+          schema: commonResponseSchema(dataSchema),
+        },
+      },
+    },
+  }
+}
+
+function jsonRequestBody(schema, example) {
+  return {
+    required: true,
+    content: {
+      'application/json': {
+        schema,
+        ...(example
+          ? {
+              examples: {
+                default: {
+                  summary: '请求示例',
+                  value: example,
+                },
+              },
+            }
+          : {}),
+      },
+    },
+  }
+}
+
+function openApiParameter(name, location, description, schema, required = false) {
+  return {
+    name,
+    in: location,
+    required,
+    description,
+    schema: {
+      ...schema,
+      description,
+    },
+  }
+}
+
+function volcengineAssetGroupSchema() {
+  return {
+    type: 'object',
+    properties: {
+      groupId: { type: 'string', description: '素材组 ID。' },
+      name: { type: 'string', description: '素材组名称。' },
+      description: { type: 'string', description: '素材组描述。' },
+      avatarType: {
+        type: 'string',
+        enum: ['Virtual', 'RealPerson'],
+        description: '人像类型。Virtual 表示普通素材组，RealPerson 表示真人认证素材组。',
+      },
+      createdAt: { type: 'string', format: 'date-time', description: '创建时间。' },
+      updatedAt: { type: 'string', format: 'date-time', description: '更新时间。' },
+    },
+    required: ['groupId', 'name', 'avatarType', 'createdAt', 'updatedAt'],
+    additionalProperties: false,
+  }
+}
+
+function volcengineAssetSchema() {
+  return {
+    type: 'object',
+    properties: {
+      assetId: { type: 'string', description: '素材 ID。' },
+      groupId: { type: 'string', description: '素材组 ID。' },
+      name: { type: 'string', description: '素材名称。' },
+      assetType: {
+        type: 'string',
+        enum: ['Image', 'Video', 'Audio'],
+        description: '素材类型。',
+      },
+      status: {
+        type: 'string',
+        enum: ['Processing', 'Active', 'Failed'],
+        description: '素材状态。只有 Active 状态的素材可以用于视频生成。',
+      },
+      url: { type: 'string', format: 'uri', description: '素材源文件 URL。' },
+      createdAt: { type: 'string', format: 'date-time', description: '创建时间。' },
+      updatedAt: { type: 'string', format: 'date-time', description: '更新时间。' },
+    },
+    required: ['assetId', 'groupId', 'assetType', 'status', 'createdAt', 'updatedAt'],
+    additionalProperties: false,
+  }
+}
+
+function paginationSchema(itemSchema) {
+  return {
+    type: 'object',
+    properties: {
+      page: { type: 'integer', description: '当前页码。' },
+      pageSize: { type: 'integer', description: '每页数量。' },
+      totalPages: { type: 'integer', description: '总页数。' },
+      total: { type: 'integer', description: '总数量。' },
+      list: { type: 'array', items: itemSchema, description: '数据列表。' },
+    },
+    required: ['page', 'pageSize', 'totalPages', 'total', 'list'],
+    additionalProperties: false,
+  }
+}
+
+function addVolcengineAssetsEndpoints(spec) {
+  spec.paths = spec.paths || {}
+
+  const tag = 'AI 服务/真人素材'
+  const groupSchema = volcengineAssetGroupSchema()
+  const virtualGroupSchema = structuredClone(groupSchema)
+  virtualGroupSchema.properties.groupId.example = 'group_xxx'
+  virtualGroupSchema.properties.name.example = 'product-avatar'
+  virtualGroupSchema.properties.avatarType.example = 'Virtual'
+  const realPersonGroupSchema = structuredClone(groupSchema)
+  realPersonGroupSchema.properties.groupId.example = 'group_xxx'
+  realPersonGroupSchema.properties.name.example = 'real_person_group'
+  realPersonGroupSchema.properties.avatarType.example = 'RealPerson'
+  const assetSchema = volcengineAssetSchema()
+  const pageParameter = openApiParameter('page', 'query', '页码，从 1 开始。', { type: 'integer', minimum: 1, default: 1 })
+  const pageSizeParameter = openApiParameter('pageSize', 'query', '每页数量，取值范围 1-1000。', { type: 'integer', minimum: 1, maximum: 1000, default: 10 })
+
+  spec.paths['/api/ai/volcengine/assets/groups'] = {
+    post: {
+      tags: [tag],
+      summary: '创建普通素材组',
+      description: '创建普通素材组，返回的 `avatarType` 固定为 `Virtual`。真人素材组必须通过“完成真人认证”接口创建。',
+      operationId: 'VolcengineAssetsController_createAssetGroup',
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          name: { type: 'string', minLength: 1, description: '素材组名称。' },
+          description: { type: 'string', description: '素材组描述。' },
+        },
+        required: ['name'],
+        additionalProperties: false,
+      }, { name: 'product-avatar', description: '产品虚拟人素材' }),
+      responses: sourceResponse(virtualGroupSchema),
+    },
+    get: {
+      tags: [tag],
+      summary: '素材组列表',
+      description: '分页查询当前 API Key 所属账号的素材组。查询真人素材组时传入 `avatarType=RealPerson`。',
+      operationId: 'VolcengineAssetsController_listAssetGroupsWithPagination',
+      parameters: [
+        pageParameter,
+        pageSizeParameter,
+        openApiParameter('avatarType', 'query', '人像类型。查询真人素材组时使用 RealPerson。', {
+          type: 'string',
+          enum: ['Virtual', 'RealPerson'],
+        }),
+      ],
+      responses: sourceResponse(paginationSchema(groupSchema)),
+    },
+  }
+
+  spec.paths['/api/ai/volcengine/assets/groups/{groupId}'] = {
+    get: {
+      tags: [tag],
+      summary: '素材组详情',
+      description: '获取当前 API Key 所属账号的素材组详情。',
+      operationId: 'VolcengineAssetsController_getAssetGroup',
+      parameters: [openApiParameter('groupId', 'path', '素材组 ID。', { type: 'string' }, true)],
+      responses: sourceResponse(groupSchema),
+    },
+    patch: {
+      tags: [tag],
+      summary: '更新素材组',
+      description: '更新素材组名称或描述。至少传入一个字段。',
+      operationId: 'VolcengineAssetsController_updateAssetGroup',
+      parameters: [openApiParameter('groupId', 'path', '素材组 ID。', { type: 'string' }, true)],
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          name: { type: 'string', minLength: 1, description: '素材组名称。' },
+          description: { type: 'string', description: '素材组描述。' },
+        },
+        additionalProperties: false,
+      }, { name: 'updated-avatar' }),
+      responses: sourceResponse(groupSchema),
+    },
+    delete: {
+      tags: [tag],
+      summary: '删除素材组',
+      description: '删除素材组及其在 AiToEarn 中登记的素材记录。',
+      operationId: 'VolcengineAssetsController_deleteAssetGroup',
+      parameters: [openApiParameter('groupId', 'path', '素材组 ID。', { type: 'string' }, true)],
+      responses: sourceResponse({ type: 'object', additionalProperties: false }),
+    },
+  }
+
+  spec.paths['/api/ai/volcengine/assets/items'] = {
+    post: {
+      tags: [tag],
+      summary: '创建素材',
+      description: '把公网可访问的图片、视频或音频登记到素材组。创建后状态通常为 `Processing`，请通过“素材详情”接口刷新状态。',
+      operationId: 'VolcengineAssetsController_createAsset',
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          groupId: { type: 'string', minLength: 1, description: '素材组 ID。真人素材必须使用认证完成后返回的真人素材组 ID。' },
+          url: { type: 'string', format: 'uri', description: '素材源文件 URL，必须可由公网访问。' },
+          assetType: { type: 'string', enum: ['Image', 'Video', 'Audio'], description: '素材类型。' },
+          name: { type: 'string', minLength: 1, description: '素材名称。' },
+        },
+        required: ['groupId', 'url', 'assetType'],
+        additionalProperties: false,
+      }, {
+        groupId: 'group_xxx',
+        url: 'https://assets.example.com/person-reference.jpg',
+        assetType: 'Image',
+        name: 'person-reference',
+      }),
+      responses: sourceResponse(assetSchema),
+    },
+    get: {
+      tags: [tag],
+      summary: '素材列表',
+      description: '分页查询当前 API Key 所属账号的素材记录。素材最新处理状态以“素材详情”接口为准。',
+      operationId: 'VolcengineAssetsController_listAssetsWithPagination',
+      parameters: [
+        pageParameter,
+        pageSizeParameter,
+        openApiParameter('groupId', 'query', '素材组 ID。', { type: 'string' }),
+        openApiParameter('assetType', 'query', '素材类型。', { type: 'string', enum: ['Image', 'Video', 'Audio'] }),
+        openApiParameter('status', 'query', '素材状态。', { type: 'string', enum: ['Processing', 'Active', 'Failed'] }),
+      ],
+      responses: sourceResponse(paginationSchema(assetSchema)),
+    },
+  }
+
+  spec.paths['/api/ai/volcengine/assets/items/{assetId}'] = {
+    get: {
+      tags: [tag],
+      summary: '素材详情',
+      description: '获取素材详情并刷新上游处理状态。只有 `status=Active` 的素材可以通过 `asset://{assetId}` 用于视频生成。',
+      operationId: 'VolcengineAssetsController_getAsset',
+      parameters: [openApiParameter('assetId', 'path', '素材 ID。', { type: 'string' }, true)],
+      responses: sourceResponse(assetSchema),
+    },
+    patch: {
+      tags: [tag],
+      summary: '更新素材',
+      description: '更新素材名称。',
+      operationId: 'VolcengineAssetsController_updateAsset',
+      parameters: [openApiParameter('assetId', 'path', '素材 ID。', { type: 'string' }, true)],
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          name: { type: 'string', minLength: 1, description: '素材名称。' },
+        },
+        required: ['name'],
+        additionalProperties: false,
+      }, { name: 'person-reference-updated' }),
+      responses: sourceResponse(assetSchema),
+    },
+    delete: {
+      tags: [tag],
+      summary: '删除素材',
+      description: '删除素材及其在 AiToEarn 中的登记记录。',
+      operationId: 'VolcengineAssetsController_deleteAsset',
+      parameters: [openApiParameter('assetId', 'path', '素材 ID。', { type: 'string' }, true)],
+      responses: sourceResponse({ type: 'object', additionalProperties: false }),
+    },
+  }
+
+  spec.paths['/api/ai/volcengine/assets/visual-validation-sessions'] = {
+    post: {
+      tags: [tag],
+      summary: '创建真人认证会话',
+      description: '创建真人活体认证会话。认证完成后，AiToEarn 会把浏览器重定向到 `callbackUrl`，并附带认证结果参数。创建和完成同一会话必须使用同一个 API Key。',
+      operationId: 'VolcengineAssetsController_createVisualValidationSession',
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          callbackUrl: {
+            type: 'string',
+            format: 'uri',
+            description: '认证完成后跳转的 HTTP(S) 地址。',
+          },
+        },
+        required: ['callbackUrl'],
+        additionalProperties: false,
+      }, { callbackUrl: 'https://example.com/real-person/callback' }),
+      responses: sourceResponse({
+        type: 'object',
+        properties: {
+          bytedToken: { type: 'string', description: '真人认证会话 Token。', example: '20260902170610426DEDD5F07EEF7EF075' },
+          h5Link: { type: 'string', format: 'uri', description: '真人认证 H5 地址。', example: 'https://ark.volcengine.com/region:cn-beijing/mobile/liveness-face-manage/authorization' },
+          shortLink: { type: 'string', format: 'uri', description: '适合生成二维码的真人认证短链接。', example: 'https://aitoearn.cn/s/example' },
+          callbackUrl: { type: 'string', format: 'uri', description: '认证完成后的跳转地址。', example: 'https://example.com/real-person/callback' },
+        },
+        required: ['bytedToken', 'h5Link', 'shortLink', 'callbackUrl'],
+        additionalProperties: false,
+      }),
+    },
+  }
+
+  spec.paths['/api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete'] = {
+    post: {
+      tags: [tag],
+      summary: '完成真人认证',
+      description: '查询真人认证结果，并在认证成功后创建 `avatarType=RealPerson` 的素材组。会话在 AiToEarn 中保留 30 分钟；若返回业务码 `12329`，表示认证结果尚未就绪，可以稍后重试。',
+      operationId: 'VolcengineAssetsController_completeVisualValidation',
+      parameters: [openApiParameter('bytedToken', 'path', '创建真人认证会话时返回的 Token。', { type: 'string' }, true)],
+      responses: sourceResponse(realPersonGroupSchema),
+    },
+  }
+}
+
 function addOfflineCheckinEndpoints(spec) {
   spec.paths = spec.paths || {}
 
@@ -1148,6 +1461,30 @@ function buildNavigationGroups(endpoints, targetSpecRef) {
       pages,
     })
   }
+  const preferredOrder = [
+    'AI 服务/视频生成',
+    'AI 服务/真人素材',
+    'AI 服务/图像生成',
+    'AI 服务/大语言模型',
+    'AI Services/Video Generation',
+    'AI Services/Real-person Assets',
+    'AI Services/Image Generation',
+    'AI Services/Large Language Models',
+  ]
+  groups.sort((left, right) => {
+    const leftIndex = preferredOrder.indexOf(left.group)
+    const rightIndex = preferredOrder.indexOf(right.group)
+    if (leftIndex === -1 && rightIndex === -1) {
+      return 0
+    }
+    if (leftIndex === -1) {
+      return 1
+    }
+    if (rightIndex === -1) {
+      return -1
+    }
+    return leftIndex - rightIndex
+  })
   return groups
 }
 
@@ -1703,9 +2040,10 @@ function generate() {
   const sourceSpec = readJson(sourceSpecPath)
   addOfflineCheckinEndpoints(sourceSpec)
   addVolcengineVideoCompatibilityEndpoints(sourceSpec)
+  addVolcengineAssetsEndpoints(sourceSpec)
   const endpoints = listEndpoints(sourceSpec)
-  if (endpoints.length !== 65) {
-    throw new Error(`Expected 65 endpoints, got ${endpoints.length}`)
+  if (endpoints.length !== 77) {
+    throw new Error(`Expected 77 endpoints, got ${endpoints.length}`)
   }
 
   const specOverrides = readJson(specOverridesPath)

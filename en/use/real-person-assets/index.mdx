@@ -1,0 +1,89 @@
+---
+title: Real-person assets
+description: Verify an authorized person and use real-person assets in Seedance.
+---
+
+Real-person assets let Seedance use authorized media of a real person. Your integration only needs an AiToEarn `X-Api-Key`; no Volcengine access key or secret key is required.
+
+<Warning>
+  Use this feature only with the person's explicit authorization. Keep the API key on your backend.
+</Warning>
+
+## Integration flow
+
+1. Create a verification session and store `bytedToken`.
+2. Send `shortLink` or `h5Link` to the person being verified.
+3. Complete the session from your backend with the same API key.
+4. Store the returned `RealPerson` group ID.
+5. Create an asset and wait until its status is `Active`.
+6. Pass `asset://{assetId}` to Seedance.
+
+## Create and complete verification
+
+Call [Create verification session](/en/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions):
+
+```bash
+curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/visual-validation-sessions' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{"callbackUrl":"https://example.com/real-person/callback"}'
+```
+
+Store `data.bytedToken`. AiToEarn retains the session for 30 minutes. After verification, the browser redirects to your `callbackUrl` with `bytedToken`, `resultCode`, and other query parameters.
+
+Your backend must still call [Complete verification](/en/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete) with the same API key:
+
+```bash
+curl --request POST \
+  'https://aitoearn.ai/api/ai/volcengine/assets/visual-validation-sessions/<BYTED_TOKEN>/complete' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+Store `data.groupId`. Business code `12329` means the result is not ready; wait briefly and retry. The regular group creation endpoint returns `avatarType: Virtual`; a real-person group is created only by completing verification.
+
+## Create an asset
+
+If the file is local or private, use [Asset upload](/en/use/asset-upload) first. Then call [Create asset](/en/api-reference/post-api-ai-volcengine-assets-items):
+
+```bash
+curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/items' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "groupId": "group_xxx",
+    "url": "https://assets.example.com/person-reference.jpg",
+    "assetType": "Image"
+  }'
+```
+
+Store `data.assetId`. Query [Asset details](/en/api-reference/get-api-ai-volcengine-assets-items-asset-id) until the status becomes `Active`:
+
+```bash
+curl 'https://aitoearn.ai/api/ai/volcengine/assets/items/<ASSET_ID>' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+`Processing` means the asset is still being processed. `Failed` means you should check the source file and create a new asset.
+
+## Use the asset in Seedance
+
+Send the following body to `POST /api/ai/video/generations` with the same `X-Api-Key`:
+
+```json
+{
+  "model": "doubao-seedance-2-0-260128",
+  "prompt": "Preserve the person identity and facial features",
+  "mode": "multi-ref",
+  "images": ["asset://<ASSET_ID>"],
+  "resolution": "720p",
+  "ratio": "16:9",
+  "duration": 5
+}
+```
+
+- Keep one verified person per real-person group.
+- Use clear face media and avoid multiple faces.
+- Keep the source URL publicly accessible while processing.
+- Match the asset type to `images`, `videos`, or `audios`.
+- Append only the asset ID after `asset://`.
+- Use only `Active` assets.

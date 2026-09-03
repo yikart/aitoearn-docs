@@ -22,6 +22,8 @@ title: "视频生成"
 
 如果需要上传参考图、参考视频或参考音频，请先用 [资源上传](../asset-upload) 获取公网可访问 URL，再写入生成接口对应的参考素材字段。
 
+如果需要使用已授权的真人形象，请先完成 [真人素材](../real-person-assets) 流程。真人素材状态变为 `Active` 后，在 `images`、`videos` 或 `audios` 中传入 `asset://{assetId}`。
+
 ## 模型列表与 modes
 
 `GET /api/ai/models/video/generation` 返回当前可用视频模型。生成任务时不要硬编码模型参数，`model` 使用模型项里的 `name`，`mode`、`resolution`、`ratio` 和 `duration` 从同一个模型项的可用值里选择。
