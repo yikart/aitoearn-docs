@@ -6,6 +6,9 @@
   "metadata": {
     "timestamp": true
   },
+  "interaction": {
+    "drilldown": false
+  },
   "colors": {
     "primary": "#A989FF",
     "light": "#B8A1FF",
@@ -423,144 +426,161 @@
             "icon": "code",
             "groups": [
               {
-                "group": "概览",
+                "group": "接口分组",
                 "pages": [
-                  "zh/api/index"
-                ]
-              },
-              {
-                "group": "AI 服务/视频生成",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/ai/models/video/generation",
-                  "POST /api/ai/video/generations",
-                  "GET /api/ai/video/generations",
-                  "GET /api/ai/video/generations/{taskId}",
-                  "POST /api/ai/v3/contents/generations/tasks",
-                  "GET /api/ai/v3/contents/generations/tasks/{taskId}"
-                ]
-              },
-              {
-                "group": "AI 服务/真人素材",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "POST /api/ai/volcengine/assets/groups",
-                  "GET /api/ai/volcengine/assets/groups",
-                  "GET /api/ai/volcengine/assets/groups/{groupId}",
-                  "PATCH /api/ai/volcengine/assets/groups/{groupId}",
-                  "DELETE /api/ai/volcengine/assets/groups/{groupId}",
-                  "POST /api/ai/volcengine/assets/items",
-                  "GET /api/ai/volcengine/assets/items",
-                  "GET /api/ai/volcengine/assets/items/{assetId}",
-                  "PATCH /api/ai/volcengine/assets/items/{assetId}",
-                  "DELETE /api/ai/volcengine/assets/items/{assetId}",
-                  "POST /api/ai/volcengine/assets/visual-validation-sessions",
-                  "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
-                ]
-              },
-              {
-                "group": "AI 服务/图像生成",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/ai/models/image/generation",
-                  "GET /api/ai/models/image/edit",
-                  "POST /api/ai/image/generate",
-                  "POST /api/ai/image/edit",
-                  "POST /api/ai/image/generate/async",
-                  "POST /api/ai/image/edit/async",
-                  "GET /api/ai/image/task/{logId}",
-                  "POST /api/ai/images/generations",
-                  "POST /api/ai/images/edits"
-                ]
-              },
-              {
-                "group": "AI 服务/大语言模型",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/ai/models/chat",
-                  "POST /api/ai/chat/completions",
-                  "POST /api/ai/v1/messages",
-                  "POST /api/ai/v1beta/models/{model}:generateContent",
-                  "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
-                ]
-              },
-              {
-                "group": "渠道管理/账号",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/accounts",
-                  "DELETE /api/v2/channels/accounts",
-                  "GET /api/v2/channels/accounts/{accountId}",
-                  "DELETE /api/v2/channels/accounts/{accountId}",
-                  "GET /api/v2/channels/accounts/{accountId}/auth-status",
-                  "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
-                  "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values"
-                ]
-              },
-              {
-                "group": "渠道管理/内容发布",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "POST /api/v2/channels/publish/flows",
-                  "GET /api/v2/channels/publish/flows/{flowId}",
-                  "POST /api/v2/channels/publish/tasks/{taskId}/publish-now",
-                  "POST /api/v2/channels/publish/tasks/{taskId}/retry",
-                  "DELETE /api/v2/channels/publish/tasks/{taskId}",
-                  "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at",
-                  "GET /api/v2/channels/publish/records",
-                  "GET /api/v2/channels/publish/records/queued",
-                  "GET /api/v2/channels/publish/records/published",
-                  "DELETE /api/v2/channels/publish/records/{recordId}",
-                  "GET /api/v2/channels/publish/records/{recordId}",
-                  "GET /api/v2/channels/publish/records/{recordId}/user-action",
-                  "POST /api/v2/channels/douyin/open/offline-qr",
-                  "POST /api/v2/channels/rednote/open/offline-qr/share-config"
-                ]
-              },
-              {
-                "group": "渠道管理/平台",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/platforms",
-                  "GET /api/v2/channels/platforms/{platform}/publish-options"
-                ]
-              },
-              {
-                "group": "渠道管理/作品",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/works/link-info",
-                  "GET /api/v2/channels/works/{platform}",
-                  "GET /api/v2/channels/works/{platform}/{platformWorkId}",
-                  "GET /api/v2/channels/works/{platform}/{platformWorkId}/analytics",
-                  "POST /api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify"
-                ]
-              },
-              {
-                "group": "渠道管理/账号分组",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/account-groups",
-                  "POST /api/v2/channels/account-groups",
-                  "DELETE /api/v2/channels/account-groups",
-                  "PATCH /api/v2/channels/account-groups/{groupId}",
-                  "PATCH /api/v2/channels/account-groups/{groupId}/accounts/rank"
-                ]
-              },
-              {
-                "group": "渠道管理/授权",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/accounts/auth/{platform}",
-                  "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}"
-                ]
-              },
-              {
-                "group": "资源管理",
-                "openapi": "openapi/zh/aitoearn.openapi.json",
-                "pages": [
-                  "POST /api/assets/uploadSign",
-                  "POST /api/assets/{id}/confirm"
+                  {
+                    "group": "概览",
+                    "expanded": false,
+                    "pages": [
+                      "zh/api/index"
+                    ]
+                  },
+                  {
+                    "group": "AI 服务/视频生成",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/ai/models/video/generation",
+                      "POST /api/ai/video/generations",
+                      "GET /api/ai/video/generations",
+                      "GET /api/ai/video/generations/{taskId}",
+                      "POST /api/ai/v3/contents/generations/tasks",
+                      "GET /api/ai/v3/contents/generations/tasks/{taskId}"
+                    ]
+                  },
+                  {
+                    "group": "AI 服务/真人素材",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/ai/volcengine/assets/groups",
+                      "GET /api/ai/volcengine/assets/groups",
+                      "GET /api/ai/volcengine/assets/groups/{groupId}",
+                      "PATCH /api/ai/volcengine/assets/groups/{groupId}",
+                      "DELETE /api/ai/volcengine/assets/groups/{groupId}",
+                      "POST /api/ai/volcengine/assets/items",
+                      "GET /api/ai/volcengine/assets/items",
+                      "GET /api/ai/volcengine/assets/items/{assetId}",
+                      "PATCH /api/ai/volcengine/assets/items/{assetId}",
+                      "DELETE /api/ai/volcengine/assets/items/{assetId}",
+                      "POST /api/ai/volcengine/assets/visual-validation-sessions",
+                      "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
+                    ]
+                  },
+                  {
+                    "group": "AI 服务/图像生成",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/ai/models/image/generation",
+                      "GET /api/ai/models/image/edit",
+                      "POST /api/ai/image/generate",
+                      "POST /api/ai/image/edit",
+                      "POST /api/ai/image/generate/async",
+                      "POST /api/ai/image/edit/async",
+                      "GET /api/ai/image/task/{logId}",
+                      "POST /api/ai/images/generations",
+                      "POST /api/ai/images/edits"
+                    ]
+                  },
+                  {
+                    "group": "AI 服务/大语言模型",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/ai/models/chat",
+                      "POST /api/ai/chat/completions",
+                      "POST /api/ai/v1/messages",
+                      "POST /api/ai/v1beta/models/{model}:generateContent",
+                      "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
+                    ]
+                  },
+                  {
+                    "group": "渠道管理/账号",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/accounts",
+                      "DELETE /api/v2/channels/accounts",
+                      "GET /api/v2/channels/accounts/{accountId}",
+                      "DELETE /api/v2/channels/accounts/{accountId}",
+                      "GET /api/v2/channels/accounts/{accountId}/auth-status",
+                      "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+                      "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values"
+                    ]
+                  },
+                  {
+                    "group": "渠道管理/内容发布",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/v2/channels/publish/flows",
+                      "GET /api/v2/channels/publish/flows/{flowId}",
+                      "POST /api/v2/channels/publish/tasks/{taskId}/publish-now",
+                      "POST /api/v2/channels/publish/tasks/{taskId}/retry",
+                      "DELETE /api/v2/channels/publish/tasks/{taskId}",
+                      "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at",
+                      "GET /api/v2/channels/publish/records",
+                      "GET /api/v2/channels/publish/records/queued",
+                      "GET /api/v2/channels/publish/records/published",
+                      "DELETE /api/v2/channels/publish/records/{recordId}",
+                      "GET /api/v2/channels/publish/records/{recordId}",
+                      "GET /api/v2/channels/publish/records/{recordId}/user-action",
+                      "POST /api/v2/channels/douyin/open/offline-qr",
+                      "POST /api/v2/channels/rednote/open/offline-qr/share-config"
+                    ]
+                  },
+                  {
+                    "group": "渠道管理/平台",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/platforms",
+                      "GET /api/v2/channels/platforms/{platform}/publish-options"
+                    ]
+                  },
+                  {
+                    "group": "渠道管理/作品",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/works/link-info",
+                      "GET /api/v2/channels/works/{platform}",
+                      "GET /api/v2/channels/works/{platform}/{platformWorkId}",
+                      "GET /api/v2/channels/works/{platform}/{platformWorkId}/analytics",
+                      "POST /api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify"
+                    ]
+                  },
+                  {
+                    "group": "渠道管理/账号分组",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/account-groups",
+                      "POST /api/v2/channels/account-groups",
+                      "DELETE /api/v2/channels/account-groups",
+                      "PATCH /api/v2/channels/account-groups/{groupId}",
+                      "PATCH /api/v2/channels/account-groups/{groupId}/accounts/rank"
+                    ]
+                  },
+                  {
+                    "group": "渠道管理/授权",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/accounts/auth/{platform}",
+                      "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}"
+                    ]
+                  },
+                  {
+                    "group": "资源管理",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/assets/uploadSign",
+                      "POST /api/assets/{id}/confirm"
+                    ]
+                  }
                 ]
               }
             ]
@@ -694,144 +714,161 @@
             "icon": "code",
             "groups": [
               {
-                "group": "Overview",
+                "group": "Endpoint Groups",
                 "pages": [
-                  "en/api/index"
-                ]
-              },
-              {
-                "group": "AI Services/Video Generation",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/ai/models/video/generation",
-                  "POST /api/ai/video/generations",
-                  "GET /api/ai/video/generations",
-                  "GET /api/ai/video/generations/{taskId}",
-                  "POST /api/ai/v3/contents/generations/tasks",
-                  "GET /api/ai/v3/contents/generations/tasks/{taskId}"
-                ]
-              },
-              {
-                "group": "AI Services/Real-person Assets",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "POST /api/ai/volcengine/assets/groups",
-                  "GET /api/ai/volcengine/assets/groups",
-                  "GET /api/ai/volcengine/assets/groups/{groupId}",
-                  "PATCH /api/ai/volcengine/assets/groups/{groupId}",
-                  "DELETE /api/ai/volcengine/assets/groups/{groupId}",
-                  "POST /api/ai/volcengine/assets/items",
-                  "GET /api/ai/volcengine/assets/items",
-                  "GET /api/ai/volcengine/assets/items/{assetId}",
-                  "PATCH /api/ai/volcengine/assets/items/{assetId}",
-                  "DELETE /api/ai/volcengine/assets/items/{assetId}",
-                  "POST /api/ai/volcengine/assets/visual-validation-sessions",
-                  "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
-                ]
-              },
-              {
-                "group": "AI Services/Image Generation",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/ai/models/image/generation",
-                  "GET /api/ai/models/image/edit",
-                  "POST /api/ai/image/generate",
-                  "POST /api/ai/image/edit",
-                  "POST /api/ai/image/generate/async",
-                  "POST /api/ai/image/edit/async",
-                  "GET /api/ai/image/task/{logId}",
-                  "POST /api/ai/images/generations",
-                  "POST /api/ai/images/edits"
-                ]
-              },
-              {
-                "group": "AI Services/Large Language Models",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/ai/models/chat",
-                  "POST /api/ai/chat/completions",
-                  "POST /api/ai/v1/messages",
-                  "POST /api/ai/v1beta/models/{model}:generateContent",
-                  "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
-                ]
-              },
-              {
-                "group": "Channel Management/Accounts",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/accounts",
-                  "DELETE /api/v2/channels/accounts",
-                  "GET /api/v2/channels/accounts/{accountId}",
-                  "DELETE /api/v2/channels/accounts/{accountId}",
-                  "GET /api/v2/channels/accounts/{accountId}/auth-status",
-                  "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
-                  "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values"
-                ]
-              },
-              {
-                "group": "Channel Management/Publishing",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "POST /api/v2/channels/publish/flows",
-                  "GET /api/v2/channels/publish/flows/{flowId}",
-                  "POST /api/v2/channels/publish/tasks/{taskId}/publish-now",
-                  "POST /api/v2/channels/publish/tasks/{taskId}/retry",
-                  "DELETE /api/v2/channels/publish/tasks/{taskId}",
-                  "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at",
-                  "GET /api/v2/channels/publish/records",
-                  "GET /api/v2/channels/publish/records/queued",
-                  "GET /api/v2/channels/publish/records/published",
-                  "DELETE /api/v2/channels/publish/records/{recordId}",
-                  "GET /api/v2/channels/publish/records/{recordId}",
-                  "GET /api/v2/channels/publish/records/{recordId}/user-action",
-                  "POST /api/v2/channels/douyin/open/offline-qr",
-                  "POST /api/v2/channels/rednote/open/offline-qr/share-config"
-                ]
-              },
-              {
-                "group": "Channel Management/Platforms",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/platforms",
-                  "GET /api/v2/channels/platforms/{platform}/publish-options"
-                ]
-              },
-              {
-                "group": "Channel Management/Works",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/works/link-info",
-                  "GET /api/v2/channels/works/{platform}",
-                  "GET /api/v2/channels/works/{platform}/{platformWorkId}",
-                  "GET /api/v2/channels/works/{platform}/{platformWorkId}/analytics",
-                  "POST /api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify"
-                ]
-              },
-              {
-                "group": "Channel Management/Account Groups",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/account-groups",
-                  "POST /api/v2/channels/account-groups",
-                  "DELETE /api/v2/channels/account-groups",
-                  "PATCH /api/v2/channels/account-groups/{groupId}",
-                  "PATCH /api/v2/channels/account-groups/{groupId}/accounts/rank"
-                ]
-              },
-              {
-                "group": "Channel Management/Authorization",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "GET /api/v2/channels/accounts/auth/{platform}",
-                  "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}"
-                ]
-              },
-              {
-                "group": "Asset Management",
-                "openapi": "openapi/en/aitoearn.openapi.json",
-                "pages": [
-                  "POST /api/assets/uploadSign",
-                  "POST /api/assets/{id}/confirm"
+                  {
+                    "group": "Overview",
+                    "expanded": false,
+                    "pages": [
+                      "en/api/index"
+                    ]
+                  },
+                  {
+                    "group": "AI Services/Video Generation",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/ai/models/video/generation",
+                      "POST /api/ai/video/generations",
+                      "GET /api/ai/video/generations",
+                      "GET /api/ai/video/generations/{taskId}",
+                      "POST /api/ai/v3/contents/generations/tasks",
+                      "GET /api/ai/v3/contents/generations/tasks/{taskId}"
+                    ]
+                  },
+                  {
+                    "group": "AI Services/Real-person Assets",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/ai/volcengine/assets/groups",
+                      "GET /api/ai/volcengine/assets/groups",
+                      "GET /api/ai/volcengine/assets/groups/{groupId}",
+                      "PATCH /api/ai/volcengine/assets/groups/{groupId}",
+                      "DELETE /api/ai/volcengine/assets/groups/{groupId}",
+                      "POST /api/ai/volcengine/assets/items",
+                      "GET /api/ai/volcengine/assets/items",
+                      "GET /api/ai/volcengine/assets/items/{assetId}",
+                      "PATCH /api/ai/volcengine/assets/items/{assetId}",
+                      "DELETE /api/ai/volcengine/assets/items/{assetId}",
+                      "POST /api/ai/volcengine/assets/visual-validation-sessions",
+                      "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
+                    ]
+                  },
+                  {
+                    "group": "AI Services/Image Generation",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/ai/models/image/generation",
+                      "GET /api/ai/models/image/edit",
+                      "POST /api/ai/image/generate",
+                      "POST /api/ai/image/edit",
+                      "POST /api/ai/image/generate/async",
+                      "POST /api/ai/image/edit/async",
+                      "GET /api/ai/image/task/{logId}",
+                      "POST /api/ai/images/generations",
+                      "POST /api/ai/images/edits"
+                    ]
+                  },
+                  {
+                    "group": "AI Services/Large Language Models",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/ai/models/chat",
+                      "POST /api/ai/chat/completions",
+                      "POST /api/ai/v1/messages",
+                      "POST /api/ai/v1beta/models/{model}:generateContent",
+                      "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
+                    ]
+                  },
+                  {
+                    "group": "Channel Management/Accounts",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/accounts",
+                      "DELETE /api/v2/channels/accounts",
+                      "GET /api/v2/channels/accounts/{accountId}",
+                      "DELETE /api/v2/channels/accounts/{accountId}",
+                      "GET /api/v2/channels/accounts/{accountId}/auth-status",
+                      "GET /api/v2/channels/accounts/{accountId}/publish-options/{field}/values",
+                      "POST /api/v2/channels/accounts/{accountId}/publish-options/{field}/values"
+                    ]
+                  },
+                  {
+                    "group": "Channel Management/Publishing",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/v2/channels/publish/flows",
+                      "GET /api/v2/channels/publish/flows/{flowId}",
+                      "POST /api/v2/channels/publish/tasks/{taskId}/publish-now",
+                      "POST /api/v2/channels/publish/tasks/{taskId}/retry",
+                      "DELETE /api/v2/channels/publish/tasks/{taskId}",
+                      "PATCH /api/v2/channels/publish/tasks/{taskId}/publish-at",
+                      "GET /api/v2/channels/publish/records",
+                      "GET /api/v2/channels/publish/records/queued",
+                      "GET /api/v2/channels/publish/records/published",
+                      "DELETE /api/v2/channels/publish/records/{recordId}",
+                      "GET /api/v2/channels/publish/records/{recordId}",
+                      "GET /api/v2/channels/publish/records/{recordId}/user-action",
+                      "POST /api/v2/channels/douyin/open/offline-qr",
+                      "POST /api/v2/channels/rednote/open/offline-qr/share-config"
+                    ]
+                  },
+                  {
+                    "group": "Channel Management/Platforms",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/platforms",
+                      "GET /api/v2/channels/platforms/{platform}/publish-options"
+                    ]
+                  },
+                  {
+                    "group": "Channel Management/Works",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/works/link-info",
+                      "GET /api/v2/channels/works/{platform}",
+                      "GET /api/v2/channels/works/{platform}/{platformWorkId}",
+                      "GET /api/v2/channels/works/{platform}/{platformWorkId}/analytics",
+                      "POST /api/v2/channels/works/{platform}/{platformWorkId}/ownership/verify"
+                    ]
+                  },
+                  {
+                    "group": "Channel Management/Account Groups",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/account-groups",
+                      "POST /api/v2/channels/account-groups",
+                      "DELETE /api/v2/channels/account-groups",
+                      "PATCH /api/v2/channels/account-groups/{groupId}",
+                      "PATCH /api/v2/channels/account-groups/{groupId}/accounts/rank"
+                    ]
+                  },
+                  {
+                    "group": "Channel Management/Authorization",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/v2/channels/accounts/auth/{platform}",
+                      "GET /api/v2/channels/accounts/auth/{platform}/status/{sessionId}"
+                    ]
+                  },
+                  {
+                    "group": "Asset Management",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/assets/uploadSign",
+                      "POST /api/assets/{id}/confirm"
+                    ]
+                  }
                 ]
               }
             ]
