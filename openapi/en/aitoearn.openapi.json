@@ -45,6 +45,9 @@
     },
     {
       "name": "AI Services/Real-person Assets"
+    },
+    {
+      "name": "AI Services/Agent"
     }
   ],
   "paths": {
@@ -604,24 +607,6 @@
                       "timestamp": 1772099056662
                     }
                   },
-                  "aiVideoGenerationUnsupportedMode12310": {
-                    "summary": "AiVideoGenerationUnsupportedMode (12310)",
-                    "value": {
-                      "code": 12310,
-                      "message": "Unsupported video generation mode",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
-                  "invalidModel12300": {
-                    "summary": "InvalidModel (12300)",
-                    "value": {
-                      "code": 12300,
-                      "message": "Invalid AI model",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
-                  },
                   "materialGroupNotFound12801": {
                     "summary": "MaterialGroupNotFound (12801)",
                     "value": {
@@ -660,16 +645,6 @@
             }
           ],
           "responseCodes": [
-            {
-              "name": "AiVideoGenerationUnsupportedMode",
-              "code": 12310,
-              "message": "Unsupported video generation mode"
-            },
-            {
-              "name": "InvalidModel",
-              "code": 12300,
-              "message": "Invalid AI model"
-            },
             {
               "name": "MaterialGroupNotFound",
               "code": 12801,
@@ -814,15 +789,6 @@
                       "data": {},
                       "timestamp": 1772099056662
                     }
-                  },
-                  "invalidAiTaskId12302": {
-                    "summary": "InvalidAiTaskId (12302)",
-                    "value": {
-                      "code": 12302,
-                      "message": "Invalid AI task ID",
-                      "data": {},
-                      "timestamp": 1772099056662
-                    }
                   }
                 }
               }
@@ -852,13 +818,7 @@
               "method": "listVideoTasks"
             }
           ],
-          "responseCodes": [
-            {
-              "name": "InvalidAiTaskId",
-              "code": 12302,
-              "message": "Invalid AI task ID"
-            }
-          ],
+          "responseCodes": [],
           "rawResponse": false
         }
       }
@@ -7450,11 +7410,6 @@
               "message": "The channel account was not found or has been unbound. Reauthorize the platform account and try again."
             },
             {
-              "name": "ChannelPublishDuplicateItem",
-              "code": 15052,
-              "message": "{{platform}} account {{accountId}} has duplicate publishing items"
-            },
-            {
               "name": "ChannelPublishMixedRelayAndLocalAccounts",
               "code": 15087,
               "message": "Relay accounts and local accounts cannot be mixed in the same publishing process."
@@ -13145,24 +13100,13 @@
           "controllerMethod": "videoGeneration",
           "services": [
             {
-              "property": "volcengineVideoService",
-              "type": "VolcengineVideoService",
-              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
-              "method": "create"
+              "property": "videoService",
+              "type": "VideoService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
+              "method": "userVideoGenerationV2"
             }
           ],
-          "responseCodes": [
-            {
-              "name": "InvalidModel",
-              "code": 12300,
-              "message": "Invalid AI model"
-            },
-            {
-              "name": "UserCreditsInsufficient",
-              "code": 12001,
-              "message": "Insufficient User Credits"
-            }
-          ],
+          "responseCodes": [],
           "rawResponse": true
         }
       }
@@ -13256,7 +13200,7 @@
               "property": "volcengineVideoService",
               "type": "VolcengineVideoService",
               "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
-              "method": "getTask"
+              "method": "getCompatTaskStatus"
             }
           ],
           "responseCodes": [
@@ -15590,6 +15534,2097 @@
             }
           ],
           "rawResponse": false
+        }
+      }
+    },
+    "/api/agent/chat": {
+      "post": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Start Chat",
+        "description": "Start or continue an Agent chat with `X-Api-Key`. This endpoint does not accept `Authorization: Bearer <API Key>`.\n\nOmit `sessionId` to create a new session; `messages` must then include one `role=user` message. Pass `sessionId` to continue a session, submit a tool approval, or resume a waiting run. A session that is already running returns business code `18120`; use the resume endpoint instead.\n\nA successful response is an AI SDK UI Message SSE stream and is not wrapped in `{ code, data }`. After a new session title is generated, the stream includes `data-title`. When human approval is required, the stream includes `data-approval-cost`.",
+        "operationId": "AgentController_chat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "type": "string",
+                    "description": "Session ID. Omit it to create a new session."
+                  },
+                  "messages": {
+                    "type": "array",
+                    "description": "User messages or tool-approval responses submitted in this request. Required for a new session.",
+                    "default": [],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "tool"
+                          ],
+                          "description": "Message role. user is a user message, and tool is a tool-approval response."
+                        },
+                        "content": {
+                          "description": "A user message can be a string or an array of text/file parts. A tool message must be an array of tool-approval-response objects."
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "content"
+                      ],
+                      "additionalProperties": true
+                    }
+                  },
+                  "model": {
+                    "type": "string",
+                    "default": "auto",
+                    "description": "Model. Pass auto or a specific model ID. The default is auto."
+                  },
+                  "effort": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "low",
+                      "medium",
+                      "high",
+                      "xhigh",
+                      "max"
+                    ],
+                    "description": "Reasoning effort. The request fails when the model does not support the selected effort."
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "User IANA time zone, for example Asia/Shanghai."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "default": {
+                  "summary": "Request example",
+                  "value": {
+                    "messages": [
+                      {
+                        "role": "user",
+                        "content": "Write a short weekend cafe post."
+                      }
+                    ],
+                    "model": "auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Native third-party success response",
+                    "value": {
+                      "id": "AgentController_chat_example",
+                      "object": "response"
+                    }
+                  }
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "SSE streaming response."
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/post-api-agent-chat",
+          "metadata": {
+            "title": "Start Chat",
+            "sidebarTitle": "Start Chat"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "chat",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "chat"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionRunInProgress",
+              "code": 18120,
+              "message": "This agent session already has a run in progress"
+            }
+          ],
+          "rawResponse": true
+        }
+      }
+    },
+    "/api/agent/sessions": {
+      "get": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Session List",
+        "description": "List Agent sessions for the account that owns the current API Key.",
+        "operationId": "AgentController_listSessions",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number, starting from 1.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "description": "Page number, starting from 1."
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "description": "Items per page, from 1 to 1000.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 10,
+              "description": "Items per page, from 1 to 1000."
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "Search by session title. Length 1-200.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "Search by session title. Length 1-200."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "description": "Current page number."
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "description": "Items per page."
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total pages."
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "Total item count."
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Session ID."
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "Session title. It appears after the title is generated for a new session."
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "waiting_approval",
+                                  "waiting_task",
+                                  "waiting_resume",
+                                  "completed",
+                                  "cancelled"
+                                ],
+                                "description": "Session status. active means running, waiting_approval means waiting for tool approval, waiting_task means waiting for an async task, waiting_resume means waiting to resume, completed means finished, and cancelled means aborted."
+                              },
+                              "points": {
+                                "type": "number",
+                                "description": "Credits consumed by this session."
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Created at."
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Updated at."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "status",
+                              "points",
+                              "createdAt",
+                              "updatedAt"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "Data list."
+                        }
+                      },
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "totalPages",
+                        "total",
+                        "list"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "page": 1,
+                        "pageSize": 1,
+                        "totalPages": 1,
+                        "total": 1,
+                        "list": [
+                          {
+                            "id": "string",
+                            "status": "active",
+                            "points": 1,
+                            "createdAt": "2026-07-02T12:00:00.000Z",
+                            "updatedAt": "2026-07-02T12:00:00.000Z",
+                            "title": "string"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-agent-sessions",
+          "metadata": {
+            "title": "Session List",
+            "sidebarTitle": "Session List"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "listSessions",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "listSessionsWithPagination"
+            }
+          ],
+          "responseCodes": [],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/agent/sessions/{sessionId}": {
+      "get": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Session Details",
+        "description": "Get an Agent session owned by the account of the current API Key.",
+        "operationId": "AgentController_getSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Session ID.",
+            "schema": {
+              "type": "string",
+              "description": "Session ID."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Session ID."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Session title. It appears after the title is generated for a new session."
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "waiting_approval",
+                            "waiting_task",
+                            "waiting_resume",
+                            "completed",
+                            "cancelled"
+                          ],
+                          "description": "Session status. active means running, waiting_approval means waiting for tool approval, waiting_task means waiting for an async task, waiting_resume means waiting to resume, completed means finished, and cancelled means aborted."
+                        },
+                        "points": {
+                          "type": "number",
+                          "description": "Credits consumed by this session."
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Created at."
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Updated at."
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "status",
+                        "points",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "id": "string",
+                        "status": "active",
+                        "points": 1,
+                        "createdAt": "2026-07-02T12:00:00.000Z",
+                        "updatedAt": "2026-07-02T12:00:00.000Z",
+                        "title": "string"
+                      }
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "agentSessionNotFound18104": {
+                    "summary": "AgentSessionNotFound (18104)",
+                    "value": {
+                      "code": 18104,
+                      "message": "Agent session not found",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-agent-sessions-session-id",
+          "metadata": {
+            "title": "Session Details",
+            "sidebarTitle": "Session Details"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "getSession",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "getSessionDetail"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionNotFound",
+              "code": 18104,
+              "message": "Agent session not found"
+            }
+          ],
+          "rawResponse": false
+        }
+      },
+      "patch": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Update Session",
+        "description": "Update the session title. The title length is 1-100.",
+        "operationId": "AgentController_updateSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Session ID.",
+            "schema": {
+              "type": "string",
+              "description": "Session ID."
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "description": "Session title, length 1-100."
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "default": {
+                  "summary": "Request example",
+                  "value": {
+                    "title": "Weekend cafe notes"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Session ID."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Session title. It appears after the title is generated for a new session."
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "waiting_approval",
+                            "waiting_task",
+                            "waiting_resume",
+                            "completed",
+                            "cancelled"
+                          ],
+                          "description": "Session status. active means running, waiting_approval means waiting for tool approval, waiting_task means waiting for an async task, waiting_resume means waiting to resume, completed means finished, and cancelled means aborted."
+                        },
+                        "points": {
+                          "type": "number",
+                          "description": "Credits consumed by this session."
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Created at."
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Updated at."
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "status",
+                        "points",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "id": "string",
+                        "status": "active",
+                        "points": 1,
+                        "createdAt": "2026-07-02T12:00:00.000Z",
+                        "updatedAt": "2026-07-02T12:00:00.000Z",
+                        "title": "string"
+                      }
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "agentSessionNotFound18104": {
+                    "summary": "AgentSessionNotFound (18104)",
+                    "value": {
+                      "code": 18104,
+                      "message": "Agent session not found",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/patch-api-agent-sessions-session-id",
+          "metadata": {
+            "title": "Update Session",
+            "sidebarTitle": "Update Session"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "updateSession",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "updateSessionTitle"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionNotFound",
+              "code": 18104,
+              "message": "Agent session not found"
+            }
+          ],
+          "rawResponse": false
+        }
+      },
+      "delete": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Delete Session",
+        "description": "Delete an Agent session owned by the account of the current API Key.",
+        "operationId": "AgentController_deleteSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Session ID.",
+            "schema": {
+              "type": "string",
+              "description": "Session ID."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {}
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "agentSessionNotFound18104": {
+                    "summary": "AgentSessionNotFound (18104)",
+                    "value": {
+                      "code": 18104,
+                      "message": "Agent session not found",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/delete-api-agent-sessions-session-id",
+          "metadata": {
+            "title": "Delete Session",
+            "sidebarTitle": "Delete Session"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "deleteSession",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "deleteSession"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionNotFound",
+              "code": 18104,
+              "message": "Agent session not found"
+            }
+          ],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/agent/sessions/{sessionId}/messages": {
+      "get": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Message list",
+        "description": "Get the saved messages of a session. The response is a list of AI SDK UI Messages.",
+        "operationId": "AgentController_getSessionMessages",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Session ID.",
+            "schema": {
+              "type": "string",
+              "description": "Session ID."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Message ID."
+                          },
+                          "sessionId": {
+                            "type": "string",
+                            "description": "Owning session ID."
+                          },
+                          "runId": {
+                            "type": "string",
+                            "description": "Associated run ID."
+                          },
+                          "stepNumber": {
+                            "type": "integer",
+                            "description": "Associated step number, starting at 0."
+                          },
+                          "message": {
+                            "type": "object",
+                            "description": "AI SDK UI Message。",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "UI message ID."
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "system",
+                                  "user",
+                                  "assistant"
+                                ],
+                                "description": "Message role."
+                              },
+                              "parts": {
+                                "type": "array",
+                                "description": "Message parts. Fields vary by part type.",
+                                "items": {
+                                  "type": "object",
+                                  "additionalProperties": true
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "parts"
+                            ],
+                            "additionalProperties": true
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Created at."
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "sessionId",
+                          "message",
+                          "createdAt"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Session message list."
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": [
+                        {
+                          "id": "string",
+                          "sessionId": "string",
+                          "message": {
+                            "id": "string",
+                            "role": "system",
+                            "parts": [
+                              {}
+                            ]
+                          },
+                          "createdAt": "2026-07-02T12:00:00.000Z",
+                          "runId": "string",
+                          "stepNumber": 1
+                        }
+                      ]
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "agentSessionNotFound18104": {
+                    "summary": "AgentSessionNotFound (18104)",
+                    "value": {
+                      "code": 18104,
+                      "message": "Agent session not found",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-agent-sessions-session-id-messages",
+          "metadata": {
+            "title": "Message list",
+            "sidebarTitle": "Message list"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "getSessionMessages",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "listSessionMessages"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionNotFound",
+              "code": 18104,
+              "message": "Agent session not found"
+            }
+          ],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/agent/sessions/{sessionId}/resume": {
+      "get": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Resume Stream",
+        "description": "Replay an in-progress Agent session stream. Authenticate with `X-Api-Key`.\n\nThe `Last-Event-ID` header takes priority over the `lastEventId` query parameter. Both values are the SSE event ID bound to the current run. A completed session can be replayed only while the stream is still retained. An aborted session or an expired stream returns HTTP 204. The response is SSE and is not wrapped in `{ code, data }`.",
+        "operationId": "AgentController_resume",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Session ID.",
+            "schema": {
+              "type": "string",
+              "description": "Session ID."
+            }
+          },
+          {
+            "name": "lastEventId",
+            "in": "query",
+            "required": false,
+            "description": "Resume cursor. The Last-Event-ID header takes priority over this parameter.",
+            "schema": {
+              "type": "string",
+              "description": "Resume cursor. The Last-Event-ID header takes priority over this parameter."
+            }
+          },
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "required": false,
+            "description": "SSE resume cursor. It takes priority over the lastEventId query parameter.",
+            "schema": {
+              "type": "string",
+              "description": "SSE resume cursor. It takes priority over the lastEventId query parameter."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Native third-party success response",
+                    "value": {
+                      "id": "AgentController_resume_example",
+                      "object": "response"
+                    }
+                  }
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "SSE streaming response."
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-agent-sessions-session-id-resume",
+          "metadata": {
+            "title": "Resume Stream",
+            "sidebarTitle": "Resume Stream"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "resume",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "resume"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionNotFound",
+              "code": 18104,
+              "message": "Agent session not found"
+            },
+            {
+              "name": "AgentSessionRunInProgress",
+              "code": 18120,
+              "message": "This agent session already has a run in progress"
+            }
+          ],
+          "rawResponse": true
+        }
+      }
+    },
+    "/api/agent/sessions/{sessionId}/abort": {
+      "post": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Abort Session",
+        "description": "Abort a running or waiting Agent run. Repeated calls are safe. After success, the session status becomes cancelled.",
+        "operationId": "AgentController_abortRun",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "description": "Session ID.",
+            "schema": {
+              "type": "string",
+              "description": "Session ID."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {}
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "agentSessionNotFound18104": {
+                    "summary": "AgentSessionNotFound (18104)",
+                    "value": {
+                      "code": 18104,
+                      "message": "Agent session not found",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/post-api-agent-sessions-session-id-abort",
+          "metadata": {
+            "title": "Abort Session",
+            "sidebarTitle": "Abort Session"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "abortRun",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "abortRun"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "AgentSessionNotFound",
+              "code": 18104,
+              "message": "Agent session not found"
+            }
+          ],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/agent/memories": {
+      "get": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Memory List",
+        "description": "List Agent memories for the account that owns the current API Key.",
+        "operationId": "AgentController_listMemories",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number, starting from 1.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "description": "Page number, starting from 1."
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "description": "Items per page, from 1 to 1000.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 10,
+              "description": "Items per page, from 1 to 1000."
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "description": "Filter by memory type.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "semantic",
+                "procedural",
+                "episodic"
+              ],
+              "description": "Filter by memory type."
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "Search memory text. Length 1-200.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "Search memory text. Length 1-200."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "description": "Current page number."
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "description": "Items per page."
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total pages."
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "Total item count."
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Memory ID."
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "semantic",
+                                  "procedural",
+                                  "episodic"
+                                ],
+                                "description": "Memory type. semantic is semantic memory, procedural is procedural memory, and episodic is episodic memory."
+                              },
+                              "parts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text",
+                                        "image",
+                                        "video",
+                                        "audio",
+                                        "file"
+                                      ],
+                                      "description": "Memory part type."
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "description": "Text content. Returned only for text parts."
+                                    },
+                                    "url": {
+                                      "type": "string",
+                                      "description": "Media or file URL. Returned only for media or file parts."
+                                    }
+                                  },
+                                  "required": [
+                                    "type"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "description": "Transcribed memory parts."
+                              },
+                              "inputParts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text",
+                                        "image",
+                                        "video",
+                                        "audio",
+                                        "file"
+                                      ],
+                                      "description": "Memory part type."
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "description": "Text content. Returned only for text parts."
+                                    },
+                                    "url": {
+                                      "type": "string",
+                                      "description": "Media or file URL. Returned only for media or file parts."
+                                    }
+                                  },
+                                  "required": [
+                                    "type"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "description": "Original memory parts before transcription."
+                              },
+                              "reason": {
+                                "type": "string",
+                                "description": "Reason this memory was written."
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Created at."
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Updated at."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "type",
+                              "parts",
+                              "createdAt",
+                              "updatedAt"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "Data list."
+                        }
+                      },
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "totalPages",
+                        "total",
+                        "list"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "page": 1,
+                        "pageSize": 1,
+                        "totalPages": 1,
+                        "total": 1,
+                        "list": [
+                          {
+                            "id": "string",
+                            "type": "semantic",
+                            "parts": [
+                              {
+                                "type": "text",
+                                "text": "string",
+                                "url": "string"
+                              }
+                            ],
+                            "createdAt": "2026-07-02T12:00:00.000Z",
+                            "updatedAt": "2026-07-02T12:00:00.000Z",
+                            "inputParts": [
+                              {
+                                "type": "text",
+                                "text": "string",
+                                "url": "string"
+                              }
+                            ],
+                            "reason": "string"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-agent-memories",
+          "metadata": {
+            "title": "Memory List",
+            "sidebarTitle": "Memory List"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "listMemories",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "listMemoriesWithPagination"
+            }
+          ],
+          "responseCodes": [],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/agent/memories/{memoryId}": {
+      "get": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Memory Details",
+        "description": "Get one Agent memory owned by the account of the current API Key.",
+        "operationId": "AgentController_getMemory",
+        "parameters": [
+          {
+            "name": "memoryId",
+            "in": "path",
+            "required": true,
+            "description": "Memory ID.",
+            "schema": {
+              "type": "string",
+              "description": "Memory ID."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Memory ID."
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "semantic",
+                            "procedural",
+                            "episodic"
+                          ],
+                          "description": "Memory type. semantic is semantic memory, procedural is procedural memory, and episodic is episodic memory."
+                        },
+                        "parts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "text",
+                                  "image",
+                                  "video",
+                                  "audio",
+                                  "file"
+                                ],
+                                "description": "Memory part type."
+                              },
+                              "text": {
+                                "type": "string",
+                                "description": "Text content. Returned only for text parts."
+                              },
+                              "url": {
+                                "type": "string",
+                                "description": "Media or file URL. Returned only for media or file parts."
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "Transcribed memory parts."
+                        },
+                        "inputParts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "text",
+                                  "image",
+                                  "video",
+                                  "audio",
+                                  "file"
+                                ],
+                                "description": "Memory part type."
+                              },
+                              "text": {
+                                "type": "string",
+                                "description": "Text content. Returned only for text parts."
+                              },
+                              "url": {
+                                "type": "string",
+                                "description": "Media or file URL. Returned only for media or file parts."
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "Original memory parts before transcription."
+                        },
+                        "reason": {
+                          "type": "string",
+                          "description": "Reason this memory was written."
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Created at."
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Updated at."
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "parts",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {
+                        "id": "string",
+                        "type": "semantic",
+                        "parts": [
+                          {
+                            "type": "text",
+                            "text": "string",
+                            "url": "string"
+                          }
+                        ],
+                        "createdAt": "2026-07-02T12:00:00.000Z",
+                        "updatedAt": "2026-07-02T12:00:00.000Z",
+                        "inputParts": [
+                          {
+                            "type": "text",
+                            "text": "string",
+                            "url": "string"
+                          }
+                        ],
+                        "reason": "string"
+                      }
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/get-api-agent-memories-memory-id",
+          "metadata": {
+            "title": "Memory Details",
+            "sidebarTitle": "Memory Details"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "getMemory",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "getMemoryDetail"
+            }
+          ],
+          "responseCodes": [],
+          "rawResponse": false
+        }
+      },
+      "delete": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Delete Memory",
+        "description": "Delete one Agent memory owned by the account of the current API Key.",
+        "operationId": "AgentController_deleteMemory",
+        "parameters": [
+          {
+            "name": "memoryId",
+            "in": "path",
+            "required": true,
+            "description": "Memory ID.",
+            "schema": {
+              "type": "string",
+              "description": "Memory ID."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been processed by the service. Business success is determined by whether the response body has code === 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "Business status code. 0 means success; non-zero means a business error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "Request ID."
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "Error response timestamp in Unix milliseconds."
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "message": "Request succeeded",
+                      "data": {}
+                    }
+                  },
+                  "validationFailed10002": {
+                    "summary": "ValidationFailed (10002)",
+                    "value": {
+                      "code": 10002,
+                      "message": "Parameter validation failed",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "Unauthenticated or invalid API Key",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/delete-api-agent-memories-memory-id",
+          "metadata": {
+            "title": "Delete Memory",
+            "sidebarTitle": "Delete Memory"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+          "controllerMethod": "deleteMemory",
+          "services": [
+            {
+              "property": "agentService",
+              "type": "AgentService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+              "method": "deleteMemory"
+            }
+          ],
+          "responseCodes": [],
+          "rawResponse": false
+        }
+      }
+    },
+    "/api/ai/agent/mcp": {
+      "post": {
+        "tags": [
+          "AI Services/Agent"
+        ],
+        "summary": "Call MCP",
+        "description": "Stateless MCP Streamable HTTP endpoint for Agent tools. The response is JSON.\n\nSend `X-Api-Key`, or `Authorization: Bearer <API Key>`. A missing or invalid key does not return 401. The session falls back to anonymous and only exposes `aitoearn_connection_help`. The legacy path `POST /api/unified/mcp` is forwarded to this endpoint.",
+        "operationId": "AgentMcpController_handleStreamablePost",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "MCP JSON-RPC request body.",
+                "additionalProperties": true
+              },
+              "examples": {
+                "default": {
+                  "summary": "Request example",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/list"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Native third-party protocol response or SSE data, not wrapped in the AiToEarn common response envelope.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Native third-party protocol response, not wrapped in the AiToEarn common response envelope."
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Native third-party success response",
+                    "value": {
+                      "id": "AgentMcpController_handleStreamablePost_example",
+                      "object": "response"
+                    }
+                  }
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "SSE streaming response."
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/en/api-reference/post-api-ai-agent-mcp",
+          "metadata": {
+            "title": "Call MCP",
+            "sidebarTitle": "Call MCP"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/mcp/agent-mcp.controller.ts",
+          "controllerMethod": "handleStreamablePost",
+          "services": [
+            {
+              "property": "agentMcpService",
+              "type": "AgentMcpService",
+              "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/mcp/agent-mcp.service.ts",
+              "method": "handleStreamablePost"
+            }
+          ],
+          "responseCodes": [],
+          "rawResponse": true
         }
       }
     }

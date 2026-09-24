@@ -328,6 +328,54 @@
     {
       "source": "/api-reference/ai-服务真人素材/完成真人认证",
       "destination": "/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/发起对话",
+      "destination": "/api-reference/post-api-agent-chat"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/会话列表",
+      "destination": "/api-reference/get-api-agent-sessions"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/会话详情",
+      "destination": "/api-reference/get-api-agent-sessions-session-id"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/修改会话",
+      "destination": "/api-reference/patch-api-agent-sessions-session-id"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/删除会话",
+      "destination": "/api-reference/delete-api-agent-sessions-session-id"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/消息列表",
+      "destination": "/api-reference/get-api-agent-sessions-session-id-messages"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/断点续播",
+      "destination": "/api-reference/get-api-agent-sessions-session-id-resume"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/中止会话",
+      "destination": "/api-reference/post-api-agent-sessions-session-id-abort"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/记忆列表",
+      "destination": "/api-reference/get-api-agent-memories"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/记忆详情",
+      "destination": "/api-reference/get-api-agent-memories-memory-id"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/删除记忆",
+      "destination": "/api-reference/delete-api-agent-memories-memory-id"
+    },
+    {
+      "source": "/api-reference/ai-服务agent/调用-mcp",
+      "destination": "/api-reference/post-api-ai-agent-mcp"
     }
   ],
   "errors": {
@@ -493,6 +541,25 @@
                       "POST /api/ai/v1/messages",
                       "POST /api/ai/v1beta/models/{model}:generateContent",
                       "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
+                    ]
+                  },
+                  {
+                    "group": "AI 服务/Agent",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/agent/chat",
+                      "GET /api/agent/sessions",
+                      "GET /api/agent/sessions/{sessionId}",
+                      "PATCH /api/agent/sessions/{sessionId}",
+                      "DELETE /api/agent/sessions/{sessionId}",
+                      "GET /api/agent/sessions/{sessionId}/messages",
+                      "GET /api/agent/sessions/{sessionId}/resume",
+                      "POST /api/agent/sessions/{sessionId}/abort",
+                      "GET /api/agent/memories",
+                      "GET /api/agent/memories/{memoryId}",
+                      "DELETE /api/agent/memories/{memoryId}",
+                      "POST /api/ai/agent/mcp"
                     ]
                   },
                   {
@@ -781,6 +848,25 @@
                       "POST /api/ai/v1/messages",
                       "POST /api/ai/v1beta/models/{model}:generateContent",
                       "POST /api/ai/v1beta/models/{model}:streamGenerateContent"
+                    ]
+                  },
+                  {
+                    "group": "AI Services/Agent",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "POST /api/agent/chat",
+                      "GET /api/agent/sessions",
+                      "GET /api/agent/sessions/{sessionId}",
+                      "PATCH /api/agent/sessions/{sessionId}",
+                      "DELETE /api/agent/sessions/{sessionId}",
+                      "GET /api/agent/sessions/{sessionId}/messages",
+                      "GET /api/agent/sessions/{sessionId}/resume",
+                      "POST /api/agent/sessions/{sessionId}/abort",
+                      "GET /api/agent/memories",
+                      "GET /api/agent/memories/{memoryId}",
+                      "DELETE /api/agent/memories/{memoryId}",
+                      "POST /api/ai/agent/mcp"
                     ]
                   },
                   {

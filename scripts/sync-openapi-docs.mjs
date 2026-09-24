@@ -1042,6 +1042,308 @@ function addVolcengineAssetsEndpoints(spec) {
   }
 }
 
+function agentSessionSchema() {
+  return {
+    type: 'object',
+    properties: {
+      id: { type: 'string', description: '会话 ID。' },
+      title: { type: 'string', description: '会话标题。新会话标题生成后才会出现。' },
+      status: {
+        type: 'string',
+        enum: ['active', 'waiting_approval', 'waiting_task', 'waiting_resume', 'completed', 'cancelled'],
+        description: '会话状态。active 为进行中，waiting_approval 为等待工具审批，waiting_task 为等待异步任务，waiting_resume 为等待续跑，completed 为已完成，cancelled 为已中止。',
+      },
+      points: { type: 'number', description: '该会话累计消耗的积分。' },
+      createdAt: { type: 'string', format: 'date-time', description: '创建时间。' },
+      updatedAt: { type: 'string', format: 'date-time', description: '更新时间。' },
+    },
+    required: ['id', 'status', 'points', 'createdAt', 'updatedAt'],
+    additionalProperties: false,
+  }
+}
+
+function agentMemoryPartSchema() {
+  return {
+    type: 'object',
+    properties: {
+      type: {
+        type: 'string',
+        enum: ['text', 'image', 'video', 'audio', 'file'],
+        description: '记忆分段类型。',
+      },
+      text: { type: 'string', description: '文本内容。仅文本分段返回。' },
+      url: { type: 'string', description: '媒体或文件 URL。仅媒体或文件分段返回。' },
+    },
+    required: ['type'],
+    additionalProperties: false,
+  }
+}
+
+function agentMemorySchema() {
+  return {
+    type: 'object',
+    properties: {
+      id: { type: 'string', description: '记忆 ID。' },
+      type: {
+        type: 'string',
+        enum: ['semantic', 'procedural', 'episodic'],
+        description: '记忆类型。semantic 为语义记忆，procedural 为流程记忆，episodic 为情景记忆。',
+      },
+      parts: {
+        type: 'array',
+        items: agentMemoryPartSchema(),
+        description: '转写后的记忆分段。',
+      },
+      inputParts: {
+        type: 'array',
+        items: agentMemoryPartSchema(),
+        description: '转写前的原始记忆分段。',
+      },
+      reason: { type: 'string', description: '写入这条记忆的理由。' },
+      createdAt: { type: 'string', format: 'date-time', description: '创建时间。' },
+      updatedAt: { type: 'string', format: 'date-time', description: '更新时间。' },
+    },
+    required: ['id', 'type', 'parts', 'createdAt', 'updatedAt'],
+    additionalProperties: false,
+  }
+}
+
+function agentMessageSchema() {
+  return {
+    type: 'object',
+    properties: {
+      id: { type: 'string', description: '消息 ID。' },
+      sessionId: { type: 'string', description: '所属会话 ID。' },
+      runId: { type: 'string', description: '关联的运行 ID。' },
+      stepNumber: { type: 'integer', description: '关联的步骤序号，从 0 开始。' },
+      message: {
+        type: 'object',
+        description: 'AI SDK UI Message。',
+        properties: {
+          id: { type: 'string', description: 'UI 消息 ID。' },
+          role: {
+            type: 'string',
+            enum: ['system', 'user', 'assistant'],
+            description: '消息角色。',
+          },
+          parts: {
+            type: 'array',
+            description: '消息分段。具体字段随分段类型变化。',
+            items: { type: 'object', additionalProperties: true },
+          },
+        },
+        required: ['id', 'role', 'parts'],
+        additionalProperties: true,
+      },
+      createdAt: { type: 'string', format: 'date-time', description: '创建时间。' },
+    },
+    required: ['id', 'sessionId', 'message', 'createdAt'],
+    additionalProperties: false,
+  }
+}
+
+function addAgentEndpoints(spec) {
+  spec.paths = spec.paths || {}
+
+  const tag = 'AI 服务/Agent'
+  const sessionIdParameter = openApiParameter('sessionId', 'path', '会话 ID。', { type: 'string' }, true)
+  const memoryIdParameter = openApiParameter('memoryId', 'path', '记忆 ID。', { type: 'string' }, true)
+  const pageParameter = openApiParameter('page', 'query', '页码，从 1 开始。', { type: 'integer', minimum: 1, default: 1 })
+  const pageSizeParameter = openApiParameter('pageSize', 'query', '每页数量，取值范围 1-1000。', { type: 'integer', minimum: 1, maximum: 1000, default: 10 })
+  const emptyData = { type: 'object', additionalProperties: false }
+
+  spec.paths['/api/agent/chat'] = {
+    post: {
+      tags: [tag],
+      summary: '发起对话',
+      description: '使用 `X-Api-Key` 发起或继续 Agent 对话。本接口不接受 `Authorization: Bearer <API Key>`。\n\n省略 `sessionId` 时创建新会话，此时 `messages` 必须包含一条 `role=user` 的消息。继续已有会话、提交工具审批或等待续跑时必须传入 `sessionId`。运行中的会话返回业务码 `18120`，请改用断点续播接口。\n\n成功响应是 AI SDK UI Message SSE 流，不使用 `{ code, data }` 包裹。新会话标题生成后，流内会写入 `data-title`。需要人工审批时，流内会写入 `data-approval-cost`。',
+      operationId: 'AgentController_chat',
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          sessionId: { type: 'string', description: '会话 ID。省略时创建新会话。' },
+          messages: {
+            type: 'array',
+            description: '本次提交的用户消息或工具审批回执。新会话不能为空。',
+            default: [],
+            items: {
+              type: 'object',
+              properties: {
+                role: { type: 'string', enum: ['user', 'tool'], description: '消息角色。user 为用户消息，tool 为工具审批回执。' },
+                content: {
+                  description: '用户消息可以是字符串，或 text/file 分段数组。工具消息必须是 tool-approval-response 数组。',
+                },
+              },
+              required: ['role', 'content'],
+              additionalProperties: true,
+            },
+          },
+          model: { type: 'string', default: 'auto', description: '模型。传 auto 或具体模型 ID，默认 auto。' },
+          effort: {
+            type: 'string',
+            enum: ['none', 'low', 'medium', 'high', 'xhigh', 'max'],
+            description: '推理强度。模型不支持该强度时会失败。',
+          },
+          timezone: { type: 'string', description: '用户 IANA 时区，例如 Asia/Shanghai。' },
+        },
+        additionalProperties: false,
+      }, {
+        messages: [{ role: 'user', content: 'Write a short weekend cafe post.' }],
+        model: 'auto',
+      }),
+      responses: sourceResponse(emptyData),
+    },
+  }
+
+  spec.paths['/api/agent/sessions'] = {
+    get: {
+      tags: [tag],
+      summary: '会话列表',
+      description: '分页查询当前 API Key 所属账号的 Agent 会话。',
+      operationId: 'AgentController_listSessions',
+      parameters: [
+        pageParameter,
+        pageSizeParameter,
+        openApiParameter('keyword', 'query', '按会话标题检索，长度 1-200。', { type: 'string', minLength: 1, maxLength: 200 }),
+      ],
+      responses: sourceResponse(paginationSchema(agentSessionSchema())),
+    },
+  }
+
+  spec.paths['/api/agent/sessions/{sessionId}'] = {
+    get: {
+      tags: [tag],
+      summary: '会话详情',
+      description: '获取当前 API Key 所属账号的 Agent 会话详情。',
+      operationId: 'AgentController_getSession',
+      parameters: [sessionIdParameter],
+      responses: sourceResponse(agentSessionSchema()),
+    },
+    patch: {
+      tags: [tag],
+      summary: '修改会话',
+      description: '修改会话标题。标题长度为 1-100。',
+      operationId: 'AgentController_updateSession',
+      parameters: [sessionIdParameter],
+      requestBody: jsonRequestBody({
+        type: 'object',
+        properties: {
+          title: { type: 'string', minLength: 1, maxLength: 100, description: '会话标题，长度 1-100。' },
+        },
+        required: ['title'],
+        additionalProperties: false,
+      }, { title: 'Weekend cafe notes' }),
+      responses: sourceResponse(agentSessionSchema()),
+    },
+    delete: {
+      tags: [tag],
+      summary: '删除会话',
+      description: '删除当前 API Key 所属账号的 Agent 会话。',
+      operationId: 'AgentController_deleteSession',
+      parameters: [sessionIdParameter],
+      responses: sourceResponse(emptyData),
+    },
+  }
+
+  spec.paths['/api/agent/sessions/{sessionId}/messages'] = {
+    get: {
+      tags: [tag],
+      summary: '消息列表',
+      description: '获取指定会话已保存的消息。返回的是 AI SDK UI Message 列表。',
+      operationId: 'AgentController_getSessionMessages',
+      parameters: [sessionIdParameter],
+      responses: sourceResponse({
+        type: 'array',
+        items: agentMessageSchema(),
+        description: '会话消息列表。',
+      }),
+    },
+  }
+
+  spec.paths['/api/agent/sessions/{sessionId}/resume'] = {
+    get: {
+      tags: [tag],
+      summary: '断点续播',
+      description: '重放进行中的 Agent 会话流。使用 `X-Api-Key` 鉴权。\n\n`Last-Event-ID` 请求头优先于查询参数 `lastEventId`，两者都是与本次运行绑定的 SSE 事件 ID。已完成会话只在流仍保留时可以重放；已中止或流已过期时返回 HTTP 204。响应是 SSE，不使用 `{ code, data }` 包裹。',
+      operationId: 'AgentController_resume',
+      parameters: [
+        sessionIdParameter,
+        openApiParameter('lastEventId', 'query', '断点续播游标。请求头 Last-Event-ID 优先于本参数。', { type: 'string' }),
+        openApiParameter('Last-Event-ID', 'header', 'SSE 断点续播游标，优先于查询参数 lastEventId。', { type: 'string' }),
+      ],
+      responses: sourceResponse(emptyData),
+    },
+  }
+
+  spec.paths['/api/agent/sessions/{sessionId}/abort'] = {
+    post: {
+      tags: [tag],
+      summary: '中止会话',
+      description: '中止进行中或等待中的 Agent 运行。重复调用是安全的。成功后会话状态变为 cancelled。',
+      operationId: 'AgentController_abortRun',
+      parameters: [sessionIdParameter],
+      responses: sourceResponse(emptyData),
+    },
+  }
+
+  spec.paths['/api/agent/memories'] = {
+    get: {
+      tags: [tag],
+      summary: '记忆列表',
+      description: '分页查询当前 API Key 所属账号的 Agent 记忆。',
+      operationId: 'AgentController_listMemories',
+      parameters: [
+        pageParameter,
+        pageSizeParameter,
+        openApiParameter('type', 'query', '按记忆类型筛选。', {
+          type: 'string',
+          enum: ['semantic', 'procedural', 'episodic'],
+        }),
+        openApiParameter('keyword', 'query', '按记忆文本检索，长度 1-200。', { type: 'string', minLength: 1, maxLength: 200 }),
+      ],
+      responses: sourceResponse(paginationSchema(agentMemorySchema())),
+    },
+  }
+
+  spec.paths['/api/agent/memories/{memoryId}'] = {
+    get: {
+      tags: [tag],
+      summary: '记忆详情',
+      description: '获取当前 API Key 所属账号的一条 Agent 记忆。',
+      operationId: 'AgentController_getMemory',
+      parameters: [memoryIdParameter],
+      responses: sourceResponse(agentMemorySchema()),
+    },
+    delete: {
+      tags: [tag],
+      summary: '删除记忆',
+      description: '删除当前 API Key 所属账号的一条 Agent 记忆。',
+      operationId: 'AgentController_deleteMemory',
+      parameters: [memoryIdParameter],
+      responses: sourceResponse(emptyData),
+    },
+  }
+
+  spec.paths['/api/ai/agent/mcp'] = {
+    post: {
+      tags: [tag],
+      summary: '调用 MCP',
+      description: 'Agent 工具的 MCP Streamable HTTP 端点，无状态，响应为 JSON。\n\n可用 `X-Api-Key`，也可以使用 `Authorization: Bearer <API Key>`。Key 缺失或无效时不会返回 401，而是降级为匿名会话，只暴露 `aitoearn_connection_help`。旧地址 `POST /api/unified/mcp` 会转发到本接口。',
+      operationId: 'AgentMcpController_handleStreamablePost',
+      requestBody: jsonRequestBody({
+        type: 'object',
+        description: 'MCP JSON-RPC 请求体。',
+        additionalProperties: true,
+      }, {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'tools/list',
+      }),
+      responses: sourceResponse(emptyData),
+    },
+  }
+}
+
 function addOfflineCheckinEndpoints(spec) {
   spec.paths = spec.paths || {}
 
@@ -1466,10 +1768,12 @@ function buildNavigationGroups(endpoints, targetSpecRef) {
     'AI 服务/真人素材',
     'AI 服务/图像生成',
     'AI 服务/大语言模型',
+    'AI 服务/Agent',
     'AI Services/Video Generation',
     'AI Services/Real-person Assets',
     'AI Services/Image Generation',
     'AI Services/Large Language Models',
+    'AI Services/Agent',
   ]
   groups.sort((left, right) => {
     const leftIndex = preferredOrder.indexOf(left.group)
@@ -1587,6 +1891,7 @@ const englishTextOverrides = {
   'AI 服务/视频生成': 'AI Services/Video Generation',
   'AI 服务/图像生成': 'AI Services/Image Generation',
   'AI 服务/大语言模型': 'AI Services/Large Language Models',
+  'AI 服务/Agent': 'AI Services/Agent',
   '渠道管理': 'Channel Management',
   '渠道管理/账号': 'Channel Management/Accounts',
   '渠道管理/内容发布': 'Channel Management/Publishing',
@@ -2041,9 +2346,10 @@ function generate() {
   addOfflineCheckinEndpoints(sourceSpec)
   addVolcengineVideoCompatibilityEndpoints(sourceSpec)
   addVolcengineAssetsEndpoints(sourceSpec)
+  addAgentEndpoints(sourceSpec)
   const endpoints = listEndpoints(sourceSpec)
-  if (endpoints.length !== 77) {
-    throw new Error(`Expected 77 endpoints, got ${endpoints.length}`)
+  if (endpoints.length !== 89) {
+    throw new Error(`Expected 89 endpoints, got ${endpoints.length}`)
   }
 
   const specOverrides = readJson(specOverridesPath)

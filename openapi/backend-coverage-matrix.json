@@ -67,26 +67,13 @@
     ],
     "serviceMethodsVisited": [
       "userVideoGeneration",
-      "getCandidateChannels",
-      "resolveRuntimeModel",
-      "dispatchVideoRequest"
+      "toCanonicalCommand",
+      "submitPrepared"
     ],
     "responseCodes": [
-      "AiVideoGenerationUnsupportedMode",
-      "InvalidModel",
       "MaterialGroupNotFound"
     ],
     "responseCodeValues": [
-      {
-        "name": "AiVideoGenerationUnsupportedMode",
-        "code": 12310,
-        "message": "不支持的视频生成模式"
-      },
-      {
-        "name": "InvalidModel",
-        "code": 12300,
-        "message": "无效的 AI 模型"
-      },
       {
         "name": "MaterialGroupNotFound",
         "code": 12801,
@@ -130,16 +117,8 @@
       "listVideoTasks",
       "transformToCommonResponse"
     ],
-    "responseCodes": [
-      "InvalidAiTaskId"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "InvalidAiTaskId",
-        "code": 12302,
-        "message": "无效的 AI 任务 ID"
-      }
-    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
     "customExceptions": [],
     "aiServiceTracked": true,
     "status": "completed",
@@ -1185,11 +1164,12 @@
       "isVideoUrl",
       "getUrlPathname",
       "resolveRecordMedia",
+      "mergeContext",
+      "resolveAutoComment",
       "enqueueQueuedRecords"
     ],
     "responseCodes": [
       "ChannelAccountNotFound",
-      "ChannelPublishDuplicateItem",
       "ChannelPublishMixedRelayAndLocalAccounts",
       "ChannelPublishPermalinkMissing",
       "ChannelPublishPlatformNotSupported",
@@ -1203,11 +1183,6 @@
         "name": "ChannelAccountNotFound",
         "code": 15021,
         "message": "未找到该渠道账号或账号已解绑，请重新授权该平台账号后重试"
-      },
-      {
-        "name": "ChannelPublishDuplicateItem",
-        "code": 15052,
-        "message": "{{platform}} 账号 {{accountId}} 存在重复发布项"
       },
       {
         "name": "ChannelPublishMixedRelayAndLocalAccounts",
@@ -2723,7 +2698,6 @@
     ],
     "serviceMethodsVisited": [
       "createShareConfig",
-      "getAccessToken",
       "generateNonce",
       "fetchAccessToken",
       "buildSignature"
@@ -2765,37 +2739,17 @@
     "apiKeyHeader": "Authorization",
     "serviceCalls": [
       {
-        "property": "volcengineVideoService",
-        "type": "VolcengineVideoService",
-        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
-        "method": "create"
+        "property": "videoService",
+        "type": "VideoService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/video.service.ts",
+        "method": "userVideoGenerationV2"
       }
     ],
     "serviceMethodsVisited": [
-      "create",
-      "normalizeRequest",
-      "extractInlineParams",
-      "buildSafetyIdentifier",
-      "getModelConfig",
-      "calculatePrice",
-      "getBillingMode"
+      "userVideoGenerationV2"
     ],
-    "responseCodes": [
-      "InvalidModel",
-      "UserCreditsInsufficient"
-    ],
-    "responseCodeValues": [
-      {
-        "name": "InvalidModel",
-        "code": 12300,
-        "message": "无效的 AI 模型"
-      },
-      {
-        "name": "UserCreditsInsufficient",
-        "code": 12001,
-        "message": "用户Credits不足"
-      }
-    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
     "customExceptions": [],
     "aiServiceTracked": true,
     "status": "completed",
@@ -2828,16 +2782,11 @@
         "property": "volcengineVideoService",
         "type": "VolcengineVideoService",
         "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/ai/video/volcengine/volcengine.service.ts",
-        "method": "getTask"
+        "method": "getCompatTaskStatus"
       }
     ],
     "serviceMethodsVisited": [
-      "getTask",
-      "resolveChannel",
-      "callback",
-      "calculateActualPoints",
-      "getFailureMessage",
-      "enqueueTaskRefund"
+      "getCompatTaskStatus"
     ],
     "responseCodes": [
       "InvalidAiTaskId"
@@ -3389,5 +3338,537 @@
     "aiServiceTracked": true,
     "status": "completed",
     "notes": []
+  },
+  {
+    "index": 70,
+    "method": "POST",
+    "path": "/api/agent/chat",
+    "operationId": "AgentController_chat",
+    "tag": "AI 服务/Agent",
+    "summary": "发起对话",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "chat",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "chat"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "chat",
+      "prepareChat"
+    ],
+    "responseCodes": [
+      "AgentSessionRunInProgress"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionRunInProgress",
+        "code": 18120,
+        "message": "当前会话已有进行中的 Agent 运行"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
+  },
+  {
+    "index": 71,
+    "method": "GET",
+    "path": "/api/agent/sessions",
+    "operationId": "AgentController_listSessions",
+    "tag": "AI 服务/Agent",
+    "summary": "会话列表",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "listSessions",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "listSessionsWithPagination"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "listSessionsWithPagination"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 72,
+    "method": "GET",
+    "path": "/api/agent/sessions/{sessionId}",
+    "operationId": "AgentController_getSession",
+    "tag": "AI 服务/Agent",
+    "summary": "会话详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "getSession",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "getSessionDetail"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getSessionDetail"
+    ],
+    "responseCodes": [
+      "AgentSessionNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionNotFound",
+        "code": 18104,
+        "message": "Agent 会话未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 73,
+    "method": "PATCH",
+    "path": "/api/agent/sessions/{sessionId}",
+    "operationId": "AgentController_updateSession",
+    "tag": "AI 服务/Agent",
+    "summary": "修改会话",
+    "hasRequestBody": true,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "updateSession",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "updateSessionTitle"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "updateSessionTitle"
+    ],
+    "responseCodes": [
+      "AgentSessionNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionNotFound",
+        "code": 18104,
+        "message": "Agent 会话未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 74,
+    "method": "DELETE",
+    "path": "/api/agent/sessions/{sessionId}",
+    "operationId": "AgentController_deleteSession",
+    "tag": "AI 服务/Agent",
+    "summary": "删除会话",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "deleteSession",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "deleteSession"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "deleteSession"
+    ],
+    "responseCodes": [
+      "AgentSessionNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionNotFound",
+        "code": 18104,
+        "message": "Agent 会话未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 75,
+    "method": "GET",
+    "path": "/api/agent/sessions/{sessionId}/messages",
+    "operationId": "AgentController_getSessionMessages",
+    "tag": "AI 服务/Agent",
+    "summary": "消息列表",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "getSessionMessages",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "listSessionMessages"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "listSessionMessages"
+    ],
+    "responseCodes": [
+      "AgentSessionNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionNotFound",
+        "code": 18104,
+        "message": "Agent 会话未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 76,
+    "method": "GET",
+    "path": "/api/agent/sessions/{sessionId}/resume",
+    "operationId": "AgentController_resume",
+    "tag": "AI 服务/Agent",
+    "summary": "断点续播",
+    "hasRequestBody": false,
+    "parameterCount": 3,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "resume",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "resume"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "resume",
+      "resolveResumeRunId"
+    ],
+    "responseCodes": [
+      "AgentSessionNotFound",
+      "AgentSessionRunInProgress"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionNotFound",
+        "code": 18104,
+        "message": "Agent 会话未找到"
+      },
+      {
+        "name": "AgentSessionRunInProgress",
+        "code": 18120,
+        "message": "当前会话已有进行中的 Agent 运行"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
+  },
+  {
+    "index": 77,
+    "method": "POST",
+    "path": "/api/agent/sessions/{sessionId}/abort",
+    "operationId": "AgentController_abortRun",
+    "tag": "AI 服务/Agent",
+    "summary": "中止会话",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "abortRun",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "abortRun"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "abortRun"
+    ],
+    "responseCodes": [
+      "AgentSessionNotFound"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "AgentSessionNotFound",
+        "code": 18104,
+        "message": "Agent 会话未找到"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 78,
+    "method": "GET",
+    "path": "/api/agent/memories",
+    "operationId": "AgentController_listMemories",
+    "tag": "AI 服务/Agent",
+    "summary": "记忆列表",
+    "hasRequestBody": false,
+    "parameterCount": 4,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "listMemories",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "listMemoriesWithPagination"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "listMemoriesWithPagination"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 79,
+    "method": "GET",
+    "path": "/api/agent/memories/{memoryId}",
+    "operationId": "AgentController_getMemory",
+    "tag": "AI 服务/Agent",
+    "summary": "记忆详情",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "getMemory",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "getMemoryDetail"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getMemoryDetail"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 80,
+    "method": "DELETE",
+    "path": "/api/agent/memories/{memoryId}",
+    "operationId": "AgentController_deleteMemory",
+    "tag": "AI 服务/Agent",
+    "summary": "删除记忆",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentController",
+    "controllerMethod": "deleteMemory",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentService",
+        "type": "AgentService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/agent.service.ts",
+        "method": "deleteMemory"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "deleteMemory"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": []
+  },
+  {
+    "index": 81,
+    "method": "POST",
+    "path": "/api/ai/agent/mcp",
+    "operationId": "AgentMcpController_handleStreamablePost",
+    "tag": "AI 服务/Agent",
+    "summary": "调用 MCP",
+    "hasRequestBody": true,
+    "parameterCount": 0,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "AgentMcpController",
+    "controllerMethod": "handleStreamablePost",
+    "controllerFile": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/mcp/agent-mcp.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": true,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "agentMcpService",
+        "type": "AgentMcpService",
+        "file": "E:/vincent/works/yika/project/main/aitoearn-monorepo/apps/aitoearn-ai/src/core/agent/mcp/agent-mcp.service.ts",
+        "method": "handleStreamablePost"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "handleStreamablePost",
+      "createServer",
+      "listMcpTools",
+      "callTool",
+      "findBinding",
+      "createContext",
+      "createDiagnosticsServer"
+    ],
+    "responseCodes": [],
+    "responseCodeValues": [],
+    "customExceptions": [],
+    "aiServiceTracked": true,
+    "status": "completed",
+    "notes": [
+      "Raw third-party protocol response; not wrapped by ResponseInterceptor."
+    ]
   }
 ]
