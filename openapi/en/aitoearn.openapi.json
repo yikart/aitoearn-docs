@@ -15537,7 +15537,7 @@
         }
       }
     },
-    "/api/agent/chat": {
+    "/api/ai/agent/chat": {
       "post": {
         "tags": [
           "AI Services/Agent"
@@ -15653,7 +15653,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/post-api-agent-chat",
+          "href": "/en/api-reference/post-api-ai-agent-chat",
           "metadata": {
             "title": "Start Chat",
             "sidebarTitle": "Start Chat"
@@ -15686,7 +15686,7 @@
         }
       }
     },
-    "/api/agent/sessions": {
+    "/api/ai/agent/sessions": {
       "get": {
         "tags": [
           "AI Services/Agent"
@@ -15891,7 +15891,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-agent-sessions",
+          "href": "/en/api-reference/get-api-ai-agent-sessions",
           "metadata": {
             "title": "Session List",
             "sidebarTitle": "Session List"
@@ -15918,7 +15918,7 @@
         }
       }
     },
-    "/api/agent/sessions/{sessionId}": {
+    "/api/ai/agent/sessions/{sessionId}": {
       "get": {
         "tags": [
           "AI Services/Agent"
@@ -16064,7 +16064,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-agent-sessions-session-id",
+          "href": "/en/api-reference/get-api-ai-agent-sessions-session-id",
           "metadata": {
             "title": "Session Details",
             "sidebarTitle": "Session Details"
@@ -16271,7 +16271,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/patch-api-agent-sessions-session-id",
+          "href": "/en/api-reference/patch-api-ai-agent-sessions-session-id",
           "metadata": {
             "title": "Update Session",
             "sidebarTitle": "Update Session"
@@ -16398,7 +16398,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/delete-api-agent-sessions-session-id",
+          "href": "/en/api-reference/delete-api-ai-agent-sessions-session-id",
           "metadata": {
             "title": "Delete Session",
             "sidebarTitle": "Delete Session"
@@ -16431,7 +16431,7 @@
         }
       }
     },
-    "/api/agent/sessions/{sessionId}/messages": {
+    "/api/ai/agent/sessions/{sessionId}/messages": {
       "get": {
         "tags": [
           "AI Services/Agent"
@@ -16608,7 +16608,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-agent-sessions-session-id-messages",
+          "href": "/en/api-reference/get-api-ai-agent-sessions-session-id-messages",
           "metadata": {
             "title": "Message list",
             "sidebarTitle": "Message list"
@@ -16641,7 +16641,7 @@
         }
       }
     },
-    "/api/agent/sessions/{sessionId}/resume": {
+    "/api/ai/agent/sessions/{sessionId}/resume": {
       "get": {
         "tags": [
           "AI Services/Agent"
@@ -16711,7 +16711,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-agent-sessions-session-id-resume",
+          "href": "/en/api-reference/get-api-ai-agent-sessions-session-id-resume",
           "metadata": {
             "title": "Resume Stream",
             "sidebarTitle": "Resume Stream"
@@ -16749,7 +16749,7 @@
         }
       }
     },
-    "/api/agent/sessions/{sessionId}/abort": {
+    "/api/ai/agent/sessions/{sessionId}/abort": {
       "post": {
         "tags": [
           "AI Services/Agent"
@@ -16845,7 +16845,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/post-api-agent-sessions-session-id-abort",
+          "href": "/en/api-reference/post-api-ai-agent-sessions-session-id-abort",
           "metadata": {
             "title": "Abort Session",
             "sidebarTitle": "Abort Session"
@@ -16878,7 +16878,7 @@
         }
       }
     },
-    "/api/agent/memories": {
+    "/api/ai/agent/memories": {
       "get": {
         "tags": [
           "AI Services/Agent"
@@ -17168,7 +17168,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-agent-memories",
+          "href": "/en/api-reference/get-api-ai-agent-memories",
           "metadata": {
             "title": "Memory List",
             "sidebarTitle": "Memory List"
@@ -17195,7 +17195,7 @@
         }
       }
     },
-    "/api/agent/memories/{memoryId}": {
+    "/api/ai/agent/memories/{memoryId}": {
       "get": {
         "tags": [
           "AI Services/Agent"
@@ -17402,7 +17402,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/get-api-agent-memories-memory-id",
+          "href": "/en/api-reference/get-api-ai-agent-memories-memory-id",
           "metadata": {
             "title": "Memory Details",
             "sidebarTitle": "Memory Details"
@@ -17514,7 +17514,7 @@
           }
         },
         "x-mint": {
-          "href": "/en/api-reference/delete-api-agent-memories-memory-id",
+          "href": "/en/api-reference/delete-api-ai-agent-memories-memory-id",
           "metadata": {
             "title": "Delete Memory",
             "sidebarTitle": "Delete Memory"

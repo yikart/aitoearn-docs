@@ -331,47 +331,47 @@
     },
     {
       "source": "/api-reference/ai-服务agent/发起对话",
-      "destination": "/api-reference/post-api-agent-chat"
+      "destination": "/api-reference/post-api-ai-agent-chat"
     },
     {
       "source": "/api-reference/ai-服务agent/会话列表",
-      "destination": "/api-reference/get-api-agent-sessions"
+      "destination": "/api-reference/get-api-ai-agent-sessions"
     },
     {
       "source": "/api-reference/ai-服务agent/会话详情",
-      "destination": "/api-reference/get-api-agent-sessions-session-id"
+      "destination": "/api-reference/get-api-ai-agent-sessions-session-id"
     },
     {
       "source": "/api-reference/ai-服务agent/修改会话",
-      "destination": "/api-reference/patch-api-agent-sessions-session-id"
+      "destination": "/api-reference/patch-api-ai-agent-sessions-session-id"
     },
     {
       "source": "/api-reference/ai-服务agent/删除会话",
-      "destination": "/api-reference/delete-api-agent-sessions-session-id"
+      "destination": "/api-reference/delete-api-ai-agent-sessions-session-id"
     },
     {
       "source": "/api-reference/ai-服务agent/消息列表",
-      "destination": "/api-reference/get-api-agent-sessions-session-id-messages"
+      "destination": "/api-reference/get-api-ai-agent-sessions-session-id-messages"
     },
     {
       "source": "/api-reference/ai-服务agent/断点续播",
-      "destination": "/api-reference/get-api-agent-sessions-session-id-resume"
+      "destination": "/api-reference/get-api-ai-agent-sessions-session-id-resume"
     },
     {
       "source": "/api-reference/ai-服务agent/中止会话",
-      "destination": "/api-reference/post-api-agent-sessions-session-id-abort"
+      "destination": "/api-reference/post-api-ai-agent-sessions-session-id-abort"
     },
     {
       "source": "/api-reference/ai-服务agent/记忆列表",
-      "destination": "/api-reference/get-api-agent-memories"
+      "destination": "/api-reference/get-api-ai-agent-memories"
     },
     {
       "source": "/api-reference/ai-服务agent/记忆详情",
-      "destination": "/api-reference/get-api-agent-memories-memory-id"
+      "destination": "/api-reference/get-api-ai-agent-memories-memory-id"
     },
     {
       "source": "/api-reference/ai-服务agent/删除记忆",
-      "destination": "/api-reference/delete-api-agent-memories-memory-id"
+      "destination": "/api-reference/delete-api-ai-agent-memories-memory-id"
     },
     {
       "source": "/api-reference/ai-服务agent/调用-mcp",
@@ -548,17 +548,17 @@
                     "expanded": false,
                     "openapi": "openapi/zh/aitoearn.openapi.json",
                     "pages": [
-                      "POST /api/agent/chat",
-                      "GET /api/agent/sessions",
-                      "GET /api/agent/sessions/{sessionId}",
-                      "PATCH /api/agent/sessions/{sessionId}",
-                      "DELETE /api/agent/sessions/{sessionId}",
-                      "GET /api/agent/sessions/{sessionId}/messages",
-                      "GET /api/agent/sessions/{sessionId}/resume",
-                      "POST /api/agent/sessions/{sessionId}/abort",
-                      "GET /api/agent/memories",
-                      "GET /api/agent/memories/{memoryId}",
-                      "DELETE /api/agent/memories/{memoryId}",
+                      "POST /api/ai/agent/chat",
+                      "GET /api/ai/agent/sessions",
+                      "GET /api/ai/agent/sessions/{sessionId}",
+                      "PATCH /api/ai/agent/sessions/{sessionId}",
+                      "DELETE /api/ai/agent/sessions/{sessionId}",
+                      "GET /api/ai/agent/sessions/{sessionId}/messages",
+                      "GET /api/ai/agent/sessions/{sessionId}/resume",
+                      "POST /api/ai/agent/sessions/{sessionId}/abort",
+                      "GET /api/ai/agent/memories",
+                      "GET /api/ai/agent/memories/{memoryId}",
+                      "DELETE /api/ai/agent/memories/{memoryId}",
                       "POST /api/ai/agent/mcp"
                     ]
                   },
@@ -855,17 +855,17 @@
                     "expanded": false,
                     "openapi": "openapi/en/aitoearn.openapi.json",
                     "pages": [
-                      "POST /api/agent/chat",
-                      "GET /api/agent/sessions",
-                      "GET /api/agent/sessions/{sessionId}",
-                      "PATCH /api/agent/sessions/{sessionId}",
-                      "DELETE /api/agent/sessions/{sessionId}",
-                      "GET /api/agent/sessions/{sessionId}/messages",
-                      "GET /api/agent/sessions/{sessionId}/resume",
-                      "POST /api/agent/sessions/{sessionId}/abort",
-                      "GET /api/agent/memories",
-                      "GET /api/agent/memories/{memoryId}",
-                      "DELETE /api/agent/memories/{memoryId}",
+                      "POST /api/ai/agent/chat",
+                      "GET /api/ai/agent/sessions",
+                      "GET /api/ai/agent/sessions/{sessionId}",
+                      "PATCH /api/ai/agent/sessions/{sessionId}",
+                      "DELETE /api/ai/agent/sessions/{sessionId}",
+                      "GET /api/ai/agent/sessions/{sessionId}/messages",
+                      "GET /api/ai/agent/sessions/{sessionId}/resume",
+                      "POST /api/ai/agent/sessions/{sessionId}/abort",
+                      "GET /api/ai/agent/memories",
+                      "GET /api/ai/agent/memories/{memoryId}",
+                      "DELETE /api/ai/agent/memories/{memoryId}",
                       "POST /api/ai/agent/mcp"
                     ]
                   },

@@ -899,7 +899,7 @@
   {
     "index": 70,
     "method": "POST",
-    "path": "/api/agent/chat",
+    "path": "/api/ai/agent/chat",
     "operationId": "AgentController_chat",
     "tag": "AI 服务/Agent",
     "summary": "发起对话",
@@ -912,7 +912,7 @@
   {
     "index": 71,
     "method": "GET",
-    "path": "/api/agent/sessions",
+    "path": "/api/ai/agent/sessions",
     "operationId": "AgentController_listSessions",
     "tag": "AI 服务/Agent",
     "summary": "会话列表",
@@ -925,7 +925,7 @@
   {
     "index": 72,
     "method": "GET",
-    "path": "/api/agent/sessions/{sessionId}",
+    "path": "/api/ai/agent/sessions/{sessionId}",
     "operationId": "AgentController_getSession",
     "tag": "AI 服务/Agent",
     "summary": "会话详情",
@@ -938,7 +938,7 @@
   {
     "index": 73,
     "method": "PATCH",
-    "path": "/api/agent/sessions/{sessionId}",
+    "path": "/api/ai/agent/sessions/{sessionId}",
     "operationId": "AgentController_updateSession",
     "tag": "AI 服务/Agent",
     "summary": "修改会话",
@@ -951,7 +951,7 @@
   {
     "index": 74,
     "method": "DELETE",
-    "path": "/api/agent/sessions/{sessionId}",
+    "path": "/api/ai/agent/sessions/{sessionId}",
     "operationId": "AgentController_deleteSession",
     "tag": "AI 服务/Agent",
     "summary": "删除会话",
@@ -964,7 +964,7 @@
   {
     "index": 75,
     "method": "GET",
-    "path": "/api/agent/sessions/{sessionId}/messages",
+    "path": "/api/ai/agent/sessions/{sessionId}/messages",
     "operationId": "AgentController_getSessionMessages",
     "tag": "AI 服务/Agent",
     "summary": "消息列表",
@@ -977,7 +977,7 @@
   {
     "index": 76,
     "method": "GET",
-    "path": "/api/agent/sessions/{sessionId}/resume",
+    "path": "/api/ai/agent/sessions/{sessionId}/resume",
     "operationId": "AgentController_resume",
     "tag": "AI 服务/Agent",
     "summary": "断点续播",
@@ -990,7 +990,7 @@
   {
     "index": 77,
     "method": "POST",
-    "path": "/api/agent/sessions/{sessionId}/abort",
+    "path": "/api/ai/agent/sessions/{sessionId}/abort",
     "operationId": "AgentController_abortRun",
     "tag": "AI 服务/Agent",
     "summary": "中止会话",
@@ -1003,7 +1003,7 @@
   {
     "index": 78,
     "method": "GET",
-    "path": "/api/agent/memories",
+    "path": "/api/ai/agent/memories",
     "operationId": "AgentController_listMemories",
     "tag": "AI 服务/Agent",
     "summary": "记忆列表",
@@ -1016,7 +1016,7 @@
   {
     "index": 79,
     "method": "GET",
-    "path": "/api/agent/memories/{memoryId}",
+    "path": "/api/ai/agent/memories/{memoryId}",
     "operationId": "AgentController_getMemory",
     "tag": "AI 服务/Agent",
     "summary": "记忆详情",
@@ -1029,7 +1029,7 @@
   {
     "index": 80,
     "method": "DELETE",
-    "path": "/api/agent/memories/{memoryId}",
+    "path": "/api/ai/agent/memories/{memoryId}",
     "operationId": "AgentController_deleteMemory",
     "tag": "AI 服务/Agent",
     "summary": "删除记忆",

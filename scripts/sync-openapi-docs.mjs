@@ -1152,7 +1152,7 @@ function addAgentEndpoints(spec) {
   const pageSizeParameter = openApiParameter('pageSize', 'query', '每页数量，取值范围 1-1000。', { type: 'integer', minimum: 1, maximum: 1000, default: 10 })
   const emptyData = { type: 'object', additionalProperties: false }
 
-  spec.paths['/api/agent/chat'] = {
+  spec.paths['/api/ai/agent/chat'] = {
     post: {
       tags: [tag],
       summary: '发起对话',
@@ -1195,7 +1195,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/sessions'] = {
+  spec.paths['/api/ai/agent/sessions'] = {
     get: {
       tags: [tag],
       summary: '会话列表',
@@ -1210,7 +1210,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/sessions/{sessionId}'] = {
+  spec.paths['/api/ai/agent/sessions/{sessionId}'] = {
     get: {
       tags: [tag],
       summary: '会话详情',
@@ -1245,7 +1245,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/sessions/{sessionId}/messages'] = {
+  spec.paths['/api/ai/agent/sessions/{sessionId}/messages'] = {
     get: {
       tags: [tag],
       summary: '消息列表',
@@ -1260,7 +1260,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/sessions/{sessionId}/resume'] = {
+  spec.paths['/api/ai/agent/sessions/{sessionId}/resume'] = {
     get: {
       tags: [tag],
       summary: '断点续播',
@@ -1275,7 +1275,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/sessions/{sessionId}/abort'] = {
+  spec.paths['/api/ai/agent/sessions/{sessionId}/abort'] = {
     post: {
       tags: [tag],
       summary: '中止会话',
@@ -1286,7 +1286,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/memories'] = {
+  spec.paths['/api/ai/agent/memories'] = {
     get: {
       tags: [tag],
       summary: '记忆列表',
@@ -1305,7 +1305,7 @@ function addAgentEndpoints(spec) {
     },
   }
 
-  spec.paths['/api/agent/memories/{memoryId}'] = {
+  spec.paths['/api/ai/agent/memories/{memoryId}'] = {
     get: {
       tags: [tag],
       summary: '记忆详情',
