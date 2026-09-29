@@ -4393,5 +4393,8 @@
         }
       }
     }
-  }
+  },
+  "GET /api/ai/agent/memories": null,
+  "GET /api/ai/agent/memories/{memoryId}": null,
+  "DELETE /api/ai/agent/memories/{memoryId}": null
 }
