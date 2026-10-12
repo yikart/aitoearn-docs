@@ -362,18 +362,6 @@
       "destination": "/api-reference/post-api-ai-agent-sessions-session-id-abort"
     },
     {
-      "source": "/api-reference/ai-服务agent/记忆列表",
-      "destination": "/api-reference/get-api-ai-agent-memories"
-    },
-    {
-      "source": "/api-reference/ai-服务agent/记忆详情",
-      "destination": "/api-reference/get-api-ai-agent-memories-memory-id"
-    },
-    {
-      "source": "/api-reference/ai-服务agent/删除记忆",
-      "destination": "/api-reference/delete-api-ai-agent-memories-memory-id"
-    },
-    {
       "source": "/api-reference/ai-服务agent/调用-mcp",
       "destination": "/api-reference/post-api-ai-agent-mcp"
     }
@@ -556,9 +544,6 @@
                       "GET /api/ai/agent/sessions/{sessionId}/messages",
                       "GET /api/ai/agent/sessions/{sessionId}/resume",
                       "POST /api/ai/agent/sessions/{sessionId}/abort",
-                      "GET /api/ai/agent/memories",
-                      "GET /api/ai/agent/memories/{memoryId}",
-                      "DELETE /api/ai/agent/memories/{memoryId}",
                       "POST /api/ai/agent/mcp"
                     ]
                   },
@@ -863,9 +848,6 @@
                       "GET /api/ai/agent/sessions/{sessionId}/messages",
                       "GET /api/ai/agent/sessions/{sessionId}/resume",
                       "POST /api/ai/agent/sessions/{sessionId}/abort",
-                      "GET /api/ai/agent/memories",
-                      "GET /api/ai/agent/memories/{memoryId}",
-                      "DELETE /api/ai/agent/memories/{memoryId}",
                       "POST /api/ai/agent/mcp"
                     ]
                   },
