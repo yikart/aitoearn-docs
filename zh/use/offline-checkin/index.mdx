@@ -63,6 +63,10 @@ curl "https://aitoearn.cn/api/v2/channels/publish/records/<recordId>" \
 
 小红书接口提供的是 `xhs.share` 签名，不会创建 AiToEarn 发布记录，也不会返回最终作品结果。
 
+<Warning>
+  纯血鸿蒙（鸿蒙 NEXT 5.0 及以上）无法完成小红书分享。`xhs.share` 从浏览器跳转到授权登录的这一步不可用。
+</Warning>
+
 <Steps>
   <Step title="准备移动端落地页">
     接入方提供自己的移动端分享页面，并将该页面地址生成线下二维码。

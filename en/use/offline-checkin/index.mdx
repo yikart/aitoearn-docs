@@ -63,6 +63,10 @@ curl "https://aitoearn.ai/api/v2/channels/publish/records/<recordId>" \
 
 The REDnote endpoint returns a signature for `xhs.share`. It does not create an AiToEarn publish record or return the final post result.
 
+<Warning>
+  Pure HarmonyOS (HarmonyOS NEXT 5.0 and later) cannot complete REDnote sharing. The `xhs.share` step that redirects from the browser to authorization login does not work.
+</Warning>
+
 <Steps>
   <Step title="Prepare a mobile landing page">
     Provide your own mobile sharing page and encode that page URL as the offline QR code.
