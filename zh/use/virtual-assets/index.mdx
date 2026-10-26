@@ -1,0 +1,146 @@
+---
+title: 普通素材
+description: 创建 avatarType 为 Virtual 的素材组，并在 Seedance 视频生成中通过 asset:// 引用。
+---
+
+普通素材用于在 Seedance 视频生成中引用图片、视频或音频。通过素材组接口创建的组，`avatarType` 固定为 `Virtual`。接入方只需要 AiToEarn 的 `X-Api-Key`，不需要配置或传递火山引擎 AK/SK。
+
+<Info>
+  如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。创建素材组、创建素材和生成视频应使用同一个 API Key。
+</Info>
+
+<Note>
+  已授权的真人形象必须走 [真人素材](/zh/use/real-person-assets)。本页创建的 `Virtual` 素材组不能代替真人活体认证。
+</Note>
+
+## 接入流程
+
+<Steps>
+  <Step title="创建普通素材组">
+    服务端调用创建素材组接口，保存返回的 `groupId`。返回的 `avatarType` 为 `Virtual`。
+  </Step>
+  <Step title="准备公网素材地址">
+    素材源文件必须能从公网访问。本地或私有文件先按 [资源上传](/zh/use/asset-upload) 取得确认后的 `data.url`。
+  </Step>
+  <Step title="创建素材">
+    把图片、视频或音频登记到该素材组，保存 `assetId`。
+  </Step>
+  <Step title="等待素材可用">
+    查询素材详情，等待 `status` 变为 `Active`。
+  </Step>
+  <Step title="生成视频">
+    将 `asset://{assetId}` 放入 Seedance 视频生成请求的参考素材字段。
+  </Step>
+</Steps>
+
+## 创建素材组
+
+调用 [创建普通素材组](/api-reference/post-api-ai-volcengine-assets-groups)：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/volcengine/assets/groups' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "name": "product-avatar",
+    "description": "产品虚拟人素材"
+  }'
+```
+
+`name` 必填，`description` 可选。成功后保存 `data.groupId`：
+
+```json
+{
+  "code": 0,
+  "message": "请求成功",
+  "data": {
+    "groupId": "group_xxx",
+    "name": "product-avatar",
+    "description": "产品虚拟人素材",
+    "avatarType": "Virtual",
+    "createdAt": "2026-07-02T12:00:00.000Z",
+    "updatedAt": "2026-07-02T12:00:00.000Z"
+  }
+}
+```
+
+`avatarType` 固定为 `Virtual`。后续创建素材、查询和删除都使用这里返回的 `groupId`。
+
+## 上传并创建素材
+
+创建素材时需要公网可访问的 URL。如果文件还在本地或私有存储中，先按 [资源上传](/zh/use/asset-upload) 获取确认后的 `data.url`。不要把对象存储的 `uploadUrl` 当作素材 URL。
+
+然后调用 [创建素材](/api-reference/post-api-ai-volcengine-assets-items)：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/volcengine/assets/items' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "groupId": "group_xxx",
+    "url": "https://assets.example.com/product-reference.jpg",
+    "assetType": "Image",
+    "name": "product-reference"
+  }'
+```
+
+`assetType` 可使用 `Image`、`Video` 或 `Audio`。`name` 可选。创建成功后保存 `data.assetId`，初始状态通常是 `Processing`。
+
+## 等待素材变为 Active
+
+调用 [素材详情](/api-reference/get-api-ai-volcengine-assets-items-asset-id) 会刷新上游处理状态：
+
+```bash
+curl --request GET \
+  'https://aitoearn.cn/api/ai/volcengine/assets/items/<ASSET_ID>' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+| status | 含义 | 处理方式 |
+| --- | --- | --- |
+| `Processing` | 素材正在处理 | 稍后再次查询详情 |
+| `Active` | 素材可用 | 可以用于 Seedance 视频生成 |
+| `Failed` | 素材处理失败 | 检查源文件后重新创建 |
+
+列表和详情的 `url` 是创建时保存的源文件地址。处理状态仍以素材详情为准。更早创建、本地没有地址的素材，详情会返回上游临时链接。
+
+## 在 Seedance 中使用
+
+素材状态变为 `Active` 后，把素材 ID 写成 `asset://{assetId}`。下面使用通用视频生成接口：
+
+```bash
+curl --request POST 'https://aitoearn.cn/api/ai/video/generations' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "doubao-seedance-2-0-260128",
+    "prompt": "保持参考形象的造型和服装，生成自然说话的半身视频",
+    "mode": "multi-ref",
+    "images": ["asset://<ASSET_ID>"],
+    "resolution": "720p",
+    "ratio": "16:9",
+    "duration": 5
+  }'
+```
+
+先调用 [视频生成模型](/api-reference/get-api-ai-models-video-generation)，选择当前站点可用且支持所需输入模式的 Seedance 模型。
+
+## 使用限制
+
+- 本页创建的素材组 `avatarType` 为 `Virtual`。真人素材组只能由 [完成真人认证](/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete) 创建。
+- 素材组、素材和视频生成请求使用同一个 API Key。
+- 素材源 URL 在创建和处理期间必须可以从公网访问。
+- `asset://` 后只能填写素材 ID，不能追加路径、查询参数或锚点。
+- 引用类型必须匹配：图片素材放入 `images`，视频素材放入 `videos`，音频素材放入 `audios`。
+- 只有 `Active` 状态的素材可以用于生成。
+
+相关 API：
+
+<CardGroup cols={2}>
+  <Card title="创建普通素材组" icon="folder-plus" href="/api-reference/post-api-ai-volcengine-assets-groups">
+    创建 `avatarType` 为 `Virtual` 的素材组。
+  </Card>
+  <Card title="素材管理" icon="folder-open" href="/api-reference/post-api-ai-volcengine-assets-items">
+    创建素材并检查处理状态。
+  </Card>
+</CardGroup>

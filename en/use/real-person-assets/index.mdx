@@ -39,7 +39,7 @@ curl --request POST \
   --header 'X-Api-Key: <API_KEY>'
 ```
 
-Store `data.groupId`. Business code `12329` means the result is not ready; wait briefly and retry. The regular group creation endpoint returns `avatarType: Virtual`; a real-person group is created only by completing verification.
+Store `data.groupId`. Business code `12329` means the result is not ready; wait briefly and retry. The regular group creation endpoint returns `avatarType: Virtual`. See [Regular assets](/en/use/virtual-assets) for that flow. A real-person group is created only by completing verification.
 
 ## Create an asset
 
@@ -56,7 +56,7 @@ curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/items' \
   }'
 ```
 
-Store `data.assetId`. Query [Asset details](/en/api-reference/get-api-ai-volcengine-assets-items-asset-id) until the status becomes `Active`:
+Store `data.assetId`. The `url` on the list and detail is the source file URL saved at creation. Query [Asset details](/en/api-reference/get-api-ai-volcengine-assets-items-asset-id) until the status becomes `Active`:
 
 ```bash
 curl 'https://aitoearn.ai/api/ai/volcengine/assets/items/<ASSET_ID>' \

@@ -112,7 +112,7 @@ curl --request POST \
 如果返回业务码 `12329`，说明认证结果尚未同步完成，可以短暂等待后重试。完成成功后会话即被消费，重复完成会返回会话无效。
 
 <Note>
-  `POST /api/ai/volcengine/assets/groups` 创建的是 `avatarType=Virtual` 的普通素材组，不能代替真人认证。真人素材组只能由完成认证接口创建。
+  `POST /api/ai/volcengine/assets/groups` 创建的是 `avatarType=Virtual` 的普通素材组，接入步骤见 [普通素材](/zh/use/virtual-assets)。它不能代替真人认证。真人素材组只能由完成认证接口创建。
 </Note>
 
 ## 上传并创建真人素材
@@ -151,7 +151,7 @@ curl --request GET \
 | `Active` | 素材可用 | 可以用于 Seedance 视频生成 |
 | `Failed` | 素材处理失败 | 检查源文件与人物素材要求后重新创建 |
 
-素材列表保存的是本地登记记录；等待处理结果时应查询单个素材详情，以取得最新状态。
+列表和详情的 `url` 是创建时保存的源文件地址。处理状态仍以素材详情为准。更早创建、本地没有地址的素材，详情会返回上游临时链接。
 
 ## 在 Seedance 中使用
 

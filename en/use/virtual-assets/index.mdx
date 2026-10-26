@@ -1,0 +1,144 @@
+---
+title: Regular assets
+description: Create a Virtual asset group and reference it in Seedance with asset://.
+---
+
+Regular assets let Seedance use images, videos, or audio without real-person verification. A group created through the asset group endpoint always has `avatarType` set to `Virtual`. Your integration only needs an AiToEarn `X-Api-Key`; no Volcengine access key or secret key is required.
+
+<Info>
+  If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first. Use the same API key to create the group, create assets, and generate video.
+</Info>
+
+<Note>
+  Authorized real-person media must use [Real-person assets](/en/use/real-person-assets). A `Virtual` group created on this page does not replace liveness verification.
+</Note>
+
+## Integration flow
+
+<Steps>
+  <Step title="Create a regular asset group">
+    Call the create group endpoint and store `groupId`. The returned `avatarType` is `Virtual`.
+  </Step>
+  <Step title="Prepare a public media URL">
+    The source file must be reachable from the public internet. For a local or private file, use [Asset upload](/en/use/asset-upload) and keep the confirmed `data.url`.
+  </Step>
+  <Step title="Create an asset">
+    Register the image, video, or audio in that group and store `assetId`.
+  </Step>
+  <Step title="Wait until the asset is ready">
+    Query the asset until `status` is `Active`.
+  </Step>
+  <Step title="Generate video">
+    Pass `asset://{assetId}` in the Seedance reference field.
+  </Step>
+</Steps>
+
+## Create an asset group
+
+Call [Create regular asset group](/en/api-reference/post-api-ai-volcengine-assets-groups):
+
+```bash
+curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/groups' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "name": "product-avatar",
+    "description": "Product avatar assets"
+  }'
+```
+
+`name` is required. `description` is optional. Store `data.groupId`:
+
+```json
+{
+  "code": 0,
+  "message": "Request succeeded",
+  "data": {
+    "groupId": "group_xxx",
+    "name": "product-avatar",
+    "description": "Product avatar assets",
+    "avatarType": "Virtual",
+    "createdAt": "2026-07-02T12:00:00.000Z",
+    "updatedAt": "2026-07-02T12:00:00.000Z"
+  }
+}
+```
+
+`avatarType` is always `Virtual`. Use this `groupId` when you create, query, or delete assets.
+
+## Create an asset
+
+The source URL must be publicly accessible while the asset is created and processed. If the file is local or private, use [Asset upload](/en/use/asset-upload) first. Do not pass the object-storage `uploadUrl` as the asset URL.
+
+Then call [Create asset](/en/api-reference/post-api-ai-volcengine-assets-items):
+
+```bash
+curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/items' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "groupId": "group_xxx",
+    "url": "https://assets.example.com/product-reference.jpg",
+    "assetType": "Image",
+    "name": "product-reference"
+  }'
+```
+
+`assetType` can be `Image`, `Video`, or `Audio`. `name` is optional. Store `data.assetId`. The initial status is usually `Processing`.
+
+## Wait until the asset is Active
+
+[Asset details](/en/api-reference/get-api-ai-volcengine-assets-items-asset-id) refreshes the upstream processing status:
+
+```bash
+curl --request GET \
+  'https://aitoearn.ai/api/ai/volcengine/assets/items/<ASSET_ID>' \
+  --header 'X-Api-Key: <API_KEY>'
+```
+
+| status | Meaning | What to do |
+| --- | --- | --- |
+| `Processing` | The asset is still processing | Query the asset again later |
+| `Active` | The asset is ready | Use it in Seedance |
+| `Failed` | Processing failed | Check the source file and create a new asset |
+
+The `url` on the list and detail is the source file URL saved at creation. Query a single asset to read the latest status. Assets created before this address was stored still receive the upstream temporary URL from the detail endpoint.
+
+## Use the asset in Seedance
+
+After the status becomes `Active`, write the asset ID as `asset://{assetId}` and send it to `POST /api/ai/video/generations`:
+
+```bash
+curl --request POST 'https://aitoearn.ai/api/ai/video/generations' \
+  --header 'Content-Type: application/json' \
+  --header 'X-Api-Key: <API_KEY>' \
+  --data '{
+    "model": "doubao-seedance-2-0-260128",
+    "prompt": "Keep the reference styling and clothing, and generate a natural speaking shot",
+    "mode": "multi-ref",
+    "images": ["asset://<ASSET_ID>"],
+    "resolution": "720p",
+    "ratio": "16:9",
+    "duration": 5
+  }'
+```
+
+Call [Video generation models](/en/api-reference/get-api-ai-models-video-generation) first and choose a Seedance model available on the current site that supports the input mode you need.
+
+## Limits
+
+- Groups created on this page have `avatarType` `Virtual`. A real-person group is created only by [Complete verification](/en/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete).
+- Use the same API key for the group, the asset, and video generation.
+- Keep the source URL publicly accessible while the asset is processing.
+- Put only the asset ID after `asset://`. Do not append a path, query string, or fragment.
+- Match the asset type to the field: images in `images`, videos in `videos`, and audio in `audios`.
+- Use only `Active` assets.
+
+<CardGroup cols={2}>
+  <Card title="Create a regular asset group" icon="folder-plus" href="/en/api-reference/post-api-ai-volcengine-assets-groups">
+    Create a group whose `avatarType` is `Virtual`.
+  </Card>
+  <Card title="Manage assets" icon="folder-open" href="/en/api-reference/post-api-ai-volcengine-assets-items">
+    Create an asset and check its processing status.
+  </Card>
+</CardGroup>
