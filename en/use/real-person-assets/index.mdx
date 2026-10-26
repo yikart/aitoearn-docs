@@ -56,7 +56,7 @@ curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/items' \
   }'
 ```
 
-Store `data.assetId`. The `url` on the list and detail is the source file URL saved at creation. Query [Asset details](/en/api-reference/get-api-ai-volcengine-assets-items-asset-id) until the status becomes `Active`:
+Store `data.assetId`. Query [Asset details](/en/api-reference/get-api-ai-volcengine-assets-items-asset-id) until the status becomes `Active`:
 
 ```bash
 curl 'https://aitoearn.ai/api/ai/volcengine/assets/items/<ASSET_ID>' \
