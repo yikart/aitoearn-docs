@@ -403,7 +403,7 @@ function volcengineVideoGenerationRequestSchema() {
       },
       content: {
         type: 'array',
-        description: '输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**',
+        description: '输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**',
         items: {
           oneOf: [
             {
@@ -432,7 +432,7 @@ function volcengineVideoGenerationRequestSchema() {
                   enum: ['image_url'],
                   description: '内容类型，图片内容固定为 image_url。',
                 },
-                image_url: volcengineUrlSchema('图片 URL 或 base64 图片数据。'),
+                image_url: volcengineUrlSchema('图片 URL 或 base64 图片数据。注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。'),
                 role: {
                   type: 'string',
                   enum: ['first_frame', 'last_frame', 'reference_image'],
@@ -451,7 +451,7 @@ function volcengineVideoGenerationRequestSchema() {
                   enum: ['video_url'],
                   description: '内容类型，视频内容固定为 video_url。',
                 },
-                video_url: volcengineUrlSchema('参考视频 URL 或素材 ID。'),
+                video_url: volcengineUrlSchema('参考视频 URL。注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。'),
                 role: {
                   type: 'string',
                   enum: ['reference_video'],
@@ -470,7 +470,7 @@ function volcengineVideoGenerationRequestSchema() {
                   enum: ['audio_url'],
                   description: '内容类型，音频内容固定为 audio_url。',
                 },
-                audio_url: volcengineUrlSchema('参考音频 URL、base64 音频数据或素材 ID。'),
+                audio_url: volcengineUrlSchema('参考音频 URL 或 base64 音频数据。注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。'),
                 role: {
                   type: 'string',
                   enum: ['reference_audio'],
@@ -609,7 +609,7 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
   spec.paths['/api/ai/v3/contents/generations/tasks'].post = spec.paths['/api/ai/v3/contents/generations/tasks'].post || {
     tags: ['AI 服务/视频生成'],
     summary: '火山格式创建视频生成任务',
-    description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。',
+    description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。',
     operationId: 'VolcengineVideoController_videoGeneration',
     requestBody: {
       required: true,
