@@ -609,7 +609,7 @@ function addVolcengineVideoCompatibilityEndpoints(spec) {
   spec.paths['/api/ai/v3/contents/generations/tasks'].post = spec.paths['/api/ai/v3/contents/generations/tasks'].post || {
     tags: ['AI 服务/视频生成'],
     summary: '火山格式创建视频生成任务',
-    description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。',
+    description: '接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。',
     operationId: 'VolcengineVideoController_videoGeneration',
     requestBody: {
       required: true,

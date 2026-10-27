@@ -12801,7 +12801,7 @@
           "AI Services/Video Generation"
         ],
         "summary": "Create Volcengine-format video generation task",
-        "description": "Interface description: Volcengine Ark video generation compatible endpoint for customers who have already integrated the Volcengine video generation API and want to migrate to AiToEarn without significantly changing their request structure. See the official Volcengine documentation: [Create video generation task](https://www.volcengine.com/docs/82379/1520757?lang=zh).\n\nNote: To use a real-person asset or a virtual portrait asset, pass `asset://<asset ID>` to generate a video.",
+        "description": "Interface description: Volcengine Ark video generation compatible endpoint for customers who have already integrated the Volcengine video generation API and want to migrate to AiToEarn without significantly changing their request structure. See the official Volcengine documentation: [Create video generation task](https://www.volcengine.com/docs/82379/1520757?lang=zh).",
         "operationId": "VolcengineVideoController_videoGeneration",
         "requestBody": {
           "required": true,
