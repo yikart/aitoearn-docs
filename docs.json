@@ -453,7 +453,10 @@
                   "zh/use/large-language-model/index",
                   "zh/use/codex/index",
                   "zh/use/claude-code/index",
-                  "zh/use/claude-desktop/index"
+                  "zh/use/claude-desktop/index",
+                  "zh/use/trae/index",
+                  "zh/use/doubao/index",
+                  "zh/use/workbuddy/index"
                 ]
               }
             ]
@@ -758,7 +761,10 @@
                   "en/use/large-language-model/index",
                   "en/use/codex/index",
                   "en/use/claude-code/index",
-                  "en/use/claude-desktop/index"
+                  "en/use/claude-desktop/index",
+                  "en/use/trae/index",
+                  "en/use/doubao/index",
+                  "en/use/workbuddy/index"
                 ]
               }
             ]

@@ -1,0 +1,68 @@
+---
+title: "豆包接入教程"
+description: "在豆包中接入 AiToEarn 技能与自定义连接器"
+---
+
+本文介绍如何在豆包电脑客户端中接入 AiToEarn。接入后，你可以上传 AiToEarn 技能包，并通过自定义连接器把 AiToEarn 的 Agent 能力对接到豆包对话中。
+
+<Info>
+  技能入口仅在豆包电脑客户端（Mac/Windows）提供，网页版和手机 App 没有技能入口。如果你还没有 API Key，请先阅读 [获取 API Key 教程](/zh/use/api-key)。
+</Info>
+
+## 前置条件
+
+开始之前，请确认你已经准备好：
+
+1. AiToEarn 账户和 [AiToEarn API Key](/zh/use/api-key)。
+2. 豆包电脑客户端（Mac/Windows）。
+3. [AiToEarn 豆包技能包](/assets/downloads/aitoearn-doubao-skill-0.0.4.zip)。
+
+## 上传技能包
+
+打开豆包电脑客户端，进入左侧「插件 · 技能 · 伙伴」，切换到「技能」标签，点击右上角「+ 添加」，选择「上传技能」。
+
+![在豆包中选择上传技能](/assets/use/doubao/01-upload-skill-entry.png)
+
+将 [aitoearn-doubao-skill-0.0.4.zip](/assets/downloads/aitoearn-doubao-skill-0.0.4.zip) 直接拖入上传区域，或点击「选择文件」（不用解压）。压缩包需包含 `SKILL.md` 文件，且其中以 YAML 格式包含技能名称和描述。
+
+![豆包上传技能对话框](/assets/use/doubao/02-upload-skill-dialog.png)
+
+## 新建自定义连接器
+
+在同一页面点击右上角「+ 添加」，选择「新建自定义连接器」。
+
+![在豆包中选择新建自定义连接器](/assets/use/doubao/03-custom-connector-entry.png)
+
+在弹出的对话框中按以下信息填写：
+
+![豆包新建自定义连接器对话框](/assets/use/doubao/04-custom-connector-dialog.png)
+
+| 字段 | 填写内容 |
+| --- | --- |
+| 服务器名称 | `AiToEarn` |
+| 传输类型 | `HTTP` |
+| 服务器 URL | 国际站账号填 `https://aitoearn.ai/api/ai/agent/mcp`，国内站账号填 `https://aitoearn.cn/api/ai/agent/mcp` |
+| 自定义 Headers | 添加一条：`X-Api-Key` = 你的 AiToEarn API Key |
+
+URL 必须与 API Key 所属站点一致。填写完成后点击「保存」。
+
+保存成功后，在连接器列表中可以看到 AiToEarn 连接器及开关。点击连接器名称，可以查看它包含的全部操作（工具列表），确认与预期一致。
+
+![连接器配置成功并展示包含的操作](/assets/use/doubao/05-connector-success.png)
+
+## 使用
+
+配置完成后，在豆包对话中先选中 AiToEarn 技能：点击对话输入框下方的「技能」，在「由我创建」分组中选择 `aitoearn`（全域内容增长与变现助手）。
+
+![在豆包对话中选择 AiToEarn 技能](/assets/use/doubao/06-select-skill.png)
+
+选中后再描述需求即可，例如：
+
+> 帮我排一周的短视频内容，直接出选题、脚本和封面图
+
+豆包会根据对话内容自动调用 AiToEarn 技能与连接器。
+
+## 常见问题
+
+- 连接器调用失败：确认 URL 与 API Key 所属站点一致，API Key 来自 [AiToEarn API Key 页面](/zh/use/api-key)。
+- 找不到技能入口：确认使用的是豆包电脑客户端，网页版和手机 App 没有该入口。
