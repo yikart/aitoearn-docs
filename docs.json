@@ -508,7 +508,8 @@
               {
                 "group": "AI 工具接入",
                 "pages": [
-                  "zh/use/workbuddy/index"
+                  "zh/use/workbuddy/index",
+                  "zh/use/installer-pack/index"
                 ]
               },
               {
@@ -861,7 +862,8 @@
               {
                 "group": "AI Tool Integration",
                 "pages": [
-                  "en/use/workbuddy/index"
+                  "en/use/workbuddy/index",
+                  "en/use/installer-pack/index"
                 ]
               },
               {

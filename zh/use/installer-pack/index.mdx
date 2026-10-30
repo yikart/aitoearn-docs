@@ -1,0 +1,55 @@
+---
+title: "全平台安装包"
+description: "双击即用的安装管理器，把 AiToEarn 技能装进常用的 AI 客户端"
+---
+
+一个**双击即用**的安装管理器，把 AiToEarn「全域内容运营助手」技能装进你常用的 AI 客户端。装好后，直接在对话里说「帮我生成一条抖音视频并发布」，AI 就能调用 AiToEarn 的创作、生成、配音、剪辑、多平台发布、变现规划等全套能力。
+
+<Note>
+  目前仅提供 Mac 版安装包，Windows 版正在调试中，敬请期待。
+</Note>
+
+**下载地址**：[AiToEarn-全平台管理器-Mac.zip](https://ai-to-earn.oss-cn-beijing.aliyuncs.com/comment/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip)
+
+## 支持的平台
+
+| 平台 | 安装方式 | 装完还要做什么 |
+| --- | --- | --- |
+| Codex | 全自动直装 | 无 |
+| Trae | 全自动直装（非官方路径） | 无 |
+| 千问办公 | 技能全自动直装 | 连接器按弹窗点 4 下（地址和 Key 已自动复制好） |
+| 千问 | 技能全自动直装 | 连接器按弹窗点 4 下（地址和 Key 已自动复制好） |
+| 豆包 | 引导点选（配置存在客户端内部，无法直写） | 按弹窗 4 步点完 |
+
+全程只需要做一件事：**粘贴你的 AiToEarn API Key**（aitoearn.cn / aitoearn.ai → 设置 → API Key）。安装器会自动识别 Key 属于国内站还是国际站并填对服务器地址。
+
+## 快速开始
+
+<Steps>
+  <Step title="解压安装包">
+    Mac 下载并解压 [AiToEarn-全平台管理器-Mac.zip](https://ai-to-earn.oss-cn-beijing.aliyuncs.com/comment/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip)。Windows 版正在调试中，暂未提供。
+  </Step>
+
+  <Step title="双击运行管理器">
+    Mac 双击 `AiToEarn管理器.command`。
+  </Step>
+
+  <Step title="安装">
+    选「安装」→ 选平台 → 粘贴 Key → 按弹窗提示点完。
+  </Step>
+</Steps>
+
+卸载同样双击管理器选「卸载」，自动清理并恢复原状。任何弹窗点「取消」都会直接退出，不会改动任何东西。
+
+## 包里有什么
+
+- `AiToEarn-全平台管理器-Mac.zip`：安装器（含五个平台的技能文件）
+- `AiToEarn-多平台安装教程.md`：详细教程（每个平台的步骤、常见问题、原理说明）
+- `AiToEarn-Codex安装教程.md`：Codex 专项深入教程
+- `AiToEarn-全平台安装包-简介.md`：简介文件
+
+## 安全性
+
+- 管理器是**明文脚本**（.command / .ps1 就是文本），写了什么一目了然，可随时审查。
+- 只读写本机 AI 客户端的配置目录，**不上传任何数据**；Key 联网验证直连 AiToEarn 官方服务器。
+- 所有写入先备份、写入后校验，失败自动回滚。
