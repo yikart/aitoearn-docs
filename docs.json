@@ -470,14 +470,29 @@
             "icon": "book-open",
             "groups": [
               {
-                "group": "使用",
+                "group": "入门",
                 "pages": [
                   "zh/use/introduction",
+                  "zh/use/api-key/index"
+                ]
+              },
+              {
+                "group": "内容发布",
+                "pages": [
                   "zh/use/publish-flow/index",
                   "zh/use/offline-checkin/index",
-                  "zh/use/plugin-publish/index",
-                  "zh/use/asset-upload/index",
-                  "zh/use/api-key/index",
+                  "zh/use/plugin-publish/index"
+                ]
+              },
+              {
+                "group": "资源管理",
+                "pages": [
+                  "zh/use/asset-upload/index"
+                ]
+              },
+              {
+                "group": "AI 生成",
+                "pages": [
                   {
                     "group": "视频生成",
                     "pages": [
@@ -487,13 +502,19 @@
                     ]
                   },
                   "zh/use/image-generation/index",
-                  "zh/use/large-language-model/index",
-                  "zh/use/codex/index",
-                  "zh/use/claude-code/index",
-                  "zh/use/claude-desktop/index",
-                  "zh/use/trae/index",
-                  "zh/use/doubao/index",
+                  "zh/use/large-language-model/index"
+                ]
+              },
+              {
+                "group": "AI 工具接入",
+                "pages": [
                   "zh/use/workbuddy/index"
+                ]
+              },
+              {
+                "group": "部署",
+                "pages": [
+                  "zh/use/installer/index"
                 ]
               }
             ]
@@ -752,6 +773,18 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "开源贡献",
+            "icon": "heart-handshake",
+            "groups": [
+              {
+                "group": "开源贡献",
+                "pages": [
+                  "zh/use/contributing/index"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -790,14 +823,29 @@
             "icon": "book-open",
             "groups": [
               {
-                "group": "Use",
+                "group": "Getting Started",
                 "pages": [
                   "en/use/index",
+                  "en/use/api-key/index"
+                ]
+              },
+              {
+                "group": "Publishing",
+                "pages": [
                   "en/use/publish-flow/index",
                   "en/use/offline-checkin/index",
-                  "en/use/plugin-publish/index",
-                  "en/use/asset-upload/index",
-                  "en/use/api-key/index",
+                  "en/use/plugin-publish/index"
+                ]
+              },
+              {
+                "group": "Assets",
+                "pages": [
+                  "en/use/asset-upload/index"
+                ]
+              },
+              {
+                "group": "AI Generation",
+                "pages": [
                   {
                     "group": "Video generation",
                     "pages": [
@@ -807,13 +855,19 @@
                     ]
                   },
                   "en/use/image-generation/index",
-                  "en/use/large-language-model/index",
-                  "en/use/codex/index",
-                  "en/use/claude-code/index",
-                  "en/use/claude-desktop/index",
-                  "en/use/trae/index",
-                  "en/use/doubao/index",
+                  "en/use/large-language-model/index"
+                ]
+              },
+              {
+                "group": "AI Tool Integration",
+                "pages": [
                   "en/use/workbuddy/index"
+                ]
+              },
+              {
+                "group": "Deployment",
+                "pages": [
+                  "en/use/installer/index"
                 ]
               }
             ]
@@ -1052,6 +1106,18 @@
                   "en/help/social-platforms/567-using-bilibili-with-aitoearn",
                   "en/help/social-platforms/568-daily-posting-limits",
                   "en/help/social-platforms/569-Charcter-limits-for-each-social-network"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Contributing",
+            "icon": "heart-handshake",
+            "groups": [
+              {
+                "group": "Contributing",
+                "pages": [
+                  "en/use/contributing/index"
                 ]
               }
             ]

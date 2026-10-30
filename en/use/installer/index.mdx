@@ -1,0 +1,140 @@
+---
+title: "Docker Deployment"
+description: "Deploy the full AiToEarn application quickly with Docker Compose"
+---
+
+This guide helps you deploy the complete AiToEarn application quickly with Docker Compose.
+
+## Service Architecture
+
+```text
+                         ┌──────────┐
+                         │  Nginx   │
+                         │  :8080   │
+                         └────┬─────┘
+                              │
+              ┌───────────────┼───────────────┐
+              │               │               │
+        ┌─────┴─────┐  ┌─────┴──────┐  ┌─────┴─────┐
+        │  Web (FE)  │  │  Server    │  │  AI       │
+        │  :3000     │  │  :3002     │  │  :3010    │
+        └────────────┘  └──────┬─────┘  └─────┬─────┘
+                               │              │
+                  ┌────────────┼──────────────┤
+                  │            │              │
+             ┌────┴─────┐ ┌───┴────┐  ┌──────┴───┐
+             │ MongoDB  │ │ Redis  │  │  RustFS  │
+             │ :27017   │ │ :6379  │  │ :9000/01 │
+             └──────────┘ └────────┘  └──────────┘
+```
+
+| Service | Description | Port |
+| --- | --- | --- |
+| **Nginx** | Reverse proxy, unified entry point | 8080 (external) |
+| **aitoearn-web** | Next.js frontend | 3000 (internal) |
+| **aitoearn-server** | NestJS main backend API | 3002 (internal) |
+| **aitoearn-ai** | NestJS AI service | 3010 (internal) |
+| **MongoDB** | Database | 27017 |
+| **Redis** | Cache/queue | 6379 |
+| **RustFS** | S3-compatible object storage | 9000 (API) / 9001 (console) |
+
+## Prerequisites
+
+- **Docker**: 20.10+
+- **Docker Compose**: 2.0+
+- **System memory**: 4GB+ recommended
+- **Disk space**: 20GB+ recommended
+
+Verify the installation:
+
+```bash
+docker --version
+docker compose version
+```
+
+## Quick Start
+
+Only 3 steps to run the complete AiToEarn locally.
+
+<Steps>
+  <Step title="Clone and start">
+    ```bash
+    git clone https://github.com/yikart/AiToEarn.git
+    cd AiToEarn
+    docker compose up -d
+    ```
+
+    The first startup pulls images and may take a few minutes. Run `docker compose ps` to confirm all services are `healthy` or `running`.
+  </Step>
+
+  <Step title="Open the web interface">
+    Once started, open **[http://localhost:8080](http://localhost:8080)** in your browser.
+
+    An admin account is created automatically on first startup, and you are logged in automatically. No manual registration is required.
+  </Step>
+
+  <Step title="Configure Relay (strongly recommended)">
+    AiToEarn needs to sign in to your social media accounts (TikTok, RedNote, YouTube, etc.) to publish content. These platforms require OAuth developer credentials for authorization.
+
+    - **Without Relay**: You need to apply for developer accounts on more than a dozen platforms one by one and obtain client_id/secret, which is tedious.
+    - **With Relay**: Authorization is completed using the official aitoearn.ai credentials. **One API Key covers all platforms.**
+
+    How to configure:
+
+    1. Register and sign in on [aitoearn.ai](https://aitoearn.ai) (international) or [aitoearn.cn](https://aitoearn.cn) (China), go to **Settings → API Key**, and create an API Key.
+    2. Open your deployed instance in a browser and go to **Configuration Management**.
+    3. Select **Server → Relay** and configure the Relay used for platform authorization.
+    4. To use AI models provided by the platform, select **AI → Relay** and configure the AI Relay.
+    5. For providers like OpenAI, Gemini, and Anthropic, you can also enter the API Key and API address in **AI → Model Providers**.
+    6. After saving, click **Save and Restart** to reload the corresponding services.
+
+    <Note>
+      A China Key pairs with `https://aitoearn.cn/api`, and an international Key pairs with `https://aitoearn.ai/api`. A mismatched environment and Key will result in a 401 error.
+    </Note>
+  </Step>
+</Steps>
+
+That's it — AiToEarn is ready to use.
+
+## Operations Reference
+
+<AccordionGroup>
+  <Accordion title="Auto login">
+    Auto login is enabled by default. On first startup, the `aitoearn-init` service generates an admin token and saves it to a shared volume, and the `aitoearn-web` service reads the token to complete login automatically.
+  </Accordion>
+
+  <Accordion title="Image pull policy">
+    All application images use `pull_policy: always`, ensuring every `docker compose up` pulls the latest images.
+  </Accordion>
+
+  <Accordion title="Internal service communication">
+    The following settings are used for inter-service communication over the internal Docker network and usually do not need to be changed:
+
+    | Setting | Service | Default |
+    | --- | --- | --- |
+    | `serverClient.baseUrl` | aitoearn-ai | `http://aitoearn-server:3002` |
+    | `aiClient.baseUrl` | aitoearn-server | `http://aitoearn-ai:3010` |
+  </Accordion>
+
+  <Accordion title="Configuration files">
+    Configuration files are mounted into containers as writable volumes. Modify them through the configuration management UI; restart the corresponding service after saving:
+
+    | File | Mounted to | Description |
+    | --- | --- | --- |
+    | `project/aitoearn-backend/apps/aitoearn-ai/config/config.yaml` | aitoearn-ai:/app/config.yaml | AI service configuration |
+    | `project/aitoearn-backend/apps/aitoearn-server/config/config.yaml` | aitoearn-server:/app/config.yaml | Backend configuration |
+  </Accordion>
+</AccordionGroup>
+
+## Configuration Cheat Sheet
+
+`aitoearn-ai` and `aitoearn-server` no longer read runtime parameters from the `environment` section of `docker-compose.yml`. They read the mounted `config.yaml` instead, which is edited through the configuration management UI.
+
+### Environment variables still kept in Compose
+
+| Variable | Service | Description | Default |
+| --- | --- | --- | --- |
+| `MONGO_INITDB_ROOT_PASSWORD` | mongodb | MongoDB root password | `password` |
+| `RUSTFS_ACCESS_KEY` / `RUSTFS_SECRET_KEY` | rustfs | RustFS access credentials | `rustfsadmin` |
+| `MONGO_URI` / `JWT_SECRET` / `DB_NAME` / `AUTO_LOGIN_TOKEN_PATH` | aitoearn-init | Initialize admin and auto-login token on first startup | Built-in defaults |
+| `NODE_ENV` / `NEXT_TELEMETRY_DISABLED` | aitoearn-web | Web runtime environment and Next.js telemetry settings | `production` / `1` |
