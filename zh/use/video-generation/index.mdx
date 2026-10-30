@@ -22,7 +22,11 @@ title: "视频生成"
 
 如果需要上传参考图、参考视频或参考音频，请先用 [资源上传](../asset-upload) 获取公网可访问 URL，再写入生成接口对应的参考素材字段。
 
-如果需要引用普通图片、视频或音频，请先完成 [普通素材](../virtual-assets) 流程。如果需要使用已授权的真人形象，请先完成 [真人素材](../real-person-assets) 流程。素材状态变为 `Active` 后，在 `images`、`videos` 或 `audios` 中传入 `asset://{assetId}`。
+引用人像前先选择流程：[虚拟人像素材](./virtual-portrait-assets) 或 [真人认证](./real-person-assets)。素材变为 `Active` 后，把 `asset://{assetId}` 写入 `images`、`videos` 或 `audios`。
+
+<Warning>
+  使用真人素材生成视频失败时，请改用[「创建虚拟人像组」](/api-reference/post-api-ai-volcengine-assets-groups)。
+</Warning>
 
 ## 模型列表与 modes
 

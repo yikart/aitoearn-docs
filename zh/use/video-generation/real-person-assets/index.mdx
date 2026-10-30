@@ -1,6 +1,6 @@
 ---
-title: 真人素材
-description: 完成真人活体认证，创建真人素材，并在 Seedance 视频生成中通过 asset:// 引用。
+title: 真人认证
+description: 在视频生成下完成真人活体认证。创建会话只传 callbackUrl，完成认证只在路径里带 bytedToken。
 ---
 
 真人素材用于在 Seedance 视频生成中安全地引用已授权的真人图片、视频或音频。接入方只需要 AiToEarn 的 `X-Api-Key`，不需要配置或传递火山引擎 AK/SK。
@@ -11,6 +11,14 @@ description: 完成真人活体认证，创建真人素材，并在 Seedance 视
 
 <Warning>
   真人认证和真人素材仅可用于已获得本人明确授权的内容。API Key 必须保存在服务端，不要放到认证落地页、浏览器脚本或移动端应用中。
+</Warning>
+
+## 和虚拟人像素材分开
+
+虚拟人像见 [虚拟人像素材](../virtual-portrait-assets)。本页只说明真人认证。
+
+<Warning>
+  使用真人素材生成视频失败时，请改用[「创建虚拟人像组」](/api-reference/post-api-ai-volcengine-assets-groups)。
 </Warning>
 
 ## 接入流程
@@ -40,6 +48,12 @@ description: 完成真人活体认证，创建真人素材，并在 Seedance 视
 </Steps>
 
 ## 创建认证会话
+
+本接口只有一个请求参数，不要传虚拟人像的 `name` 或 `description`：
+
+| 参数 | 是否必填 | 说明 |
+| --- | --- | --- |
+| `callbackUrl` | 必填 | 认证完成后跳转的 HTTP(S) 地址 |
 
 调用 [创建真人认证会话](/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions)：
 
@@ -112,7 +126,7 @@ curl --request POST \
 如果返回业务码 `12329`，说明认证结果尚未同步完成，可以短暂等待后重试。完成成功后会话即被消费，重复完成会返回会话无效。
 
 <Note>
-  `POST /api/ai/volcengine/assets/groups` 创建的是 `avatarType=Virtual` 的普通素材组，接入步骤见 [普通素材](/zh/use/virtual-assets)。它不能代替真人认证。真人素材组只能由完成认证接口创建。
+  使用真人素材生成视频失败时，请改用[「创建虚拟人像组」](/api-reference/post-api-ai-volcengine-assets-groups)。
 </Note>
 
 ## 上传并创建真人素材
@@ -173,6 +187,10 @@ curl --request POST 'https://aitoearn.cn/api/ai/video/generations' \
 ```
 
 先调用 [视频生成模型](/api-reference/get-api-ai-models-video-generation)，选择当前站点可用且支持所需输入模式的 Seedance 模型。
+
+<Warning>
+  使用真人素材生成视频失败时，请改用[「创建虚拟人像组」](/api-reference/post-api-ai-volcengine-assets-groups)。
+</Warning>
 
 ## 使用限制
 

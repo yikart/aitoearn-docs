@@ -1,23 +1,24 @@
 ---
-title: 普通素材
-description: 创建 avatarType 为 Virtual 的素材组，并在 Seedance 视频生成中通过 asset:// 引用。
+title: 虚拟人像素材
+description: 在视频生成下创建虚拟人像素材组。name 必填，description 选填。本接口不接收 avatarType。
 ---
 
-普通素材用于在 Seedance 视频生成中引用图片、视频或音频。通过素材组接口创建的组，`avatarType` 固定为 `Virtual`。接入方只需要 AiToEarn 的 `X-Api-Key`，不需要配置或传递火山引擎 AK/SK。
+虚拟人像素材不需要活体认证。创建素材组时 `name` 必填，`description` 选填。接入方只需要 AiToEarn 的 `X-Api-Key`，不需要配置或传递火山引擎 AK/SK。
 
 <Info>
   如果你还没有 API Key，请先阅读 [获取 API KEY 教程](/zh/use/api-key)。创建素材组、创建素材和生成视频应使用同一个 API Key。
 </Info>
 
 <Note>
-  已授权的真人形象必须走 [真人素材](/zh/use/real-person-assets)。本页创建的 `Virtual` 素材组不能代替真人活体认证。
+  真人认证见 [真人认证](../real-person-assets)。
+  使用真人素材生成视频失败时，请改用本页的[「创建虚拟人像组」](/api-reference/post-api-ai-volcengine-assets-groups)。
 </Note>
 
 ## 接入流程
 
 <Steps>
-  <Step title="创建普通素材组">
-    服务端调用创建素材组接口，保存返回的 `groupId`。返回的 `avatarType` 为 `Virtual`。
+  <Step title="创建虚拟人像组">
+    只传 `name` 和可选的 `description`，保存返回的 `groupId`。返回的 `avatarType` 为 `Virtual`。
   </Step>
   <Step title="准备公网素材地址">
     素材源文件必须能从公网访问。本地或私有文件先按 [资源上传](/zh/use/asset-upload) 取得确认后的 `data.url`。
@@ -33,9 +34,16 @@ description: 创建 avatarType 为 Virtual 的素材组，并在 Seedance 视频
   </Step>
 </Steps>
 
-## 创建素材组
+## 创建虚拟人像组
 
-调用 [创建普通素材组](/api-reference/post-api-ai-volcengine-assets-groups)：
+调用 [创建虚拟人像组](/api-reference/post-api-ai-volcengine-assets-groups)。请求参数只有下面两个，不要附加真人认证字段：
+
+| 参数 | 是否必填 | 说明 |
+| --- | --- | --- |
+| `name` | 必填 | 虚拟人像组名称 |
+| `description` | 可选 | 组描述 |
+
+火山方舟 `CreateAssetGroup` 没有 `avatarType`。`Name` 必填，`Description` 选填，`GroupType` 选填且默认 `AIGC`（虚拟人像素材），当前也只支持 `AIGC`。本接口不接收 `GroupType` 和 `avatarType`，只接收上面两个字段，并固定按虚拟人像创建。响应里的 `avatarType` 固定为 `Virtual`。查询素材组时，`avatarType` 才是可选筛选参数。
 
 ```bash
 curl --request POST 'https://aitoearn.cn/api/ai/volcengine/assets/groups' \
@@ -127,7 +135,6 @@ curl --request POST 'https://aitoearn.cn/api/ai/video/generations' \
 
 ## 使用限制
 
-- 本页创建的素材组 `avatarType` 为 `Virtual`。真人素材组只能由 [完成真人认证](/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete) 创建。
 - 素材组、素材和视频生成请求使用同一个 API Key。
 - 素材源 URL 在创建和处理期间必须可以从公网访问。
 - `asset://` 后只能填写素材 ID，不能追加路径、查询参数或锚点。
@@ -137,8 +144,8 @@ curl --request POST 'https://aitoearn.cn/api/ai/video/generations' \
 相关 API：
 
 <CardGroup cols={2}>
-  <Card title="创建普通素材组" icon="folder-plus" href="/api-reference/post-api-ai-volcengine-assets-groups">
-    创建 `avatarType` 为 `Virtual` 的素材组。
+  <Card title="创建虚拟人像组" icon="folder-plus" href="/api-reference/post-api-ai-volcengine-assets-groups">
+    只传 `name` 和可选的 `description`。
   </Card>
   <Card title="素材管理" icon="folder-open" href="/api-reference/post-api-ai-volcengine-assets-items">
     创建素材并检查处理状态。

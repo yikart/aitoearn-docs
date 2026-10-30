@@ -34,6 +34,38 @@
       "destination": "/zh/use/api-key"
     },
     {
+      "source": "/zh/use/real-person-assets",
+      "destination": "/zh/use/video-generation/real-person-assets"
+    },
+    {
+      "source": "/zh/use/real-person-assets/",
+      "destination": "/zh/use/video-generation/real-person-assets"
+    },
+    {
+      "source": "/en/use/real-person-assets",
+      "destination": "/en/use/video-generation/real-person-assets"
+    },
+    {
+      "source": "/en/use/real-person-assets/",
+      "destination": "/en/use/video-generation/real-person-assets"
+    },
+    {
+      "source": "/zh/use/virtual-assets",
+      "destination": "/zh/use/video-generation/virtual-portrait-assets"
+    },
+    {
+      "source": "/zh/use/virtual-assets/",
+      "destination": "/zh/use/video-generation/virtual-portrait-assets"
+    },
+    {
+      "source": "/en/use/virtual-assets",
+      "destination": "/en/use/video-generation/virtual-portrait-assets"
+    },
+    {
+      "source": "/en/use/virtual-assets/",
+      "destination": "/en/use/video-generation/virtual-portrait-assets"
+    },
+    {
       "source": "/api-reference/ai-服务视频生成/视频生成模型",
       "destination": "/api-reference/get-api-ai-models-video-generation"
     },
@@ -445,10 +477,15 @@
                   "zh/use/offline-checkin/index",
                   "zh/use/plugin-publish/index",
                   "zh/use/asset-upload/index",
-                  "zh/use/virtual-assets/index",
-                  "zh/use/real-person-assets/index",
                   "zh/use/api-key/index",
-                  "zh/use/video-generation/index",
+                  {
+                    "group": "视频生成",
+                    "pages": [
+                      "zh/use/video-generation/index",
+                      "zh/use/video-generation/real-person-assets/index",
+                      "zh/use/video-generation/virtual-portrait-assets/index"
+                    ]
+                  },
                   "zh/use/image-generation/index",
                   "zh/use/large-language-model/index",
                   "zh/use/codex/index",
@@ -485,26 +522,33 @@
                       "GET /api/ai/video/generations",
                       "GET /api/ai/video/generations/{taskId}",
                       "POST /api/ai/v3/contents/generations/tasks",
-                      "GET /api/ai/v3/contents/generations/tasks/{taskId}"
-                    ]
-                  },
-                  {
-                    "group": "AI 服务/真人素材",
-                    "expanded": false,
-                    "openapi": "openapi/zh/aitoearn.openapi.json",
-                    "pages": [
-                      "POST /api/ai/volcengine/assets/groups",
-                      "GET /api/ai/volcengine/assets/groups",
-                      "GET /api/ai/volcengine/assets/groups/{groupId}",
-                      "PATCH /api/ai/volcengine/assets/groups/{groupId}",
-                      "DELETE /api/ai/volcengine/assets/groups/{groupId}",
-                      "POST /api/ai/volcengine/assets/items",
-                      "GET /api/ai/volcengine/assets/items",
-                      "GET /api/ai/volcengine/assets/items/{assetId}",
-                      "PATCH /api/ai/volcengine/assets/items/{assetId}",
-                      "DELETE /api/ai/volcengine/assets/items/{assetId}",
-                      "POST /api/ai/volcengine/assets/visual-validation-sessions",
-                      "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
+                      "GET /api/ai/v3/contents/generations/tasks/{taskId}",
+                      {
+                        "group": "真人认证",
+                        "expanded": false,
+                        "openapi": "openapi/zh/aitoearn.openapi.json",
+                        "pages": [
+                          "POST /api/ai/volcengine/assets/visual-validation-sessions",
+                          "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
+                        ]
+                      },
+                      {
+                        "group": "虚拟人像素材",
+                        "expanded": false,
+                        "openapi": "openapi/zh/aitoearn.openapi.json",
+                        "pages": [
+                          "POST /api/ai/volcengine/assets/groups",
+                          "GET /api/ai/volcengine/assets/groups",
+                          "GET /api/ai/volcengine/assets/groups/{groupId}",
+                          "PATCH /api/ai/volcengine/assets/groups/{groupId}",
+                          "DELETE /api/ai/volcengine/assets/groups/{groupId}",
+                          "POST /api/ai/volcengine/assets/items",
+                          "GET /api/ai/volcengine/assets/items",
+                          "GET /api/ai/volcengine/assets/items/{assetId}",
+                          "PATCH /api/ai/volcengine/assets/items/{assetId}",
+                          "DELETE /api/ai/volcengine/assets/items/{assetId}"
+                        ]
+                      }
                     ]
                   },
                   {
@@ -753,10 +797,15 @@
                   "en/use/offline-checkin/index",
                   "en/use/plugin-publish/index",
                   "en/use/asset-upload/index",
-                  "en/use/virtual-assets/index",
-                  "en/use/real-person-assets/index",
                   "en/use/api-key/index",
-                  "en/use/video-generation/index",
+                  {
+                    "group": "Video generation",
+                    "pages": [
+                      "en/use/video-generation/index",
+                      "en/use/video-generation/real-person-assets/index",
+                      "en/use/video-generation/virtual-portrait-assets/index"
+                    ]
+                  },
                   "en/use/image-generation/index",
                   "en/use/large-language-model/index",
                   "en/use/codex/index",
@@ -793,26 +842,33 @@
                       "GET /api/ai/video/generations",
                       "GET /api/ai/video/generations/{taskId}",
                       "POST /api/ai/v3/contents/generations/tasks",
-                      "GET /api/ai/v3/contents/generations/tasks/{taskId}"
-                    ]
-                  },
-                  {
-                    "group": "AI Services/Real-person Assets",
-                    "expanded": false,
-                    "openapi": "openapi/en/aitoearn.openapi.json",
-                    "pages": [
-                      "POST /api/ai/volcengine/assets/groups",
-                      "GET /api/ai/volcengine/assets/groups",
-                      "GET /api/ai/volcengine/assets/groups/{groupId}",
-                      "PATCH /api/ai/volcengine/assets/groups/{groupId}",
-                      "DELETE /api/ai/volcengine/assets/groups/{groupId}",
-                      "POST /api/ai/volcengine/assets/items",
-                      "GET /api/ai/volcengine/assets/items",
-                      "GET /api/ai/volcengine/assets/items/{assetId}",
-                      "PATCH /api/ai/volcengine/assets/items/{assetId}",
-                      "DELETE /api/ai/volcengine/assets/items/{assetId}",
-                      "POST /api/ai/volcengine/assets/visual-validation-sessions",
-                      "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
+                      "GET /api/ai/v3/contents/generations/tasks/{taskId}",
+                      {
+                        "group": "Real-person verification",
+                        "expanded": false,
+                        "openapi": "openapi/en/aitoearn.openapi.json",
+                        "pages": [
+                          "POST /api/ai/volcengine/assets/visual-validation-sessions",
+                          "POST /api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete"
+                        ]
+                      },
+                      {
+                        "group": "Virtual portrait assets",
+                        "expanded": false,
+                        "openapi": "openapi/en/aitoearn.openapi.json",
+                        "pages": [
+                          "POST /api/ai/volcengine/assets/groups",
+                          "GET /api/ai/volcengine/assets/groups",
+                          "GET /api/ai/volcengine/assets/groups/{groupId}",
+                          "PATCH /api/ai/volcengine/assets/groups/{groupId}",
+                          "DELETE /api/ai/volcengine/assets/groups/{groupId}",
+                          "POST /api/ai/volcengine/assets/items",
+                          "GET /api/ai/volcengine/assets/items",
+                          "GET /api/ai/volcengine/assets/items/{assetId}",
+                          "PATCH /api/ai/volcengine/assets/items/{assetId}",
+                          "DELETE /api/ai/volcengine/assets/items/{assetId}"
+                        ]
+                      }
                     ]
                   },
                   {

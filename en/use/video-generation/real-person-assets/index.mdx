@@ -1,12 +1,20 @@
 ---
-title: Real-person assets
-description: Verify an authorized person and use real-person assets in Seedance.
+title: Real-person verification
+description: Verify an authorized person under video generation. The session accepts only callbackUrl, and completion requires bytedToken in the path.
 ---
 
 Real-person assets let Seedance use authorized media of a real person. Your integration only needs an AiToEarn `X-Api-Key`; no Volcengine access key or secret key is required.
 
 <Warning>
   Use this feature only with the person's explicit authorization. Keep the API key on your backend.
+</Warning>
+
+## Separate from virtual portrait assets
+
+Virtual portraits are documented in [Virtual portrait assets](../virtual-portrait-assets). This page covers real-person verification only.
+
+<Warning>
+  If generating a video with a real-person asset fails, use [Create virtual portrait group](/en/api-reference/post-api-ai-volcengine-assets-groups).
 </Warning>
 
 ## Integration flow
@@ -19,6 +27,12 @@ Real-person assets let Seedance use authorized media of a real person. Your inte
 6. Pass `asset://{assetId}` to Seedance.
 
 ## Create and complete verification
+
+This request has one field. Do not send the virtual portrait fields `name` or `description`:
+
+| Parameter | Required | Meaning |
+| --- | --- | --- |
+| `callbackUrl` | Yes | HTTP(S) URL to open after verification |
 
 Call [Create verification session](/en/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions):
 
@@ -39,7 +53,7 @@ curl --request POST \
   --header 'X-Api-Key: <API_KEY>'
 ```
 
-Store `data.groupId`. Business code `12329` means the result is not ready; wait briefly and retry. The regular group creation endpoint returns `avatarType: Virtual`. See [Regular assets](/en/use/virtual-assets) for that flow. A real-person group is created only by completing verification.
+Completion has no request body. Store `data.groupId`. Business code `12329` means the result is not ready; retry the same `bytedToken`. If generating a video with a real-person asset fails, use [Create virtual portrait group](/en/api-reference/post-api-ai-volcengine-assets-groups).
 
 ## Create an asset
 
@@ -87,3 +101,7 @@ Send the following body to `POST /api/ai/video/generations` with the same `X-Api
 - Match the asset type to `images`, `videos`, or `audios`.
 - Append only the asset ID after `asset://`.
 - Use only `Active` assets.
+
+<Warning>
+  If generating a video with a real-person asset fails, use [Create virtual portrait group](/en/api-reference/post-api-ai-volcengine-assets-groups).
+</Warning>

@@ -345,7 +345,7 @@
     }
   },
   "POST /api/ai/video/generations": {
-    "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。",
+    "description": "接口说明：提交视频生成任务，可传入参考图片、视频、音频。任务异步执行，返回 taskId 用于轮询结果。\n\n调用本接口前，请先请求[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），获取当前可用的模型列表及各模型的参数限制（分辨率、时长、宽高比、参考媒体约束与价格），再据此填写本接口参数。\n\n使用真人素材生成视频失败时，请改用[「创建虚拟人像组」](/api-reference/post-api-ai-volcengine-assets-groups)。",
     "bodyProperties": {
       "model": {
         "description": "视频生成模型名称。先调用[「视频生成模型」](/api-reference/get-api-ai-models-video-generation)接口（`GET /api/ai/models/video/generation`），传入其返回的 `data[n].name`；各模型支持的分辨率、时长、宽高比与价格以该接口返回为准。",
@@ -381,7 +381,7 @@
     "description": "接口说明：火山方舟视频生成兼容接口，适用于已经接入火山视频生成 API、希望迁移到 AiToEarn 但不想大改请求结构的客户。参考火山官方文档：[创建视频生成任务](https://www.volcengine.com/docs/82379/1520757?lang=zh)。",
     "bodyProperties": {
       "content": {
-        "description": "输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**"
+        "description": "输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。使用真人素材生成视频失败时，请改用「创建虚拟人像组」。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**"
       }
     }
   },
