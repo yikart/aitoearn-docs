@@ -24,11 +24,11 @@ AiToEarn Open Platform 提供开放 API，帮助你在自己的系统中接入�
   <Card title="资源上传" icon="upload" href="./asset-upload">
     上传本地图片、视频或其它素材，获取可直接写入接口参数的资源 URL。
   </Card>
-  <Card title="普通素材" icon="folder-plus" href="./virtual-assets">
-    创建普通素材组，并在 Seedance 中通过 asset:// 引用图片、视频或音频。
+  <Card title="虚拟人像素材" icon="folder-plus" href="./video-generation/virtual-portrait-assets">
+    name 必填，description 选填。不接收 avatarType。
   </Card>
-  <Card title="真人素材" icon="scan-face" href="./real-person-assets">
-    完成真人认证，并在 Seedance 中使用已授权的真人素材。
+  <Card title="真人认证" icon="scan-face" href="./video-generation/real-person-assets">
+    只传 callbackUrl。完成认证时路径参数 bytedToken 必填。
   </Card>
   <Card title="视频生成" icon="video" href="./video-generation">
     查询可用视频模型，提交生成任务，并轮询任务状态获取结果。
@@ -38,15 +38,6 @@ AiToEarn Open Platform 提供开放 API，帮助你在自己的系统中接入�
   </Card>
   <Card title="大语言模型" icon="brain-circuit" href="./large-language-model">
     通过兼容接口调用文本模型，接入对话、摘要和内容生成场景。
-  </Card>
-  <Card title="Codex 接入" icon="terminal" href="./codex">
-    使用 cc-switch 将 AiToEarn 对话接口接入 Codex。
-  </Card>
-  <Card title="Claude Code 设置" icon="terminal" href="./claude-code">
-    配置 Claude Code CLI 使用 AiToEarn Anthropic 兼容接口。
-  </Card>
-  <Card title="Claude Desktop 设置" icon="monitor" href="./claude-desktop">
-    在 Claude Desktop 中配置 AiToEarn 第三方推理服务。
   </Card>
 </CardGroup>
 

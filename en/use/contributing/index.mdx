@@ -1,0 +1,117 @@
+---
+title: "Contributing"
+description: "Contribute code, bug reports, and feature requests to the AiToEarn open-source project"
+---
+
+We're excited that you're interested in contributing to AiToEarn — that's great! We're building the best AI earning platform, and help from the community is invaluable.
+
+This guide helps you get familiar with the codebase and how we work with contributors, so you can get to the point quickly. It's a living document, so if it ever falls behind the project, feedback for improvement is welcome.
+
+## Before You Start
+
+Looking for something to work on? Browse our [issues](https://github.com/yikart/AiToEarn/issues) and pick one to get started!
+
+<AccordionGroup>
+  <Accordion title="Friendly first steps" icon="handshake">
+    Issues titled **【good first】** are prepared for new contributors. If you'd like to join the team, submit a PR linked to one of these issues.
+
+    Don't forget to link the existing issue in your PR description.
+  </Accordion>
+
+  <Accordion title="Bug reports" icon="bug">
+    When submitting a bug report, please include the following information:
+
+    - A clear, descriptive title
+    - A detailed description of the bug, including any error messages
+    - Steps to reproduce the bug
+    - Expected behavior
+    - **Logs** (if available) — this is very important for backend issues
+    - Screenshots or videos (if applicable)
+
+    How we prioritize:
+
+    | Issue type | Priority |
+    | --- | --- |
+    | Core functionality bugs (cannot log in, app not working, security vulnerabilities) | Critical |
+    | Non-critical bugs, performance improvements | Medium Priority |
+    | Small fixes (typos, confusing but working UI) | Low Priority |
+  </Accordion>
+
+  <Accordion title="Feature requests" icon="lightbulb">
+    When submitting a feature request, please include the following information:
+
+    - A clear, descriptive title
+    - A detailed description of the feature
+    - Use cases for the feature
+    - Any additional context or screenshots
+
+    How we prioritize:
+
+    | Feature type | Priority |
+    | --- | --- |
+    | Features marked high priority by team members | High Priority |
+    | Popular requests from community feedback | Medium Priority |
+    | Non-core features and minor enhancements | Low Priority |
+    | Valuable but not urgent | Future-Feature |
+  </Accordion>
+</AccordionGroup>
+
+## Development Setup
+
+1. Fork the project to your GitHub account.
+2. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+3. Commit your changes:
+
+   ```bash
+   git add .
+   git commit -m "feat: add new feature"
+   ```
+
+4. Push to your fork:
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+5. Create a Pull Request on GitHub.
+
+## Submitting Your PR
+
+<Steps>
+  <Step title="Fork the repository">
+    Fork [AiToEarn](https://github.com/yikart/AiToEarn) on GitHub to your account.
+  </Step>
+
+  <Step title="Open an issue first">
+    Before drafting a PR, create an issue to discuss the changes you want to make.
+  </Step>
+
+  <Step title="Create a branch and make changes">
+    Create a new branch for your changes and add tests accordingly.
+  </Step>
+
+  <Step title="Make sure tests pass">
+    Ensure your code passes the existing tests.
+  </Step>
+
+  <Step title="Submit the PR and link the issue">
+    Link the issue in your PR description, for example `fixes #<issue_number>`.
+  </Step>
+
+  <Step title="Wait for merge">
+    Wait for the maintainers to review and merge your PR.
+  </Step>
+</Steps>
+
+### Project Setup
+
+For backend setup, refer to the detailed instructions in `project/backend/README.md` in the repository, which contains step-by-step guidance to get the backend running. We recommend reading these documents carefully before continuing.
+
+## Getting Help
+
+If you run into difficulties or have urgent questions during contribution, just ask us through the relevant GitHub issue.

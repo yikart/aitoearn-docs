@@ -44,7 +44,10 @@
       "name": "AI Services/Large Language Models"
     },
     {
-      "name": "AI Services/Real-person Assets"
+      "name": "AI Services/Real-person Verification"
+    },
+    {
+      "name": "AI Services/Virtual Portrait Assets"
     },
     {
       "name": "AI Services/Agent"
@@ -442,7 +445,7 @@
       "post": {
         "summary": "Generate Video",
         "deprecated": false,
-        "description": "Interface description: Submit a video generation task, and you can pass in reference pictures, videos, and audios. The task is executed asynchronously and taskId is returned for polling results.\n\nBefore calling this interface, please request the [\"Video Generation Model\"](/en/api-reference/get-api-ai-models-video-generation) interface (`GET /api/ai/models/video/generation`) to obtain the currently available model list and the parameter restrictions of each model (resolution, duration, aspect ratio, reference media constraints and price), and then fill in the parameters of this interface accordingly.",
+        "description": "Interface description: Submit a video generation task, and you can pass in reference pictures, videos, and audios. The task is executed asynchronously and taskId is returned for polling results.\n\nBefore calling this interface, please request the [\"Video Generation Model\"](/en/api-reference/get-api-ai-models-video-generation) interface (`GET /api/ai/models/video/generation`) to obtain the currently available model list and the parameter restrictions of each model (resolution, duration, aspect ratio, reference media constraints and price), and then fill in the parameters of this interface accordingly.\n\nIf generating a video with a real-person asset fails, call [Create virtual portrait group](/en/api-reference/post-api-ai-volcengine-assets-groups).",
         "operationId": "VideoController_videoGeneration",
         "tags": [
           "AI Services/Video Generation"
@@ -12816,7 +12819,7 @@
                   },
                   "content": {
                     "type": "array",
-                    "description": "Content passed to the model to generate video, keeping the Volcengine Ark video generation format.\n\nNote: To use a real-person asset or a virtual portrait asset, pass `asset://<asset ID>` to generate a video.\n\nSeedance 2.0 models support the following input combinations:\n\n- **Text**\n- **Text + image**\n- **Text + video**\n- **Text + image + audio**\n- **Text + image + video**\n- **Text + video + audio**\n- **Text + image + video + audio**",
+                    "description": "Content passed to the model to generate video, keeping the Volcengine Ark video generation format.\n\nNote: To use a real-person asset or a virtual portrait asset, pass `asset://<asset ID>` to generate a video. If generating a video with a real-person asset fails, use Create virtual portrait group.\n\nSeedance 2.0 models support the following input combinations:\n\n- **Text**\n- **Text + image**\n- **Text + video**\n- **Text + image + audio**\n- **Text + image + video**\n- **Text + video + audio**\n- **Text + image + video + audio**",
                     "items": {
                       "oneOf": [
                         {
@@ -13217,10 +13220,10 @@
     "/api/ai/volcengine/assets/groups": {
       "post": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
-        "summary": "Create regular asset group",
-        "description": "Create a regular asset group whose `avatarType` is always `Virtual`. A real-person group must be created through the Complete real-person verification endpoint.",
+        "summary": "Create virtual portrait group",
+        "description": "Create a virtual portrait asset group. The body accepts only `name` (required) and `description` (optional). Volcengine CreateAssetGroup has no `avatarType`. `GroupType` is optional and defaults to `AIGC`. This endpoint does not accept `GroupType` or `avatarType`. The returned `avatarType` is always `Virtual`. Real-person verification is a separate endpoint and accepts only `callbackUrl`.",
         "operationId": "VolcengineAssetsController_createAssetGroup",
         "requestBody": {
           "required": true,
@@ -13232,11 +13235,11 @@
                   "name": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "Asset group name."
+                    "description": "Virtual portrait group name."
                   },
                   "description": {
                     "type": "string",
-                    "description": "Asset group description."
+                    "description": "Optional virtual portrait group description."
                   }
                 },
                 "required": [
@@ -13284,10 +13287,9 @@
                         "avatarType": {
                           "type": "string",
                           "enum": [
-                            "Virtual",
-                            "RealPerson"
+                            "Virtual"
                           ],
-                          "description": "Avatar type. Virtual means a regular group; RealPerson means a verified real-person group.",
+                          "description": "Avatar type. Creating a virtual portrait group always returns Virtual. Do not send this field in the request body.",
                           "example": "Virtual"
                         },
                         "createdAt": {
@@ -13374,8 +13376,8 @@
         "x-mint": {
           "href": "/en/api-reference/post-api-ai-volcengine-assets-groups",
           "metadata": {
-            "title": "Create regular asset group",
-            "sidebarTitle": "Create regular asset group"
+            "title": "Create virtual portrait group",
+            "sidebarTitle": "Create virtual portrait group"
           }
         },
         "security": [
@@ -13400,10 +13402,10 @@
       },
       "get": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Asset group list",
-        "description": "List asset groups owned by the current API key account. Pass `avatarType=RealPerson` to list real-person groups.",
+        "description": "List asset groups for the account that owns the current API key. `avatarType` is optional: pass `Virtual` for virtual portrait asset groups and `RealPerson` for verified real-person groups. This is a query parameter. Create endpoints do not accept it.",
         "operationId": "VolcengineAssetsController_listAssetGroupsWithPagination",
         "parameters": [
           {
@@ -13435,14 +13437,14 @@
             "name": "avatarType",
             "in": "query",
             "required": false,
-            "description": "Avatar type. Use RealPerson to list real-person groups.",
+            "description": "Optional filter when listing asset groups. Virtual means a virtual portrait asset group. RealPerson means a group created after verification succeeds. Create endpoints do not accept this field.",
             "schema": {
               "type": "string",
               "enum": [
                 "Virtual",
                 "RealPerson"
               ],
-              "description": "Avatar type. Use RealPerson to list real-person groups."
+              "description": "Optional filter when listing asset groups. Virtual means a virtual portrait asset group. RealPerson means a group created after verification succeeds. Create endpoints do not accept this field."
             }
           }
         ],
@@ -13496,7 +13498,7 @@
                                   "Virtual",
                                   "RealPerson"
                                 ],
-                                "description": "Avatar type. Virtual means a regular group; RealPerson means a verified real-person group."
+                                "description": "Avatar type returned by the server. Do not send it when creating a group. Virtual means a virtual portrait group. RealPerson means a group created after verification succeeds."
                               },
                               "createdAt": {
                                 "type": "string",
@@ -13630,7 +13632,7 @@
     "/api/ai/volcengine/assets/groups/{groupId}": {
       "get": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Asset group details",
         "description": "Get an asset group owned by the current API key account.",
@@ -13676,7 +13678,7 @@
                             "Virtual",
                             "RealPerson"
                           ],
-                          "description": "Avatar type. Virtual means a regular group; RealPerson means a verified real-person group."
+                          "description": "Avatar type returned by the server. Do not send it when creating a group. Virtual means a virtual portrait group. RealPerson means a group created after verification succeeds."
                         },
                         "createdAt": {
                           "type": "string",
@@ -13803,7 +13805,7 @@
       },
       "patch": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Update asset group",
         "description": "Update the asset group name or description. Provide at least one field.",
@@ -13879,7 +13881,7 @@
                             "Virtual",
                             "RealPerson"
                           ],
-                          "description": "Avatar type. Virtual means a regular group; RealPerson means a verified real-person group."
+                          "description": "Avatar type returned by the server. Do not send it when creating a group. Virtual means a virtual portrait group. RealPerson means a group created after verification succeeds."
                         },
                         "createdAt": {
                           "type": "string",
@@ -14006,7 +14008,7 @@
       },
       "delete": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Delete asset group",
         "description": "Delete the asset group and its asset records registered in AiToEarn.",
@@ -14135,7 +14137,7 @@
     "/api/ai/volcengine/assets/items": {
       "post": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Create asset",
         "description": "Register a publicly accessible image, video, or audio file in an asset group. The initial status is normally `Processing`; use Asset details to refresh it.",
@@ -14150,7 +14152,7 @@
                   "groupId": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "Asset group ID. Real-person assets must use the group ID returned after verification."
+                    "description": "Asset group ID. For a virtual portrait, use the groupId returned when the virtual portrait group is created. For a real-person asset, use the groupId returned after verification completes."
                   },
                   "url": {
                     "type": "string",
@@ -14367,7 +14369,7 @@
       },
       "get": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Asset list",
         "description": "List asset records owned by the current API key account. Use Asset details for the latest processing status.",
@@ -14641,7 +14643,7 @@
     "/api/ai/volcengine/assets/items/{assetId}": {
       "get": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Asset details",
         "description": "Get asset details and refresh the upstream processing status. Only assets with `status=Active` can be used for video generation through `asset://{assetId}`.",
@@ -14832,7 +14834,7 @@
       },
       "patch": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Update asset",
         "description": "Update the asset name.",
@@ -15052,7 +15054,7 @@
       },
       "delete": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Virtual Portrait Assets"
         ],
         "summary": "Delete asset",
         "description": "Delete the asset and its registration record in AiToEarn.",
@@ -15181,10 +15183,10 @@
     "/api/ai/volcengine/assets/visual-validation-sessions": {
       "post": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Real-person Verification"
         ],
         "summary": "Create real-person verification session",
-        "description": "Create a real-person liveness verification session. After verification, AiToEarn redirects the browser to `callbackUrl` with result parameters. Use the same API key to create and complete the session.",
+        "description": "Create a real-person liveness verification session. The body accepts only `callbackUrl`. Do not send a virtual portrait `name`, `description`, or `avatarType`. After verification, AiToEarn redirects the browser to `callbackUrl` with the result parameters. Creating and completing the same session must use the same API key.",
         "operationId": "VolcengineAssetsController_createVisualValidationSession",
         "requestBody": {
           "required": true,
@@ -15348,10 +15350,10 @@
     "/api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete": {
       "post": {
         "tags": [
-          "AI Services/Real-person Assets"
+          "AI Services/Real-person Verification"
         ],
         "summary": "Complete real-person verification",
-        "description": "Query the real-person verification result and create an `avatarType=RealPerson` group after success. AiToEarn retains the session for 30 minutes. Business code `12329` means the result is not ready; retry later.",
+        "description": "Complete real-person verification with the `bytedToken` path parameter. This endpoint has no request body. Do not send `name`, `description`, or `avatarType`. A successful result returns an asset group with `avatarType=RealPerson`. The session is kept for 30 minutes. Business code `12329` means the result is not ready, so retry the same token later. If generating a video with a real-person asset fails, call Create virtual portrait group.",
         "operationId": "VolcengineAssetsController_completeVisualValidation",
         "parameters": [
           {
@@ -15393,10 +15395,9 @@
                         "avatarType": {
                           "type": "string",
                           "enum": [
-                            "Virtual",
                             "RealPerson"
                           ],
-                          "description": "Avatar type. Virtual means a regular group; RealPerson means a verified real-person group.",
+                          "description": "Avatar type. Completing verification always returns RealPerson. Do not send this field in the request body.",
                           "example": "RealPerson"
                         },
                         "createdAt": {

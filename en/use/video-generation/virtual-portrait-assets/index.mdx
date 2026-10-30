@@ -1,23 +1,24 @@
 ---
-title: Regular assets
-description: Create a Virtual asset group and reference it in Seedance with asset://.
+title: Virtual portrait assets
+description: Create a virtual portrait asset group under video generation. name is required and description is optional. This endpoint does not accept avatarType.
 ---
 
-Regular assets let Seedance use images, videos, or audio without real-person verification. A group created through the asset group endpoint always has `avatarType` set to `Virtual`. Your integration only needs an AiToEarn `X-Api-Key`; no Volcengine access key or secret key is required.
+Virtual portrait assets do not require liveness verification. `name` is required and `description` is optional. Your integration only needs an AiToEarn `X-Api-Key`; no Volcengine access key or secret key is required.
 
 <Info>
   If you do not have an API Key yet, read [Get API Key](/en/use/api-key) first. Use the same API key to create the group, create assets, and generate video.
 </Info>
 
 <Note>
-  Authorized real-person media must use [Real-person assets](/en/use/real-person-assets). A `Virtual` group created on this page does not replace liveness verification.
+  See [Real-person verification](../real-person-assets) for that flow.
+  If generating a video with a real-person asset fails, use [Create virtual portrait group](/en/api-reference/post-api-ai-volcengine-assets-groups) on this page.
 </Note>
 
 ## Integration flow
 
 <Steps>
-  <Step title="Create a regular asset group">
-    Call the create group endpoint and store `groupId`. The returned `avatarType` is `Virtual`.
+  <Step title="Create a virtual portrait group">
+    Send `name` and optional `description`, then store `groupId`. The returned `avatarType` is `Virtual`.
   </Step>
   <Step title="Prepare a public media URL">
     The source file must be reachable from the public internet. For a local or private file, use [Asset upload](/en/use/asset-upload) and keep the confirmed `data.url`.
@@ -33,9 +34,16 @@ Regular assets let Seedance use images, videos, or audio without real-person ver
   </Step>
 </Steps>
 
-## Create an asset group
+## Create a virtual portrait group
 
-Call [Create regular asset group](/en/api-reference/post-api-ai-volcengine-assets-groups):
+Call [Create virtual portrait group](/en/api-reference/post-api-ai-volcengine-assets-groups). The request has only these fields. Do not add real-person verification fields:
+
+| Parameter | Required | Meaning |
+| --- | --- | --- |
+| `name` | Yes | Virtual portrait group name |
+| `description` | No | Group description |
+
+Volcengine `CreateAssetGroup` has no `avatarType` field. `Name` is required, `Description` is optional, and `GroupType` is optional with a default of `AIGC` (virtual portrait assets). This endpoint does not accept `GroupType` or `avatarType`. It always creates a virtual portrait group, and the response `avatarType` is `Virtual`. `avatarType` is optional only when listing groups.
 
 ```bash
 curl --request POST 'https://aitoearn.ai/api/ai/volcengine/assets/groups' \
@@ -127,7 +135,6 @@ Call [Video generation models](/en/api-reference/get-api-ai-models-video-generat
 
 ## Limits
 
-- Groups created on this page have `avatarType` `Virtual`. A real-person group is created only by [Complete verification](/en/api-reference/post-api-ai-volcengine-assets-visual-validation-sessions-byted-token-complete).
 - Use the same API key for the group, the asset, and video generation.
 - Keep the source URL publicly accessible while the asset is processing.
 - Put only the asset ID after `asset://`. Do not append a path, query string, or fragment.
@@ -135,8 +142,8 @@ Call [Video generation models](/en/api-reference/get-api-ai-models-video-generat
 - Use only `Active` assets.
 
 <CardGroup cols={2}>
-  <Card title="Create a regular asset group" icon="folder-plus" href="/en/api-reference/post-api-ai-volcengine-assets-groups">
-    Create a group whose `avatarType` is `Virtual`.
+  <Card title="Create a virtual portrait group" icon="folder-plus" href="/en/api-reference/post-api-ai-volcengine-assets-groups">
+    Send `name` and optional `description` only.
   </Card>
   <Card title="Manage assets" icon="folder-open" href="/en/api-reference/post-api-ai-volcengine-assets-items">
     Create an asset and check its processing status.

@@ -1,0 +1,55 @@
+---
+title: "All-Platform Installer"
+description: "A double-click installer that puts the AiToEarn skill into your favorite AI clients"
+---
+
+A **double-click** installer that puts the AiToEarn "all-domain content operation assistant" skill into your favorite AI clients. Once installed, you can simply say "create a TikTok video and publish it for me" in a conversation, and the AI can call AiToEarn's full capabilities: creation, generation, voice-over, editing, multi-platform publishing, and monetization planning.
+
+<Note>
+  Only the Mac installer is available now. The Windows version is still being debugged and coming soon.
+</Note>
+
+**Download**: [AiToEarn-全平台管理器-Mac.zip](https://ai-to-earn.oss-cn-beijing.aliyuncs.com/comment/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip)
+
+## Supported Platforms
+
+| Platform | Installation | After installation |
+| --- | --- | --- |
+| Codex | Fully automatic | Nothing |
+| Trae | Fully automatic (unofficial path) | Nothing |
+| Qwen Office | Skill installed automatically | Click through 4 connector prompts (address and Key are pre-filled) |
+| Qwen | Skill installed automatically | Click through 4 connector prompts (address and Key are pre-filled) |
+| Doubao | Guided clicks (config lives inside the client and cannot be written directly) | Complete the 4 guided steps |
+
+There is only one thing to do throughout: **paste your AiToEarn API Key** (aitoearn.cn / aitoearn.ai → Settings → API Key). The installer automatically detects whether the Key belongs to the China site or the international site and fills in the correct server address.
+
+## Quick Start
+
+<Steps>
+  <Step title="Unzip the package">
+    Download and unzip [AiToEarn-全平台管理器-Mac.zip](https://ai-to-earn.oss-cn-beijing.aliyuncs.com/comment/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip) on Mac. The Windows version is still being debugged and not yet available.
+  </Step>
+
+  <Step title="Run the manager">
+    Double-click `AiToEarn管理器.command` on Mac.
+  </Step>
+
+  <Step title="Install">
+    Choose "Install" → select a platform → paste your Key → follow the prompts.
+  </Step>
+</Steps>
+
+To uninstall, double-click the manager and choose "Uninstall" — it cleans up automatically and restores everything. Clicking "Cancel" on any prompt exits immediately without changing anything.
+
+## What's in the Package
+
+- `AiToEarn-全平台管理器-Mac.zip`: the installer (including skill files for five platforms)
+- `AiToEarn-多平台安装教程.md`: detailed tutorial (steps for each platform, FAQ, how it works)
+- `AiToEarn-Codex安装教程.md`: in-depth Codex tutorial
+- `AiToEarn-全平台安装包-简介.md`: this introduction file
+
+## Security
+
+- The manager is a **plaintext script** (.command / .ps1 are just text), so you can review exactly what it does at any time.
+- It only reads and writes the config directories of local AI clients and **never uploads any data**; the Key is validated online directly against AiToEarn's official servers.
+- Every write is backed up first and verified after; failures roll back automatically.

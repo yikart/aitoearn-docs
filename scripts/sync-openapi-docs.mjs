@@ -403,7 +403,7 @@ function volcengineVideoGenerationRequestSchema() {
       },
       content: {
         type: 'array',
-        description: '输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**',
+        description: '输入给模型、用于生成视频的内容，保持火山方舟视频生成格式。\n\n注意：使用真人素材或虚拟人像素材，传入 `asset://<asset ID>` 即可生成视频。使用真人素材生成视频失败时，请改用「创建虚拟人像组」。\n\nSeedance 2.0 系列模型支持以下输入组合：\n\n- **文本**\n- **文本 + 图片**\n- **文本 + 视频**\n- **文本 + 图片 + 音频**\n- **文本 + 图片 + 视频**\n- **文本 + 视频 + 音频**\n- **文本 + 图片 + 视频 + 音频**',
         items: {
           oneOf: [
             {
@@ -786,7 +786,7 @@ function volcengineAssetGroupSchema() {
       avatarType: {
         type: 'string',
         enum: ['Virtual', 'RealPerson'],
-        description: '人像类型。Virtual 表示普通素材组，RealPerson 表示真人认证素材组。',
+        description: '人像类型，由服务端返回，创建时不要传入。Virtual 表示虚拟人像组，RealPerson 表示真人认证成功后的素材组。',
       },
       createdAt: { type: 'string', format: 'date-time', description: '创建时间。' },
       updatedAt: { type: 'string', format: 'date-time', description: '更新时间。' },
@@ -840,16 +840,21 @@ function paginationSchema(itemSchema) {
 function addVolcengineAssetsEndpoints(spec) {
   spec.paths = spec.paths || {}
 
-  const tag = 'AI 服务/真人素材'
+  const tag = 'AI 服务/虚拟人像素材'
+  const realPersonTag = 'AI 服务/真人认证'
   const groupSchema = volcengineAssetGroupSchema()
   const virtualGroupSchema = structuredClone(groupSchema)
   virtualGroupSchema.properties.groupId.example = 'group_xxx'
   virtualGroupSchema.properties.name.example = 'product-avatar'
   virtualGroupSchema.properties.avatarType.example = 'Virtual'
+  virtualGroupSchema.properties.avatarType.enum = ['Virtual']
+  virtualGroupSchema.properties.avatarType.description = '人像类型。创建虚拟人像组时固定返回 Virtual。请求体不要传这个字段。'
   const realPersonGroupSchema = structuredClone(groupSchema)
   realPersonGroupSchema.properties.groupId.example = 'group_xxx'
   realPersonGroupSchema.properties.name.example = 'real_person_group'
   realPersonGroupSchema.properties.avatarType.example = 'RealPerson'
+  realPersonGroupSchema.properties.avatarType.enum = ['RealPerson']
+  realPersonGroupSchema.properties.avatarType.description = '人像类型。完成真人认证后固定返回 RealPerson。请求体不要传这个字段。'
   const assetSchema = volcengineAssetSchema()
   const pageParameter = openApiParameter('page', 'query', '页码，从 1 开始。', { type: 'integer', minimum: 1, default: 1 })
   const pageSizeParameter = openApiParameter('pageSize', 'query', '每页数量，取值范围 1-1000。', { type: 'integer', minimum: 1, maximum: 1000, default: 10 })
@@ -857,14 +862,14 @@ function addVolcengineAssetsEndpoints(spec) {
   spec.paths['/api/ai/volcengine/assets/groups'] = {
     post: {
       tags: [tag],
-      summary: '创建普通素材组',
-      description: '创建普通素材组，返回的 `avatarType` 固定为 `Virtual`。真人素材组必须通过“完成真人认证”接口创建。',
+      summary: '创建虚拟人像组',
+      description: '创建虚拟人像素材组。请求体只有 `name`（必填）和 `description`（可选）。火山方舟 CreateAssetGroup 没有 `avatarType`，`GroupType` 选填且默认 `AIGC`。本接口不接收 `GroupType` 和 `avatarType`。返回的 `avatarType` 固定为 `Virtual`。真人认证是另一组接口，只传 `callbackUrl`。',
       operationId: 'VolcengineAssetsController_createAssetGroup',
       requestBody: jsonRequestBody({
         type: 'object',
         properties: {
-          name: { type: 'string', minLength: 1, description: '素材组名称。' },
-          description: { type: 'string', description: '素材组描述。' },
+          name: { type: 'string', minLength: 1, description: '虚拟人像组名称。' },
+          description: { type: 'string', description: '虚拟人像组描述，可选。' },
         },
         required: ['name'],
         additionalProperties: false,
@@ -874,12 +879,12 @@ function addVolcengineAssetsEndpoints(spec) {
     get: {
       tags: [tag],
       summary: '素材组列表',
-      description: '分页查询当前 API Key 所属账号的素材组。查询真人素材组时传入 `avatarType=RealPerson`。',
+      description: '分页查询当前 API Key 所属账号的素材组。`avatarType` 选填：查询虚拟人像素材组传入 `Virtual`，查询真人认证素材组传入 `RealPerson`。这是查询参数，创建接口不接收。',
       operationId: 'VolcengineAssetsController_listAssetGroupsWithPagination',
       parameters: [
         pageParameter,
         pageSizeParameter,
-        openApiParameter('avatarType', 'query', '人像类型。查询真人素材组时使用 RealPerson。', {
+        openApiParameter('avatarType', 'query', '查询素材组时的可选参数。Virtual 表示虚拟人像素材组，RealPerson 表示真人认证成功后的素材组。创建接口不接收这个字段。', {
           type: 'string',
           enum: ['Virtual', 'RealPerson'],
         }),
@@ -932,7 +937,7 @@ function addVolcengineAssetsEndpoints(spec) {
       requestBody: jsonRequestBody({
         type: 'object',
         properties: {
-          groupId: { type: 'string', minLength: 1, description: '素材组 ID。真人素材必须使用认证完成后返回的真人素材组 ID。' },
+          groupId: { type: 'string', minLength: 1, description: '素材组 ID。虚拟人像填写创建虚拟人像组返回的 groupId。真人素材填写完成真人认证返回的 groupId。' },
           url: { type: 'string', format: 'uri', description: '素材源文件 URL，必须可由公网访问。' },
           assetType: { type: 'string', enum: ['Image', 'Video', 'Audio'], description: '素材类型。' },
           name: { type: 'string', minLength: 1, description: '素材名称。' },
@@ -1000,9 +1005,9 @@ function addVolcengineAssetsEndpoints(spec) {
 
   spec.paths['/api/ai/volcengine/assets/visual-validation-sessions'] = {
     post: {
-      tags: [tag],
+      tags: [realPersonTag],
       summary: '创建真人认证会话',
-      description: '创建真人活体认证会话。认证完成后，AiToEarn 会把浏览器重定向到 `callbackUrl`，并附带认证结果参数。创建和完成同一会话必须使用同一个 API Key。',
+      description: '创建真人活体认证会话。请求体只有 `callbackUrl`，不要传虚拟人像的 `name`、`description` 或 `avatarType`。认证完成后，AiToEarn 会把浏览器重定向到 `callbackUrl`，并附带认证结果参数。创建和完成同一会话必须使用同一个 API Key。',
       operationId: 'VolcengineAssetsController_createVisualValidationSession',
       requestBody: jsonRequestBody({
         type: 'object',
@@ -1032,9 +1037,9 @@ function addVolcengineAssetsEndpoints(spec) {
 
   spec.paths['/api/ai/volcengine/assets/visual-validation-sessions/{bytedToken}/complete'] = {
     post: {
-      tags: [tag],
+      tags: [realPersonTag],
       summary: '完成真人认证',
-      description: '查询真人认证结果，并在认证成功后创建 `avatarType=RealPerson` 的素材组。会话在 AiToEarn 中保留 30 分钟；若返回业务码 `12329`，表示认证结果尚未就绪，可以稍后重试。',
+      description: '用路径参数 `bytedToken` 完成真人认证。本接口没有请求体，不要传 `name`、`description` 或 `avatarType`。成功后返回 `avatarType=RealPerson` 的素材组。会话保留 30 分钟。业务码 `12329` 表示结果尚未就绪，请用同一个 Token 稍后重试。使用真人素材生成视频失败时，请改调「创建虚拟人像组」。',
       operationId: 'VolcengineAssetsController_completeVisualValidation',
       parameters: [openApiParameter('bytedToken', 'path', '创建真人认证会话时返回的 Token。', { type: 'string' }, true)],
       responses: sourceResponse(realPersonGroupSchema),
@@ -1765,12 +1770,14 @@ function buildNavigationGroups(endpoints, targetSpecRef) {
   }
   const preferredOrder = [
     'AI 服务/视频生成',
-    'AI 服务/真人素材',
+    'AI 服务/真人认证',
+    'AI 服务/虚拟人像素材',
     'AI 服务/图像生成',
     'AI 服务/大语言模型',
     'AI 服务/Agent',
     'AI Services/Video Generation',
-    'AI Services/Real-person Assets',
+    'AI Services/Real-person Verification',
+    'AI Services/Virtual Portrait Assets',
     'AI Services/Image Generation',
     'AI Services/Large Language Models',
     'AI Services/Agent',
@@ -1789,7 +1796,40 @@ function buildNavigationGroups(endpoints, targetSpecRef) {
     }
     return leftIndex - rightIndex
   })
-  return groups
+
+  const nestedGroupLabels = new Map([
+    ['AI 服务/真人认证', { parent: 'AI 服务/视频生成', group: '真人认证' }],
+    ['AI 服务/虚拟人像素材', { parent: 'AI 服务/视频生成', group: '虚拟人像素材' }],
+    ['AI Services/Real-person Verification', { parent: 'AI Services/Video Generation', group: 'Real-person verification' }],
+    ['AI Services/Virtual Portrait Assets', { parent: 'AI Services/Video Generation', group: 'Virtual portrait assets' }],
+  ])
+  const childrenByParent = new Map()
+  const remaining = []
+  for (const group of groups) {
+    const nested = nestedGroupLabels.get(group.group)
+    if (!nested) {
+      remaining.push(group)
+      continue
+    }
+    const children = childrenByParent.get(nested.parent) || []
+    children.push({
+      ...group,
+      group: nested.group,
+    })
+    childrenByParent.set(nested.parent, children)
+  }
+  for (const group of remaining) {
+    const children = childrenByParent.get(group.group)
+    if (!children) {
+      continue
+    }
+    group.pages = [...group.pages, ...children]
+    childrenByParent.delete(group.group)
+  }
+  for (const children of childrenByParent.values()) {
+    remaining.push(...children)
+  }
+  return remaining
 }
 
 function buildOpenApiRedirects(endpoints, targetSpec) {
@@ -1889,6 +1929,8 @@ function sanitizeOpenApi30(value) {
 const englishTextOverrides = {
   'AI 服务': 'AI Services',
   'AI 服务/视频生成': 'AI Services/Video Generation',
+  'AI 服务/真人认证': 'AI Services/Real-person Verification',
+  'AI 服务/虚拟人像素材': 'AI Services/Virtual Portrait Assets',
   'AI 服务/图像生成': 'AI Services/Image Generation',
   'AI 服务/大语言模型': 'AI Services/Large Language Models',
   'AI 服务/Agent': 'AI Services/Agent',
