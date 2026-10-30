@@ -1,0 +1,198 @@
+---
+title: "Cloud Workspace Guide"
+description: "Learn the core features of Cloud Workspace, and complete overseas account authorization, Facebook account warm-up, and fingerprint browser usage."
+---
+
+Cloud Workspace gives each account an isolated browser environment, reducing cross-account interference between cookies, IPs, and login history. This guide walks you through creating, starting, and using a Cloud Workspace for one account.
+
+<Tip>
+  Cloud Workspace is an optional prerequisite for logging in overseas accounts, authorization, or isolated multi-account management — it is not required for every overseas short drama promotion. If this is your first time, create a dedicated workspace for one account, finish signing in, and confirm everything works before creating workspaces for other accounts.
+</Tip>
+
+## Core Features
+
+Cloud Workspace is an isolated cloud browser environment, mainly used for overseas account authorization, Facebook account warm-up, and multi-account isolation.
+
+- **Isolated environment**: each workspace uses its own browser profile, reducing interference between cookies and login history;
+- **Account isolation**: one account per workspace; different accounts never share the same browser environment;
+- **Fingerprint management**: the same account always uses its own workspace, keeping the network, time zone, language, and browser environment as stable as possible;
+- **Centralized management**: create, start, stop, and manage multiple account environments from the Cloud Workspace list;
+- **Automation tasks**: run available scripts inside a running workspace to help with repetitive actions such as browsing.
+
+## Before You Start
+
+Make sure you have:
+
+- an AiToEarn account that can sign in normally;
+- the Facebook, TikTok, YouTube, or other platform accounts you want to use in Cloud Workspace;
+- an email address or phone number that can receive login verification codes;
+- if you choose "External Proxy", the proxy server address, port, username, and password.
+
+If you need to authorize Facebook, prepare a Facebook account that can sign in normally and make sure it already owns or manages at least one Facebook Page. AiToEarn authorizes Pages, not personal profiles.
+
+<Warning>
+  Follow the "one account per Cloud Workspace" principle. Do not switch workspaces for the same account, and do not frequently change the proxy, time zone, or language, or you may trigger the platform's abnormal-login checks.
+</Warning>
+
+## Create a Cloud Workspace
+
+### 1. Open Cloud Workspace
+
+After signing in to AiToEarn, open [Cloud Workspace](https://aitoearn.ai/en/cloud-space). On the Cloud Browser page, click **Create Cloud Workspace** in the top-right corner.
+
+![Click Create Cloud Workspace in the workspace list](/assets/help/space_0.png)
+
+Once the creation window opens, you will see options for usage duration and network connection.
+
+### 2. Choose a Usage Duration
+
+Choose how long the workspace should run for this session. The page offers 15, 30, 60, 120, 240, and 360 minutes; if you are not sure, choose the recommended **60 minutes**.
+
+### 3. Choose a Network Connection
+
+Choose a connection method based on your network conditions:
+
+| Connection | When to use | Proxy info required |
+| --- | --- | --- |
+| Default network | Quick trials or casual browsing without sensitive accounts | No |
+| System proxy | You have purchased a regional proxy from AiToEarn | No |
+| External proxy | You have your own proxy server | Yes |
+
+<Warning>
+  The default network uses dynamic IPs in Singapore, and the IP address may change. Platforms with strict login-environment and IP-change detection, such as Facebook, may trigger security checks, feature restrictions, or account bans as a result. The default network is not recommended for authorizing or operating accounts on such platforms. Choose a proxy that matches the account's registration region and historical login environment and stays relatively stable. Verification, restriction, and banning decisions are made by third-party platforms; AiToEarn cannot guarantee an account will not trigger risk control.
+</Warning>
+
+If you plan to authorize or operate accounts on platforms with strict risk control such as Facebook, choose a stable proxy that matches the account's region. Choose **System proxy** if you purchased a regional proxy from AiToEarn, or **External proxy** if you prepared your own proxy server.
+
+### 4. Fill in the External Proxy
+
+After selecting "External proxy", enter the proxy server address, port, username, and password, then click **Create Cloud Workspace**. External proxies currently support HTTP only.
+
+![Select external proxy and fill in the proxy server information](/assets/help/space_1.png)
+
+When filling in the form:
+
+- the proxy server address and port must match the information provided by your proxy provider;
+- if the proxy does not require authentication, whether the username and password can be left blank depends on the on-page prompts;
+- never show real proxy passwords in screenshots, chat records, or public documents;
+- if creation fails, first check that the address, port, username, and password are correct.
+
+Once created, the new workspace appears in the Cloud Browser list.
+
+## Authorize Overseas Accounts
+
+### 5. Start the Cloud Workspace
+
+Find the workspace you just created in the Cloud Browser list and click **Start** in the action column. When the workspace status changes to "Running", you enter an isolated cloud browser environment.
+
+![Start the newly created workspace from the Cloud Browser list](/assets/help/space_4.png)
+
+If the workspace does not open properly, first confirm that the network connection and proxy information are valid, then start it again.
+
+### 6. Sign in and authorize a social platform account
+
+Inside the Cloud Workspace, open the platform you want to use, such as Facebook, TikTok, or YouTube, then complete account sign-in, authorization, and any required security checks. The steps below use authorizing a Facebook Page as an example.
+
+On the first sign-in, note that:
+
+- confirm in advance that your email, phone number, and verification codes can be received normally;
+- if the platform asks for identity verification, complete it inside the current workspace whenever possible;
+- after a successful sign-in, always open this account from its own workspace.
+
+#### 6.1 Sign in to Facebook inside the Cloud Workspace
+
+In the address bar at the top of the Cloud Workspace, enter `https://www.facebook.com` and sign in to your Facebook account. Do not sign in from your local browser.
+
+After signing in, the login window disappears and Facebook pages open normally.
+
+![Sign in to Facebook inside the Cloud Workspace](/assets/help/space_5.png)
+
+#### 6.2 Add a channel in AiToEarn
+
+Go back to the AiToEarn tab inside the Cloud Workspace, open **My Channels**, then click **Add Channel** in the channel management window.
+
+![Click Add Channel in channel management](/assets/help/space_6.png)
+
+#### 6.3 Select and authorize Facebook
+
+Select **Facebook**, confirm the authorization as prompted, and choose the Facebook Page you want to bind. If you do not see the target Page, first confirm that the signed-in Facebook account has management permission for that Page.
+
+#### 6.4 Confirm the authorization
+
+Return to the channel management page after authorization. If the target Facebook Page appears in the channel list with an "Online" status, the authorization succeeded.
+
+![Facebook Page authorized successfully](/assets/help/space_7.png)
+
+## Facebook Account Warm-up
+
+After signing in to Facebook, start with low-frequency, normal browsing so the account keeps using its workspace and network environment. Automation tasks are optional; if you only need manual operations, skip the automation steps.
+
+### 7. Choose an automation script
+
+Inside a running Cloud Workspace, click **Automation** in the top-right corner. In the automation panel, choose the script you need, such as Facebook home feed browsing, and set the run scope, content filters, and advanced policies as prompted.
+
+After confirming the settings, click **Run Now**.
+
+![Choose an automation script and run it now](/assets/help/space_2.png)
+
+You can check the task status in **Execution Records**. The first time, test with a small run scope and continue only after confirming the pages and account behave normally.
+
+When the task status in Execution Records shows "Succeeded", the automation task is complete. Click the view button on the right to see the task result.
+
+![View automation task results in Execution Records](/assets/help/space_8.png)
+
+<Warning>
+  Automation must follow each platform's rules. Do not set an overly high operation frequency, and do not use automation to bypass platform security checks or access restrictions.
+</Warning>
+
+When using a Facebook account, also keep in mind:
+
+- in the early stage, focus on normal browsing and completing the profile; do not suddenly perform large batches of actions;
+- do not let the account switch frequently between workspaces or proxies;
+- if a security check appears, complete it in the original workspace first;
+- for detailed operation requirements, see the [Facebook Account Operation Guide](/en/help/facebook-account-operations).
+
+## Using the Fingerprint Browser
+
+Cloud Workspace saves the browser environment used by each account. To keep the environment stable, follow these principles:
+
+- one account per workspace; different accounts never share the same environment;
+- always open the same account from its own workspace;
+- do not frequently change the proxy, time zone, or language;
+- when operating multiple accounts, divide workspaces by account first, then sign in separately;
+- stop the workspace when finished, and start the same workspace again next time.
+
+## After You Finish
+
+When you are done, click **Stop Cloud Workspace** in the top-right corner of the page. Next time you use this account, start the same workspace again.
+
+Do not create new workspaces frequently just to switch networks temporarily. Only delete a workspace from the list after you are sure you no longer need it.
+
+## FAQ
+
+### Which network connection should I choose?
+
+The "Default network" uses dynamic IPs in Singapore and is only suitable for quick trials or casual browsing without sensitive accounts; it is not recommended for authorizing or operating accounts on platforms with strict risk control such as Facebook. Choose "System proxy" if you purchased a regional proxy from AiToEarn, or "External proxy" if you need to use your own stable proxy server. Whichever you choose, keep the proxy region consistent with the account's registration region and historical login environment.
+
+### What if the external proxy fails to connect?
+
+Check the proxy protocol, server address, port, username, and password in order. Confirm the proxy service is still valid and supports HTTP, then restart the workspace.
+
+### What if a verification code is required during sign-in?
+
+Complete the verification in the current workspace; do not switch to a new workspace and retry repeatedly. Before signing in, confirm that the bound email or phone number can receive verification codes normally.
+
+### Can one workspace sign in to multiple accounts?
+
+Not recommended. Create a separate workspace for each account so browser environments and login history stay independent.
+
+### What if an automation task does not run as expected?
+
+Open Execution Records to check the task status, then confirm the workspace is still running, the target account is signed in, and the run scope and filters are set correctly.
+
+## Related Guides
+
+- [Overseas Short Drama Promotion Guide](/en/help/short-drama)
+- [Facebook Account Operation Guide](/en/help/facebook-account-operations)
+- [TikTok Account Operation Guide](/en/help/tiktok-account-operations)
+- [YouTube Account Operation Guide](/en/help/youtube-account-operations)

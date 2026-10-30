@@ -654,11 +654,9 @@
                 ]
               },
               {
-                "group": "短剧任务",
+                "group": "出海短剧推广",
                 "pages": [
-                  "zh/help/short-drama/index",
-                  "zh/help/account-reporting/index",
-                  "zh/help/cloud-workspace/index",
+                  "zh/help/short-drama/index",                  "zh/help/cloud-workspace/index",
                   "zh/help/revenue-sharing/index"
                 ]
               },
@@ -959,6 +957,22 @@
                   "en/help/index",
                   "en/help/creator/index",
                   "en/help/advertiser/index"
+                ]
+              },
+              {
+                "group": "Short Drama Promotion",
+                "pages": [
+                  "en/help/short-drama/index",
+                  "en/help/cloud-workspace/index",
+                  "en/help/revenue-sharing/index"
+                ]
+              },
+              {
+                "group": "Platform Operations",
+                "pages": [
+                  "en/help/facebook-account-operations/index",
+                  "en/help/tiktok-account-operations/index",
+                  "en/help/youtube-account-operations/index"
                 ]
               },
               {
