@@ -1,61 +1,322 @@
 ---
-title: "All-Platform Installer"
-description: "A double-click installer that puts the AiToEarn skill into your favorite AI clients"
+title: All-Platform Installer
+description: One install brings AiToEarn content production, cloud editing, account publishing, and 13 specialized sub-skills into your favorite AI client.
 ---
 
-A **double-click** installer that puts the AiToEarn "all-domain content operation assistant" skill into your favorite AI clients. Once installed, you can simply say "create a TikTok video and publish it for me" in a conversation, and the AI can call AiToEarn's full capabilities: creation, generation, voice-over, editing, multi-platform publishing, and monetization planning.
+<Info>
+**The plugin is not another model.** It does not replace the agent built into Codex, Trae, Kimi, Qwen, or Doubao, and it does not bypass the host's model, account, or quota.
 
-## Download
+What it adds is the AiToEarn business layer: images, video, audio, cloud editing, real publishing accounts, and a set of professional workflows that know when to call which tool.
+</Info>
 
-| System | Package |
+## Why install it
+
+If you only ask AI to write an occasional paragraph, the client's built-in agent is enough.
+
+But when you need to actually produce and publish content, you usually hit four gaps:
+
+- AI can write a script but won't pick the right image or video model;
+- it can generate assets but won't check duration, aspect ratio, reference material, and platform limits;
+- it can describe publishing steps but doesn't know which accounts you've bound or which are online;
+- every step needs the prompt explained again, and switching clients means starting over.
+
+The AiToEarn all-platform installer closes that gap between creation and publishing.
+
+## How it differs from using the official agent alone
+
+Two cases to distinguish first.
+
+### Case 1: only using the client's general-purpose agent
+
+A general agent understands requests, writes copy, analyzes, and advises, but usually lacks:
+
+- your AiToEarn account, credit balance, and authorized publishing accounts;
+- AiToEarn image, video, audio, cloud editing, and media understanding tools;
+- live platform rules, publishing flows, scheduled tasks, and publishing records;
+- the 13 specialized sub-skills and their execution rules.
+
+After installing the plugin, those capabilities appear in the same conversation.
+
+### Case 2: AiToEarn MCP already wired into the official agent manually
+
+If the connection is correct and you always pick the right tool and read platform parameters correctly, the underlying capability is the same.
+
+What this plugin adds on top:
+
+- one install that writes and validates the MCP configuration automatically;
+- automatic routing across 13 sub-skills;
+- platform parameters, failure handling, paid-call confirmation, and publish review rules;
+- a consistent experience across Codex, Trae, Kimi, Qwen, and DeepSeek Harness;
+- local install, upgrade, and uninstall management.
+
+Put precisely:
+
+> **MCP provides the capability, the skill pack provides the method, and the installer connects both to your client.**
+
+### Capabilities you gain
+
+| Capability | General agent alone | With the AiToEarn plugin |
+| --- | --- | --- |
+| Scripts, titles, body copy | Yes | Original capability retained |
+| Image generation and editing | Depends on host | AiToEarn image models, reference images, pixel editing, and cover tools |
+| Video generation and editing | Depends on host | Seedance series, first/last frames, multimodal references, editing, and continuation |
+| Audio and subtitles | Usually needs another tool | ASR, vocal separation, dubbing, sound effects, audio continuity |
+| Cloud editing | Usually advice only | Project creation, timeline editing, subtitles, transitions, effects, preview, and export |
+| Publishing to real accounts | Usually steps only | Read platforms and accounts, create publish flows, support scheduling, querying, canceling, and updating |
+| Professional task routing | Depends on user description | 13 sub-skills load automatically by task |
+
+## Before you start
+
+### 1. Install and open an AI client once
+
+Supported: Codex, Trae / TraeWork, DeepSeek Harness, Kimi Work, Qwen Office, Qwen Desktop, Doubao.
+
+Open the client once so the manager can detect its install and data directories.
+
+### 2. Get an AiToEarn API Key
+
+Sign in to the site you use and create one under Settings → API Key:
+
+- China site: [aitoearn.cn](https://aitoearn.cn)
+- International site: [aitoearn.ai](https://aitoearn.ai)
+
+<Warning>
+Accounts, keys, and API endpoints are not interchangeable between the China and international sites. The manager detects which site the key belongs to, but you must create the key on the site you actually use.
+</Warning>
+
+### 3. Download the installer
+
+| System | Download |
 | --- | --- |
 | macOS | [AiToEarn-全平台管理器-Mac.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip) |
 | Windows | [AiToEarn-全平台管理器-Windows.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Windows.zip) |
 
-## Supported Platforms
+## Installation
 
-Mac and Windows support the same set of platforms:
+1. Unzip the package for your system.
+2. Double-click `AiToEarn管理器.command` on macOS, or `AiToEarn管理器.cmd` on Windows.
+3. Choose Install.
+4. Choose the target client.
+5. Paste your AiToEarn API Key.
+6. Wait for the manager to validate the configuration.
+7. Follow the result dialog to finish the remaining client steps.
+8. Fully quit and reopen the client.
+9. Start a new session and send the verification prompt below.
 
-| Platform | Installation | After installation |
+```text
+List the available publishing channels
+```
+
+If it returns the channel directory, the plugin and AiToEarn MCP are connected.
+
+### Supported clients
+
+| Client | What the manager does | What you still do |
 | --- | --- | --- |
-| Codex | Fully automatic | Nothing |
-| Trae | Fully automatic | Nothing |
-| DeepSeek Harness | Fully automatic | Nothing |
-| Kimi | Fully automatic | On Windows, complete the installation in the plugin marketplace |
-| Qwen Office | Skill installed automatically | Click through 4 connector prompts (address and Key are pre-filled) |
-| Qwen | Skill installed automatically | Click through 4 connector prompts (address and Key are pre-filled) |
-| Doubao | Guided clicks (config lives inside the client and cannot be written directly) | Complete the 4 guided steps |
+| Codex | Installs the local plugin marketplace entry, skills, and MCP | Fully quit and reopen Codex, start a new session to verify |
+| Trae / TraeWork | Installs skills, registers them, and writes MCP | Fully quit and reopen Trae, start a new conversation to verify |
+| DeepSeek Harness | Installs the plugin and writes the profile config | Reopen the client and start a new session to verify |
+| Kimi Work | Writes the skill plugin, personal plugin marketplace, and MCP | Fully quit and reopen; on Windows, click install in the plugin marketplace if prompted |
+| Qwen Office | Installs the custom plugin and generates the connector JSON | Reopen, then go to Extensions → Connectors → Add → Import JSON and paste the copied config |
+| Qwen Desktop | Installs skills directly into the local skill library | Reopen, then go to Connect and add the HTTP MCP manually as prompted |
+| Doubao | Copies the skill pack to the Downloads folder and guides you | Import the skill in Doubao, create a custom connector, and fill in the key |
 
-There is only one thing to do throughout: **paste your AiToEarn API Key** (aitoearn.cn / aitoearn.ai → Settings → API Key). The installer automatically detects whether the Key belongs to the China site or the international site and fills in the correct server address.
+<Note>
+Some Qwen and Doubao connector settings live inside the client and cannot be written directly, so you still need to follow the prompts. The manager copies the address, key, or JSON automatically to reduce manual entry.
+</Note>
 
-## Quick Start
+## First use: verify, then publish
 
-<Steps>
-  <Step title="Unzip the package">
-    Download and unzip the package for your system: [AiToEarn-全平台管理器-Mac.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip) for Mac, or [AiToEarn-全平台管理器-Windows.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Windows.zip) for Windows.
-  </Step>
+### Step 1: Verify the MCP connection
 
-  <Step title="Run the manager">
-    Double-click `AiToEarn管理器.command` on Mac, or run the manager script on Windows.
-  </Step>
+```text
+List the available publishing channels.
+```
 
-  <Step title="Install">
-    Choose "Install" → select a platform → paste your Key → follow the prompts.
-  </Step>
-</Steps>
+### Step 2: Verify account authorization
 
-To uninstall, double-click the manager and choose "Uninstall" — it cleans up automatically and restores everything. Clicking "Cancel" on any prompt exits immediately without changing anything.
+```text
+List the publishing accounts I've bound and tell me which ones can publish right now.
+```
 
-## What's in the Package
+If you have no accounts yet, sign in to AiToEarn and authorize the target platforms by scanning the QR code under My Channels.
+That step happens in AiToEarn and cannot be replaced by the installer.
 
-- `AiToEarn-全平台管理器-Mac.zip`: the Mac installer (including skill files for all platforms)
-- `AiToEarn-全平台管理器-Windows.zip`: the Windows installer (including skill files for all platforms)
-- `AiToEarn-多平台安装教程.md`: detailed tutorial (steps for each platform, FAQ, how it works)
-- `AiToEarn-Codex安装教程.md`: in-depth Codex tutorial
-- `AiToEarn-全平台安装包-简介.md`: this introduction file
+### Step 3: Do one generation without publishing
+
+```text
+Generate a 9:16 product cover at 1080p quality. Show me a preview and the estimated credits first, and do not publish.
+```
+
+### Step 4: Do a publishing preview
+
+```text
+Generate a Xiaohongshu publishing preview for this video:
+list the title, body, hashtags, cover, account, publish time, and platform limits.
+Do not submit without my confirmation.
+```
+
+### Step 5: Publish after confirmation
+
+```text
+Publish the content I just confirmed to Xiaohongshu.
+```
+
+Verifying this way lets you isolate problems in MCP connection, account authorization, media generation, and publishing parameters separately.
+
+## How to use it: four common scenarios
+
+### 1. From topic to a full content set
+
+```text
+Create a Xiaohongshu image-text set on "how beginners should choose their first camera":
+- 3 title options;
+- 1 body copy;
+- 6 images at 4:3;
+- suggestions on pairing the cover with the body;
+- generate previews only, do not publish.
+```
+
+The plugin breaks the task into copy, images, and publishing prep instead of returning a generic plan.
+
+### 2. From raw footage to a short video
+
+```text
+Turn these videos and audio into a 30-second vertical short:
+- keep the core message, remove repeats and pauses;
+- generate Chinese subtitles automatically;
+- normalize volume and fix audio jumps at cut points;
+- generate a cover;
+- export a low-resolution preview first, then export the high-resolution version after I confirm.
+```
+
+Suits talking-head videos, product demos, store visits, course clips, and re-editing existing footage.
+
+### 3. Generate a new video with a reference style
+
+```text
+Using this product image and this motion video as references, generate a 5-second ad video:
+- keep the product appearance and logo;
+- use the video only for camera movement and rhythm, do not copy the frames;
+- 9:16, 720p;
+- tell me the model used and the estimated credits first.
+```
+
+The plugin distinguishes first frame, last frame, style reference, motion reference, and editing master, reducing cases where you supply assets but the model misreads their roles.
+
+### 4. Multi-platform publishing
+
+```text
+Publish this final cut to Douyin, WeChat Channels, and YouTube:
+- read each platform's title, body, cover, duration, and privacy limits first;
+- generate adapted versions for each;
+- list the target accounts and estimated publish times;
+- submit only after I confirm.
+```
+
+When a platform, account, or tool isn't supported, the agent should say so explicitly rather than pretend the publish succeeded.
+
+## Feature details
+
+### Real sub-skills, not one catch-all prompt
+
+The installer includes 13 sub-skills:
+
+- image generation and image editing;
+- video generation, editing, and continuation;
+- cloud editing planning and cloud editing execution;
+- speech recognition, subtitles, vocal separation, and dubbing;
+- audio continuity repair;
+- asset preprocessing and media understanding;
+- cloud browser operation;
+- platform publishing.
+
+The entry agent loads the relevant skill per task, reads the working method first, then calls the tools.
+
+### Platform rules read live
+
+Title length, image count, whether a cover is required, how to fill hashtags, and whether an account is online all come from AiToEarn tools at runtime rather than being hardcoded in prompts.
+
+### Generate, edit, and publish controlled separately
+
+A single task can be split into:
+
+1. look up the model and price;
+2. generate a low-resolution sample;
+3. confirm the high-resolution export;
+4. confirm the publishing account and time.
+
+This is more controllable than "do everything and publish", and makes it easier to locate which step failed.
+
+### Actionable deliverables
+
+Results don't stop at chat:
+
+- images and videos return accessible URLs;
+- cloud editing returns projects, previews, and exported files;
+- publishing returns flow, task, and status records;
+- failures return a reason instead of just saying "done".
+
+## How costs work
+
+Installing the plugin is free. The current package has no pricing, subscription, or seat checks.
+
+Real usage involves three cost layers:
+
+| Cost layer | Description |
+| --- | --- |
+| Host agent | The client's own plan or model quota (Codex, Trae, Kimi, Qwen, etc.), billed separately |
+| Plugin install | Free in the current version; installing does not deduct AiToEarn credits |
+| AiToEarn services | Images, video, audio, media processing, cloud browser, etc. deduct credits per actual call |
+
+Image and video prices vary by model, resolution, duration, and limited-time promotions. Before generating, have the agent read the model catalog and report the estimated credits; the final charge follows your account bill.
 
 ## Security
 
-- The manager is a **plaintext script** (.command / .ps1 are just text), so you can review exactly what it does at any time.
-- It only reads and writes the config directories of local AI clients and **never uploads any data**; the Key is validated online directly against AiToEarn's official servers.
-- Every write is backed up first and verified after; failures roll back automatically.
+- The manager is a plain-text script you can inspect at any time;
+- It only reads and writes local AI client configuration and never uploads local files;
+- API keys are verified online directly against AiToEarn's official servers;
+- It backs up before writing, validates after writing, and rolls back automatically on failure;
+- Uninstalling cleans up skills, plugins, and MCP configuration as far as possible;
+- The Doubao connector lives inside the client and must be removed manually in Doubao.
+
+## FAQ
+
+### Tools are missing after installation
+
+Fully quit the client, reopen it, and start a new session. Closing the window alone usually doesn't reload MCP.
+
+### Tools exist but report unauthorized or `-32001`
+
+Check that the key belongs to the site matching the current URL and that it is still valid. Don't use a key across sites.
+
+### Platforms show up but accounts don't
+
+Go to My Channels in AiToEarn, re-authorize by scanning the QR code, then have the agent query accounts again.
+
+### Multiple eligible accounts
+
+Specify the account to publish to. The plugin should not guess, and certainly should not publish to all accounts by default.
+
+### Publishing fails
+
+Have the agent read the failure reason and platform rules first; don't resubmit unchanged. Failed or canceled publishing tasks usually need a new publish flow.
+
+## What's in the package
+
+- The macOS install manager;
+- The Windows install manager;
+- Skill, plugin, and MCP configuration templates for each client;
+- The Codex-specific tutorial;
+- The multi-platform installation tutorial;
+- Security and usage notes.
+
+## Uninstall
+
+Run the manager again and choose Uninstall with the target client.
+
+Uninstalling does not delete your AiToEarn account, cloud assets, or already published content. The Doubao connector must be removed manually inside the Doubao client.
+
+---
+
+**In one sentence: the official agent understands and generates, and the AiToEarn plugin brings professional media capabilities, cloud editing, and real publishing accounts into the conversation.**
