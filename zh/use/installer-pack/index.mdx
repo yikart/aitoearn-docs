@@ -91,7 +91,7 @@ AiToEarn 全平台安装包解决的就是这段“从创作到发布”的断�
 | macOS | [AiToEarn-全平台管理器-Mac.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip) |
 | Windows | [AiToEarn-全平台管理器-Windows.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Windows.zip) |
 
-## 安装
+## 方式一：使用安装管理器
 
 1. 解压对应系统的安装包。
 2. macOS 双击 `AiToEarn管理器.command`；Windows 双击 `AiToEarn管理器.cmd`。
@@ -124,6 +124,16 @@ AiToEarn 全平台安装包解决的就是这段“从创作到发布”的断�
 <Note>
 千问和豆包的部分连接器配置保存在客户端内部，管理器无法直接写入，因此仍需按弹窗手动点击。管理器会自动复制地址、Key 或 JSON，减少手工输入。
 </Note>
+
+## 方式二：让 agent 直接安装
+
+不想下载管理器时，可以把技能仓库地址直接发给 agent，让它自己完成安装：
+
+```text
+帮我安装 https://github.com/yikart/AiToEarn/tree/main/skills 的插件包
+```
+
+这种方式装的是同一套技能包，适合远程环境，或者已经习惯在对话里完成配置的场景。Codex、Trae、DeepSeek Harness、Kimi 由 agent 自动写入 MCP 配置和 Key；豆包、千问、千问办公还需要在客户端里配置连接器。装完后按「首次使用」的步骤确认是否接通即可。
 
 ## 首次使用：先验证，再发布
 

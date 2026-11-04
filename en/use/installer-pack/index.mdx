@@ -91,7 +91,7 @@ Accounts, keys, and API endpoints are not interchangeable between the China and 
 | macOS | [AiToEarn-全平台管理器-Mac.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Mac.zip) |
 | Windows | [AiToEarn-全平台管理器-Windows.zip](https://install-mac-windows-plugin.oss-cn-beijing.aliyuncs.com/AiToEarn-%E5%85%A8%E5%B9%B3%E5%8F%B0%E7%AE%A1%E7%90%86%E5%99%A8-Windows.zip) |
 
-## Installation
+## Option 1: use the install manager
 
 1. Unzip the package for your system.
 2. Double-click `AiToEarn管理器.command` on macOS, or `AiToEarn管理器.cmd` on Windows.
@@ -124,6 +124,16 @@ If it returns the channel directory, the plugin and AiToEarn MCP are connected.
 <Note>
 Some Qwen and Doubao connector settings live inside the client and cannot be written directly, so you still need to follow the prompts. The manager copies the address, key, or JSON automatically to reduce manual entry.
 </Note>
+
+## Option 2: let the agent install it
+
+If you'd rather not download the manager, send the skills repository to an agent that can read the repo and write local configuration:
+
+```text
+Install the plugin pack at https://github.com/yikart/AiToEarn/tree/main/skills
+```
+
+This installs the same skill pack, which suits remote environments or workflows you already drive through conversation. Codex, Trae, DeepSeek Harness, and Kimi get the MCP configuration and key written by the agent automatically; Doubao, Qwen, and Qwen Office still require a connector set up in the client. Either way, follow First use to confirm the connection.
 
 ## First use: verify, then publish
 
