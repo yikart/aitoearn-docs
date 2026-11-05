@@ -506,9 +506,8 @@
                 ]
               },
               {
-                "group": "AI 工具接入",
+                "group": "插件安装",
                 "pages": [
-                  "zh/use/workbuddy/index",
                   "zh/use/installer-pack/index"
                 ]
               },
@@ -858,9 +857,8 @@
                 ]
               },
               {
-                "group": "AI Tool Integration",
+                "group": "Install plugin",
                 "pages": [
-                  "en/use/workbuddy/index",
                   "en/use/installer-pack/index"
                 ]
               },
