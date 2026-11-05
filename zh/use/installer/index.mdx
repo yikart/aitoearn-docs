@@ -52,6 +52,67 @@ docker --version
 docker compose version
 ```
 
+## 认证密钥
+
+`docker-compose.yml` 和两个 `config.yaml` 不再内置认证密钥默认值。启动前必须填写以下三项，否则 Compose 会直接报错，或服务因配置校验失败而退出。
+
+| 配置项 | 所在文件 | 填写要求 |
+| --- | --- | --- |
+| `auth.secret` | aitoearn-ai、aitoearn-server 的 `config.yaml` | 两处都设为同一个 `JWT_SECRET`，用于签发和校验登录 token |
+| `auth.internalToken` | aitoearn-ai、aitoearn-server 的 `config.yaml` | 服务间内部调用令牌，两个文件建议使用同一个值 |
+| `aiClient.token` | aitoearn-server 的 `config.yaml` | 与 AI 服务的 `auth.internalToken` 保持一致 |
+
+密钥要求：**至少 32 个字符，且不能包含空格、换行等空白字符**。Compose 和服务启动时都会校验，不合规会拒绝启动。
+
+### 生成密钥
+
+```bash
+export JWT_SECRET="$(openssl rand -hex 32)"
+export INTERNAL_TOKEN="$(openssl rand -hex 32)"
+```
+
+`openssl rand -hex 32` 会生成 64 位十六进制字符串，满足长度要求。
+
+### 写入配置
+
+编辑两个配置文件：
+
+- `project/aitoearn-backend/apps/aitoearn-ai/config/config.yaml`
+- `project/aitoearn-backend/apps/aitoearn-server/config/config.yaml`
+
+把其中的 `auth` 段改为：
+
+```yaml
+auth:
+  secret: '<JWT_SECRET>'
+  internalToken: '<INTERNAL_TOKEN>'
+```
+
+再修改 aitoearn-server 配置文件中的 AI 客户端令牌：
+
+```yaml
+aiClient:
+  baseUrl: http://aitoearn-ai:3010
+  token: '<INTERNAL_TOKEN>'
+```
+
+### 启动前检查
+
+确认当前终端已导出 `JWT_SECRET`，然后校验 Compose 配置：
+
+```bash
+docker compose config --quiet
+```
+
+命令没有输出即表示校验通过。如果提示 `required variable JWT_SECRET is missing a value`，说明当前终端没有导出该变量。
+
+<Warning>
+- `JWT_SECRET` 必须与两个 `config.yaml` 中的 `auth.secret` 完全一致，否则 `aitoearn-init` 签发的自动登录 token 无法通过后端校验。
+- 更换 `auth.secret` 会使已签发的登录 token 全部失效，需要重新生成自动登录 token。
+- 重新打开终端或重启机器后需要重新 `export JWT_SECRET`，否则 `docker compose` 会拒绝启动。
+- 请妥善保存这组密钥，重装或多实例部署时沿用同一组值，并且不要提交到公开仓库。
+</Warning>
+
 ## 快速启动
 
 只需 3 步，即可在本地跑起完整的 AiToEarn。
@@ -61,6 +122,11 @@ docker compose version
     ```bash
     git clone https://github.com/yikart/AiToEarn.git
     cd AiToEarn
+    ```
+
+    先按上一节「认证密钥」生成并填写密钥，然后确认当前终端已导出 `JWT_SECRET`，再启动：
+
+    ```bash
     docker compose up -d
     ```
 
@@ -100,7 +166,7 @@ docker compose version
 
 <AccordionGroup>
   <Accordion title="自动登录">
-    自动登录默认已启用。首次启动时，`aitoearn-init` 服务会生成管理员 token 并保存到共享卷中，`aitoearn-web` 服务自动读取该 token 完成登录。
+    自动登录默认已启用。首次启动时，`aitoearn-init` 服务会生成管理员 token 并保存到共享卷中，`aitoearn-web` 服务自动读取该 token 完成登录。该 token 使用 `JWT_SECRET` 签发，必须与两个 `config.yaml` 中的 `auth.secret` 一致；更换 `auth.secret` 后需要重新生成 token。
   </Accordion>
 
   <Accordion title="镜像拉取策略">
@@ -126,6 +192,16 @@ docker compose version
   </Accordion>
 </AccordionGroup>
 
+## 常见问题
+
+| 现象 | 原因 | 处理 |
+| --- | --- | --- |
+| `docker compose up` 提示 `required variable JWT_SECRET is missing a value` | 当前终端没有导出 `JWT_SECRET` | 执行 `export JWT_SECRET="<已有密钥>"`，值必须与 `auth.secret` 一致 |
+| `aitoearn-init` 退出并提示 `at least 32 characters` | `JWT_SECRET` 为空、少于 32 字符或包含空白 | 用 `docker compose logs aitoearn-init` 查看详情，重新生成 64 位密钥并同步两个 `config.yaml` 的 `auth.secret` |
+| `aitoearn-server` 或 `aitoearn-ai` 反复重启 | `auth.secret`、`auth.internalToken`、`aiClient.token` 未填写或格式不合规 | 用 `docker compose logs aitoearn-server` 或 `docker compose logs aitoearn-ai` 查看校验错误，补全配置后重启 |
+| 页面能打开但没有自动登录 | `auth.secret` 与 `JWT_SECRET` 不一致，或旧 token 由其他密钥签发 | 对齐密钥后执行 `docker compose up -d --force-recreate aitoearn-init aitoearn-web` |
+| 调用 AI 能力返回 401 | `aiClient.token` 与 AI 服务的 `auth.internalToken` 不一致 | 修改 aitoearn-server 配置并执行 `docker compose restart aitoearn-server` |
+
 ## 配置速查表
 
 `aitoearn-ai` 和 `aitoearn-server` 不再通过 `docker-compose.yml` 的 `environment` 配置运行参数，统一读取挂载的 `config.yaml`，并通过配置管理界面修改。
@@ -136,5 +212,6 @@ docker compose version
 | --- | --- | --- | --- |
 | `MONGO_INITDB_ROOT_PASSWORD` | mongodb | MongoDB root 密码 | `password` |
 | `RUSTFS_ACCESS_KEY` / `RUSTFS_SECRET_KEY` | rustfs | RustFS 访问凭证 | `rustfsadmin` |
-| `MONGO_URI` / `JWT_SECRET` / `DB_NAME` / `AUTO_LOGIN_TOKEN_PATH` | aitoearn-init | 首次启动初始化管理员与自动登录 token | 内置默认值 |
+| `JWT_SECRET` | aitoearn-init | 必须与后端 `auth.secret` 一致 | 必填，无默认值 |
+| `MONGO_URI` / `DB_NAME` / `AUTO_LOGIN_TOKEN_PATH` | aitoearn-init | 首次启动初始化管理员与自动登录 token | 内置默认值 |
 | `NODE_ENV` / `NEXT_TELEMETRY_DISABLED` | aitoearn-web | Web 运行环境与 Next.js telemetry 设置 | `production` / `1` |

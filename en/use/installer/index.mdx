@@ -52,6 +52,67 @@ docker --version
 docker compose version
 ```
 
+## Authentication Secrets
+
+`docker-compose.yml` and the two `config.yaml` files no longer ship default authentication secrets. You must configure the following three values before starting; otherwise Compose fails immediately or the services exit after configuration validation.
+
+| Setting | File | Requirement |
+| --- | --- | --- |
+| `auth.secret` | `config.yaml` in aitoearn-ai and aitoearn-server | Set both to the same `JWT_SECRET`; used to sign and verify login tokens |
+| `auth.internalToken` | `config.yaml` in aitoearn-ai and aitoearn-server | Internal service token; use the same value in both files |
+| `aiClient.token` | `config.yaml` in aitoearn-server | Must match the AI service's `auth.internalToken` |
+
+Requirements: **at least 32 characters with no whitespace characters** such as spaces or line breaks. Compose and the services validate this at startup and refuse to run otherwise.
+
+### Generate secrets
+
+```bash
+export JWT_SECRET="$(openssl rand -hex 32)"
+export INTERNAL_TOKEN="$(openssl rand -hex 32)"
+```
+
+`openssl rand -hex 32` produces a 64-character hexadecimal string that satisfies the length requirement.
+
+### Write the configuration
+
+Edit both configuration files:
+
+- `project/aitoearn-backend/apps/aitoearn-ai/config/config.yaml`
+- `project/aitoearn-backend/apps/aitoearn-server/config/config.yaml`
+
+Set the `auth` section in each file to:
+
+```yaml
+auth:
+  secret: '<JWT_SECRET>'
+  internalToken: '<INTERNAL_TOKEN>'
+```
+
+Then update the AI client token in the aitoearn-server configuration:
+
+```yaml
+aiClient:
+  baseUrl: http://aitoearn-ai:3010
+  token: '<INTERNAL_TOKEN>'
+```
+
+### Verify before starting
+
+Make sure `JWT_SECRET` is exported in the current shell, then validate the Compose configuration:
+
+```bash
+docker compose config --quiet
+```
+
+No output means validation passed. If you see `required variable JWT_SECRET is missing a value`, the variable is not exported in the current shell.
+
+<Warning>
+- `JWT_SECRET` must exactly match `auth.secret` in both `config.yaml` files, otherwise the auto-login token issued by `aitoearn-init` cannot be verified by the backend.
+- Changing `auth.secret` invalidates all issued login tokens; regenerate the auto-login token afterward.
+- Export `JWT_SECRET` again after reopening a terminal or rebooting the machine, otherwise `docker compose` refuses to start.
+- Keep this set of secrets for reinstalls and multi-instance deployments, and never commit them to a public repository.
+</Warning>
+
 ## Quick Start
 
 Only 3 steps to run the complete AiToEarn locally.
@@ -61,6 +122,11 @@ Only 3 steps to run the complete AiToEarn locally.
     ```bash
     git clone https://github.com/yikart/AiToEarn.git
     cd AiToEarn
+    ```
+
+    First generate and fill in the secrets as described in [Authentication Secrets](#authentication-secrets), then make sure `JWT_SECRET` is exported in the current shell and start the stack:
+
+    ```bash
     docker compose up -d
     ```
 
@@ -100,7 +166,7 @@ That's it — AiToEarn is ready to use.
 
 <AccordionGroup>
   <Accordion title="Auto login">
-    Auto login is enabled by default. On first startup, the `aitoearn-init` service generates an admin token and saves it to a shared volume, and the `aitoearn-web` service reads the token to complete login automatically.
+    Auto login is enabled by default. On first startup, the `aitoearn-init` service generates an admin token and saves it to a shared volume, and the `aitoearn-web` service reads the token to complete login automatically. The token is signed with `JWT_SECRET` and must match `auth.secret` in both `config.yaml` files; regenerate the token after changing `auth.secret`.
   </Accordion>
 
   <Accordion title="Image pull policy">
@@ -126,6 +192,16 @@ That's it — AiToEarn is ready to use.
   </Accordion>
 </AccordionGroup>
 
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `docker compose up` reports `required variable JWT_SECRET is missing a value` | `JWT_SECRET` is not exported in the current shell | Run `export JWT_SECRET="<existing secret>"`; the value must match `auth.secret` |
+| `aitoearn-init` exits with `at least 32 characters` | `JWT_SECRET` is empty, shorter than 32 characters, or contains whitespace | Check `docker compose logs aitoearn-init`, regenerate a 64-character secret, and update `auth.secret` in both `config.yaml` files |
+| `aitoearn-server` or `aitoearn-ai` keeps restarting | `auth.secret`, `auth.internalToken`, or `aiClient.token` is missing or invalid | Check validation errors with `docker compose logs aitoearn-server` or `docker compose logs aitoearn-ai`, then fix the configuration and restart |
+| The page loads but auto login does not work | `auth.secret` does not match `JWT_SECRET`, or the stored token was signed with another secret | Align the secrets, then run `docker compose up -d --force-recreate aitoearn-init aitoearn-web` |
+| AI features return 401 | `aiClient.token` does not match the AI service's `auth.internalToken` | Update the aitoearn-server configuration and run `docker compose restart aitoearn-server` |
+
 ## Configuration Cheat Sheet
 
 `aitoearn-ai` and `aitoearn-server` no longer read runtime parameters from the `environment` section of `docker-compose.yml`. They read the mounted `config.yaml` instead, which is edited through the configuration management UI.
@@ -136,5 +212,6 @@ That's it — AiToEarn is ready to use.
 | --- | --- | --- | --- |
 | `MONGO_INITDB_ROOT_PASSWORD` | mongodb | MongoDB root password | `password` |
 | `RUSTFS_ACCESS_KEY` / `RUSTFS_SECRET_KEY` | rustfs | RustFS access credentials | `rustfsadmin` |
-| `MONGO_URI` / `JWT_SECRET` / `DB_NAME` / `AUTO_LOGIN_TOKEN_PATH` | aitoearn-init | Initialize admin and auto-login token on first startup | Built-in defaults |
+| `JWT_SECRET` | aitoearn-init | Must match the backend's `auth.secret` | Required; no default |
+| `MONGO_URI` / `DB_NAME` / `AUTO_LOGIN_TOKEN_PATH` | aitoearn-init | Initialize admin and auto-login token on first startup | Built-in defaults |
 | `NODE_ENV` / `NEXT_TELEMETRY_DISABLED` | aitoearn-web | Web runtime environment and Next.js telemetry settings | `production` / `1` |
