@@ -34,6 +34,14 @@ const legacyOpenApiRedirects = [
     source: '/api-reference/渠道管理授权/授权会话状态',
     destination: `${zhApiReferenceBasePath}/get-api-v2-channels-accounts-auth-platform-status-session-id`,
   },
+  {
+    source: '/api-reference/get-api-v2-api-keys-current-usage',
+    destination: `${zhApiReferenceBasePath}/get-api-api-key-current-usage`,
+  },
+  {
+    source: '/en/api-reference/get-api-v2-api-keys-current-usage',
+    destination: `${enApiReferenceBasePath}/get-api-api-key-current-usage`,
+  },
 ]
 
 function readJson(filePath) {
@@ -1144,6 +1152,49 @@ function agentMessageSchema() {
     },
     required: ['id', 'sessionId', 'message', 'createdAt'],
     additionalProperties: false,
+  }
+}
+
+function addApiKeyUsageEndpoint(spec) {
+  spec.paths = spec.paths || {}
+  spec.paths['/api/api-key/current/usage'] = {
+    get: {
+      tags: ['账号与密钥/API Key'],
+      summary: 'API Key 用量',
+      description: '查询当前 API Key 的分组用量。',
+      operationId: 'ApiKeyController_getCurrentUsage',
+      parameters: [
+        openApiParameter('period', 'query', '统计周期，格式 YYYY-MM。', {
+          type: 'string',
+          pattern: '^\\d{4}-\\d{2}$',
+          example: '2026-09',
+        }),
+      ],
+      responses: sourceResponse({
+        type: 'object',
+        properties: {
+          period: { type: 'string', description: '统计周期，格式 YYYY-MM。', example: '2026-09' },
+          apiKeyId: { type: 'string', description: 'API Key ID。' },
+          userId: { type: 'string', description: '所属用户 ID。' },
+          groups: {
+            type: 'array',
+            description: '分组用量列表。',
+            items: {
+              type: 'object',
+              properties: {
+                groupId: { type: 'string', description: '分组 ID。' },
+                name: { type: 'string', description: '分组名称。' },
+                used: { type: 'number', description: '当期已调用次数。' },
+              },
+              required: ['groupId', 'name', 'used'],
+              additionalProperties: false,
+            },
+          },
+        },
+        required: ['period', 'apiKeyId', 'userId', 'groups'],
+        additionalProperties: false,
+      }),
+    },
   }
 }
 
@@ -2389,9 +2440,10 @@ function generate() {
   addVolcengineVideoCompatibilityEndpoints(sourceSpec)
   addVolcengineAssetsEndpoints(sourceSpec)
   addAgentEndpoints(sourceSpec)
+  addApiKeyUsageEndpoint(sourceSpec)
   const endpoints = listEndpoints(sourceSpec)
-  if (endpoints.length !== 89) {
-    throw new Error(`Expected 89 endpoints, got ${endpoints.length}`)
+  if (endpoints.length !== 90) {
+    throw new Error(`Expected 90 endpoints, got ${endpoints.length}`)
   }
 
   const specOverrides = readJson(specOverridesPath)

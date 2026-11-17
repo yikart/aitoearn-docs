@@ -51,9 +51,186 @@
     },
     {
       "name": "AI 服务/Agent"
+    },
+    {
+      "name": "账号与密钥/API Key"
     }
   ],
   "paths": {
+    "/api/api-key/current/usage": {
+      "get": {
+        "tags": [
+          "账号与密钥/API Key"
+        ],
+        "summary": "API Key 用量",
+        "description": "接口说明：使用 `X-Api-Key` 查询当前凭证对应 API Key 的分组调用次数。不传 `period` 时返回当前 UTC 自然月；传入 `YYYY-MM` 时查询指定历史月份，每次仅查询一个月份。\n\n返回的是配额调用用量，不是成功发布数、AI Token 或积分消耗明细。没有历史记录的月份，各分组 `used` 返回 0。只能查询当前 API Key，不支持通过参数查询其他 Key。",
+        "operationId": "ApiKeyController_getCurrentUsage",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": false,
+            "description": "统计周期，格式 YYYY-MM。可选；不传时查询当前 UTC 自然月，例如 2026-09。",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}$",
+              "example": "2026-09",
+              "description": "统计周期，格式 YYYY-MM。可选；不传时查询当前 UTC 自然月，例如 2026-09。"
+            },
+            "example": "2026-09"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "请求已被服务处理。业务是否成功以响应体 code === 0 为准。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "period": {
+                          "type": "string",
+                          "description": "统计周期，格式 YYYY-MM。",
+                          "example": "2026-09"
+                        },
+                        "apiKeyId": {
+                          "type": "string",
+                          "description": "API Key ID。"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "description": "所属用户 ID。"
+                        },
+                        "groups": {
+                          "type": "array",
+                          "description": "分组用量列表。",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "groupId": {
+                                "type": "string",
+                                "description": "分组 ID。"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "分组名称。"
+                              },
+                              "used": {
+                                "type": "number",
+                                "description": "当期已调用次数。"
+                              }
+                            },
+                            "required": [
+                              "groupId",
+                              "name",
+                              "used"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "period",
+                        "apiKeyId",
+                        "userId",
+                        "groups"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "业务状态码。0 表示成功，非 0 表示业务错误。"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "响应消息。"
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "description": "请求 ID。"
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "description": "错误响应时间戳，Unix 毫秒。"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "success": {
+                    "summary": "成功",
+                    "value": {
+                      "code": 0,
+                      "message": "请求成功",
+                      "data": {
+                        "period": "2026-09",
+                        "apiKeyId": "key-id-1",
+                        "userId": "user-id-1",
+                        "groups": [
+                          {
+                            "groupId": "publish-api",
+                            "name": "发布 API",
+                            "used": 17
+                          }
+                        ]
+                      },
+                      "requestId": "request-id-1"
+                    }
+                  },
+                  "unauthorized401": {
+                    "summary": "未认证或 API Key 无效",
+                    "value": {
+                      "code": 401,
+                      "message": "Unauthorized",
+                      "data": {},
+                      "timestamp": 1772099056662
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-mint": {
+          "href": "/api-reference/get-api-api-key-current-usage",
+          "metadata": {
+            "title": "API Key 用量",
+            "sidebarTitle": "API Key 用量"
+          }
+        },
+        "security": [
+          {
+            "apikey-header-X-Api-Key": []
+          }
+        ],
+        "x-aitoearn-backend": {
+          "controller": "D:/project/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/api-key/api-key.controller.ts",
+          "controllerMethod": "getCurrentUsage",
+          "services": [
+            {
+              "property": "apiKeyService",
+              "type": "ApiKeyService",
+              "file": "D:/project/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/api-key/api-key.service.ts",
+              "method": "getUsageByIdAndUserId"
+            }
+          ],
+          "responseCodes": [
+            {
+              "name": "ApiKeyInvalid",
+              "code": 19000,
+              "message": "API Key 无效"
+            }
+          ],
+          "rawResponse": false
+        }
+      }
+    },
     "/api/ai/models/video/generation": {
       "get": {
         "summary": "视频生成模型",

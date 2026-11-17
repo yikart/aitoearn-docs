@@ -3756,5 +3756,51 @@
     "notes": [
       "Raw third-party protocol response; not wrapped by ResponseInterceptor."
     ]
+  },
+  {
+    "index": 79,
+    "method": "GET",
+    "path": "/api/api-key/current/usage",
+    "operationId": "ApiKeyController_getCurrentUsage",
+    "tag": "账号与密钥/API Key",
+    "summary": "API Key 用量",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ],
+    "controllerClass": "ApiKeyController",
+    "controllerMethod": "getCurrentUsage",
+    "controllerFile": "D:/project/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/api-key/api-key.controller.ts",
+    "controllerFound": true,
+    "requiresAuth": true,
+    "isPublic": false,
+    "skipResponseInterceptor": false,
+    "apiKeyHeader": "X-Api-Key",
+    "serviceCalls": [
+      {
+        "property": "apiKeyService",
+        "type": "ApiKeyService",
+        "file": "D:/project/yika/aitoearn-monorepo/apps/aitoearn-server/src/core/api-key/api-key.service.ts",
+        "method": "getUsageByIdAndUserId"
+      }
+    ],
+    "serviceMethodsVisited": [
+      "getUsageByIdAndUserId"
+    ],
+    "responseCodes": [
+      "ApiKeyInvalid"
+    ],
+    "responseCodeValues": [
+      {
+        "name": "ApiKeyInvalid",
+        "code": 19000,
+        "message": "API Key 无效"
+      }
+    ],
+    "customExceptions": [],
+    "aiServiceTracked": false,
+    "status": "completed",
+    "notes": []
   }
 ]

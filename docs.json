@@ -396,6 +396,18 @@
     {
       "source": "/api-reference/ai-服务agent/调用-mcp",
       "destination": "/api-reference/post-api-ai-agent-mcp"
+    },
+    {
+      "source": "/api-reference/账号与密钥api-key/api-key-用量",
+      "destination": "/api-reference/get-api-api-key-current-usage"
+    },
+    {
+      "source": "/api-reference/get-api-v2-api-keys-current-usage",
+      "destination": "/api-reference/get-api-api-key-current-usage"
+    },
+    {
+      "source": "/en/api-reference/get-api-v2-api-keys-current-usage",
+      "destination": "/en/api-reference/get-api-api-key-current-usage"
     }
   ],
   "errors": {
@@ -700,6 +712,14 @@
                     "pages": [
                       "POST /api/assets/uploadSign",
                       "POST /api/assets/{id}/confirm"
+                    ]
+                  },
+                  {
+                    "group": "账号与密钥/API Key",
+                    "expanded": false,
+                    "openapi": "openapi/zh/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/api-key/current/usage"
                     ]
                   }
                 ]
@@ -1051,6 +1071,14 @@
                     "pages": [
                       "POST /api/assets/uploadSign",
                       "POST /api/assets/{id}/confirm"
+                    ]
+                  },
+                  {
+                    "group": "Account & Keys/API Key",
+                    "expanded": false,
+                    "openapi": "openapi/en/aitoearn.openapi.json",
+                    "pages": [
+                      "GET /api/api-key/current/usage"
                     ]
                   }
                 ]

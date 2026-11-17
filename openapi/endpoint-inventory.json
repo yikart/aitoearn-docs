@@ -1012,5 +1012,18 @@
     "originalResponseKeys": [
       "default"
     ]
+  },
+  {
+    "index": 79,
+    "method": "GET",
+    "path": "/api/api-key/current/usage",
+    "operationId": "ApiKeyController_getCurrentUsage",
+    "tag": "账号与密钥/API Key",
+    "summary": "API Key 用量",
+    "hasRequestBody": false,
+    "parameterCount": 1,
+    "originalResponseKeys": [
+      "default"
+    ]
   }
 ]

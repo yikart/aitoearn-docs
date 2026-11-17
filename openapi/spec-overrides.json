@@ -1,4 +1,48 @@
 {
+  "GET /api/api-key/current/usage": {
+    "description": "接口说明：使用 `X-Api-Key` 查询当前凭证对应 API Key 的分组调用次数。不传 `period` 时返回当前 UTC 自然月；传入 `YYYY-MM` 时查询指定历史月份，每次仅查询一个月份。\n\n返回的是配额调用用量，不是成功发布数、AI Token 或积分消耗明细。没有历史记录的月份，各分组 `used` 返回 0。只能查询当前 API Key，不支持通过参数查询其他 Key。",
+    "queryParameters": {
+      "period": {
+        "description": "统计周期，格式 YYYY-MM。可选；不传时查询当前 UTC 自然月，例如 2026-09。",
+        "example": "2026-09",
+        "schema": {
+          "description": "统计周期，格式 YYYY-MM。可选；不传时查询当前 UTC 自然月，例如 2026-09。",
+          "example": "2026-09"
+        }
+      }
+    },
+    "responseExamples": {
+      "success": {
+        "summary": "成功",
+        "value": {
+          "code": 0,
+          "message": "请求成功",
+          "data": {
+            "period": "2026-09",
+            "apiKeyId": "key-id-1",
+            "userId": "user-id-1",
+            "groups": [
+              {
+                "groupId": "publish-api",
+                "name": "发布 API",
+                "used": 17
+              }
+            ]
+          },
+          "requestId": "request-id-1"
+        }
+      },
+      "unauthorized401": {
+        "summary": "未认证或 API Key 无效",
+        "value": {
+          "code": 401,
+          "message": "Unauthorized",
+          "data": {},
+          "timestamp": 1772099056662
+        }
+      }
+    }
+  },
   "GET /api/ai/models/video/generation": {
     "summary": "视频生成模型",
     "responseRequired": false,
