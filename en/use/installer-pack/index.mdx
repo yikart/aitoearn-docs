@@ -54,6 +54,7 @@ Install the AiToEarn plugin package at https://github.com/yikart/AiToEarn/tree/m
 - Doubao, Qwen, and Qwen Office still need a connector set up in the client (name, transport, and URL only).
 - After installing, **go to the client's MCP/connector settings and start authentication for the AiToEarn connection yourself**, then finish OAuth in the browser. Don't wait for the client to pop up an authorization window.
 - **Codex on the China version**: switch the connection type from "Auto" to "Dynamic client registration (DCR)" before authenticating (desktop app: Settings → Plugins → MCP; CLI: `codex mcp login aitoearn-cn --oauth-client-registration dcr`). The default CIMD flow shows an "Application configuration error" page. The International version has no such issue — the default flow works (verified).
+- **When adding the MCP manually in the Codex desktop app**: in the "Connect to custom MCP" form, **the type must be "Streamable HTTP"** (the default STDIO cannot connect). Fill in only the name and URL — no launch command, arguments, or environment variables.
 
 ### Per-client authentication and verification
 
