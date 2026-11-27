@@ -1,6 +1,6 @@
 ---
 title: Install the plugin
-description: "Connect AiToEarn to Codex, Trae, Kimi, Qwen, or Doubao: install with a prompt, then authorize the MCP connection via OAuth."
+description: "Connect AiToEarn to Codex, Claude Code, Trae, Kimi, Qwen, or Doubao: install with a prompt, then authorize the MCP connection via OAuth."
 ---
 
 ## WorkBuddy: No Install Needed
@@ -19,11 +19,11 @@ The plugin is not another model. It adds AiToEarn's image, video, audio, cloud e
 
 ### Prerequisites
 
-- **AI client**: Codex, Trae / TraeWork, DeepSeek Harness, Kimi Work, Qwen Office, Qwen Desktop, or Doubao. Open it once before installing.
+- **AI client**: Codex, Claude Code, Trae / TraeWork, DeepSeek Harness, Kimi Work, Qwen Office, Qwen Desktop, or Doubao. Open it once before installing.
 - **AiToEarn account**: An account on [aitoearn.cn](https://aitoearn.cn) or [aitoearn.ai](https://aitoearn.ai) is all you need. The plugin now uses OAuth — **no API Key anymore**. You authorize in the browser after installing.
 
 <Warning>
-Authorizations for the China and international sites are not interchangeable. Authorize on the site you actually use.
+Authorizations for the China and International versions are not interchangeable. Authorize on the version you actually use.
 </Warning>
 
 <Warning>
@@ -32,28 +32,51 @@ Authorizations for the China and international sites are not interchangeable. Au
 
 ### Install with a prompt
 
-Copy the prompt below and paste it into your client's chat to install automatically:
+Each client maps to one package directory. Replace `<package-dir>` in the prompt below with the directory for your client (see the table), state whether to install the **China version** or the **International version**, then paste it into your client's chat:
 
 ```text
-Install the plugin pack at https://github.com/yikart/AiToEarn/tree/main/skills
+Install the AiToEarn plugin package at https://github.com/yikart/AiToEarn/tree/main/skills/<package-dir> (China version). Download only that directory (e.g. git sparse checkout, or extract just this subdirectory from the repository archive) — do NOT clone the whole repository. Then follow the package's README.md and 安装提示词.md to finish installation, guide me through OAuth authorization, and verify with "List my available publishing channels".
 ```
 
-- Codex, Trae, DeepSeek Harness, and Kimi get the MCP configuration written automatically — no key to fill in.
+| Client | Package directory |
+| --- | --- |
+| Codex | `codex-plugin-aitoearn` |
+| Claude Code | `claude-plugin-aitoearn` |
+| Trae / TraeWork | `trae-skill-aitoearn` |
+| DeepSeek Harness | `dsh-plugin-aitoearn` |
+| Kimi Work | `kimi-plugin-aitoearn` |
+| Qwen Office | `qwenwork-plugin-aitoearn` |
+| Qwen Desktop | `qwen-skill-aitoearn` |
+| Doubao | `doubao-skill-aitoearn` |
+
+- For the International version, replace "China version" with "International version" in the prompt; everything else stays the same. Each package README also ships a ready-to-copy bilingual prompt at the top.
+- Codex, Claude Code, Trae, DeepSeek Harness, and Kimi get the MCP configuration written automatically — no key to fill in.
 - Doubao, Qwen, and Qwen Office still need a connector set up in the client (name, transport, and URL only).
 - After installing, **go to the client's MCP/connector settings and start authentication for the AiToEarn connection yourself**, then finish OAuth in the browser. Don't wait for the client to pop up an authorization window.
-- **Codex on the China site**: switch the connection type from "Auto" to "Dynamic client registration (DCR)" before authenticating (desktop app: Settings → Plugins → MCP; CLI: `codex mcp login aitoearn-cn --oauth-client-registration dcr`). The default CIMD flow shows an "Application configuration error" page.
+- **Codex on the China version**: switch the connection type from "Auto" to "Dynamic client registration (DCR)" before authenticating (desktop app: Settings → Plugins → MCP; CLI: `codex mcp login aitoearn-cn --oauth-client-registration dcr`). The default CIMD flow shows an "Application configuration error" page.
 
 ### Per-client authentication and verification
 
 | Client | Written automatically | What you still need to do |
 | --- | --- | --- |
 | Codex | Plugin, skill, MCP | Settings → Plugins → MCP, set the connection type to "Dynamic client registration (DCR)", click Authenticate and finish in the browser; then reopen and verify in a new session |
+| Claude Code | Plugin, skill, MCP | After restarting, run `/mcp`, start authentication for the AiToEarn server, and finish in the browser |
 | Trae / TraeWork | Skill, MCP | Reopen, then click connect/authenticate on the AiToEarn connection in MCP settings and finish in the browser |
 | DeepSeek Harness | Plugin, profile config | Run `aitoearn login` to complete OAuth (browser or device code), then reopen the client and verify |
 | Kimi Work | Skill, plugin marketplace, MCP | Fully quit and reopen, then start authentication for the AiToEarn connection on the MCP connections page; on Windows, click install in the plugin marketplace if prompted |
 | Qwen Office | Plugin + connector JSON | Reopen, go to Extensions → Connectors → Add → Import JSON, then click connect/authorize on the connector and finish in the browser |
 | Qwen Desktop | Skill into local skill library | Reopen, add the HTTP MCP under Connect, then start authorization for that connection |
 | Doubao | Skill pack to Downloads | Import the skill in Doubao, create a custom connector (name, transport, URL only), then click connect/authorize and finish in the browser |
+
+## Switch between China and International versions
+
+Authorizations for the two versions are not interchangeable, and only one connection should exist at a time. To switch:
+
+1. Delete the current AiToEarn connection (`aitoearn-cn` or `aitoearn`) in the client's MCP/connector settings; on DeepSeek Harness, run `aitoearn logout` instead.
+2. Re-add the target version: China version `aitoearn-cn` + `https://aitoearn.cn/api/ai/agent/mcp`; International version `aitoearn` + `https://aitoearn.ai/api/ai/agent/mcp`. On DeepSeek Harness, log in again with `aitoearn login` (China) or `aitoearn login --site ai` (International).
+3. Complete OAuth authorization again, then verify in a new session with "List my available publishing channels".
+
+See the "切换中国版 / 国际版" section in each package README for client-specific steps.
 
 ## Verify
 
@@ -69,7 +92,7 @@ If it returns the channel directory, the plugin is connected.
 
 **Tools are missing**: Fully quit and reopen the client. Closing the window alone usually doesn't reload MCP.
 
-**`-32001` unauthorized**: OAuth authorization is incomplete or expired. Start authentication again for the AiToEarn connection in the MCP/connector settings, and make sure you authorize on the site you're actually using — China and international sites are not interchangeable.
+**`-32001` unauthorized**: OAuth authorization is incomplete or expired. Start authentication again for the AiToEarn connection in the MCP/connector settings, and make sure you authorize on the version you're actually using — the China and International versions are not interchangeable.
 
 **Codex shows "Application configuration error" on the authorization page**: the connection type is still "Auto/CIMD". Switch it to "Dynamic client registration (DCR)" and authenticate again.
 
