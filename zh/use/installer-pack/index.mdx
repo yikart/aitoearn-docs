@@ -53,13 +53,13 @@ WorkBuddy 用户无需安装插件，直接使用内置官方专家「自媒体�
 - Codex、Claude Code、Trae、DeepSeek Harness、Kimi 会自动写入 MCP 配置，无需填写任何 Key。
 - 豆包、千问、千问办公还需要在客户端里手动配置连接器（只填名称、传输方式和 URL）。
 - 安装完成后，**到客户端的 MCP/连接器管理页面对 AiToEarn 连接主动发起认证**，在浏览器完成 OAuth 登录；不要等待客户端自动弹出授权窗口。
-- **Codex 中国版特别注意**：把连接类型从「自动」改为「动态客户端注册 (DCR)」再认证（桌面版：设置 → 插件 → MCP；命令行：`codex mcp login aitoearn-cn --oauth-client-registration dcr`）。默认的 CIMD 方式会显示「应用配置错误」。
+- **Codex 中国版特别注意**：把连接类型从「自动」改为「动态客户端注册 (DCR)」再认证（桌面版：设置 → 插件 → MCP；命令行：`codex mcp login aitoearn-cn --oauth-client-registration dcr`）。默认的 CIMD 方式会显示「应用配置错误」。国际版无此问题，默认方式即可（已实测）。
 
 ### 各客户端认证与验证
 
 | 客户端 | 自动写入 | 你还需要做什么 |
 | --- | --- | --- |
-| Codex | 插件、技能、MCP | 设置 → 插件 → MCP，连接类型选「动态客户端注册 (DCR)」，点「进行身份验证」完成浏览器授权；重开后新建会话验证 |
+| Codex | 插件、技能、MCP | 中国版：设置 → 插件 → MCP，连接类型选「动态客户端注册 (DCR)」，点「进行身份验证」完成浏览器授权；国际版：默认连接类型直接认证即可（已实测，无需 DCR）。重开后新建会话验证 |
 | Claude Code | 插件、技能、MCP | 重启后输入 `/mcp` 打开面板，对 AiToEarn server 主动发起认证，在浏览器完成授权 |
 | Trae / TraeWork | 技能、MCP | 重开后到 MCP 设置对 AiToEarn 连接点击连接/认证，在浏览器完成授权 |
 | DeepSeek Harness | 插件、profile 配置 | 运行 `aitoearn login` 完成 OAuth 授权（浏览器或设备码），重开客户端验证 |
@@ -94,7 +94,7 @@ WorkBuddy 用户无需安装插件，直接使用内置官方专家「自媒体�
 
 **提示 `-32001` 未授权**：OAuth 授权未完成或已过期。到 MCP/连接器管理页对 AiToEarn 连接重新发起认证；确认授权的是当前使用的版本，中国版和国际版不通用。
 
-**Codex 授权页显示「应用配置错误」**：连接类型停在了「自动/CIMD」。改成「动态客户端注册 (DCR)」后重新认证即可。
+**Codex 授权页显示「应用配置错误」**（仅中国版）：连接类型停在了「自动/CIMD」。改成「动态客户端注册 (DCR)」后重新认证即可。
 
 **能看到平台但看不到账号**：去 AiToEarn 的「我的频道」扫码授权，再让 agent 查询账号。
 

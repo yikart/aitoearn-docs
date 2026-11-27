@@ -53,13 +53,13 @@ Install the AiToEarn plugin package at https://github.com/yikart/AiToEarn/tree/m
 - Codex, Claude Code, Trae, DeepSeek Harness, and Kimi get the MCP configuration written automatically — no key to fill in.
 - Doubao, Qwen, and Qwen Office still need a connector set up in the client (name, transport, and URL only).
 - After installing, **go to the client's MCP/connector settings and start authentication for the AiToEarn connection yourself**, then finish OAuth in the browser. Don't wait for the client to pop up an authorization window.
-- **Codex on the China version**: switch the connection type from "Auto" to "Dynamic client registration (DCR)" before authenticating (desktop app: Settings → Plugins → MCP; CLI: `codex mcp login aitoearn-cn --oauth-client-registration dcr`). The default CIMD flow shows an "Application configuration error" page.
+- **Codex on the China version**: switch the connection type from "Auto" to "Dynamic client registration (DCR)" before authenticating (desktop app: Settings → Plugins → MCP; CLI: `codex mcp login aitoearn-cn --oauth-client-registration dcr`). The default CIMD flow shows an "Application configuration error" page. The International version has no such issue — the default flow works (verified).
 
 ### Per-client authentication and verification
 
 | Client | Written automatically | What you still need to do |
 | --- | --- | --- |
-| Codex | Plugin, skill, MCP | Settings → Plugins → MCP, set the connection type to "Dynamic client registration (DCR)", click Authenticate and finish in the browser; then reopen and verify in a new session |
+| Codex | Plugin, skill, MCP | China version: Settings → Plugins → MCP, set the connection type to "Dynamic client registration (DCR)", click Authenticate and finish in the browser. International version: the default connection type works as-is (verified, no DCR needed). Then reopen and verify in a new session |
 | Claude Code | Plugin, skill, MCP | After restarting, run `/mcp`, start authentication for the AiToEarn server, and finish in the browser |
 | Trae / TraeWork | Skill, MCP | Reopen, then click connect/authenticate on the AiToEarn connection in MCP settings and finish in the browser |
 | DeepSeek Harness | Plugin, profile config | Run `aitoearn login` to complete OAuth (browser or device code), then reopen the client and verify |
@@ -94,7 +94,7 @@ If it returns the channel directory, the plugin is connected.
 
 **`-32001` unauthorized**: OAuth authorization is incomplete or expired. Start authentication again for the AiToEarn connection in the MCP/connector settings, and make sure you authorize on the version you're actually using — the China and International versions are not interchangeable.
 
-**Codex shows "Application configuration error" on the authorization page**: the connection type is still "Auto/CIMD". Switch it to "Dynamic client registration (DCR)" and authenticate again.
+**Codex shows "Application configuration error" on the authorization page** (China version only): the connection type is still "Auto/CIMD". Switch it to "Dynamic client registration (DCR)" and authenticate again.
 
 **Platforms show up but accounts don't**: Re-authorize by scanning the QR code under My Channels in AiToEarn, then have the agent query accounts again.
 
